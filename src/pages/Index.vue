@@ -1,17 +1,12 @@
 <template>
-  <dashboard_layout page_title="Dashboard">
+  <dashboard_layout page_title="">
 
-       <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-         
-         <div
-             class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-         >
-           <div
-               class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
-           >
-             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+       <div class="grid gap-2 mb-1 md:grid-cols-2 xl:grid-cols-4">         
+         <div class="flex col-span-2 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+           <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
+             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
            </div>
-           <div>
+           <div class="col-span-2">
              <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                Total Rapidly Deployable Experts (RDEs)
              </p>
@@ -19,36 +14,24 @@
                137
              </p>
            </div>
-         </div>
-         <div
-             class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-         >
-           <div
-               class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
-           >
-             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-               <path
-                   clip-rule="evenodd"
-                   d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                   fill-rule="evenodd"
-               ></path>
-             </svg>
+         </div>                 
+
+         <div class="grid col-span-2 items-center p-4 rounded-lg shadow-xs dark:bg-gray-800">          
+           <div class="flex justify-between">
+             <div class=""></div>             
+             <div class="">
+                <button
+                  class="px-4 py-2 text-sm font-medium leading-5  transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple capitalize flex "
+                  >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span class="px-1">add pre-qualified rADE</span>
+                </button>
+              </div>
            </div>
-           <div>
-             <Datepicker placeholder="--Select date--" class="pb-2 pr-6"/>
-             <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-               Today's revenue
-             </p>
-             <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-               KES 1,235.50
-             </p>
-           </div>
-         </div>         
+         </div>                 
+                  
        </div>
-    <div class="grid grid-cols-3">
-      <!--      <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">-->
-      <!--        Transactions-->
-      <!--      </h2>-->
+    <div class="grid grid-cols-3">   
       <span></span>
       <span class="grid grid-cols-2 ">
       </span>
@@ -61,60 +44,83 @@
           <thead>
           <tr>
             <td class="w-2/12">
-              <button
+              <!-- <button
                   class="px-4 py-2 text-sm font-medium leading-5  text-white transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 Export To Excel
-              </button>
+              </button> -->
             </td>
             <td class="w-2/12">
-              <button
-                  class="px-4 py-2 text-sm font-medium leading-5  text-white transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+              <!-- <button
+                  class="px-4 py-2 text-sm font-medium leading-5  transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 Send to Email
-              </button>
+              </button> -->
+               <p class="text-xs italic">--Select specialization--</p>
+                <!-- <Datepicker placeholder="--Select Country--" class="pb-2 pr-6"/> -->
+                <select :class="['rounded-xl  border border-gray-300 font-semibold focus:border-blue-100 px-2 ']"
+                        placeholder="--select specialization--"
+                        @change="filterBySpecialization(specialization)" v-model="specializations" name="specialization">
+                  <option value="" selected>All</option>
+                  <option v-for="(specialization,index) in rade_specializations" :key="index">
+                    {{specialization.text}}
+                  </option>              
+                </select> 
             </td>
-            <td class="w-1/12"></td>
+            <td class="w-1/12">
+                <p class="text-xs italic">--Select country--</p>
+                <!-- <Datepicker placeholder="--Select Country--" class="pb-2 pr-6"/> -->
+                <select :class="['rounded-xl  border border-gray-300 font-semibold focus:border-blue-100 px-2 ']"
+                        placeholder="--select country--"
+                        @change="filterByCountry(country)" v-model="countries" name="country">
+                  <option value="" selected>All</option>
+                  <option v-for="(country,index) in eac_countries" :key="index">
+                    {{country.text}}
+                  </option>              
+                </select> 
+            </td>
             <td class="w-2/12">
+                <p class="text-xs italic">--Select status--</p>
               <select :class="['rounded-xl  border border-gray-300 font-semibold focus:border-blue-100 px-2']"
                       placeholder="select status"
                       @change="filterByStatus(status)" v-model="status" name="status">
                 <option class="bg-white" selected value="">All</option>
-                <option class="bg-white" value="?transaction_status=initiated">Initiated</option>
-                <option class="bg-white" value="?transaction_status=processed">Processed</option>
+                <option class="bg-white" value="pending_approval">Pending approval</option>
+                <option class="bg-white" value="available">Available</option>
+                <option class="bg-white" value="deployed">Deployed</option>
               </select>
-              <span v-if="this.transactions.results" class="px-2">{{ transactions.results.length }}</span>
+              <!-- <span v-if="this.transactions.results" class="px-2">{{ transactions.results.length }}</span> -->
             </td>
             <td class="w-2/12">
-              <select :class="['rounded-xl  border border-gray-300 font-semibold focus:border-blue-100 px-2']"
+              <!-- <select :class="['rounded-xl  border border-gray-300 font-semibold focus:border-blue-100 px-2']"
                       placeholder="select payment menthod"
                       @change="filterByPaymentMethod(paymentMethod)" v-model="paymentMethod" name="paymentMethod">
                 <option class="bg-white" value="">All</option>
                 <option class="bg-white" value="?payment_method=1">{{ paymentMethods[0] }}</option>
                 <option class="bg-white" value="?payment_method=2">{{ paymentMethods[1] }}</option>
               </select>
-              <span v-if="this.transactions.results" class="px-2">{{ transactions.results.length }}</span>
+              <span v-if="this.transactions.results" class="px-2">{{ transactions.results.length }}</span> -->
             </td>
             <td class="w-3/12 font-semibold flex justify-between">
-              <span class="col-span-1 p-2">From:  <Datepicker placeholder="--Select date--"/></span>             
+              <!-- <span class="col-span-1 p-2">From:  <Datepicker placeholder="--Select date--"/></span>             
 
-              <span class="col-span-1 p-2">To: <Datepicker placeholder="--Select date--"/></span>
+              <span class="col-span-1 p-2">To: <Datepicker placeholder="--Select date--"/></span> -->
             </td>
           </tr>
           <tr
               class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border border-b border-t border-r dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
           >
-            <th class="px-4 py-3 w-3/12">Transaction ID</th>
-            <th class="px-4 py-3 w-1/12">Amount</th>
+            <th class="px-4 py-3 w-3/12">Name</th>
+            <th class="px-4 py-3 w-1/12">Specialization</th>
             <th class="px-4 py-3 w-1/12">Country</th>
             <th class="px-4 py-3 w-2/12">Status</th>
-            <th class="px-4 py-3 w-2/12">Payment Method</th>
-            <th class="px-4 py-3 w-3/12">Date</th>
+            <th class="px-4 py-3 w-2/12">Professional Experience(yrs)</th>
+            <th class="px-4 py-3 w-3/12">RDE Experience(yrs)</th>
           </tr>
           </thead>
 
           <tbody
               class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
           >
-          <tr class="text-gray-700 dark:text-gray-400 border" v-for="(transaction,index) in this.transactions.results"
+          <tr class="text-gray-700 dark:text-gray-400 border" v-for="(rade,index) in rade_data"
               :key="index">
             <td class="px-4 py-3">
               <div class="flex items-center text-sm">
@@ -125,34 +131,36 @@
                   <div
                       aria-hidden="true"
                       class="absolute inset-0 rounded-full shadow-inner"
-                  ></div>
+                  >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
                 </div>
                 <div>
-                  <p class="font-semibold">{{ transaction.transaction_confirmation_number }}</p>
+                  <p class="font-semibold">{{ rade.name }}</p>
                   <p class="text-xs text-gray-600 dark:text-gray-400">
-                    +{{ transaction.customer_account_number }}
+                    {{ rade.radeNumber }}
                   </p>
                 </div>
               </div>
             </td>
             <td class="px-4 py-3 text-sm">
-              {{ transaction.amount }} {{ transaction.payment_method.currency.short_name }}
+              {{rade.specialization }}
             </td>
             <td class="px-4 py-3 text-sm">
-              {{ transaction.payment_method.currency.country.name }}
+              {{ rade.country }}
             </td>
             <td class="px-4 py-3 text-xs">
                 <span
-                    :class="['capitalize italic',transaction.transaction_status=='initiated'?'px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-100 dark:text-yellow-100':transaction.transaction_status=='processed'?'px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100':'']"
+                    :class="['capitalize italic font-semibold leading-tight rounded-full',rade.status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':rade.status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':rade.status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
                 >
-                  {{ transaction.transaction_status }}
+                  {{ rade.status}}
                 </span>
             </td>
-            <td :class=" ['text-sm items-center px-2',transaction.payment_method.name =='mpesa'?'text-sm text-green-500 font-semibold capitalize':'text-orange-500']">
-              {{ transaction.payment_method.name }}
+            <td :class=" ['text-sm items-center px-2',rade.status =='mpesa'?'text-sm text-green-500 font-semibold capitalize':'text-orange-500']">
+              {{ rade.years_of_experience }}
             </td>
             <td class="px-4 py-3 text-sm">
-              {{ new Date(transaction.created_at) }}
+              {{rade.years_on_board }}
             </td>
           </tr>
           </tbody>
@@ -161,8 +169,8 @@
       <div
           class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
       >
-        <span class="flex items-center col-span-3" v-if="this.transactions.results">
-          Showing {{ this.transactions.results.length }} of {{ this.transactions.results.length }}
+        <span class="flex items-center col-span-3" v-if="rade_data">
+          Showing {{ rade_data.length }} of {{ rade_data.length }}
         </span>
         <span class="col-span-2"></span>
         <!-- Pagination -->
@@ -264,7 +272,7 @@
 import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
-import Datepicker from 'vuejs-datepicker';
+// import Datepicker from 'vuejs-datepicker';
 
 
 export default {
@@ -272,18 +280,88 @@ export default {
   components: {
 
     dashboard_layout,
-    Datepicker
+    // Datepicker
   },
   data() {
     return {
       transactions: {},
       search: '',
       status: '',
+      countries: '',
       paymentMethod: '',
       paymentMethods: [
         'M-Pesa',
         'Airtel Money'
-      ]
+      ],
+       eac_countries: [
+          { text: 'Burundi', value: 'burundi' },
+          { text: 'Kenya', value: 'kenya' },
+          { text: 'Rwanda', value: 'rwanda' },
+          { text: 'South Sudan', value: 'southSudan' },
+          { text: 'Tanzania', value: 'tanzania' },
+          { text: 'Uganda', value: 'uganda' }
+        ],
+        rade_data:[
+          {
+            radeNumber:'RADE001',
+            name:"Ahmed Mahmoud",
+            specialization:"ENT specialist",
+            country:"Kenya",
+            status:"available",
+            years_of_experience:5,
+            years_on_board:2
+
+          },
+          {
+            radeNumber:'RADE002',
+            name:"Emmanuel Macron",
+            specialization:"Dermatology specialist",
+            country:"Tanzania",
+            status:"deployed",
+            years_of_experience:11,
+            years_on_board:5
+
+          },
+          {
+            radeNumber:'RADE003',
+            name:"Erling Haaland",
+            specialization:"Virology specialist",
+            country:"Kenya",
+            status:"pending_approval",
+            years_of_experience:3,
+            years_on_board:1
+
+          },
+          {
+            radeNumber:'RADE004',
+            name:"Joseph Kabila",
+            specialization:"Osteology specialist",
+            country:"Rwanda",
+            status:"available",
+            years_of_experience:2,
+            years_on_board:1
+
+          },
+          {
+            radeNumber:'RADE005',
+            name:"Jadon Sancho",
+            specialization:"Surgery specialist",
+            country:"Uganda",
+            status:"available",
+            years_of_experience:5,
+            years_on_board:2
+
+          }
+        ], 
+        rade_specializations:[
+          { text: 'ENT', value: 'ent' },
+          { text: 'Epidemiology', value: 'epidemiology' },
+          { text: 'Dermatology', value: 'dermatology' },
+          { text: 'Virology', value: 'virology' },
+          { text: 'Osteology', value: 'osteology' },
+          { text: 'Surgery', value: 'surgery' }
+        ],
+        specializations:''
 
     }
   },
@@ -291,7 +369,14 @@ export default {
     ...mapActions(['login', 'fetchTransactions']),
     ...mapGetters(['getCurrentToken', 'allTransactions']),
 
-    filterPaymentMethod() {
+    filterBySpecialization() {
+      // if (this.paymentMethods !== "") {
+      // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
+      // } else {
+      // 	this.$router.push({ query: {} });
+      // }
+    },
+    filterByCountry() {
       // if (this.paymentMethods !== "") {
       // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
       // } else {
