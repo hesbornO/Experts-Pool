@@ -28,6 +28,12 @@ const routes = [{
             import ("./pages/create-account.vue"),
     },
     {
+        path: "/rade-self-registration-form",
+        name: "RadeSelfRegistrationForm",
+        component: () =>
+            import ("./pages/rade-self-registration-form.vue"),
+    },
+    {
         path: "/forgot-password",
         name: "ForgotPassword",
         component: () =>

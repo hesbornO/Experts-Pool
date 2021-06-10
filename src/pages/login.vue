@@ -22,7 +22,7 @@
         <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
           <div class="w-full">
             <div class="flex space-y-3 justify-center">
-              <span class="text-2xl font-bold py-2 flex flex-row">Sefapay</span>
+              <span class="text-2xl font-bold py-2 flex flex-row">EAC RADE</span>
 
             </div>
             <h1

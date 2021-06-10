@@ -8,7 +8,7 @@
            </div>
            <div class="col-span-2">
              <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-               Total Rapidly Deployable Experts (RDEs)
+               Total Rapidly Deployable Experts (RADEs)
              </p>
              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                137
@@ -112,8 +112,8 @@
             <th class="px-4 py-3 w-1/12">Specialization</th>
             <th class="px-4 py-3 w-1/12">Country</th>
             <th class="px-4 py-3 w-2/12">Status</th>
-            <th class="px-4 py-3 w-2/12">Professional Experience(yrs)</th>
-            <th class="px-4 py-3 w-3/12">RDE Experience(yrs)</th>
+            <th class="px-4 py-3 w-2/12">Current Deployment</th>
+            <th class="px-4 py-3 w-3/12">Competencies</th>
           </tr>
           </thead>
 
@@ -156,11 +156,27 @@
                   {{ rade.status}}
                 </span>
             </td>
-            <td :class=" ['text-sm items-center px-2',rade.status =='mpesa'?'text-sm text-green-500 font-semibold capitalize':'text-orange-500']">
-              {{ rade.years_of_experience }}
-            </td>
             <td class="px-4 py-3 text-sm">
-              {{rade.years_on_board }}
+              <span v-if="Object.keys(rade.current_deployment).length > 0">{{ rade.current_deployment.outbreak}}, {{rade.current_deployment.country}}</span>
+              
+            </td>
+            <td class="px-4 py-3 text-sm" v-if="rade.competencies">
+              <div v-if="rade.competencies.length>0">
+                <div v-for="(competency,index) in rade.competencies" :key="index">
+                  <span>{{index+1}}.</span>
+                  <span class="px-2">{{competency.outbreak}}</span><br>
+                  <span class="px-5">{{competency.role}}</span><br>
+                  <span class="px-5">{{competency.notes}}</span><br>
+
+                </div>
+                <button
+                  class="px-4 py-2 text-sm font-medium leading-5  transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple capitalize flex "
+                  >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                  <span class="px-1">View all</span>
+                </button>
+
+              </div>
             </td>
           </tr>
           </tbody>
@@ -308,8 +324,22 @@ export default {
             specialization:"ENT specialist",
             country:"Kenya",
             status:"available",
+            current_deployment:{
+             
+            },
             years_of_experience:5,
-            years_on_board:2
+            competencies:[
+              {
+                outbreak:"Ebola",
+                role:"Volunteer",
+                notes:"Enhanced..."
+              },
+              {
+                outbreak:"COVID-19",
+                role:"First Respondent",
+                notes:"Facilitated..."
+              }
+            ]
 
           },
           {
@@ -318,8 +348,18 @@ export default {
             specialization:"Dermatology specialist",
             country:"Tanzania",
             status:"deployed",
+            current_deployment:{
+              outbreak:"COVID-19",
+              country:"Burundi"
+            },
             years_of_experience:11,
-            years_on_board:5
+            competencies:[
+              {
+                outbreak:"COVID-19",
+                role:"Volunteer",
+                notes:""
+              }
+            ]
 
           },
           {
@@ -328,8 +368,20 @@ export default {
             specialization:"Virology specialist",
             country:"Kenya",
             status:"pending_approval",
+            current_deployment:{},
             years_of_experience:3,
-            years_on_board:1
+            competencies:[
+              {
+                outbreak:"Spanish Flu",
+                role:"Virologist",
+                notes:"Research on..."
+              },
+              {
+                outbreak:"COVID-19",
+                role:"Front line respondent",
+                notes:"Facilitated..."
+              }
+            ]
 
           },
           {
@@ -338,8 +390,20 @@ export default {
             specialization:"Osteology specialist",
             country:"Rwanda",
             status:"available",
+            current_deployment:{},
             years_of_experience:2,
-            years_on_board:1
+            competencies:[
+              {
+                outbreak:"Spanish Flu",
+                role:"Virologist",
+                notes:"Research on..."
+              },
+              {
+                outbreak:"COVID-19",
+                role:"Front line respondent",
+                notes:"Facilitated..."
+              }
+            ]
 
           },
           {
@@ -348,8 +412,20 @@ export default {
             specialization:"Surgery specialist",
             country:"Uganda",
             status:"available",
+            current_deployment:{},
             years_of_experience:5,
-            years_on_board:2
+            competencies:[
+              {
+                outbreak:"Spanish Flu",
+                role:"Virologist",
+                notes:"Research on..."
+              },
+              {
+                outbreak:"COVID-19",
+                role:"Front line respondent",
+                notes:"Facilitated..."
+              }
+            ]
 
           }
         ], 
