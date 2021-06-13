@@ -358,16 +358,18 @@
           <div class=" mt-6 text-sm flex justify-between">
             <span v-if="fileUploaded==0"></span>
             <button @click="togglePdfDisplay" 
-              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" 
+              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
               v-if="fileUploaded>0">
-              View upload
+              <span v-if="!viewPdf">Preview upload</span>
+              <span v-if="viewPdf">Close preview</span>
             </button>
+
             <button
                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
               Save
             </button>
           </div>
-        </div>        
+        </div>    
         <vue-pdf-app :pdf="form.cv" :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ', viewPdf? 'block': 'hidden']"></vue-pdf-app>
       </div>
   </dashboard_layout>
@@ -379,16 +381,21 @@
 <script>
 
 import {mapActions, mapGetters} from 'vuex'
-// import '../node_modules/@braid/vue-formulate/themes/snow/snow.scss';
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 // import Datepicker from 'vuejs-datepicker';
+
+// formulate
 import Vue from 'vue'
 import VueFormulate from '@braid/vue-formulate'
 Vue.use(VueFormulate)
+// pdf
 import VuePdfApp from "vue-pdf-app";
-// import this to use default icons for buttons
 import "vue-pdf-app/dist/icons/main.css";
+// modal
+Vue.component("modal", {
+        template: "#modal-template"
+      });
 
 
 export default {
@@ -463,7 +470,8 @@ export default {
       payment_refund_form_open: false,
       payment_type:'refund',
       viewPdf:false,
-      fileUploaded:0
+      fileUploaded:0,
+      showModal: false
     }
   },
   methods: {
