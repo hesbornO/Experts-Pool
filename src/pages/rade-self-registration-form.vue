@@ -336,10 +336,9 @@
             ></textarea>
           </label>
 
-          <div class="flex mt-6 text-sm justify-between">
-            <span>
+          <div class="flex justify-between">
               <label class="block mt-4 text-sm">
-                <span class="text-gray-700  font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(.pdf only)</span></span>
+                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(.pdf only)</span></span>
                 <!-- focus-within sets the color for the icon when input is focused -->
                 <div
                     class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
@@ -347,22 +346,29 @@
                   <input  type="file"
                           id="cvFile"
                           :name="form.cv"
-                          class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                          class=" w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                           placeholder="john.doe@gmail.com"
                           validation="required"  
                           accept=".pdf" 
-                          @input="getFileBase64"                
+                          @input="processFile"                
                   />          
                 </div>
-              </label>
-            </span>
-            
+              </label>              
+            </div>
+          <div class=" mt-6 text-sm flex justify-between">
+            <span v-if="fileUploaded==0"></span>
+            <button @click="togglePdfDisplay" 
+              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" 
+              v-if="fileUploaded>0">
+              View upload
+            </button>
             <button
                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
               Save
             </button>
           </div>
-        </div>
+        </div>        
+        <vue-pdf-app :pdf="form.cv" :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ', viewPdf? 'block': 'hidden']"></vue-pdf-app>
       </div>
   </dashboard_layout>
 </template>
@@ -379,20 +385,24 @@ import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 // import Datepicker from 'vuejs-datepicker';
 import Vue from 'vue'
 import VueFormulate from '@braid/vue-formulate'
-
 Vue.use(VueFormulate)
+import VuePdfApp from "vue-pdf-app";
+// import this to use default icons for buttons
+import "vue-pdf-app/dist/icons/main.css";
 
 
 export default {
   name: "rade-self-registration",
   components: {
-
+    VuePdfApp,
     dashboard_layout,
     // Datepicker
   },
   data() {
     return {
-      form:{ },
+      form:{
+        cv:''
+       },
       transactions: {},
       eac_countries:{
         burundi:"Burundi",
@@ -451,18 +461,99 @@ export default {
         'Airtel Money'
       ],
       payment_refund_form_open: false,
-      payment_type:'refund'
+      payment_type:'refund',
+      viewPdf:false,
+      fileUploaded:0
     }
   },
   methods: {
     ...mapActions(['login', 'fetchTransactions']),
     ...mapGetters(['getCurrentToken', 'allTransactions']),
+
+    processFile(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) {
+                return;
+            }
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = e => {
+                const dataUri = e.target.result;
+                if (dataUri) {
+                    // this.compress(dataUri);
+                    this.form.cv = dataUri
+                    this.fileUploaded+=1
+                }
+            };
+            reader.readAsDataURL(file);
+        },
+// compress(src) {
+//             const img = new Image();
+//             img.src = src;
+//             img.onload = () => {
+//                 const elem = document.createElement("canvas");
+//                 const ctx = elem.getContext("2d");
+//                 let width = img.width;
+//                 if (width > 1080) {
+//                     width = 1080;
+//                     const scaleFactor = width / img.width;
+//                     elem.width = width;
+//                     elem.height = img.height * scaleFactor;
+//                     ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+//                 } else {
+//                     const height = img.height;
+//                     elem.width = width;
+//                     elem.height = height;
+//                     ctx.drawImage(img, 0, 0, width, height);
+//                 }
+
+//                 this.form.passportPhoto = elem.toDataURL("image/jpeg", 0.8);
+//             };
+//         }
+
+
+// reader.addEventListener("load", function () {
+//     // convert image file to base64 string
+//     preview.src = reader.result;
+//   }, false);
+
+
+
+
+
+
+
+
     getFileBase64(){
-      var file = document.querySelector('#cvFile > input[type="file"]').files[0];
-      this.getBase64(file);
+      // var file = document.getElementById('cvFile');
+      var x = document.getElementById("cvFile");
+      var txt = "";
+      if ('files' in x) {
+        if (x.files.length == 0) {
+          txt = "Select one or more files.";
+        } else {
+          for (var i = 0; i < x.files.length; i++) {
+            txt += "<br><strong>" + (i+1) + ". file</strong><br>";
+            var file = x.files[i];
+            // document.getElementById('uploadedFile').innerHTML = file;
+            if ('name' in file) {
+              txt += "name: " + file.name + "<br>";
+            }
+            // if ('size' in file) {
+              //   txt += "size: " + file.size + " bytes <br>";
+            // }
+          }
+        }
+      }
+      // this.getFileBase64(file);
+      document.getElementById('fileSection').innerHTML = 'File Name';
+      document.getElementById('fileName').innerHTML = txt;
+      // alert(txt);
+      // console.log(txt);      
+      // this.getBase64(file); 
 
     },
-    getBase64(file) {
+    getBase64(file){
       var reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function () {
@@ -479,8 +570,8 @@ export default {
       // 	this.$router.push({ query: {} });
       // }
     },
-    toggleForm(){
-      this.payment_refund_form_open=!this.payment_refund_form_open;
+    togglePdfDisplay(){
+      this.viewPdf=!this.viewPdf;
     },
     filterStatus() {
       // if (this.paymentMethods !== "") {
