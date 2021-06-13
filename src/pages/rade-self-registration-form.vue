@@ -129,7 +129,7 @@
                     placeholder="--Pick--"
               /> -->
               <select name="nationality" class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.nationality" id="country">
+              v-model="form.nationality" id="country" :options="eac_countries">
                 <option value="" selected disabled>--select--</option>
                 <option value="burundi">Burundi</option>
                 <option value="kenya">Kenya</option>
@@ -158,12 +158,24 @@
               <select name="location" class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
               v-model="form.location" id="county">
                 <option value="" selected disabled>--select--</option>
-                <!-- <option value="burundi">Burundi</option>
-                <option value="kenya">Kenya</option>
-                <option value="rwanda">Rwanda</option>
-                <option value="tanzania">Tanzania</option>
-                <option value="uganda">Uganda</option>
-                <option value="south_sudan">South Sudan</option> -->
+                <option value="Bubanza">Bubanza</option>
+                <option value="Bujumbura Mairie"> Bujumbura Mairie</option>
+                <option value="Bujumbura Rural"> Bujumbura Rural</option>
+                <option value="Bururi">Bururi</option>
+                <option value="Cankuzo">Cankuzo</option>
+                <option value="Cibitoke">Cibitoke</option>
+                <option value="Gitega">Gitega</option>
+                <option value="Karuzi">Karuzi</option>
+                <option value="Kayanza">Kayanza</option>
+                <option value="Kirundo">Kirundo</option>
+                <option value="Makamba">Makamba</option>
+                <option value="Muramvya">Muramvya</option>
+                <option value="Muyinga">Muyinga</option>
+                <option value="Mwaro">Mwaro</option>
+                <option value="Ngozi">Ngozi</option>
+                <option value="Rumonge">Rumonge</option>
+                <option value="Rutana">Rutana</option>
+                <option value="Ruyigi">Ruyigi</option>
               </select>
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
@@ -253,7 +265,7 @@
         </div>
 
         <!-- Next of kin section -->
-        <h3 class="text-blue-400 font-semibold">Next of Kin Details</h3>
+        <h3 class="text-blue-400 font-semibold pt-6">Next of Kin Details</h3>
         <div class="grid grid-cols-3 gap-4">
           <label class="block mt-4 text-sm">
             <span class="text-gray-700  font font-semibold dark:text-gray-400">Full Name</span>
@@ -312,7 +324,7 @@
             </div>
           </label>
         </div>
-        <h6 class="text-blue-400 font-semibold">Other info</h6>
+        <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>
           <label class="block mt-4 text-sm">
             <span class="text-gray-700  font font-semibold dark:text-gray-400">Notes</span>
             <textarea
@@ -327,14 +339,14 @@
           <div class="flex mt-6 text-sm justify-between">
             <span>
               <label class="block mt-4 text-sm">
-                <span class="text-gray-700  font font-semibold dark:text-gray-400">CV Attachment</span>
+                <span class="text-gray-700  font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(.pdf only)</span></span>
                 <!-- focus-within sets the color for the icon when input is focused -->
                 <div
                     class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                 >
                   <input  type="file"
                           id="cvFile"
-                          name="cv"
+                          :name="form.cv"
                           class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                           placeholder="john.doe@gmail.com"
                           validation="required"  
@@ -382,6 +394,10 @@ export default {
     return {
       form:{ },
       transactions: {},
+      eac_countries:{
+        burundi:"Burundi",
+        kenya:"Kenya"
+      },
       accountTransactions: [
         {
           transactionId: 'MGX506Q7B',
