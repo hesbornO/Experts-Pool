@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="EAC RADE Sign Up">
+  <dashboard_layout page_title= "EAC RDE Sign Up">
     <!-- <div
         :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"
     >
@@ -7,7 +7,6 @@
         class="grid grid-rows-modal"
         autocomplete="off" :errors="errors"
         :form-errors="serverError"
-        
       >
         <div class="grid grid-cols-3 gap-3">
           <FormulateInput type="text" name="first_name" label="First Name" placeholder="John " validation="required" />
@@ -48,7 +47,7 @@
             >
               <input
                   v-model="form.first_name"
-                  class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                   type="text"
                   validation="required"
                   placeholder="John"
@@ -65,7 +64,7 @@
             >
               <input
                   v-model="form.middle_name"
-                  class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                   type="text"
                   name="middle_name"
                   placeholder="Joseph"
@@ -80,7 +79,7 @@
             >
               <input
                   v-model="form.last_name"
-                  class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                   type="text"
                   name="last_name"
                   validation="required"
@@ -98,12 +97,12 @@
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <!-- <input type="text"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="--Pick--"
                     name="gender"
                     :options="gender_types"
               /> -->
-              <select name="gender" class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required"
+              <select name="gender" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required"
               v-model="form.gender">
                 <option value="" selected disabled>--select--</option>
                 <option value="male">Male</option>
@@ -119,16 +118,16 @@
             </div>
           </label>
           <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Nationality</span>
+            <span class="text-gray-700  font font-semibold dark:text-gray-400">Country of Residence</span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <!-- <input type="text"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="--Pick--"
               /> -->
-              <select name="nationality" class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+              <select name="nationality" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
               v-model="form.nationality" id="country" :options="eac_countries">
                 <option value="" selected disabled>--select--</option>
                 <option value="burundi">Burundi</option>
@@ -150,12 +149,12 @@
             <!-- focus-within sets the color for the icon when input is focused -->
             <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
               <!-- <input type="text"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="--Pick--"
                     name="location"
                     v-model="form.location"
               /> -->
-              <select name="location" class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+              <select name="location" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
               v-model="form.location" id="county">
                 <option value="" selected disabled>--select--</option>
                 <option value="Bubanza">Bubanza</option>
@@ -187,15 +186,16 @@
         </div>
 
         <!-- contact section -->
-        <div class="grid grid-cols-4 gap-4">
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">National ID</span>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-2 gap-3">
+             <label class="block mt-4 text-sm">
+            <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Type</span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input type="text"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="67234567"
                     name="nationalID"
                     v-model="form.nationalID"
@@ -208,13 +208,33 @@
             </div>
           </label>
           <label class="block mt-4 text-sm">
+            <span class="text-gray-700  font font-semibold dark:text-gray-400">National ID</span>
+            <!-- focus-within sets the color for the icon when input is focused -->
+            <div
+                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+            >
+              <input type="text"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    placeholder="67234567"
+                    name="nationalID"
+                    v-model="form.nationalID"
+              />
+              <div
+                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+              >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+              </div>
+            </div>
+          </label>
+          </div>
+          <label class="block mt-4 text-sm">
             <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input type="tel"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="+25470..."
                     name="phone"
                     validation="required"   
@@ -234,7 +254,7 @@
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input type="email"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="john.doe@gmail.com"
                     name="email"
                     validation="required"
@@ -247,21 +267,24 @@
               </div>
             </div>
           </label>
+          
+        </div>
+        <div class="grid grid-cols-3 gap-4">
           <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Date of Birth</span>
+            <span class="text-gray-700 font font-semibold dark:text-gray-400">Date of Birth</span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input type="date"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="--pick--"
                     name="date_of_birth"
                     validation="required"
                     v-model="form.date_of_birth"
               />              
             </div>
-          </label>
+          </label>          
         </div>
 
         <!-- Next of kin section -->
@@ -274,7 +297,7 @@
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input
-                  class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                   placeholder="John"
                   name="next_of_kin_name"
                   validation="required"
@@ -290,7 +313,7 @@
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input type="tel"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="+2547..."
                     name="next_of_kin_phone"
                     validation="required"
@@ -310,7 +333,7 @@
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <input type="email"
-                    class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="john.doe@gmail.com"
                     name="next_of_kin_email"
                     validation="required"
@@ -325,7 +348,7 @@
           </label>
         </div>
         <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>
-          <label class="block mt-4 text-sm">
+          <!-- <label class="block mt-4 text-sm">
             <span class="text-gray-700  font font-semibold dark:text-gray-400">Notes</span>
             <textarea
                 class="block border rounded-sm p-3 w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -334,7 +357,7 @@
                 name="notes"   
                 v-model="form.notes"             
             ></textarea>
-          </label>
+          </label> -->
 
           <div class="flex justify-between">
               <label class="block mt-4 text-sm">
@@ -346,10 +369,10 @@
                   <input  type="file"
                           id="cvFile"
                           :name="form.cv"
-                          class=" w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                          class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                           placeholder="john.doe@gmail.com"
                           validation="required"  
-                          accept=".pdf" 
+                          accept=".pdf,.doc,.docx,application/msword" 
                           @input="processFile"                
                   />          
                 </div>
@@ -369,7 +392,7 @@
               Save
             </button>
           </div>
-        </div>    
+        </div>  
         <vue-pdf-app :pdf="form.cv" :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ', viewPdf? 'block': 'hidden']"></vue-pdf-app>
       </div>
   </dashboard_layout>
@@ -380,7 +403,8 @@
 
 <script>
 
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex';
+import {app_name} from "@/utils/constants";
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 // import Datepicker from 'vuejs-datepicker';
@@ -393,13 +417,16 @@ Vue.use(VueFormulate)
 import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
 // modal
-Vue.component("modal", {
-        template: "#modal-template"
-      });
+import VueTailwind from 'vue-tailwind'
+const components = {
+  //...
+}
+
+Vue.use(VueTailwind, components)
 
 
 export default {
-  name: "rade-self-registration",
+  name: `${app_name}-self-registration`,
   components: {
     VuePdfApp,
     dashboard_layout,
@@ -467,6 +494,10 @@ export default {
         'M-Pesa',
         'Airtel Money'
       ],
+      id_types:[
+        {value:"nationalID", label:"National ID"},
+        {value:"passportNo", label:"Passport No"}        
+      ],
       payment_refund_form_open: false,
       payment_type:'refund',
       viewPdf:false,
@@ -489,7 +520,7 @@ export default {
                 const dataUri = e.target.result;
                 if (dataUri) {
                     // this.compress(dataUri);
-                    this.form.cv = dataUri
+                    this.form.cv = dataUri                    
                     this.fileUploaded+=1
                 }
             };

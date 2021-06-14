@@ -28,10 +28,10 @@ const routes = [{
             import ("./pages/create-account.vue"),
     },
     {
-        path: "/rade-self-registration-form",
+        path: "/rde-self-registration-form",
         name: "RadeSelfRegistrationForm",
         component: () =>
-            import ("./pages/rade-self-registration-form.vue"),
+            import ("./pages/rde-self-registration-form.vue"),
     },
     {
         path: "/forgot-password",
