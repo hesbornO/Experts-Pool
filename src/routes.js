@@ -5,15 +5,9 @@ Vue.use(VueRouter);
 
 const routes = [{
         path: "/",
-        name: "Home",
+        name: "DefaultLogin",
         component: () =>
-            import ("./pages/Index.vue"),
-    },
-    {
-        path: "/buttons",
-        name: "Buttons",
-        component: () =>
-            import ("./pages/Buttons.vue"),
+            import ("./pages/login.vue"),
     },
     {
         path: "/login",
@@ -22,6 +16,19 @@ const routes = [{
             import ("./pages/login.vue"),
     },
     {
+        path: "/home",
+        name: "Home",
+        component: () =>
+            import ("./pages/Index.vue"),
+    },
+    {
+        path: "/member-countries",
+        name: "MemberCountries",
+        component: () =>
+            import ("./pages/MemberCountries.vue"),
+    },
+
+    {
         path: "/create-account",
         name: "CreateAccount",
         component: () =>
@@ -29,7 +36,7 @@ const routes = [{
     },
     {
         path: "/rde-self-registration-form",
-        name: "RadeSelfRegistrationForm",
+        name: "RdeSelfRegistrationForm",
         component: () =>
             import ("./pages/rde-self-registration-form.vue"),
     },

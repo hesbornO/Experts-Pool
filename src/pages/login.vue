@@ -2,7 +2,7 @@
   <div class="flex items-center h-screen p-6 bg-gray-50 dark:bg-gray-900 w-full">
 
     <div
-        class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800"
+        class="flex-1 h-full max-w-4xl mx-auto overflow bg-white rounded-lg shadow-xl dark:bg-gray-800"
     >
       <div class="flex flex-col overflow-y-auto md:flex-row">
         <div class="h-32 md:h-auto md:w-1/2">
@@ -10,7 +10,8 @@
               aria-hidden="true"
               class="object-cover w-full h-full dark:hidden"
               src="../assets/img/login-office.jpeg"
-              alt="Office"
+              alt="EAC headquarters"
+              title="EAC headquarters"
           />
           <img
               aria-hidden="true"
@@ -21,8 +22,13 @@
         </div>
         <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
           <div class="w-full">
-            <div class="flex space-y-3 justify-center">
-              <span class="text-2xl font-bold py-2 flex flex-row">EAC RADE</span>
+            <div class="">
+              <div class="pt-0">
+                <img class="w-full h-full md:h-28 dark:block" src="../assets/img/EAC_flag.jpg"
+                alt="EAC Logo"
+                />
+              </div>
+              <div class="text-2xl font-bold py-2 flex items-center justify-center">EAC RDE</div>
 
             </div>
             <h1
@@ -114,7 +120,7 @@ export default {
       }
       // eslint-disable-next-line no-unused-vars
       this.login(payload).then(resp => {
-        window.location.replace("/")
+        window.location.replace("/home")
       }).catch(err => {
         console.log(err)
       })

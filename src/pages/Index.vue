@@ -8,7 +8,7 @@
            </div>
            <div class="col-span-2">
              <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-               Total Rapidly Deployable Experts (RADEs)
+               Total Rapidly Deployable Experts (RDEs)
              </p>
              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                137
@@ -20,11 +20,9 @@
            <div class="flex justify-between">
              <div class=""></div>             
              <div class="">
-                <button
-                  class="px-4 py-2 text-sm font-medium leading-5  transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple capitalize flex "
-                  >
+                <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="registerPreQualifiedRDE()">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <span class="px-1">add pre-qualified rADE</span>
+                  <span class="px-1">add pre-qualified RDE</span>
                 </button>
               </div>
            </div>
@@ -60,7 +58,7 @@
                         placeholder="--select specialization--"
                         @change="filterBySpecialization(specialization)" v-model="specializations" name="specialization">
                   <option value="" selected>All</option>
-                  <option v-for="(specialization,index) in rade_specializations" :key="index">
+                  <option v-for="(specialization,index) in RDE_specializations" :key="index">
                     {{specialization.text}}
                   </option>              
                 </select> 
@@ -120,7 +118,7 @@
           <tbody
               class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
           >
-          <tr class="text-gray-700 dark:text-gray-400 border" v-for="(rade,index) in rade_data"
+          <tr class="text-gray-700 dark:text-gray-400 border" v-for="(RDE,index) in RDE_data"
               :key="index">
             <td class="px-4 py-3">
               <div class="flex items-center text-sm">
@@ -136,33 +134,33 @@
                   </div>
                 </div>
                 <div>
-                  <p class="font-semibold">{{ rade.name }}</p>
+                  <p class="font-semibold">{{ RDE.name }}</p>
                   <p class="text-xs text-gray-600 dark:text-gray-400">
-                    {{ rade.radeNumber }}
+                    {{ RDE.RDENumber }}
                   </p>
                 </div>
               </div>
             </td>
             <td class="px-4 py-3 text-sm">
-              {{rade.specialization }}
+              {{RDE.specialization }}
             </td>
             <td class="px-4 py-3 text-sm">
-              {{ rade.country }}
+              {{ RDE.country }}
             </td>
             <td class="px-4 py-3 text-xs">
                 <span
-                    :class="['capitalize italic font-semibold leading-tight rounded-full',rade.status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':rade.status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':rade.status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
+                    :class="['capitalize italic font-semibold leading-tight rounded-full',RDE.status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':RDE.status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':RDE.status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
                 >
-                  {{ rade.status}}
+                  {{ RDE.status}}
                 </span>
             </td>
             <td class="px-4 py-3 text-sm">
-              <span v-if="Object.keys(rade.current_deployment).length > 0">{{ rade.current_deployment.outbreak}}, {{rade.current_deployment.country}}</span>
+              <span v-if="Object.keys(RDE.current_deployment).length > 0">{{ RDE.current_deployment.outbreak}}, {{RDE.current_deployment.country}}</span>
               
             </td>
-            <td class="px-4 py-3 text-sm" v-if="rade.competencies">
-              <div v-if="rade.competencies.length>0">
-                <div v-for="(competency,index) in rade.competencies" :key="index">
+            <td class="px-4 py-3 text-sm" v-if="RDE.competencies">
+              <div v-if="RDE.competencies.length>0">
+                <div v-for="(competency,index) in RDE.competencies" :key="index">
                   <span>{{index+1}}.</span>
                   <span class="px-2">{{competency.outbreak}}</span><br>
                   <span class="px-5">{{competency.role}}</span><br>
@@ -170,7 +168,7 @@
 
                 </div>
                 <button
-                  class="px-4 py-2 text-sm font-medium leading-5  transition-colors duration-150 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple capitalize flex "
+                  class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex "
                   >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                   <span class="px-1">View all</span>
@@ -185,8 +183,8 @@
       <div
           class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
       >
-        <span class="flex items-center col-span-3" v-if="rade_data">
-          Showing {{ rade_data.length }} of {{ rade_data.length }}
+        <span class="flex items-center col-span-3" v-if="RDE_data">
+          Showing {{ RDE_data.length }} of {{ RDE_data.length }}
         </span>
         <span class="col-span-2"></span>
         <!-- Pagination -->
@@ -281,6 +279,64 @@
       <iframe id="txtArea1" style="display:none"></iframe>
     </div>
 
+    <!-- Pre qualified RDE sign up modal -->
+      <div :class="[register_prequalified_rde?'fixed z-10 inset-0 overflow-y-auto':'hidden']" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+          <!-- This element is to trick the browser into centering the modal contents. -->
+          <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>          
+          <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div class="sm:flex sm:items-start h-96">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center  w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 h-96">
+                  <!-- Heroicon name: outline/exclamation -->
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900 text-center" id="modal-title">
+                    Register pre-qualified RDE                    
+                  </h3>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                    <p class="text-sm text-gray-500">
+                      Form Data elements go here!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse justify-between font-semibold text-white">
+              <button type="button" class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase" @click="submitPreQualifiedRDE">
+                Submit
+              </button>
+              <button type="button" class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 mt-3 w-full inline-flex justify-center rounded-md border border-red-200 shadow-sm px-4 py-2 bg-red-300 hover:bg-red-500 focus:outline-none uppercase sm:mt-0 sm:ml-3 sm:w-auto " @click="closeRegisterPreQualifiedRDEModal()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- End of pre qualified RDE sign up modal -->
+
   </dashboard_layout>
 </template>
 
@@ -300,6 +356,7 @@ export default {
   },
   data() {
     return {
+      register_prequalified_rde:false,
       transactions: {},
       search: '',
       status: '',
@@ -317,9 +374,9 @@ export default {
           { text: 'Tanzania', value: 'tanzania' },
           { text: 'Uganda', value: 'uganda' }
         ],
-        rade_data:[
+        RDE_data:[
           {
-            radeNumber:'RADE001',
+            RDENumber:'RDE001',
             name:"Ahmed Mahmoud",
             specialization:"ENT specialist",
             country:"Kenya",
@@ -343,7 +400,7 @@ export default {
 
           },
           {
-            radeNumber:'RADE002',
+            RDENumber:'RDE002',
             name:"Emmanuel Macron",
             specialization:"Dermatology specialist",
             country:"Tanzania",
@@ -363,7 +420,7 @@ export default {
 
           },
           {
-            radeNumber:'RADE003',
+            RDENumber:'RDE003',
             name:"Erling Haaland",
             specialization:"Virology specialist",
             country:"Kenya",
@@ -385,7 +442,7 @@ export default {
 
           },
           {
-            radeNumber:'RADE004',
+            RDENumber:'RDE004',
             name:"Joseph Kabila",
             specialization:"Osteology specialist",
             country:"Rwanda",
@@ -407,7 +464,7 @@ export default {
 
           },
           {
-            radeNumber:'RADE005',
+            RDENumber:'RDE005',
             name:"Jadon Sancho",
             specialization:"Surgery specialist",
             country:"Uganda",
@@ -429,7 +486,7 @@ export default {
 
           }
         ], 
-        rade_specializations:[
+        RDE_specializations:[
           { text: 'ENT', value: 'ent' },
           { text: 'Epidemiology', value: 'epidemiology' },
           { text: 'Dermatology', value: 'dermatology' },
@@ -444,7 +501,17 @@ export default {
   methods: {
     ...mapActions(['login', 'fetchTransactions']),
     ...mapGetters(['getCurrentToken', 'allTransactions']),
-
+    
+    registerPreQualifiedRDE(){
+      this.register_prequalified_rde = true
+    },
+    closeRegisterPreQualifiedRDEModal(){
+      this.register_prequalified_rde = false
+    },
+    submitPreQualifiedRDE(){
+      this.register_prequalified_rde = false
+      // alert('RDE registered successfully!!')
+    },  
     filterBySpecialization() {
       // if (this.paymentMethods !== "") {
       // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
