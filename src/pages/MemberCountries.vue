@@ -66,14 +66,14 @@
                     27
                   </span>
               </td>
-              <td class="px-4 py-3 text-xs flex justify-between gap-4">
+              <td class="px-4 py-3 text-xs flex justify-between items-center gap-4">
                 <router-link
                     class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                    :to="{name:'Regions', params:{countryId:country.id, countryName: country.name}}"  
                   >
-                    <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="filterCountryRegionsByName(country.name)">
+                    <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                      <span class="px-1">Regions</span>
+                      <span class="px-1">View Regions</span>
                     </button>
                   </router-link>
                   <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="getCountryById(country.id)">
@@ -82,7 +82,7 @@
                   </button>
                   <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-red-300 text-red-500 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="deleteCountry(country.id)">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                    <span class="px-1">Delete</span>
+                    <span class="px-1 ">Delete</span>
                   </button>
               </td>
               <!-- <td class="px-4 py-3 text-sm">
@@ -192,57 +192,6 @@
       </div>
       <iframe id="txtArea1" style="display:none"></iframe>
     </div>
-
-    <!-- REGIONS -->
-    <div v-if="filteredRegions">
-      <div v-if="filteredRegions.length>0" class="py-3 ">
-
-     <div class="grid col-span-2 items-center rounded-lg shadow-xs dark:bg-gray-800 py-3">          
-        <div class="flex justify-between">
-          <div class=""></div>             
-          <div class="">
-            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="displayAddRegionForm">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <span class="px-1">Add Region</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    
-      <span class="uppercase text-blue-500 font-mono">{{filteredRegions[0].country.name}} [{{filteredRegions[0].country.phone_code}}]</span>
-      <table class="w-3/4 whitespace-no-wrap">
-        <thead>
-          <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border border-b border-t border-r dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-            <th class="px-4 py-3 w-1/2 border border-l">Name</th>
-            <th class="px-4 py-3 w-1/2 border border-l">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 w-full">
-          <tr class="text-gray-700 dark:text-gray-400 border" v-for="(region,index) in filteredRegions" :key="index">
-            <td class="px-4 py-3 w-1/2 border border-l">              
-              <p>
-                <span class="px-2">{{index+=1}}. </span>
-                <span>{{region.name}}</span>                
-              </p>              
-            </td>
-            <td class="px-4 py-3 w-1/2  flex justify-between gap-4">            
-                  <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="getRegionById(region.id)">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    <span class="px-1">Update</span>
-                  </button>
-                  <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-red-300 text-red-500 rounded-lg active:bg-red-600 hover:bg-red-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="deleteRegion(region.id)">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                    <span class="px-1">Delete</span>
-                  </button>
-            </td>
-          </tr>
-
-        </tbody>
-
-      </table>
-      </div>
-    </div>
-    
 
 <!-- COUNTRIES -->
 
@@ -476,13 +425,13 @@ export default {
       this.update_member_country = false
     },
     postMemberCountry(){
-      this.add_member_country = false;
+      // this.add_member_country = false;
       let payload = {
           name:this.form.name,
           phone_code:this.form.phone_code
       }
       this.postCountry(payload).then(resp=>{
-            this.store.dispatch('setError',{})
+            this.$store.dispatch('setError',{})
             window.location.replace('/member-countries')
             console.log(resp)
       })      
@@ -527,109 +476,8 @@ export default {
         console.log(err);
       })
     },
-    filterCountryRegionsByName(countryName){
-      this.filteredRegions = this.regions.filter(function(region){
-        return region.country.name === countryName
-      })
-    },
-
-    displayAddRegionForm(){   
-      this.form={}   
-      this.add_region = true      
-    },
-    closeAddRegionForm(){
-      this.add_region = false      
-    },
-    displayUpdateRegionForm(){            
-      this.update_region = true
-    },
-    
-    closeUpdateRegionForm(){      
-      this.update_region = false
-    },
-    postRegion(countryId){
-      this.add_region = false;
-      let payload = {
-          name:this.form.name,
-          country_id:countryId
-      }
-      this.postRegion(payload).then(resp=>{
-            window.location.replace('/member-countries')
-            console.log(resp)
-      })      
-    },     
-    postRegionUpdateById(regionId){
-        let payload = {
-          id:regionId,
-          name:this.form.name,
-          country_id:this.form.country_id
-        }
-        this.updateRegionById(payload).then(resp=>{
-                window.location.replace('/member-countries')
-                console.log(resp)
-        })
-
-    }, 
-    getRegionById(regionId){
-        this.update_region = true;
-        this.fetchRegionById(regionId).then(resp=>{            
-            this.form= resp
-        })
-    },  
-    deleteRegion(regionId){         
-        this.deleteRegionById(regionId).then(
-            this.getRegions
-        )
-    },   
-
-
     // end of regions
-    filterByStatus(status) {
-      this.paymentMethod = ''
-      this.$store.dispatch('fetchTransactions', status).then(resp => {
-        this.transactions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    filterByPaymentMethod(paymentMethod) {
-      this.status = '';
-      this.$store.dispatch('fetchTransactions', paymentMethod).then(resp => {
-        this.transactions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    exportDataToExcel(tableID, filename = '') {
-      var downloadLink;
-      var dataType = 'application/vnd.ms-excel';
-      var tableSelect = document.getElementById(tableID);
-      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-
-      // Specify file name
-      filename = filename ? filename + '.xls' : 'excel_data.xls';
-
-      // Create download link element
-      downloadLink = document.createElement("a");
-
-      document.body.appendChild(downloadLink);
-
-      if (navigator.msSaveOrOpenBlob) {
-        var blob = new Blob(['\ufeff', tableHTML], {
-          type: dataType
-        });
-        navigator.msSaveOrOpenBlob(blob, filename);
-      } else {
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-
-        // Setting the file name
-        downloadLink.download = filename;
-
-        //triggering the function
-        downloadLink.click();
-      }
-    },
+  
   },
   mounted() {
     this.getCountries()

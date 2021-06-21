@@ -43,7 +43,7 @@ const actions = {
                 relative_url = "/country/" + payload
             }
             api.get(relative_url).then(resp => {
-                commit("getCountry", resp.data)
+                commit("setCountry", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -60,7 +60,7 @@ const actions = {
                 relative_url = "/country/" + payload
             }
             api.delete(relative_url).then(resp => {
-                commit("getCountry", resp.data)
+                commit("setCountry", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -70,7 +70,7 @@ const actions = {
     postCountry({ commit }, payload) {
         return new Promise((resolve, reject) => {
             api.post("/country/", payload).then(resp => {
-                commit("getCountry", resp.data)
+                commit("setCountry", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 commit("setError", err.response.data)
@@ -88,7 +88,7 @@ const actions = {
                 console.log('patchUrl', relative_url)
             }
             api.put(relative_url, payload).then(resp => {
-                commit("getCountry", resp.data)
+                commit("setCountry", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 commit("setError", err.response.data)
@@ -96,6 +96,9 @@ const actions = {
             })
         });
     },
+    // end of countries
+
+
     // regions
     fetchRegions({ commit }, payload) {
         return new Promise((resolve, reject) => {
@@ -129,7 +132,8 @@ const actions = {
             })
         })
     },
-    deleteRegionById(payload) {
+
+    deleteRegionById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/region/'
 
@@ -137,8 +141,10 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/region/" + payload
+                console.log('delete url', relative_url)
             }
             api.delete(relative_url).then(resp => {
+                commit("setRegion", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
