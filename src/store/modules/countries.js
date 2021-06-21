@@ -1,12 +1,18 @@
 import api from "@/api";
 
 const state = {
-    countries: {}
+    countries: [],
+    regions: [],
+    country: {},
+    region: {}
 }
 
 const getters = {
     allCountries(state) {
         return state.countries
+    },
+    allRegions(state) {
+        return state.regions
     }
 }
 
@@ -100,7 +106,7 @@ const actions = {
                 relative_url = "/region/" + payload
             }
             api.get(relative_url).then(resp => {
-                commit("setCountries", resp.data)
+                commit("setRegions", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -116,14 +122,14 @@ const actions = {
                 relative_url = "/region/" + payload
             }
             api.get(relative_url).then(resp => {
-                commit("getCountry", resp.data)
+                commit("setRegion", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
             })
         })
     },
-    deleteRegionById({ commit }, payload) {
+    deleteRegionById(payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/region/'
 
@@ -133,7 +139,6 @@ const actions = {
                 relative_url = "/region/" + payload
             }
             api.delete(relative_url).then(resp => {
-                commit("getRegion", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -161,7 +166,7 @@ const actions = {
                 console.log('patchUrl', relative_url)
             }
             api.put(relative_url, payload).then(resp => {
-                commit("getRegion", resp.data)
+                commit("setRegion", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 commit("setError", err.response.data)
@@ -173,9 +178,9 @@ const actions = {
 
 const mutations = {
     setCountries: (state, countries) => (state.countries = countries),
-    getCountry: (state, country) => (state.country = country),
-    getRegions: (state, regions) => (state.regions = regions),
-    getRegion: (state, region) => (state.region = region)
+    setCountry: (state, country) => (state.country = country),
+    setRegions: (state, regions) => (state.regions = regions),
+    setRegion: (state, region) => (state.region = region)
 }
 
 

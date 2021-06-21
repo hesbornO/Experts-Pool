@@ -27,6 +27,12 @@ const routes = [{
         component: () =>
             import ("./pages/MemberCountries.vue"),
     },
+    {
+        path: "/member-countries/:countryId/:countryName/regions",
+        name: "Regions",
+        component: () =>
+            import ("./pages/Regions.vue"),
+    },
 
     {
         path: "/create-account",
