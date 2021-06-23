@@ -1,5 +1,6 @@
 <template>
   <dashboard_layout page_title="">
+    <GoBack />
       
     <!-- REGIONS -->
     <div v-if="filteredRegions.length>0" class="py-3 ">
@@ -169,11 +170,12 @@ import Vue from 'vue'
 import VueFormulate from '@braid/vue-formulate'
 Vue.use(VueFormulate)
 
+import GoBack from '@/components/GoBack.vue'
 
 export default {
   name: "Regions",
   components: {
-
+    GoBack,
     dashboard_layout,
     // Datepicker
   },
@@ -197,6 +199,7 @@ export default {
     }
   },
   methods: {
+    
     getCurrentRegions(){
         let selectedRegions = []
         selectedRegions = this.allRegions.filter(region=>{
