@@ -2,23 +2,29 @@
   <dashboard_layout page_title="">
     <GoBack />
       
+  <dashboard_layout page_title="">      
+      <router-link
+        v-if="$routerHistory.hasPrevious()"
+        :to="{ path: $routerHistory.previous().path }">
+        GO BACK
+    </router-link>
     <!-- REGIONS -->
-    <div v-if="filteredRegions.length>0" class="py-3 ">
 
      <div class="grid col-span-2 items-center rounded-lg shadow-xs dark:bg-gray-800 py-3">          
         <div class="flex justify-between">
           <div class=""></div>             
           <div class="">
-            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" >
+            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="openAddRegionForm">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               <span class="px-1">Add Region</span>
             </button>
           </div>
         </div>
       </div>
+    <div v-if="filteredRegions.length>0" class="py-3 w-full ">
     
-      <span class="uppercase text-blue-500 font-mono">{{filteredRegions[0].country.name}} [{{filteredRegions[0].country.phone_code}}]</span>
-      <table class="w-3/4 whitespace-no-wrap">
+      <span class="uppercase text-blue-500 font-mono">[CODE:{{filteredRegions[0].country.phone_code}}] Regions in {{filteredRegions[0].country.name}} </span>
+      <table class="w-full whitespace-no-wrap">
         <thead>
           <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border border-b border-t border-r dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
             <th class="px-4 py-3 w-1/2 border border-l">Name</th>
@@ -34,7 +40,7 @@
               </p>              
             </td>
             <td class="px-4 py-3 w-1/2  flex justify-between gap-4">            
-                  <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="getRegionById(region.id)">
+                  <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex " @click="getRegionById(region.id)">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     <span class="px-1">Update</span>
                   </button>
@@ -48,6 +54,9 @@
         </tbody>
 
       </table>
+    </div>
+    <div v-else class="font-semibold text-yellow-500">
+      No regions found!! Please add some regions...
     </div>
 
 
@@ -92,7 +101,7 @@
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse justify-between font-semibold text-white">
-              <button type="button" class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase" @click="postRegion">
+              <button type="button" class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase" @click="postCountryRegion()">
                 Submit
               </button>
               <button type="button" class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 mt-3 w-full inline-flex justify-center rounded-md border border-red-200 shadow-sm px-4 py-2 bg-red-300 hover:bg-red-500 focus:outline-none uppercase sm:mt-0 sm:ml-3 sm:w-auto " @click="closeAddRegionForm">
@@ -160,7 +169,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 // import Datepicker from 'vuejs-datepicker';
@@ -183,13 +192,9 @@ export default {
     return {
       form:{
           name:'',
-          phone_code:''
-      },
-      register_prequalified_rde:false,
-      transactions: {},
-      search: '',
-      countries: {},
-      add_member_country:false,   
+          country_id:''
+      },    
+      search: '', 
       update_member_country:false,   
       regions: {},
       add_region:false,   
@@ -200,6 +205,7 @@ export default {
   },
   methods: {
     
+    ...mapActions(['postRegion','fetchRegionById','updateRegionById','deleteRegionById']),
     getCurrentRegions(){
         let selectedRegions = []
         selectedRegions = this.allRegions.filter(region=>{
@@ -207,6 +213,9 @@ export default {
         });
         this.filteredRegions = selectedRegions;
         
+    },
+    openAddRegionForm(){
+      this.add_region = true      
     },
     closeAddRegionForm(){
       this.add_region = false      
@@ -217,25 +226,26 @@ export default {
     closeUpdateRegionForm(){      
       this.update_region = false
     },
-    postRegion(countryId){
-      this.add_region = false;
+    postCountryRegion(){      
       let payload = {
-          name:this.form.name,
-          country_id:countryId
+        name:this.form.name,
+        country_id:this.$route.params.countryId
       }
       this.postRegion(payload).then(resp=>{
-            window.location.replace('/member-countries')
+        this.$store.dispatch('setError',{})
+        window.location.replace(`/member-countries/${this.$route.params.countryId}/${this.$route.params.countryName}/regions`)
             console.log(resp)
       })      
+      this.add_region = false;
     },     
     postRegionUpdateById(regionId){
         let payload = {
           id:regionId,
           name:this.form.name,
-          country_id:this.form.country_id
+          country_id:this.$route.params.countryId
         }
         this.updateRegionById(payload).then(resp=>{
-                window.location.replace('/member-countries')
+                window.location.replace(`/member-countries/${this.$route.params.countryId}/${this.$route.params.countryName}/regions`)
                 console.log(resp)
         })
 
@@ -244,69 +254,23 @@ export default {
         this.update_region = true;
         this.fetchRegionById(regionId).then(resp=>{            
             this.form= resp
+            console.log(this.form)
         })
     },  
     deleteRegion(regionId){         
+      console.log('region Id',regionId)
         this.deleteRegionById(regionId).then(
-            this.getRegions
+            
         )
     },   
-
-
     // end of regions
-    filterByStatus(status) {
-      this.paymentMethod = ''
-      this.$store.dispatch('fetchTransactions', status).then(resp => {
-        this.transactions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    filterByPaymentMethod(paymentMethod) {
-      this.status = '';
-      this.$store.dispatch('fetchTransactions', paymentMethod).then(resp => {
-        this.transactions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    exportDataToExcel(tableID, filename = '') {
-      var downloadLink;
-      var dataType = 'application/vnd.ms-excel';
-      var tableSelect = document.getElementById(tableID);
-      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-
-      // Specify file name
-      filename = filename ? filename + '.xls' : 'excel_data.xls';
-
-      // Create download link element
-      downloadLink = document.createElement("a");
-
-      document.body.appendChild(downloadLink);
-
-      if (navigator.msSaveOrOpenBlob) {
-        var blob = new Blob(['\ufeff', tableHTML], {
-          type: dataType
-        });
-        navigator.msSaveOrOpenBlob(blob, filename);
-      } else {
-        // Create a link to the file
-        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-
-        // Setting the file name
-        downloadLink.download = filename;
-
-        //triggering the function
-        downloadLink.click();
-      }
-
-    }
+      
   },
   mounted() {    
     this.getCurrentRegions()
     },
   computed: {
-      ...mapGetters(['allRegions'])
+      ...mapGetters(['allRegions','getErrorMessage'])
 
   }
 };
