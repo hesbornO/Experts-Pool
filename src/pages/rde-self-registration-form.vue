@@ -1,37 +1,6 @@
 <template>
   <dashboard_layout page_title= "EAC RDE Sign Up">
-    <!-- <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">
-      <FormulateForm  v-model="form"
-        class="grid grid-rows-modal"
-        autocomplete="off" :errors="errors"
-        :form-errors="serverError"
-      >
-        <div class="grid grid-cols-3 gap-3">
-          <FormulateInput type="text" name="first_name" label="First Name" placeholder="John " validation="required" />
-          <FormulateInput type="text" name="middle_name" label="Middle Name" placeholder="Joseph" />
-          <FormulateInput type="text" name="last_name" label="Last Name" validation="required" placeholder="Doe"/>
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <FormulateInput type="text" name="gender" label="Gender" placeholder="Type to select "  validation="required" />
-          <FormulateInput type="date" placeholder="Pick" name="date_of_birth" label="Date of Birth" validation="required" />      
-        </div>
-        <div class="grid grid-cols-3 gap-3 items-baseline">
-          <FormulateInput name="phone " label="Mobile Phone Number" placeholder="+254 71234567" validation="required" type="tel" />
-          <FormulateInput name="email" label="Email address" placeholder="john@gmail.com" type="tel" />
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <FormulateInput name="nationality" type="text" label="Country of Origin" placeholder="EAC countries dropdown" validation="required"/>
-          <FormulateInput name="location" type="text" label="Location" validation="required" placeholder="Type to choose filtered country locations/sub-locations... " />        
-        </div>
-          <h3 class="text-blue-500 font-semibold">Next of Kin Details</h3>
-        <div class="grid grid-cols-3 gap-3">
-          <FormulateInput name="next_of_kin_name" class="border" type="text" label="ID Number" placeholder="Jane Doe" validation="required"/>
-          <FormulateInput name="next_of_kin_email" type="text" label="Email Address" placeholder="JaneDoe@gmail.com" validation="required"/>
-        </div>
-        <FormulateErrors class="rounded-sm text-xs px-4 py-3 text-red-700 bg-red-100 border border-red-300" />
-      </FormulateForm>
-
-    </div> -->
+    
     <div>
       <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">
         <h3 class="text-blue-400 font-semibold">Personal Details</h3>
@@ -121,19 +90,17 @@
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
-              <!-- <input type="text"
+              <!-- <input type="select"
                     class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="--Pick--"
+                    name="nationality"
+                    v-model="form.nationality"                    
               /> -->
               <select name="nationality" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.nationality" id="country" :options="eac_countries">
-                <option value="" selected disabled>--select--</option>
-                <option value="burundi">Burundi</option>
-                <option value="kenya">Kenya</option>
-                <option value="rwanda">Rwanda</option>
-                <option value="tanzania">Tanzania</option>
-                <option value="uganda">Uganda</option>
-                <option value="south_sudan">South Sudan</option>
+              v-model="form.nationality" id="country">              
+                <option v-for="(country,index) in countries" :key="index" @input="filterRegions(country.name)">{{country.name}}</option>
+                
+                               
               </select>
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
@@ -345,17 +312,7 @@
             </div>
           </label>
         </div>
-        <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>
-          <!-- <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Notes</span>
-            <textarea
-                class="block border rounded-sm p-3 w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                rows="3"
-                placeholder="Enter some long form content."
-                name="notes"   
-                v-model="form.notes"             
-            ></textarea>
-          </label> -->
+        <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>  
 
           <div class="flex justify-between">
               <label class="block mt-4 text-sm">
@@ -407,7 +364,7 @@
                     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
                       Uploaded CV
                     </h3>
-                    <div class="h-96">                      
+                    <div class="h-96" v-if="form.cv">                      
                       <vue-pdf-app :pdf="form.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
                     </div>
                   </div>
@@ -470,77 +427,47 @@ export default {
       form:{
         cv:''
        },
-      transactions: {},
-      eac_countries:{
-        burundi:"Burundi",
-        kenya:"Kenya"
-      },
-      accountTransactions: [
-        {
-          transactionId: 'MGX506Q7B',
-          amount: 120,
-          phoneNumber: '+254745327809',
-          reason: 'salary',
-          paymentMethod: 'M-Pesa',
-          status: 'initiated',
-          date: new Date()
-        },
-        {
-          transactionId: 'MGX506Q7Z',
-          amount: 150,
-          phoneNumber: '+254756987256',
-          reason: 'salary',
-          status: 'processing',
-          paymentMethod: 'Airtel Money',
-          date: new Date()
-        },
-        {
-          transactionId: 'MGX509Q7Q',
-          amount: 25,
-          phoneNumber: '+2547565127256',
-          reason: 'refund',
-          status: 'processed',
-          paymentMethod: 'M-Pesa',
-          date: new Date()
-        },
-        {
-          transactionId: 'MGX504Q7A',
-          amount: 16,
-          phoneNumber: '+254756517653',
-          reason: 'refund',
-          status: 'processed',
-          paymentMethod: 'M-Pesa',
-          date: new Date()
-        }
-      ],
+      countries: {},
+      regions: {},
       search: '',
       status: '',
-      paymentReason: '',
-      paymentMethod: '',
       gender_types:{
         male:"Male",
         female:"Female",
         transgender:"Transgender",
         preferNotToSay:"Prefer Not To Say"
       },
-      paymentMethods: [
-        'M-Pesa',
-        'Airtel Money'
-      ],
       id_types:[
         {value:"nationalID", label:"National ID"},
         {value:"passportNo", label:"Passport No"}        
       ],
-      payment_refund_form_open: false,
-      payment_type:'refund',
       viewPdf:false,
       fileUploaded:0,
       showModal: false
     }
   },
   methods: {
-    ...mapActions(['login', 'fetchTransactions']),
-    ...mapGetters(['getCurrentToken', 'allTransactions']),
+    ...mapActions(['fetchCountries','fetchRegions']),
+    ...mapGetters(['allCountries']),
+    getCountries() {
+      this.$store.dispatch('fetchCountries').then(resp => {
+        this.countries = resp;   
+        console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+     getRegions() {
+      this.$store.dispatch('fetchRegions').then(resp => {
+        this.regions = resp;
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    filterRegions(selectedCountry){
+      console.log('Selected Country', selectedCountry)
+
+    },
 
     processFile(e) {
             const files = e.target.files || e.dataTransfer.files;
@@ -559,75 +486,9 @@ export default {
             };
             reader.readAsDataURL(file);
         },
-// compress(src) {
-//             const img = new Image();
-//             img.src = src;
-//             img.onload = () => {
-//                 const elem = document.createElement("canvas");
-//                 const ctx = elem.getContext("2d");
-//                 let width = img.width;
-//                 if (width > 1080) {
-//                     width = 1080;
-//                     const scaleFactor = width / img.width;
-//                     elem.width = width;
-//                     elem.height = img.height * scaleFactor;
-//                     ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
-//                 } else {
-//                     const height = img.height;
-//                     elem.width = width;
-//                     elem.height = height;
-//                     ctx.drawImage(img, 0, 0, width, height);
-//                 }
-
-//                 this.form.passportPhoto = elem.toDataURL("image/jpeg", 0.8);
-//             };
-//         }
 
 
-// reader.addEventListener("load", function () {
-//     // convert image file to base64 string
-//     preview.src = reader.result;
-//   }, false);
-
-    getFileBase64(){
-      // var file = document.getElementById('cvFile');
-      var x = document.getElementById("cvFile");
-      var txt = "";
-      if ('files' in x) {
-        if (x.files.length == 0) {
-          txt = "Select one or more files.";
-        } else {
-          for (var i = 0; i < x.files.length; i++) {
-            txt += "<br><strong>" + (i+1) + ". file</strong><br>";
-            var file = x.files[i];
-            // document.getElementById('uploadedFile').innerHTML = file;
-            if ('name' in file) {
-              txt += "name: " + file.name + "<br>";
-            }
-            // if ('size' in file) {
-              //   txt += "size: " + file.size + " bytes <br>";
-            // }
-          }
-        }
-      }
-      // this.getFileBase64(file);
-      document.getElementById('fileSection').innerHTML = 'File Name';
-      document.getElementById('fileName').innerHTML = txt;
-      // alert(txt);
-      // console.log(txt);      
-      // this.getBase64(file); 
-
-    },
-    getBase64(file){
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        console.log(reader.result);
-      };
-      reader.onerror = function (error) {
-        console.log('Error: ', error);
-      };
-    },
+    
     filterPaymentMethod() {
       // if (this.paymentMethods !== "") {
       // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
@@ -644,13 +505,6 @@ export default {
       // } else {
       // 	this.$router.push({ query: {} });
       // }
-    },
-    getTransactions() {
-      this.$store.dispatch('fetchTransactions').then(resp => {
-        this.transactions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
     },
     filterByStatus(status) {
       this.paymentMethod = ''
@@ -699,9 +553,6 @@ export default {
       }
 
     },
-    sendDataToEmail() {
-
-    },
     filterCounties(){
         document.ready(function() {
 
@@ -722,10 +573,14 @@ export default {
     });
     }
   },
-  mounted() {
-    // this.getTransactions()
-    // this.filterCounties()
+
+   mounted() {
+    this.getCountries()
+    this.getRegions()
   },
-  computed: {}
+  
+  computed: {
+    ...mapGetters(['allRegions','getErrorMessage'])
+  }
 };
 </script>

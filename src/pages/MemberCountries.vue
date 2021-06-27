@@ -461,7 +461,7 @@ export default {
     },   
     getCountries() {
       this.$store.dispatch('fetchCountries').then(resp => {
-        this.countries = resp;
+        this.countries = resp;        
       }).catch(err => {
         console.log(err);
       })
