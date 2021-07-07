@@ -2,9 +2,9 @@
   <div class="flex items-center h-screen p-6 bg-gray-50 dark:bg-gray-900 w-full">
 
     <div
-        class="flex-1 h-full max-w-4xl mx-auto overflow bg-white rounded-lg shadow-xl dark:bg-gray-800"
+        class="flex-1 h-min max-w-4xl mx-auto overflow bg-white rounded-md shadow-xl dark:bg-gray-800"
     >
-      <div class="flex flex-col overflow-y-auto md:flex-row">
+      <div class="flex flex-col overflow-y-auto md:flex-row rounded-md">
         <div class="h-32 md:h-auto md:w-1/2">
           <img
               aria-hidden="true"
@@ -20,15 +20,15 @@
               alt="Office"
           />
         </div>
-        <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+        <div class="flex items-center justify-center pl-4 sm:p-8 md:w-1/2">
           <div class="w-full">
             <div class="">
-              <div class="pt-0">
-                <img class="w-full h-full md:h-28 dark:block" src="../assets/img/EAC_flag.jpg"
+              <div class="pt-0 flex justify-center">
+                <img class=" w-28" src="../assets/img/eac_logo.png"
                 alt="EAC Logo"
                 />
               </div>
-              <div class="text-2xl font-bold py-2 flex items-center justify-center">EAC RDE</div>
+              <div class="text-2xl font-bold py-4 flex items-center justify-center">EAC RDE</div>
 
             </div>
             <h1
@@ -40,16 +40,15 @@
             <form @submit.prevent="userLogin">
               <label class="block text-sm ">
                 <span class="text-gray-700 dark:text-gray-400">Username</span>
-                <input v-model="username"
-                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                       placeholder="Jane Doe"
+                <input v-model="username" type="text"
+                       placeholder="Jane Doe" class="mt-1 block w-full rounded-md border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                        required
                        />
               </label>
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Password</span>
                 <input v-model="password"
-                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                       class="block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray "
                        placeholder=""
                        type="password"
                        required

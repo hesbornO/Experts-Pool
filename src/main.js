@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./routes";
+import "@/assets/styles/main.css";
 import "@/assets/styles/tailwind.css";
 import store from './store'
 // import 'es6-promise/auto'
