@@ -34,7 +34,7 @@
               <th class="px-4 py-3 w-2/12">Phone Code</th>
               <th class="px-4 py-3 w-2/12">Registered RDEs</th>
               <th class="px-4 py-3 w-2/12">Pending RDEs</th>
-              <th class="px-4 py-3 w-4/12">Action</th>
+              <th class="px-4 py-3 w-4/12 border-l">Actions</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -66,7 +66,7 @@
                     27
                   </span>
               </td>
-              <td class="px-4 py-3 text-xs flex justify-between items-center gap-4">
+              <td class="px-4 py-3 text-xs flex justify-between items-center gap-4  border-l">
                 <router-link
                     class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                    :to="{name:'Regions', params:{countryId:country.id, countryName: country.name}}"  
@@ -77,7 +77,7 @@
                     </button>
                   </router-link>
                   <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="getCountryById(country.id)">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     <span class="px-1">Update</span>
                   </button>
                   <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-red-300 text-red-500 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="deleteCountry(country.id)">
@@ -85,11 +85,6 @@
                     <span class="px-1 ">Delete</span>
                   </button>
               </td>
-              <!-- <td class="px-4 py-3 text-sm">
-                <span v-if="Object.keys(RDE.current_deployment).length > 0">{{ RDE.current_deployment.outbreak}}, {{RDE.current_deployment.country}}</span>
-                
-              </td> -->
-              
             </tr>
           </tbody>
         </table>
