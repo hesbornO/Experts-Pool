@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 import transaction from './modules/transactions'
 import countries from './modules/countries'
 import login from './modules/login'
+import RDE from './modules/RDE'
+import occupations from './modules/occupations'
 
 export default new Vuex.Store({
     state: {
@@ -22,6 +24,8 @@ export default new Vuex.Store({
     modules: {
         transaction,
         countries,
-        login
+        login,
+        RDE,
+        occupations
     }
 })

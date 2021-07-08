@@ -16,11 +16,17 @@
                   v-model="form.first_name"
                   class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                   type="text"
-                  validation="required"
+                  required
                   placeholder="John"
                   name="first_name"
-              />         
-            
+              /> 
+              <span v-if="getErrorMessage['first_name']">
+                <span v-if="getErrorMessage['first_name'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['first_name']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>  
             </div>
           </label>
           <label class="block mt-4 text-sm">
@@ -29,14 +35,15 @@
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
-              <input
-                  v-model="form.middle_name"
-                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                  type="text"
-                  name="middle_name"
-                  placeholder="Joseph"
-              />
-                    </div>
+            <input
+                v-model="form.middle_name"
+                class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                type="text"
+                name="middle_name"
+                placeholder="Joseph"
+            />
+              
+            </div>
           </label>
           <label class="block mt-4 text-sm">
             <span class="text-gray-700  font font-semibold dark:text-gray-400">Last Name</span>
@@ -51,7 +58,14 @@
                   name="last_name"
                   validation="required"
                   placeholder="Doe"
-              />        
+              />  
+               <span v-if="getErrorMessage['last_name']">
+                <span v-if="getErrorMessage['last_name'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['last_name']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>       
             </div>
           </label>
         </div>
@@ -72,11 +86,18 @@
               <select name="gender" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required"
               v-model="form.gender">
                 <option value="" selected disabled>--select--</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="transgender">Transgender</option>
-                <option value="prefer_not_to_say">Prefer Not To Say</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option> 
+                <option value="T">Transgender</option>
+                <option value="O">Prefer Not To Say</option>
               </select>
+               <span v-if="getErrorMessage['gender']">
+                <span v-if="getErrorMessage['gender'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['gender']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -90,18 +111,17 @@
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
-              <!-- <input type="select"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="--Pick--"
-                    name="nationality"
-                    v-model="form.nationality"                    
-              /> -->
-              <select name="nationality" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.nationality" id="country">              
-                <option v-for="(country,index) in countries" :key="index" @input="filterRegions(country.name)">{{country.name}}</option>
-                
-                               
+              <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+              v-model="form.region_of_residence_id" id="country">              
+                <option v-for="(country,index) in countries" :key="index" @input="filterRegions(country.name)" :value="country.id">{{country.name}}</option>
               </select>
+               <span v-if="getErrorMessage['region_of_residence_id']">
+                <span v-if="getErrorMessage['region_of_residence_id'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['region_of_residence_id']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -111,14 +131,7 @@
           </label>
           <label class="block mt-4 text-sm">
             <span class="text-gray-700  font font-semibold dark:text-gray-400">Location</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
-              <!-- <input type="text"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="--Pick--"
-                    name="location"
-                    v-model="form.location"
-              /> -->
+            <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">            
               <select name="location" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
               v-model="form.location" id="county">
                 <option value="" selected disabled>--select--</option>
@@ -141,6 +154,13 @@
                 <option value="Rutana">Rutana</option>
                 <option value="Ruyigi">Ruyigi</option>
               </select>
+               <span v-if="getErrorMessage['location']">
+                <span v-if="getErrorMessage['location'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['location']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -159,12 +179,22 @@
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
-              <input type="text"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="67234567"
-                    name="nationalID"
-                    v-model="form.nationalID"
-              />
+              <select name="id_type" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+              v-model="form.id_type" id="id_type">
+                <option value="" selected disabled>--select--</option>
+                <option value="alien_id">Alien ID</option>           
+                <option value="birth_cert">Birth Certificate No.</option>
+                <option value="military_id">Military ID No.</option>                
+                <option value="national_id">National ID No.</option>                
+                <option value="passport">Passport.</option>                
+              </select>
+               <span v-if="getErrorMessage['id_type']">
+                <span v-if="getErrorMessage['id_type'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['id_type']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -181,9 +211,16 @@
               <input type="text"
                     class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="67234567"
-                    name="nationalID"
-                    v-model="form.nationalID"
+                    name="id_number"
+                    v-model="form.id_number"
               />
+               <span v-if="getErrorMessage['id_number']">
+                <span v-if="getErrorMessage['id_number'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['id_number']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -205,6 +242,13 @@
                     validation="required"   
                     v-model="form.phone"                 
               />
+               <span v-if="getErrorMessage['phone']">
+                <span v-if="getErrorMessage['phone'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['phone']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -234,7 +278,29 @@
           </label>
           
         </div>
+        
         <div class="grid grid-cols-3 gap-4">
+           <label class="block mt-4 text-sm">
+            <span class="text-gray-700 font font-semibold dark:text-gray-400">Occupation</span>
+            <!-- focus-within sets the color for the icon when input is focused -->
+            <div
+                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+            >
+           <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+              v-model="form.occupation_id" id="occupation">              
+                <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.id">{{occupation.name}}</option>
+              </select>
+
+               <span v-if="getErrorMessage['occupation_id']">
+                <span v-if="getErrorMessage['occupation_id'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['occupation_id']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>            
+            </div>
+          </label> 
+
           <label class="block mt-4 text-sm">
             <span class="text-gray-700 font font-semibold dark:text-gray-400">Date of Birth</span>
             <!-- focus-within sets the color for the icon when input is focused -->
@@ -247,7 +313,15 @@
                     name="date_of_birth"
                     validation="required"
                     v-model="form.date_of_birth"
-              />              
+              />   
+
+               <span v-if="getErrorMessage['date_of_birth']">
+                <span v-if="getErrorMessage['date_of_birth'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['date_of_birth']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>            
             </div>
           </label>          
         </div>
@@ -267,7 +341,14 @@
                   name="next_of_kin_name"
                   validation="required"
                   v-model="form.next_of_kin_name"
-              />         
+              />      
+               <span v-if="getErrorMessage['next_of_kin_name']">
+                <span v-if="getErrorMessage['next_of_kin_name'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['next_of_kin_name']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>    
             
             </div>
           </label>
@@ -284,6 +365,13 @@
                     validation="required"
                     v-model="form.next_of_kin_phone"
               />
+               <span v-if="getErrorMessage['next_of_kin_phone']">
+                <span v-if="getErrorMessage['next_of_kin_phone'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['next_of_kin_phone']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span> 
               <div
                   class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
               >
@@ -314,7 +402,8 @@
         </div>
         <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>  
 
-          <div class="flex justify-between">
+          <div class="grid grid-cols-3 gap-3">
+                         
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
                 <!-- focus-within sets the color for the icon when input is focused -->
@@ -329,10 +418,38 @@
                           validation="required"  
                           accept=".pdf,.doc,.docx,application/msword" 
                           @input="processFile"                
-                  />          
+                  />        
+                   <span v-if="getErrorMessage['cv']">
+                    <span v-if="getErrorMessage['cv'].length>0">
+                      <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
+                        <span class="text-red-500 animate-pulse">{{error}}</span>
+                      </span>
+                    </span>
+                  </span>   
                 </div>
-              </label>              
-            </div>
+              </label>  
+
+               <label class="block mt-4 text-sm col-span-2">
+                  <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
+                  <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">            
+                    <select name="competencies_list" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+                    v-model="form.competencies_list" id="competencies_list" >
+                      <option value="" selected disabled>--select--</option>
+                      <option :value="1">Competency 1</option>
+                      <option :value="2">Competency 2</option>
+                      <option :value="3">Competency 3</option>
+                    </select>
+                    <span v-if="getErrorMessage['competencies_list']">
+                      <span v-if="getErrorMessage['competencies_list'].length>0">
+                        <span v-for="(error,index) in getErrorMessage['competencies_list']" :key="index">
+                          <span class="text-red-500 animate-pulse">{{error}}</span>
+                        </span>
+                      </span>
+                    </span> 
+                  
+                  </div>
+                </label>              
+          </div>
           <div class=" mt-6 text-sm flex justify-between">
             <span v-if="fileUploaded==0"></span>
             <button @click="togglePdfDisplay" 
@@ -341,13 +458,12 @@
               <span v-if="!viewPdf">Preview upload</span>
               <span v-if="viewPdf">Close preview</span>
             </button>
-
             <button
-                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
-              Save
+                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" @click="registerRDE">
+              SUBMIT
             </button>
           </div>
-        </div>  
+      </div>  
 
       <!-- CV preview modal -->        
         <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
@@ -427,15 +543,16 @@ export default {
       form:{
         cv:''
        },
+      occupations: {},
       countries: {},
       regions: {},
       search: '',
       status: '',
       gender_types:{
-        male:"Male",
-        female:"Female",
-        transgender:"Transgender",
-        preferNotToSay:"Prefer Not To Say"
+        0:"Male",
+        1:"Female",
+        2:"Transgender",
+        3:"Prefer Not To Say"
       },
       id_types:[
         {value:"nationalID", label:"National ID"},
@@ -447,12 +564,34 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchCountries','fetchRegions']),
+    ...mapActions(['fetchCountries','fetchRegions','fetchOccupations','postRDE']),
     ...mapGetters(['allCountries']),
+
+     registerRDE(){
+      this.form.competencies_list = [this.form.competencies_list]
+      this.form.region_of_residence_id=21
+      console.log('form', this.form)
+
+      let payload = this.form
+      this.postRDE(payload).then(resp=>{
+            this.$store.dispatch('setError',{})
+            window.location.replace('/member-countries')
+            console.log(resp)
+      })      
+    }, 
+    getOccupations() {
+      console.log('getting occupations...')
+      this.$store.dispatch('fetchOccupations').then(resp => {
+        this.occupations = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     getCountries() {
       this.$store.dispatch('fetchCountries').then(resp => {
         this.countries = resp;   
-        console.log('countries:', this.countries)             
+        // console.log('countries:', this.countries)             
       }).catch(err => {
         console.log(err);
       })
@@ -468,7 +607,6 @@ export default {
       console.log('Selected Country', selectedCountry)
 
     },
-
     processFile(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) {
@@ -577,6 +715,7 @@ export default {
    mounted() {
     this.getCountries()
     this.getRegions()
+    this.getOccupations()
   },
   
   computed: {
