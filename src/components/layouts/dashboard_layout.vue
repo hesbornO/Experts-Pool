@@ -1,11 +1,11 @@
 <template>
-  <div id="app" class="flex h-screen bg-gray-50 dark:bg-gray-900">
+  <div id="app" class="flex h-screen bg-gray-100 dark:bg-gray-900">
     <Sidebar/>
-    <div class="flex flex-col flex-1 w-full">
+    <div class="flex flex-col flex-1 w-full ">
 
       <Navigation/>
-      <div class="container px-6 mx-auto grid">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+      <div class="container px-6 mx-auto grid ">
+        <h2 class="my-6 text-xl font-semibold text-gray-700 dark:text-gray-200">
           {{ page_title }}
         </h2>
         <slot>

@@ -1,7 +1,7 @@
 <template>
-  <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+  <header class="z-10 py-2  shadow-sm border-b dark:bg-gray-800 bg-havelock-blue" >
     <div
-      class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
+      class="container flex items-center justify-between h-full px-6 mx-auto text-white dark:text-purple-300"
     >
       <!-- Mobile hamburger -->
       <button
@@ -22,18 +22,14 @@
           ></path>
         </svg>
       </button>
-      <button class="flex bg-blue-500 p-1 rounded shadow-md" @click="reloadPage">
-        <span class="pt-1 px-1"><svg class="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></span>
-        <span class="text-white font-semibold">Refresh</span>
-      </button>
       <!-- Search input -->
       <div class="flex justify-center flex-1 lg:mr-32">
-        <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+        <div class="relative w-full max-w-xl mr-6 focus-within:text-white">
           <div class="absolute inset-y-0 flex items-center p-2 ">
             <svg
               class="w-4 h-4"
               aria-hidden="true"
-              fill="currentColor"
+              fill="havelock-blue"
               viewBox="0 0 20 20"
             >
               <path
@@ -169,7 +165,7 @@
             aria-label="Account"
             aria-haspopup="true"
           >
-          <span class="font-semibold">Admin</span>
+          <span class="font-semibold pt-1">Admin</span>
             <img
               class="object-cover w-8 h-8 rounded-full"
               src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
