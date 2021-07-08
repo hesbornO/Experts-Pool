@@ -1,8 +1,6 @@
 <template>
   <dashboard_layout page_title="">
-
     <!-- REGIONS -->
-
      <div class="grid col-span-2 items-center rounded-lg shadow-xs dark:bg-gray-800 py-3">          
         <div class="flex justify-between">
                

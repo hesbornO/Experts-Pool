@@ -529,4 +529,10 @@ export default {
   .btn-blue{
     @apply bg-havelock-blue-200 text-havelock-blue-700 hover:bg-havelock-blue-700 hover:text-white
   }
+  .btn-red{
+    @apply bg-red-200 text-red-700 hover:bg-red-700 hover:text-white
+  }
+  .btn-green{
+    @apply bg-green-200 text-green-700 hover:bg-green-700 hover:text-white
+  }
 </style>
