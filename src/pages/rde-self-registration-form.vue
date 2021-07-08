@@ -463,7 +463,7 @@
               SUBMIT
             </button>
           </div>
-        </div>  
+      </div>  
 
       <!-- CV preview modal -->        
         <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >

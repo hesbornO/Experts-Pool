@@ -105,43 +105,56 @@
             <th class="px-4 py-3 w-2/12">Status</th>
             <th class="px-4 py-3 w-2/12">Current Deployment</th>
             <th class="px-4 py-3 w-3/12">Competencies</th>
+            <th class="px-4 py-3 w-3/12">Action</th>
           </tr>
           </thead>
 
-          <tbody
-              class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
-          >
-          <tr v-for="(RDE,index) in RDE_data" :key="index"
+          <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <tr v-for="(RDE,index) in RDES.results" :key="index"
+            
               class="text-gray-600 dark:text-gray-400 border">
             <td class="px-4 py-4">
               <div class="flex items-center space-x-4 text-sm text-gray-400">
                 <div class="flex flex-col space-y-1">
-                  <p class="font-semibold text-gray-600">{{ RDE.name }}</p>
+                  <p class="font-semibold text-gray-600">{{RDE.last_name + ', '+ RDE.first_name}}</p>
                   <p class="text-xs text-gray-600 dark:text-gray-400 font-mono">
-                    {{ RDE.RDENumber }}
+                    <!-- {{ RDE.RDENumber }} -->
                   </p>
                 </div>
               </div>
             </td>
-            <td class="px-4 py-3 text-sm">
-              {{ RDE.specialization }}
+            <td class="px-4 py-3 text-sm capitalize" >
+              <span v-if="RDE.occupation">
+                {{ RDE.occupation.name }}
+              </span>
             </td>
             <td class="px-4 py-3 text-sm">
-              {{ RDE.country }}
+              <span v-if="RDE.region_of_residence">
+                {{ RDE.region_of_residence.name }}
+              </span>
             </td>
             <td class="px-4 py-3 text-xs">
                 <span
-                    :class="['capitalize leading-tight rounded-md',RDE.status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':RDE.status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':RDE.status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
+                    :class="['capitalize leading-tight rounded-md',RDE.application_status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':RDE.application_status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':RDE.application_status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
                 >
-                  {{ RDE.status }}
+                  {{ RDE.application_status }}
                 </span>
             </td>
             <td class="px-4 py-3 text-sm">
-              <span
-                  v-if="Object.keys(RDE.current_deployment).length > 0">{{ RDE.current_deployment.outbreak }}, {{ RDE.current_deployment.country }}</span>
+              <!-- <span v-if="Object.keys(RDE.current_deployment).length > 0">{{ RDE.current_deployment.outbreak }}, {{ RDE.current_deployment.country }}</span> -->
 
             </td>
             <td v-if="RDE.competencies" class="px-4 py-3 text-sm">
+              <span v-for="(competency,index) in RDE.competencies" :key="index" class="capitalize">
+                {{index+1 +'.'+ ' '+ competency.name}} <br>
+              </span>
+
+            </td>
+            <td class="px-4 py-3 text-sm">    
+                <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="getRDEById(RDE.id)">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <span class="px-1">Update</span>
+                  </button>         
 
             </td>
           </tr>
@@ -151,9 +164,9 @@
       <div
           class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
       >
-        <span v-if="RDE_data" class="flex items-center col-span-3">
-          Showing {{ RDE_data.length }} of {{ RDE_data.length }}
-        </span>
+        <!-- <span v-if="RDES" class="flex items-center col-span-3">
+          Showing {{ RDES.length }} of {{ RDES.length }}
+        </span> -->
         <span class="col-span-2"></span>
         <!-- Pagination -->
         <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
@@ -316,6 +329,78 @@
     </div>
     <!-- End of pre qualified RDE sign up modal -->
 
+
+    <!-- Pre qualified RDE sign up modal -->
+    <div :class="[update_rde_details?'fixed z-10 inset-0 overflow-y-auto':'hidden']"
+         aria-labelledby="modal-title" aria-modal="true" role="dialog">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+        <div aria-hidden="true" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+        <div
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start h-96">
+              <div
+                  class="mx-auto flex-shrink-0 flex items-center justify-center  w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 h-96">
+                <!-- Heroicon name: outline/exclamation -->
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"></path>
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900 text-center">
+                  Register pre-qualified RDE
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    Form Data elements go here!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse justify-between font-semibold text-white">
+            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase"
+                    type="button"
+                    @click="postRDEUpdateById">
+              Submit
+            </button>
+            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 mt-3 w-full inline-flex justify-center rounded-md border border-red-200 shadow-sm px-4 py-2 bg-red-300 hover:bg-red-500 focus:outline-none uppercase sm:mt-0 sm:ml-3 sm:w-auto "
+                    type="button"
+                    @click="closeUpdateRDEModal()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of pre qualified RDE sign up modal -->
+    
+
+
   </dashboard_layout>
 </template>
 
@@ -327,7 +412,7 @@ import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 
 
 export default {
-  name: "Index",
+  name: "RDES",
   components: {
 
     dashboard_layout,
@@ -353,116 +438,7 @@ export default {
         {text: 'Tanzania', value: 'tanzania'},
         {text: 'Uganda', value: 'uganda'}
       ],
-      RDE_data: [
-        {
-          RDENumber: 'RDE001',
-          name: "Ahmed Mahmoud",
-          specialization: "ENT specialist",
-          country: "Kenya",
-          status: "available",
-          current_deployment: {},
-          years_of_experience: 5,
-          competencies: [
-            {
-              outbreak: "Ebola",
-              role: "Volunteer",
-              notes: "Enhanced..."
-            },
-            {
-              outbreak: "COVID-19",
-              role: "First Respondent",
-              notes: "Facilitated..."
-            }
-          ]
-
-        },
-        {
-          RDENumber: 'RDE002',
-          name: "Emmanuel Macron",
-          specialization: "Dermatology specialist",
-          country: "Tanzania",
-          status: "deployed",
-          current_deployment: {
-            outbreak: "COVID-19",
-            country: "Burundi"
-          },
-          years_of_experience: 11,
-          competencies: [
-            {
-              outbreak: "COVID-19",
-              role: "Volunteer",
-              notes: ""
-            }
-          ]
-
-        },
-        {
-          RDENumber: 'RDE003',
-          name: "Erling Haaland",
-          specialization: "Virology specialist",
-          country: "Kenya",
-          status: "pending_approval",
-          current_deployment: {},
-          years_of_experience: 3,
-          competencies: [
-            {
-              outbreak: "Spanish Flu",
-              role: "Virologist",
-              notes: "Research on..."
-            },
-            {
-              outbreak: "COVID-19",
-              role: "Front line respondent",
-              notes: "Facilitated..."
-            }
-          ]
-
-        },
-        {
-          RDENumber: 'RDE004',
-          name: "Joseph Kabila",
-          specialization: "Osteology specialist",
-          country: "Rwanda",
-          status: "available",
-          current_deployment: {},
-          years_of_experience: 2,
-          competencies: [
-            {
-              outbreak: "Spanish Flu",
-              role: "Virologist",
-              notes: "Research on..."
-            },
-            {
-              outbreak: "COVID-19",
-              role: "Front line respondent",
-              notes: "Facilitated..."
-            }
-          ]
-
-        },
-        {
-          RDENumber: 'RDE005',
-          name: "Jadon Sancho",
-          specialization: "Surgery specialist",
-          country: "Uganda",
-          status: "available",
-          current_deployment: {},
-          years_of_experience: 5,
-          competencies: [
-            {
-              outbreak: "Spanish Flu",
-              role: "Virologist",
-              notes: "Research on..."
-            },
-            {
-              outbreak: "COVID-19",
-              role: "Front line respondent",
-              notes: "Facilitated..."
-            }
-          ]
-
-        }
-      ],
+      RDES:[],
       RDE_specializations: [
         {text: 'ENT', value: 'ent'},
         {text: 'Epidemiology', value: 'epidemiology'},
@@ -471,13 +447,15 @@ export default {
         {text: 'Osteology', value: 'osteology'},
         {text: 'Surgery', value: 'surgery'}
       ],
-      specializations: ''
+      specializations: '',
+      form:{},
+      update_rde_details:false
 
     }
   },
   methods: {
-    ...mapActions(['login', 'fetchTransactions']),
-    ...mapGetters(['getCurrentToken', 'allTransactions']),
+    ...mapActions([ 'fetchRDES','fetchRDEById']),
+    ...mapGetters(['getCurrentToken']),
 
     registerPreQualifiedRDE() {
       this.register_prequalified_rde = true
@@ -485,37 +463,41 @@ export default {
     closeRegisterPreQualifiedRDEModal() {
       this.register_prequalified_rde = false
     },
+    closeUpdateRDEModal() {
+      this.update_rde_details = false
+    },
     submitPreQualifiedRDE() {
       this.register_prequalified_rde = false
       // alert('RDE registered successfully!!')
     },
-    filterBySpecialization() {
-      // if (this.paymentMethods !== "") {
-      // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
-      // } else {
-      // 	this.$router.push({ query: {} });
-      // }
+    getRDES(){
+        this.$store.dispatch('fetchRDES').then(resp => {
+        this.RDES = resp;  
+      }).catch(err => {
+        console.log(err);
+      })
     },
-    filterByCountry() {
-      // if (this.paymentMethods !== "") {
-      // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
-      // } else {
-      // 	this.$router.push({ query: {} });
-      // }
-    },
-    filterStatus() {
-      // if (this.paymentMethods !== "") {
-      // 	this.$router.push({ query: { paymentMethods: this.paymentMethods } });
-      // } else {
-      // 	this.$router.push({ query: {} });
-      // }
-    },
-    sendDataToEmail() {
+    getRDEById(RDEId){    
+      this.update_rde_details=true  
+      this.fetchRDEById(RDEId).then(resp=>{            
+          this.form= resp
+      })
 
+    },
+    postRDEUpdateById(){
+       let payload = {
+        }
+        this.updateCountryById(payload).then(resp=>{
+                window.location.replace('/member-countries')
+                console.log(resp)
+        })
     }
+    
+    
 
   },
   mounted() {
+    this.getRDES()
 
   },
   computed: {}
