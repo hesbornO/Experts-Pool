@@ -30,7 +30,8 @@ module.exports = {
                 lblue: colors.lightBlue,
                 teal: colors.teal,
                 orange: colors.orange,
-                metal: { DEFAULT: "#F2F2F2", '100': "#F2F2F2", '200': "#D9D9D9", '300': "#BFBFBF", '400': "#A6A6A6", '500': "#8C8C8C", '600': "#737373", '700': "#595959", '800': "#404040", '900': "#262626" }
+                metal: { DEFAULT: "#F2F2F2", '100': "#F2F2F2", '200': "#D9D9D9", '300': "#BFBFBF", '400': "#A6A6A6", '500': "#8C8C8C", '600': "#737373", '700': "#595959", '800': "#404040", '900': "#262626" },
+                'havelock-blue': {  DEFAULT: '#48A6DB',  '50': '#FFFFFF',  '100': '#F2F9FD',  '200': '#C8E4F4',  '300': '#9DCFEC',  '400': '#73BBE3',  '500': '#48A6DB',  '600': '#278EC9',  '700': '#1F709E',  '800': '#175273',  '900': '#0E3449'},
             },
             animation: {
                 "fade-in-top": "fade-in-top .2s cubic-bezier(.39,.575,.565,1.000) both",
@@ -154,8 +155,13 @@ module.exports = {
                         opacity: "1"
                     }
                 }
-            }
-        }
+            },
+            fontFamily: {
+                sans: ['Graphik', 'sans-serif'],
+                serif: ['Merriweather', 'serif'],
+            },
+        },
+
     },
     variants: {
         extend: {
