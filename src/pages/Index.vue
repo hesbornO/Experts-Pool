@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="">
+  <dashboard_layout page_title="Home">
 <!--    <div class="grid gap-2">-->
 <!--      <div class="flex w-56 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">-->
 <!--        <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">-->
@@ -31,8 +31,8 @@
       </button>
     </div>
 
-    <div class="w-full overflow-hidden shadow-xs">
-      <div class="w-full overflow-x-auto">
+    <div class="w-full overflow-hidden shadow-xs ">
+      <div class="w-full overflow-x-auto ">
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
           <div class="flex flex-row space-x-8 w-10/12">
             <div class="flex-auto flex-col space-y-2">
@@ -97,9 +97,7 @@
         <table id="tblData" class="w-full whitespace-no-wrap">
           <thead class="">
           <tr
-              class="text-xs font-semibold tracking-wide text-left text-gray-500
-              uppercase border border-b border-t border-r dark:border-gray-700
-              bg-gray-50 dark:text-gray-400 dark:bg-gray-800 mt-6"
+              class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
           >
             <th class="px-4 py-3 w-3/12">Name</th>
             <th class="px-4 py-3 w-1/12">Specialization</th>
