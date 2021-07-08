@@ -23,12 +23,12 @@
         <div class="flex items-center justify-center pl-4 sm:p-8 md:w-1/2">
           <div class="w-full">
             <div class="">
-              <div class="pt-0 flex justify-center">
-                <img class=" w-28" src="../assets/img/eac_logo.png"
-                alt="EAC Logo"
-                />
-              </div>
-              <div class="text-2xl font-bold py-4 flex items-center justify-center">EAC RDE</div>
+<!--              <div class="pt-0 flex justify-center">-->
+<!--                <img class=" w-28" src="../assets/img/eac_logo.png"-->
+<!--                alt="EAC Logo"-->
+<!--                />-->
+<!--              </div>-->
+<!--              <div class="text-2xl font-bold py-4 flex items-center justify-center">EAC RDE</div>-->
 
             </div>
             <h1

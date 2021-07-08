@@ -165,10 +165,10 @@ module.exports = {
         }
     },
     plugins: [
-        // require("tailwindcss-elevation")(["responsive"]),
+        require("tailwindcss-elevation")(["responsive"]),
         require("@tailwindcss/forms"),
 
-        // require("@tailwindcss/typography"),
+        require("@tailwindcss/typography"),
         // require("tailwind-scrollbar")
     ]
 }
