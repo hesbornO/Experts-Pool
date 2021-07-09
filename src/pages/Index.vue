@@ -506,7 +506,7 @@ export default {
 
 <style>
   .btn{
-    @apply justify-center transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 px-4 py-1.5 text-sm font-medium leading-5  border border-transparent rounded-md focus:outline-none capitalize flex
+    @apply justify-center transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 px-4 py-1 text-sm font-medium leading-5  border border-transparent rounded-md focus:outline-none capitalize flex
   }
   .btn-blue{
     @apply bg-havelock-blue-200 text-havelock-blue-700 hover:bg-havelock-blue-700 hover:text-white

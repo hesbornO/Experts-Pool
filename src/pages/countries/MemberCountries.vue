@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="">
+  <dashboard_layout page_title="Member Countries">
 
     <div class="grid gap-2 mb-1 md:grid-cols-2 xl:grid-cols-4">
       <div class="flex col-span-2 items-center ">
@@ -9,16 +9,16 @@
         <div class="flex justify-between">
           <div class=""></div>
           <div class="">
-            <button
-                class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex"
-                @click="displayAddMemberCountryForm">
+            <router-link
+                class="btn btn-blue"
+               :to="{name: 'CreateCountry'}">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                    xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
                       stroke-width="2"></path>
               </svg>
               <span class="px-1">Add Member Country</span>
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -29,7 +29,6 @@
       <span class="grid grid-cols-2 ">
       </span>
     </div>
-
     <!-- Countries List -->
     <data_table v-bind="$attrs">
       <template v-slot="{item}">
@@ -265,16 +264,15 @@
     </div>
     <!-- End of update member country form modal -->
     <!-- END OF COUNTRIES -->
-
-
+    <router-view></router-view>
   </dashboard_layout>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
 
-import dashboard_layout from '../components/layouts/dashboard_layout.vue';
-import data_table from "../components/layouts/DataTableTemplate";
+import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
+import data_table from "../../components/layouts/DataTableTemplate";
 
 export default {
   name: "MemberCountries",

@@ -517,8 +517,7 @@ import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 
 // formulate
 import Vue from 'vue'
-import VueFormulate from '@braid/vue-formulate'
-Vue.use(VueFormulate)
+
 // pdf
 import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";

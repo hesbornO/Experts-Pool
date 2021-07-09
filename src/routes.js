@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Index.vue";
-import MemberCountries from "./pages/MemberCountries.vue";
-import Regions from "./pages/Regions.vue";
+import MemberCountries from "./pages/countries/MemberCountries.vue";
+import Regions from "./pages/regions/Regions.vue";
 import CreateAccount from "./pages/create-account.vue";
 import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
@@ -11,6 +11,8 @@ import MyAccount from "./pages/my-account.vue";
 import PageNotFound from "./pages/404.vue";
 import testMemberCountries from "./pages/testMemberCountries";
 import modal_delete_template from "./components/utilities/modal_delete_template";
+// import CreateMemberCountry from "./pages/countries/CreateMemberCountry";
+import modal_create_template from "./components/utilities/modal_create_template";
 // import paragraph from "./components/layouts/paragraph";
 
 Vue.use(VueRouter);
@@ -52,7 +54,7 @@ const routes = [
         verboseName: 'Register RDE'
     },
     {
-        path: "/member-countries",
+        path: "/member-countries/",
         name: "MemberCountries",
         component: MemberCountries,
         props: {
@@ -63,25 +65,49 @@ const routes = [
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>`,
         children: [
+
             {
-                path: ':countryId/:countryName/regions',
-                name: 'Regions',
-                component: Regions
+                path: 'create-country',
+                name: 'CreateCountry',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: [
+                        {
+                            type:'text',
+                            label:'Country Name',
+                            name:'name',
+                            validation:'required'
+                        },
+                        {
+                            type:'tel',
+                            label:'Phone Code',
+                            name:'phone_code',
+                            validation:'required'
+                        }
+                    ],
+                    vuex_action:'postCountry',
+                    object_title: 'Country'
+                }
             },
-
-
+            {
+                path: 'delete-country/:countryName/:countryId',
+                name: 'DeleteCountry',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteCountryById', vuex_payload: x.params.countryId , object_title: x.params.countryName
+                    }
+                }
+            },
         ]
     },
     {
-        path: 'delete-country/:countryName/:countryId',
-        name: 'DeleteCountry',
-        component: modal_delete_template,
-        showInLeftBar: false,
-        props: x => {
-            return {
-                vuex_action: 'deleteCountryById', vuex_payload: x.params.countryId
-            }
-        }
+        path: '/member-countries/:countryId/:countryName/regions',
+        name: 'Regions',
+        component: Regions,
+        showInLeftBar: false
     },
 
     {

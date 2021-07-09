@@ -73,6 +73,9 @@ const actions = {
                 commit("setCountry", resp.data)
                 resolve(resp.data)
             }).catch(err => {
+                if(err.response.status !== 400){
+                    this.$toast.error('an unknown error occurred')
+                }
                 commit("setError", err.response.data)
                 reject(err.response.data)
             })

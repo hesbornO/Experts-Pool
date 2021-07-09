@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Delete">
+  <div>
     <div :class="[delete_modal_hidden ?'fixed z-10 inset-0 overflow-y-auto':'hidden']" aria-labelledby="modal-title"
          aria-modal="true" role="dialog" >
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -14,12 +14,12 @@
             <div class="sm:flex sm:items-start ">
 
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <p>Confirm Delete ? This Action Cannot be UnDone !</p>
+                <p>Confirm Delete {{object_title}} ? This Action Cannot be UnDone !</p>
               </div>
               <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse justify-between font-semibold text-white">
                 <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase"
                         type="button"
-                        @click="executeDelete">
+                        @click="executeAction">
                   Confirm
                 </button>
                 <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 mt-3 w-full inline-flex justify-center rounded-md border border-red-200 shadow-sm px-4 py-2 bg-red-300 hover:bg-red-500 focus:outline-none uppercase sm:mt-0 sm:ml-3 sm:w-auto "
@@ -33,18 +33,16 @@
         </div>
       </div>
     </div>
-  </dashboard_layout>
-
+  </div>
 </template>
 
 <script>
-import dashboard_layout from "../layouts/dashboard_layout";
+
 export default {
   name: "modal_delete_template",
-  components: {dashboard_layout},
   props:{
     vuex_action:{
-      type: Function,
+      type: String,
     },
     vuex_payload:{
 
@@ -52,6 +50,10 @@ export default {
     item:{
       type : Object,
       default: ()=>{return {}}
+    },
+    object_title: {
+      type:String,
+      default: ''
     }
   },
   data(){
@@ -60,12 +62,19 @@ export default {
     }
   },
   methods:{
-    executeDelete(){
-      console.log("execute", this.vuex_action, this.vuex_payload)
+    executeAction(){
       this.$store.dispatch(this.vuex_action, this.vuex_payload).then(()=>{
-          this.hidden = true
+          this.$toast.success(
+              ""+ this.object_title + " Deleted Successfully"
+          )
+          this.hidden = true;
+          this.back()
+        // eslint-disable-next-line no-unused-vars
+      }).catch(err=>{
+        this.hidden = true;
+        this.back()
       });
-      this.back()
+
     },
     back(){
       this.$router.back()
