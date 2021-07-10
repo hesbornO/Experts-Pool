@@ -15,6 +15,11 @@ import modal_delete_template from "./components/utilities/modal_delete_template"
 import modal_create_template from "./components/utilities/modal_create_template";
 // import paragraph from "./components/layouts/paragraph";
 
+//schemas
+import country_schema from '@/schemas/country_schema.json'
+import modal_update_template from "./components/utilities/modal_update_template";
+
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -72,22 +77,25 @@ const routes = [
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: {
-                    jsonSchema: [
-                        {
-                            type:'text',
-                            label:'Country Name',
-                            name:'name',
-                            validation:'required'
-                        },
-                        {
-                            type:'tel',
-                            label:'Phone Code',
-                            name:'phone_code',
-                            validation:'required'
-                        }
-                    ],
+                    jsonSchema: country_schema,
                     vuex_action:'postCountry',
                     object_title: 'Country'
+                }
+            },
+            {
+                path: 'update-country/:countryName/:countryId',
+                name: 'UpdateCountry',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props:x => {
+                    return {
+                        jsonSchema: country_schema,
+                        vuex_fetch_action:'fetchCountryById',
+                        vuex_save_action: 'updateCountryById',
+                        object_title: x.params.countryName,
+                        object_id: x.params.countryId
+                    }
+
                 }
             },
             {

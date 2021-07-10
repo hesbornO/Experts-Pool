@@ -22,6 +22,9 @@
                 </div>
               </div>
               <div class="flex flex-col justify-start px-3 py-3">
+                <div class="flex justify-center">
+                  <loading v-if="loading"></loading>
+                </div>
                 <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="jsonSchema" :form-errors="formErrors">
 
                 </FormulateForm>
@@ -53,15 +56,18 @@
 <script>
 
 import {mapGetters} from "vuex";
+import Loading from "./loading";
 
 export default {
   name: "modal_create_template",
+  components: {Loading},
   data (){
     return {
       form: {},
       inputErrors:{},
       formErrors: [],
       modal_hidden: true,
+      loading: false
     }
   },
   props:{
@@ -81,7 +87,7 @@ export default {
   },
   methods:{
     executeAction(){
-      console.log("execute", this.vuex_action, this.vuex_payload)
+      this.loading = true
       let payload = {}
       if (this.vuex_payload){
         payload = this.vuex_payload
@@ -96,6 +102,8 @@ export default {
           this.back()
         // eslint-disable-next-line no-unused-vars
       }).catch(err=>{
+      }).then(()=>{
+        this.loading = false
       });
     },
     back(){

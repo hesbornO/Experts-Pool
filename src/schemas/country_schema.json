@@ -1,0 +1,15 @@
+[
+    {
+        "type":"text",
+        "label":"Country Name",
+        "name":"name",
+        "validation":"required"
+    },
+    {
+        "type":"tel",
+        "label":"Phone Code",
+        "name":"phone_code",
+        "validation":"required"
+    }
+]
+
