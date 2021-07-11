@@ -9,7 +9,6 @@ import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
 import MyAccount from "./pages/my-account.vue";
 import PageNotFound from "./pages/404.vue";
-import testMemberCountries from "./pages/testMemberCountries";
 import modal_delete_template from "./components/utilities/modal_delete_template";
 // import CreateMemberCountry from "./pages/countries/CreateMemberCountry";
 import modal_create_template from "./components/utilities/modal_create_template";
@@ -17,6 +16,7 @@ import modal_create_template from "./components/utilities/modal_create_template"
 
 //schemas
 import country_schema from '@/schemas/country_schema.json'
+import region_schema from '@/schemas/region_schema.json'
 import modal_update_template from "./components/utilities/modal_update_template";
 
 
@@ -33,18 +33,6 @@ const routes = [
         path: "/home",
         name: "home",
         component: Home,
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>`
-    },
-    {
-        path: "/testCountries",
-        name: "MemberCountriesTest",
-        component: testMemberCountries,
-        props: {
-            vuex_data_action: 'fetchCountries',
-            table_headings: ['NAME', 'PHONE CODE', 'REGISTERED RDES', 'PENDING RDES', 'ACTION']
-        },
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>`
@@ -70,7 +58,6 @@ const routes = [
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>`,
         children: [
-
             {
                 path: 'create-country',
                 name: 'CreateCountry',
@@ -112,10 +99,61 @@ const routes = [
         ]
     },
     {
-        path: '/member-countries/:countryId/:countryName/regions',
+        path: '/:countryId/:countryName/regions/',
         name: 'Regions',
         component: Regions,
-        showInLeftBar: false
+        props: {
+            vuex_data_action: 'fetchRegions',
+            table_headings: ['NAME', 'Country', 'ACTION']
+        },
+        showInLeftBar: false,
+        children : [
+            {
+                path: 'create-region',
+                name: 'CreateRegion',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: [
+                        {
+                            "type":"text",
+                            "label":"Region Name",
+                            "name":"name",
+                            "validation":"required"
+                        }
+                    ],
+                    vuex_action:'postRegion',
+                    object_title: 'Region'
+                }
+            },
+            {
+                path: 'update-region/:regionName/:regionId',
+                name: 'UpdateRegion',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props:x => {
+                    return {
+                        jsonSchema: region_schema,
+                        vuex_fetch_action:'fetchRegionById',
+                        vuex_save_action: 'updateRegionById',
+                        object_title: x.params.regionName,
+                        object_id: x.params.regionId
+                    }
+
+                }
+            },
+            {
+                path: 'delete-region/:regionName/:regionId',
+                name: 'DeleteRegion',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteRegionById', vuex_payload: x.params.regionId , object_title: x.params.regionName
+                    }
+                }
+            },
+        ]
     },
 
     {

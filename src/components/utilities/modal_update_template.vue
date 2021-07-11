@@ -127,6 +127,7 @@ export default {
       });
     },
     fetchObject() {
+      console.log("mounting")
       this.loading = true
       this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
         this.form = resp

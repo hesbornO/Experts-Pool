@@ -135,7 +135,6 @@ const actions = {
             })
         })
     },
-
     deleteRegionById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/region/'

@@ -1,0 +1,9 @@
+[
+    {
+        "type":"text",
+        "label":"Region Name",
+        "name":"name",
+        "validation":"required"
+    }
+]
+
