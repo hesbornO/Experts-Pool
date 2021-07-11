@@ -1,0 +1,53 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+            "component": "div",
+            "class": "grid grid-cols-2 gap-3",
+            "children": [{
+                    "type": "text",
+                    "label": "Name",
+                    "name": "name",
+                    "validation": "required"
+                },
+                {
+                    "type": "textarea",
+                    "label": "Description",
+                    "rows": 5,
+                    "name": "description",
+                    "validation": "required"
+                }
+            ]
+        },
+        {
+            "component": "div",
+            "class": "grid grid-cols-2 gap-3",
+            "children": [{
+                    "type": "text",
+                    "label": "Severity",
+                    "name": "severity",
+                    "value": "minor",
+                    "validation": "required"
+                },
+                {
+                    "type": "group",
+                    "label": "Competencies",
+                    "name": "competencies_list ",
+                    "validation": "required"
+                },
+                {
+                    "type": "date",
+                    "label": "Start Date",
+                    "name": "start_date ",
+                    "validation": "required"
+                },
+                {
+                    "type": "date",
+                    "label": "End Date",
+                    "name": "end_date "
+                }
+
+            ]
+        }
+    ]
+}]

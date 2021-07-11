@@ -18,13 +18,13 @@ import modal_create_template from "./components/utilities/modal_create_template"
 //schemas
 import country_schema from '@/schemas/country_schema.json'
 import region_schema from '@/schemas/region_schema.json'
+import outbreak_schema from '@/schemas/outbreak_schema.json'
 import modal_update_template from "./components/utilities/modal_update_template";
 
 
 Vue.use(VueRouter);
 
-const routes = [
-    {
+const routes = [{
         path: "/login",
         name: "Login",
         component: Login,
@@ -58,15 +58,14 @@ const routes = [
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-country',
                 name: 'CreateCountry',
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: {
                     jsonSchema: country_schema,
-                    vuex_action:'postCountry',
+                    vuex_action: 'postCountry',
                     object_title: 'Country'
                 }
             },
@@ -75,10 +74,10 @@ const routes = [
                 name: 'UpdateCountry',
                 component: modal_update_template,
                 showInLeftBar: false,
-                props:x => {
+                props: x => {
                     return {
                         jsonSchema: country_schema,
-                        vuex_fetch_action:'fetchCountryById',
+                        vuex_fetch_action: 'fetchCountryById',
                         vuex_save_action: 'updateCountryById',
                         object_title: x.params.countryName,
                         object_id: x.params.countryId
@@ -93,7 +92,9 @@ const routes = [
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        vuex_action: 'deleteCountryById', vuex_payload: x.params.countryId , object_title: x.params.countryName
+                        vuex_action: 'deleteCountryById',
+                        vuex_payload: x.params.countryId,
+                        object_title: x.params.countryName
                     }
                 }
             },
@@ -108,22 +109,19 @@ const routes = [
             table_headings: ['NAME', 'Country', 'ACTION']
         },
         showInLeftBar: false,
-        children : [
-            {
+        children: [{
                 path: 'create-region',
                 name: 'CreateRegion',
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: {
-                    jsonSchema: [
-                        {
-                            "type":"text",
-                            "label":"Region Name",
-                            "name":"name",
-                            "validation":"required"
-                        }
-                    ],
-                    vuex_action:'postRegion',
+                    jsonSchema: [{
+                        "type": "text",
+                        "label": "Region Name",
+                        "name": "name",
+                        "validation": "required"
+                    }],
+                    vuex_action: 'postRegion',
                     object_title: 'Region'
                 }
             },
@@ -132,10 +130,10 @@ const routes = [
                 name: 'UpdateRegion',
                 component: modal_update_template,
                 showInLeftBar: false,
-                props:x => {
+                props: x => {
                     return {
                         jsonSchema: region_schema,
-                        vuex_fetch_action:'fetchRegionById',
+                        vuex_fetch_action: 'fetchRegionById',
                         vuex_save_action: 'updateRegionById',
                         object_title: x.params.regionName,
                         object_id: x.params.regionId
@@ -150,7 +148,9 @@ const routes = [
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        vuex_action: 'deleteRegionById', vuex_payload: x.params.regionId , object_title: x.params.regionName
+                        vuex_action: 'deleteRegionById',
+                        vuex_payload: x.params.regionId,
+                        object_title: x.params.regionName
                     }
                 }
             },
@@ -164,18 +164,17 @@ const routes = [
         component: Outbreak,
         props: {
             vuex_data_action: 'fetchAllOutbreaks',
-            table_headings: ['NAME', 'DESCRIPTION', 'COMPETENCIES LIST', 'SEVERITY', 'AFFECTED REGIONS LIST']
+            table_headings: ['NAME', 'DESCRIPTION', 'COMPETENCIES LIST', 'SEVERITY', 'AFFECTED REGIONS LIST', 'START DATE', 'END DATE', 'ACTION']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-outbreak',
                 name: 'CreateOutbreak',
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: {
-                    jsonSchema: country_schema,
-                    vuex_action:'postOutbreak',
+                    jsonSchema: outbreak_schema,
+                    vuex_action: 'postOutbreak',
                     object_title: 'Outbreak'
                 }
             },
@@ -184,10 +183,10 @@ const routes = [
                 name: 'UpdateOutbreak',
                 component: modal_update_template,
                 showInLeftBar: false,
-                props:x => {
+                props: x => {
                     return {
-                        jsonSchema: country_schema,
-                        vuex_fetch_action:'fetchOutbreakById',
+                        jsonSchema: outbreak_schema,
+                        vuex_fetch_action: 'fetchOutbreakById',
                         vuex_save_action: 'updateOutbreakById',
                         object_title: x.params.outbreakName,
                         object_id: x.params.outbreakId
@@ -197,12 +196,14 @@ const routes = [
             },
             {
                 path: 'delete-outbreak/:outbreakName/:outbreakId',
-                name: 'DeleteCountry',
+                name: 'DeleteOutbreak',
                 component: modal_delete_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        vuex_action: 'deleteOutbreakById', vuex_payload: x.params.outbreakId , object_title: x.params.outbreakName
+                        vuex_action: 'deleteOutbreakById',
+                        vuex_payload: x.params.outbreakId,
+                        object_title: x.params.outbreakName
                     }
                 }
             },

@@ -37,6 +37,12 @@
             </td>
           </tr>
         </tbody>
+        <tbody v-if="pageResult.results && !loading" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr class="text-gray-700 dark:text-gray-400 border" v-for="(item,index) in pageResult.results"
+            :key="index">
+          <slot v-bind:item="item"></slot>
+        </tr>
+        </tbody>
       </table>
     </div>
     <div
