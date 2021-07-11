@@ -421,15 +421,9 @@ export default {
   data() {
     return {
       register_prequalified_rde: false,
-      transactions: {},
       search: '',
       status: '',
       countries: '',
-      paymentMethod: '',
-      paymentMethods: [
-        'M-Pesa',
-        'Airtel Money'
-      ],
       eac_countries: [
         {text: 'Burundi', value: 'burundi'},
         {text: 'Kenya', value: 'kenya'},

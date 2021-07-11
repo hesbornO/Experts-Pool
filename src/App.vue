@@ -17,7 +17,7 @@ export default {
   components: {
   //  Login,
   },
-  created: function () {
+  created: function () {    
     //check if user is logged in
     api.interceptors.request.use((config) => {
       config.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
