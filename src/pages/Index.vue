@@ -1,35 +1,5 @@
 <template>
   <dashboard_layout page_title="Home">
-<!--    <div class="grid gap-2">-->
-<!--      <div class="flex w-56 items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">-->
-<!--        <div class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">-->
-<!--          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">-->
-<!--            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round"-->
-<!--                  stroke-width="2"></path>-->
-<!--          </svg>-->
-<!--        </div>-->
-<!--        <div class="col-span-2">-->
-<!--          <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">-->
-<!--            Total RDEs-->
-<!--          </p>-->
-<!--          <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">-->
-<!--            137-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-    <div class="mb-3 flex flex flex-row justify-end">
-      <button
-          class="btn btn-blue w-56"
-          @click="registerPreQualifiedRDE()">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-             xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2"></path>
-        </svg>
-        <span class="px-1">add pre-qualified RDE</span>
-      </button>
-    </div>
 
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
@@ -137,7 +107,7 @@
                 <span
                     :class="['capitalize leading-tight rounded-md',RDE.application_status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':RDE.application_status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':RDE.application_status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
                 >
-                  {{ RDE.application_status }}
+                  {{ RDE.application_status.replace('_',' ') }}
                 </span>
             </td>
             <td class="px-4 py-3 text-sm">
@@ -146,7 +116,7 @@
             </td>
             <td v-if="RDE.competencies" class="px-4 py-3 text-sm">
               <span v-for="(competency,index) in RDE.competencies" :key="index" class="capitalize">
-                {{index+1 +'.'+ ' '+ competency.name}} <br>
+                {{competency.name}} <span v-if="index+1 <RDE.competencies.length">, </span>
               </span>
 
             </td>
@@ -286,29 +256,30 @@
                 <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900 text-center">
                   Register pre-qualified RDE
                 </h3>
-                <div class="mt-2">
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                </div>
+                <!--  -->
+                <!--  -->
+                <!-- <form-wizard >
+                  <tab-content title="Personal details"
+                              icon="ti-user">
+                    My first tab content
+                  </tab-content>
+                  <tab-content title="Additional Info"
+                              icon="ti-settings">
+                    My second tab content
+                  </tab-content>
+                  <tab-content title="Last step"
+                              icon="ti-check">
+                    Yuhuuu! This seems pretty damn simple
+                  </tab-content>
+                </form-wizard> -->
+                        
+        
+     
+                <!--  -->
+                <!--  -->
+    
+
+    
               </div>
             </div>
           </div>
@@ -406,9 +377,17 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+// import Vue from 'vue'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 // import Datepicker from 'vuejs-datepicker';
+
+//global registration
+
+//local registration
+// import {FormWizard, TabContent} from 'vue-form-wizard'
+// import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+// Vue.use(VueFormWizard)
 
 
 export default {
@@ -417,6 +396,8 @@ export default {
 
     dashboard_layout,
     // Datepicker
+    // FormWizard,
+    // TabContent
   },
   data() {
     return {
@@ -424,6 +405,7 @@ export default {
       search: '',
       status: '',
       countries: '',
+      viewPdf:false,
       eac_countries: [
         {text: 'Burundi', value: 'burundi'},
         {text: 'Kenya', value: 'kenya'},
@@ -443,7 +425,10 @@ export default {
       ],
       specializations: '',
       form:{},
-      update_rde_details:false
+      update_rde_details:false,
+      occupations: {},
+      fileUploaded:0,
+
 
     }
   },
@@ -485,16 +470,80 @@ export default {
                 window.location.replace('/member-countries')
                 console.log(resp)
         })
-    }
+    },
+       processFile(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) {
+                return;
+            }
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = e => {
+                const dataUri = e.target.result;
+                if (dataUri) {
+                    // this.compress(dataUri);
+                    this.form.cv = dataUri                    
+                    this.fileUploaded+=1                    
+                }
+            };
+            reader.readAsDataURL(file);
+        },
+         registerRDE(){
+      this.form.competencies_list = [this.form.competencies_list]
+      this.form.region_of_residence_id=21
+      console.log('form', this.form)
+
+      let payload = this.form
+      this.postRDE(payload).then(resp=>{
+            this.$store.dispatch('setError',{})
+            window.location.replace('/member-countries')
+            console.log(resp)
+      })      
+    }, 
+    togglePdfDisplay(){
+      this.viewPdf=!this.viewPdf;
+    },
+     getOccupations() {
+      console.log('getting occupations...')
+      this.$store.dispatch('fetchOccupations').then(resp => {
+        this.occupations = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    getCountries() {
+      this.$store.dispatch('fetchCountries').then(resp => {
+        this.countries = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+     getRegions() {
+      this.$store.dispatch('fetchRegions').then(resp => {
+        this.regions = resp;
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     
     
 
   },
   mounted() {
     this.getRDES()
+    this.getCountries()
+    this.getRegions()
+    this.getOccupations()
 
   },
-  computed: {}
+  computed: {
+    ...mapGetters(['allCountries','allRegions','getErrorMessage']),
+    ...mapActions(['fetchCountries','fetchRegions','fetchOccupations','postRDE'])
+
+
+  }
 };
 </script>
 

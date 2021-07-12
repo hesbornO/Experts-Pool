@@ -131,10 +131,7 @@ export default {
       })
     
     },
-    populateSchema(){      
-        console.log("called", this.jsonSchema)
-        console.log("called", JSON.stringify(this.jsonSchema))
-        
+    populateSchema(){              
         let schema = JSON.stringify(this.jsonSchema)
         this.fetchedOptions.map((option, index)=>{
              schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)

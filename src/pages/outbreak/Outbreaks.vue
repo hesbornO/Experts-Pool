@@ -52,7 +52,7 @@
         <td class="px-4 py-3 text-sm" v-if="item.affected_regions">
           <span v-for="(region,index) in item.affected_regions" :key="index">
             <span v-if="region.name" class="capitalize">
-              {{index+1 +'. '+region.name}}
+              {{region.name}} <span v-if="index+1 < item.affected_regions.length">, </span>
             </span>
           </span>
         </td>
