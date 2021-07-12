@@ -9,6 +9,7 @@ import login from './modules/login'
 import RDE from './modules/RDE'
 import occupations from './modules/occupations'
 import outbreaks from './modules/outbreaks'
+import competencies from './modules/competencies'
 
 
 export default new Vuex.Store({
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         login,
         RDE,
         occupations,
-        outbreaks
+        outbreaks,
+        competencies        
     }
 })

@@ -11,43 +11,61 @@
                     "validation": "required"
                 },
                 {
-                    "type": "textarea",
-                    "label": "Description",
-                    "rows": 5,
-                    "name": "description",
-                    "validation": "required"
-                }
-            ]
-        },
-        {
-            "component": "div",
-            "class": "grid grid-cols-2 gap-3",
-            "children": [{
                     "type": "text",
                     "label": "Severity",
                     "name": "severity",
                     "value": "minor",
                     "validation": "required"
-                },
+                }
+                
+            ]
+        },      
+       
+        {
+            "component": "div",
+            "class": "grid grid-cols-2 gap-3",
+            "children": [
                 {
-                    "type": "group",
+                    "type": "select",
                     "label": "Competencies",
-                    "name": "competencies_list ",
-                    "validation": "required"
+                    "name": "competencies_list",
+                    "validation": "required",
+                    "multiple":"multiple",  
+                    "options":{"1":"First", "2": "Second"}
+                    
+                   
                 },
                 {
-                    "type": "date",
-                    "label": "Start Date",
-                    "name": "start_date ",
-                    "validation": "required"
-                },
-                {
-                    "type": "date",
-                    "label": "End Date",
-                    "name": "end_date "
+                    "type": "select",
+                    "label": "Affected Regions",
+                    "name": "affected_regions_list",
+                    "validation": "required",
+                    "options":{"31":"First"},
+                    "multiple":"multiple"
+                    
                 }
 
             ]
+        },
+        {
+            "component":"div",
+            "class":"grid grid-cols-2 gap-3",
+            "children":[
+                {
+                    "type": "date",
+                    "label": "Start Date",
+                    "name": "start_date",
+                    "validation": "required"
+                }
+            ]
+        },
+        
+        {
+            "type": "textarea",
+            "label": "Description",
+            "rows": 5,
+            "name": "description",
+            "validation": "required"
         }
     ]
 }]

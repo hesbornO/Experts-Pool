@@ -20,7 +20,7 @@
 <!--    </div>-->
     <div class="mb-3 flex flex-row justify-end">      
       <router-link
-          :to="{name:'CreateOutbreak', params:{}}"
+          :to="{name:'CreateCompetence', params:{}}"
           class="btn btn-blue  text-xs"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -39,36 +39,19 @@
     <!-- Outbreaks List -->
     <data_table v-bind="$attrs">
       <template v-slot="{item}">        
-        <td class="px-4 py-3 text-sm">{{item.name }}</td>
-        <td class="px-4 py-3 text-sm">{{ item.description }}</td>
-        <td class="px-4 py-3 text-sm flex-wrap" v-if="item.competencies">
-          <span v-for="(competency,index) in item.competencies" :key="index">
-            <span v-if="competency.name" class="capitalize">
-              {{competency.name}}<span v-if="index+1<item.competencies.length">,</span>
-            </span>
-          </span>
-        </td>
-        <td class="px-4 py-3 text-sm capitalize">{{ item.severity }}</td>
-        <td class="px-4 py-3 text-sm" v-if="item.affected_regions">
-          <span v-for="(region,index) in item.affected_regions" :key="index">
-            <span v-if="region.name" class="capitalize">
-              {{index+1 +'. '+region.name}}
-            </span>
-          </span>
-        </td>
-        <td class="px-4 py-3 text-sm">{{item.start_date}}</td>
-        <td class="px-4 py-3 text-sm">{{item.end_date}}</td>
-        <td class="px-4 py-3 text-sm flex flex-row space-x-1">          
-
+        <td class="px-4 py-3 text-sm capitalize">{{item.name }}</td>
+        <td class="px-4 py-3 text-sm capitalize">{{ new Date(item.created_at).toLocaleDateString() +' at '+ new Date(item.created_at).toLocaleTimeString() }}</td>
+        <td class="px-4 py-3 text-sm capitalize">{{ new Date(item.updated_at).toLocaleDateString() +' at '+ new Date(item.updated_at).toLocaleTimeString() }}</td>
+        <td class="px-4 py-3 text-sm flex flex-row space-x-1">   
           <router-link
-              :to="{name:'UpdateOutbreak', params:{outbreakId:item.id, outbreakName: item.name}}"
+              :to="{name:'UpdateCompetence', params:{competenceId:item.id, competenceName: item.name}}"
               class="btn btn-green h-1/2 text-xs"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
             <span class="px-1">Update</span>
           </router-link>
           <router-link
-              :to="{name:'DeleteOutbreak', params:{outbreakId:item.id, outbreakName: item.name}}"
+              :to="{name:'DeleteCompetence', params:{competenceId:item.id, competenceName: item.name}}"
               class="btn btn-red h-1/2 text-xs"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
@@ -84,7 +67,6 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
@@ -108,31 +90,16 @@ export default {
       countries: '',
       specializations: '',
       form:{},
-      Outbreaks:{}
+      competencies:{}
     }
   },
   methods: {
-    ...mapActions([ 'fetchAllOutbreaks','fetchOutbreakById','deleteOutbreakById']),
-    ...mapGetters(['getCurrentToken']),
-   
-    getOutbreaks(){
-        this.$store.dispatch('fetchAllOutbreaks').then(resp => {
-        this.Outbreaks = resp;  
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getOutBreakById(OutbreakID){    
-      this.fetchOutbreakById(OutbreakID).then(resp=>{            
-          this.form= resp
-      })
-    }
+    
     
     
 
   },
   mounted() {
-    // this.getOutbreaks()
 
   },
   computed: {}

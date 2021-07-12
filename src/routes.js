@@ -5,6 +5,7 @@ import Home from "./pages/Index.vue";
 import MemberCountries from "./pages/countries/MemberCountries.vue";
 import Regions from "./pages/regions/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
+import Competence from "./pages/competence/Competence.vue";
 import CreateAccount from "./pages/create-account.vue";
 import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
@@ -19,6 +20,7 @@ import modal_create_template from "./components/utilities/modal_create_template"
 import country_schema from '@/schemas/country_schema.json'
 import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
+import competence_schema from '@/schemas/competence_schema.json'
 import modal_update_template from "./components/utilities/modal_update_template";
 
 
@@ -175,7 +177,8 @@ const routes = [{
                 props: {
                     jsonSchema: outbreak_schema,
                     vuex_action: 'postOutbreak',
-                    object_title: 'Outbreak'
+                    object_title: 'Outbreak',
+                    size:'w-1/2'
                 }
             },
             {
@@ -189,7 +192,8 @@ const routes = [{
                         vuex_fetch_action: 'fetchOutbreakById',
                         vuex_save_action: 'updateOutbreakById',
                         object_title: x.params.outbreakName,
-                        object_id: x.params.outbreakId
+                        object_id: x.params.outbreakId,
+                        size:'w-1/2'
                     }
 
                 }
@@ -204,6 +208,60 @@ const routes = [{
                         vuex_action: 'deleteOutbreakById',
                         vuex_payload: x.params.outbreakId,
                         object_title: x.params.outbreakName
+                    }
+                }
+            },
+        ]
+    },
+    // competencies
+    {
+        path: "/competence/",
+        name: "Competence",
+        component: Competence,
+        props: {
+            vuex_data_action: 'fetchAllCompetencies',
+            table_headings: ['NAME', 'CREATED AT', 'UPDATED AT','ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`,
+        children: [{
+                path: 'create-competence',
+                name: 'CreateCompetence',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: competence_schema,
+                    vuex_action: 'postCompetence',
+                    object_title: 'Add Competence',
+                    size:'w-1/2'
+                }
+            },
+            {
+                path: 'update-competence/:competenceName/:competenceId',
+                name: 'UpdateCompetence',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: competence_schema,
+                        vuex_fetch_action: 'fetchCompetencyById',
+                        vuex_save_action: 'updateCompetenceById',
+                        object_title: x.params.competenceName,
+                        object_id: x.params.competenceId,
+                        size:'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-competence/:competenceName/:competenceId',
+                name: 'DeleteCompetence',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteCompetencyById',
+                        vuex_payload: x.params.competenceId,
+                        object_title: x.params.competenceName
                     }
                 }
             },

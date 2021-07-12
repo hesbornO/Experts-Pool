@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div :class="['fixed z-10 inset-0 overflow-y-auto']" aria-labelledby="modal-title"
+    <div :class="['fixed z-10 inset-0 overflow-y-auto ']" aria-labelledby="modal-title"
          aria-modal="true" role="dialog" >
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 ">
 
       <div aria-hidden="true" class="fixed inset-0 bg-gray-200 bg-opacity-75 transition-opacity"></div>
 
         <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
         <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:max-h-lg sm:w-full">
-          <div class="bg-white sm:pb-4 flex flex-col justify-between text-havelock-blue">
-              <div class="w-full flex flex-row justify-between text-center border-b border-gray-200 py-3.5 px-3">
+            :class="['inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
+          <div class="bg-white sm:pb-4 flex flex-col justify-between text-havelock-blue ">
+              <div class="flex flex-row justify-between text-center border-b border-gray-200 py-3.5 px-3">
                 <div class="flex flex-row">
                   <div class="flex flex-col justify-center"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path></svg> </div>
                   <div class="flex flex-col justify-center"><p class="px-2 ">Create {{object_title}}</p></div>
@@ -83,7 +83,11 @@ export default {
     },
     jsonSchema: {
       type: Array, default: ()=>{return []}
-    }
+    },
+    size: {
+				type: String,
+				default: "max-w-sm",
+			},
   },
   methods:{
     executeAction(){

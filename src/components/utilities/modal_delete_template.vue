@@ -77,9 +77,7 @@ export default {
     vuex_action:{
       type: String,
     },
-    vuex_payload:{
-
-    },
+    vuex_payload:[String,Number],
     item:{
       type : Object,
       default: ()=>{return {}}
@@ -95,8 +93,9 @@ export default {
     }
   },
   methods:{
-    executeAction(){
+    executeAction(){      
       this.$store.dispatch(this.vuex_action, this.vuex_payload).then(()=>{
+
           this.$toast.success(
               ""+ this.object_title + " Deleted Successfully"
           )
