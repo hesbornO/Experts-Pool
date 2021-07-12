@@ -31,16 +31,14 @@
                     "name": "competencies_list",
                     "validation": "required",
                     "multiple":"multiple",  
-                    "options":{"1":"First", "2": "Second"}
-                    
-                   
+                    "options":[0]
                 },
                 {
                     "type": "select",
                     "label": "Affected Regions",
                     "name": "affected_regions_list",
                     "validation": "required",
-                    "options":{"31":"First"},
+                    "options":[1],
                     "multiple":"multiple"
                     
                 }

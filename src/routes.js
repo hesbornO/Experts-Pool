@@ -178,7 +178,8 @@ const routes = [{
                     jsonSchema: outbreak_schema,
                     vuex_action: 'postOutbreak',
                     object_title: 'Outbreak',
-                    size:'w-1/2'
+                    size:'w-1/2',
+                    optionsList:['fetchAllCompetencies','fetchRegions']
                 }
             },
             {
@@ -193,7 +194,8 @@ const routes = [{
                         vuex_save_action: 'updateOutbreakById',
                         object_title: x.params.outbreakName,
                         object_id: x.params.outbreakId,
-                        size:'w-1/2'
+                        size:'w-1/2',
+                        optionsList:['fetchAllCompetencies','fetchRegions']
                     }
 
                 }
@@ -232,7 +234,8 @@ const routes = [{
                     jsonSchema: competence_schema,
                     vuex_action: 'postCompetence',
                     object_title: 'Add Competence',
-                    size:'w-1/2'
+                    size:'w-1/2',
+                    optionsList:['fetchAllCompetencies','fetchRegions']
                 }
             },
             {
