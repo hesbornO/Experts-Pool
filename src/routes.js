@@ -69,6 +69,7 @@ const routes = [{
                         vuex_save_action: 'updateRDEById',
                         object_title: `${x.params.rdeName} details`,
                         object_id: x.params.rdeId,
+                        optionsList: ['fetchAllCompetencies'],
                         size: 'w-1/2'
                     }
 

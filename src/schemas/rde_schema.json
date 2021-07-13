@@ -3,8 +3,8 @@
     "class": "px-2 py-3",
     "children": [
         {
-            "component":"h3",
-            "class":"text-blue-500 font-semibold uppercase",
+            "component":"h5",
+            "class":"text-havelock-blue font-semibold uppercase mb-3 text-sm",
             "children":"Personal Details"
         },
         {
@@ -112,7 +112,7 @@
         },
         {
             "component":"h3",
-            "class":"text-blue-500 font-semibold uppercase",
+            "class":"text-havelock-blue font-semibold uppercase mb-3 text-sm",
             "children":"Next of Kin Details"
         },        
 
@@ -130,14 +130,12 @@
                     "type": "tel",
                     "name": "next_of_kin_phone",
                     "validation": "required"
-
                 }
-
             ]
         },
         {
             "component":"h3",
-            "class":"text-blue-500 font-semibold uppercase",
+            "class":"text-havelock-blue font-semibold uppercase mb-3 text-sm",
             "children":"Other"
         },   
         {

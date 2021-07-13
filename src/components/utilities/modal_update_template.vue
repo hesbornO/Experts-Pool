@@ -135,6 +135,7 @@ export default {
         this.back()
         // eslint-disable-next-line no-unused-vars
       }).catch(err => {
+        this.loading = false
         this.$toast.error(displayServerErrMessage(err))
       }).then(()=>{
         this.loading = false
