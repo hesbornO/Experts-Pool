@@ -168,6 +168,27 @@ export default {
     },
     back() {
       this.$router.back()
+    },
+      fetchOptions() {
+      this.optionsList.map((option,index)=>{
+        this.$store.dispatch(option).then((resp)=>{
+          this.fetchedOptions.push(resp)
+        }).then(()=>{
+          console.log("index", index +1, this.optionsList.length)
+          if(index +1 === this.optionsList.length){
+            this.populateSchema()
+          }
+        })
+      })
+    
+    },
+    populateSchema(){              
+        let schema = JSON.stringify(this.jsonSchema)
+        this.fetchedOptions.map((option, index)=>{
+             schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
+        })
+        console.log("after", schema)
+        this.jsonSchema = JSON.parse(schema)
     }
   },
   computed: {

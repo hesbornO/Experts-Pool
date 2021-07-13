@@ -54,7 +54,6 @@ const actions = {
             } else {
                 relative_url = "/outbreak/" + payload
             }
-            console.log('payload:',payload)
             api.delete(relative_url).then(resp => {
                 resolve(resp.data)
             }).catch(err => {

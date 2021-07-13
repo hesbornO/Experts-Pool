@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
@@ -104,75 +103,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['postCountry', 'fetchCountryById', 'updateCountryById', 'deleteCountryById', 'fetchRegions', 'fetchRegionById', 'updateRegionById', 'deleteRegionById']),
-    ...mapGetters(['getCurrentToken', 'allCountries']),
-    // countries
-    displayAddMemberCountryForm() {
-      this.form = {}
-      this.add_member_country = true
-    },
-    closeAddMemberCountryForm() {
-      this.add_member_country = false
-    },
-    displayUpdateMemberCountryForm() {
-      this.update_member_country = true
-    },
-
-    closeUpdateMemberCountryForm() {
-      this.update_member_country = false
-    },
-    postMemberCountry() {
-      // this.add_member_country = false;
-      let payload = {
-        name: this.form.name,
-        phone_code: this.form.phone_code
-      }
-      this.postCountry(payload).then(resp => {
-        this.$store.dispatch('setError', {})
-        window.location.replace('/member-countries')
-        console.log(resp)
-      })
-    },
-    postCountryUpdateById(countryId) {
-      let payload = {
-        id: countryId,
-        name: this.form.name,
-        phone_code: this.form.phone_code
-      }
-      this.updateCountryById(payload).then(resp => {
-        window.location.replace('/member-countries')
-        console.log(resp)
-      })
-
-    },
-    openCountryUpdateModal(countryId) {
-      this.update_member_country = true;
-      this.form = {}
-      this.fetchCountryById(countryId).then(resp => {
-        this.form = resp
-      })
-    },
-    // eslint-disable-next-line no-unused-vars
-    deleteCountry(countryId) {
-      this.delete_country = true
-      this.deleteCountryById(countryId)
-    },
-    // regions
-    getRegions() {
-      this.$store.dispatch('fetchRegions').then(resp => {
-        this.regions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    // end of regions
-
+    
   },
   mounted() {
-    this.getRegions()
   },
   computed: {
-    ...mapGetters(['allRegions', 'getErrorMessage'])
   }
 };
 </script>
