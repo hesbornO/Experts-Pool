@@ -8,7 +8,7 @@
 
         <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
         <div
-            :class="['inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
+            :class="['inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
           <div class="bg-white sm:pb-4 flex flex-col justify-between text-havelock-blue ">
               <div class="flex flex-row justify-between text-center border-b border-gray-200 py-3.5 px-3">
                 <div class="flex flex-row">
@@ -25,7 +25,7 @@
                 <div class="flex justify-center">
                   <loading v-if="loading"></loading>
                 </div>
-                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="jsonSchema" :form-errors="formErrors">
+                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="optionsPopulatedSchema" :form-errors="formErrors">
 
                 </FormulateForm>
                 <slot v-else></slot>
@@ -68,7 +68,8 @@ export default {
       formErrors: [],
       modal_hidden: true,
       loading: false,
-      fetchedOptions:[]
+      fetchedOptions:[],
+      optionsPopulatedSchema: []
     }
   },
   props:{
@@ -89,10 +90,10 @@ export default {
 				type: String,
 				default: "max-w-sm",
 			},
-      optionsList: { type: Array, default: () => [] },
+    optionsList: { type: Array, default: () => [] },
   },
   created(){
-    this.fetchOptions();
+    this.tryOptions();
   },
   methods:{
     executeAction(){
@@ -112,18 +113,25 @@ export default {
         // eslint-disable-next-line no-unused-vars
       }).catch(err=>{
       }).then(()=>{
-        this.loading = false
+        // this.loading = false
       });
     },
     back(){
       this.$router.back()
     },
+    tryOptions(){
+      if (this.optionsList.length>0){
+        this.fetchOptions()
+      }else{
+        this.optionsPopulatedSchema = this.jsonSchema
+      }
+    },
     fetchOptions() {
+      // let schema =[]
       this.optionsList.map((option,index)=>{
         this.$store.dispatch(option).then((resp)=>{
           this.fetchedOptions.push(resp)
         }).then(()=>{
-          console.log("index", index +1, this.optionsList.length)
           if(index +1 === this.optionsList.length){
             this.populateSchema()
           }
@@ -131,13 +139,13 @@ export default {
       })
     
     },
-    populateSchema(){              
+    populateSchema(){
         let schema = JSON.stringify(this.jsonSchema)
         this.fetchedOptions.map((option, index)=>{
              schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
         })
-        console.log("after", schema)
-        this.jsonSchema = JSON.parse(schema)
+        this.optionsPopulatedSchema = JSON.parse(schema)
+        this.loading = false
     }
   },
   computed: {

@@ -4,6 +4,13 @@
         "label":"Region Name",
         "name":"name",
         "validation":"required"
+    },
+    {
+        "type":"select",
+        "label":"Country",
+        "name":"country_id",
+        "options":[0],
+        "validation":"required"
     }
 ]
 

@@ -8,7 +8,7 @@
 
         <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
         <div
-            :class="['inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
+            :class="['inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
           <div class="bg-white sm:pb-4 flex flex-col justify-between text-havelock-blue">
             <div class="w-full flex flex-row justify-between text-center border-b border-gray-200 py-3.5 px-3">
               <div class="flex flex-row">
@@ -31,16 +31,19 @@
                 </div>
               </div>
             </div>
-            <div class="flex flex-col justify-start px-3 py-3">
+            <div  class="flex flex-col justify-start px-3 py-3">
               <div class="flex justify-center">
                 <loading v-if="loading"></loading>
               </div>
-              <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage"
-                             :schema="jsonSchema" :form-errors="formErrors">
+              <div v-if="!loading">
+                <FormulateForm v-if="jsonSchema" class="w-full"  v-model="form" :errors="getErrorMessage"
+                               :schema="optionsPopulatedSchema" :form-errors="formErrors">
 
-              </FormulateForm>
+                </FormulateForm>
 
-              <slot v-else></slot>
+                <slot v-else></slot>
+              </div>
+
             </div>
             <div class="flex flex-row justify-between w-full border-t px-3 pt-3 font-semibold text-white">
               <button class="btn btn-red flex flex-col justify-center filter opacity-60"
@@ -80,6 +83,7 @@
 import {mapGetters} from "vuex";
 import displayServerErrMessage from '@/utils/functions'
 import Loading from "./loading";
+
 export default {
   name: "modal_update_template",
   components: {Loading},
@@ -90,7 +94,10 @@ export default {
       formErrors: [],
       modal_hidden: true,
       loading: false,
-      fetchedOptions:[]
+      fetchedOptionsObject:{},
+      fetchedOptions:[],
+      fetchOrder:[],
+      optionsPopulatedSchema: []
     }
   },
   props: {
@@ -111,7 +118,7 @@ export default {
         return []
       }
     },
-    size: {
+   size: {
       type: String,
       default: "max-w-sm",
     },
@@ -128,6 +135,7 @@ export default {
         this.back()
         // eslint-disable-next-line no-unused-vars
       }).catch(err => {
+        this.$toast.error(displayServerErrMessage(err))
       }).then(()=>{
         this.loading = false
       });
@@ -137,41 +145,58 @@ export default {
       this.loading = true
       this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
         this.form = resp
+        this.$forceUpdate()
       }).catch(err => {
         displayServerErrMessage(err)
       }).then(()=>{
-        this.loading = false
+        if(this.optionsList.length ===0){
+          this.loading = false
+        }
+        //
       })
+    },
+    fetchOptions() {
+      // let schema =[]
+      let counter =0
+      Promise.all(this.optionsList.map(option=>{this.$store.dispatch(option).then((values)=>{
+        this.$set(this.fetchedOptionsObject,option,values);
+        this.fetchOrder.push(option)
+        counter++
+        if(counter === this.optionsList.length){
+          this.populateSchema()
+        }
+      })}))
+    },
+    populateSchema(){
+      this.fetchedOptions = []
+      //re order options
+      this.optionsList.forEach((action, index)=>{
+        this.fetchedOptions[index]=this.fetchedOptionsObject[action]
+      })
+      let schema = JSON.stringify(this.jsonSchema)
+      this.fetchedOptions.map((option, index)=>{
+        schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
+      })
+      this.optionsPopulatedSchema = JSON.parse(schema)
+      this.$forceUpdate()
+      this.loading = false
+    },
+    tryOptions(){
+      if (this.optionsList.length>0){
+        this.fetchOptions()
+      }else{
+        this.optionsPopulatedSchema = this.jsonSchema
+      }
     },
     back() {
       this.$router.back()
-    },
-      fetchOptions() {
-      this.optionsList.map((option,index)=>{
-        this.$store.dispatch(option).then((resp)=>{
-          this.fetchedOptions.push(resp)
-        }).then(()=>{
-          console.log("index", index +1, this.optionsList.length)
-          if(index +1 === this.optionsList.length){
-            this.populateSchema()
-          }
-        })
-      })
-    
-    },
-    populateSchema(){              
-        let schema = JSON.stringify(this.jsonSchema)
-        this.fetchedOptions.map((option, index)=>{
-             schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
-        })
-        console.log("after", schema)
-        this.jsonSchema = JSON.parse(schema)
     }
   },
   computed: {
     ...mapGetters(['getErrorMessage'])
   },
   mounted() {
+    this.tryOptions()
     this.fetchObject()
   }
 }
