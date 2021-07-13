@@ -51,38 +51,18 @@
             </div>
           </div>
           <div class="flex flex-col w-2/12 justify-end ">
-            <!-- <button
-                class="btn btn-blue "
-                @click="registerPreQualifiedRDE()">
+            <router-link
+                class="btn btn-blue"
+               :to="{name: 'CreateRDE'}">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                    xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
-                      stroke-width="2"></path>
-              </svg>
-              <span class="px-1">add pre-qualified RDE</span>
-            </button> -->
-            <router-link
-                :to="{name:'CreateRDE'}"
-                class="btn btn-blue  text-xs"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
                       stroke-width="2"></path>
               </svg>
               <span class="px-1">Add RDE</span>
             </router-link>
-            <router-link
-                class="btn btn-blue"
-               :to="{name: 'CreateCountry'}">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
-                      stroke-width="2"></path>
-              </svg>
-              <span class="px-1">Add Member Country</span>
-            </router-link>
           </div>
+          <router-view></router-view>
 
         </div>
 
@@ -95,13 +75,53 @@
           <td class="px-4 py-3 text-sm capitalize">{{item.occupation?item.occupation.name:''}}</td>
           <td class="px-4 py-3 text-sm capitalize">{{item.region_of_residence?item.region_of_residence.name:''}}</td>
           <td :class="['capitalize px-4 py-3 text-sm leading-tight rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='available'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">{{item.application_status?item.application_status.replace('_',' '):''}}</td>
-          <td class="px-4 py-3 text-sm capitalize">{{item.current_deployment?item.current_deployment:''}}</td>
+          <td class="px-4 py-3 text-sm capitalize">{{item.current_deployment?item.current_deployment:'None'}}</td>
           <td class="px-4 py-3 text-sm capitalize">
-            <span v-if="item.competencies">
-              <span v-for="(competency,index) in item.competencies" :key="index">
-                {{competency.name?competency.name:''}}<span v-if="index+1<item.competencies.length">, </span>
+            <span v-if="item.competencies_objects">
+              <span v-for="(competency,index) in item.competencies_objects" :key="index">
+                {{competency.name?competency.name:''}}<span v-if="index+1<item.competencies_objects.length">, </span>
               </span>
+            </span><br>
+            <span v-if="item.cv">
+              <button @click="togglePdfDisplay" 
+              class="p-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-300 border border-transparent rounded-lg active:bg-yellow-400 hover:bg-yellow-400 focus:outline-none focus:shadow-outline-blue">
+              <span v-if="!viewPdf">View CV</span>
+              <span v-if="viewPdf">Close preview</span>
+            </button>
             </span>
+            <!-- CV preview modal -->        
+              <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
+                <div class="flex items-end  min-h-full text-center sm:block ">            
+                  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                  <!-- This element is to trick the browser into centering the modal contents. -->
+                  <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                
+                  <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div class="h-96">                 
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Uploaded CV
+                          </h3>
+                          <div class="h-96">                   
+                            <vue-pdf-app :pdf="item.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-gray-150 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                      <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm hidden">
+                        
+                      </button>
+                      <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay">
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- end of CV preview modal -->
 
           </td>
           <td class="px-4 py-3 text-sm flex flex-row space-x-1">
@@ -126,149 +146,10 @@
       <!-- end of list -->
          
       </div>
+
+      
       
     </div>
-
-    <!-- Pre qualified RDE sign up modal -->
-    <div :class="[register_prequalified_rde?'fixed z-10 inset-0 overflow-y-auto':'hidden']"
-         aria-labelledby="modal-title" aria-modal="true" role="dialog">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-
-        <div aria-hidden="true" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-        <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
-          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start h-96">
-              <div
-                  class="mx-auto flex-shrink-0 flex items-center justify-center  w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 h-96">
-                <!-- Heroicon name: outline/exclamation -->
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2"></path>
-                </svg>
-              </div>
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900 text-center">
-                  Register pre-qualified RDE
-                </h3>
-                <!--  -->
-                <!--  -->
-                <form-wizard class="w-full">
-                  <tab-content title="Personal details"
-                              icon="ti-user">
-                    My first tab content
-                  </tab-content>
-                  <tab-content title="Additional Info"
-                              icon="ti-settings">
-                    My second tab content
-                  </tab-content>
-                  <tab-content title="Last step"
-                              icon="ti-check">
-                    Yuhuuu! This seems pretty damn simple
-                  </tab-content>
-                </form-wizard>
-                        
-        
-     
-                <!--  -->
-                <!--  -->
-    
-
-    
-              </div>
-            </div>
-          </div>
-          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse justify-between font-semibold text-white">
-            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase"
-                    type="button"
-                    @click="submitPreQualifiedRDE">
-              Submit
-            </button>
-            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 mt-3 w-full inline-flex justify-center rounded-md border border-red-200 shadow-sm px-4 py-2 bg-red-300 hover:bg-red-500 focus:outline-none uppercase sm:mt-0 sm:ml-3 sm:w-auto "
-                    type="button"
-                    @click="closeRegisterPreQualifiedRDEModal()">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of pre qualified RDE sign up modal -->
-
-
-    <!-- Pre qualified RDE sign up modal -->
-    <div :class="[update_rde_details?'fixed z-10 inset-0 overflow-y-auto':'hidden']"
-         aria-labelledby="modal-title" aria-modal="true" role="dialog">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-
-        <div aria-hidden="true" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-        <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
-          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start h-96">
-              <div
-                  class="mx-auto flex-shrink-0 flex items-center justify-center  w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 h-96">
-                <!-- Heroicon name: outline/exclamation -->
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2"></path>
-                </svg>
-              </div>
-              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900 text-center">
-                  Register pre-qualified RDE
-                </h3>
-                <div class="mt-2">
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    Form Data elements go here!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse justify-between font-semibold text-white">
-            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto uppercase"
-                    type="button"
-                    @click="postRDEUpdateById">
-              Submit
-            </button>
-            <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 mt-3 w-full inline-flex justify-center rounded-md border border-red-200 shadow-sm px-4 py-2 bg-red-300 hover:bg-red-500 focus:outline-none uppercase sm:mt-0 sm:ml-3 sm:w-auto "
-                    type="button"
-                    @click="closeUpdateRDEModal()">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End of pre qualified RDE sign up modal -->
-    
 
 
   </dashboard_layout>
@@ -276,20 +157,15 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
-import Vue from 'vue'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
 
-// import Datepicker from 'vuejs-datepicker';
 
-//global registration
-import VueFormWizard from 'vue-form-wizard'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-Vue.use(VueFormWizard)
-//local registration
-import {FormWizard, TabContent} from 'vue-form-wizard'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+// pdf
+import VuePdfApp from "vue-pdf-app";
+import "vue-pdf-app/dist/icons/main.css";
+
 
 export default {
   name: "RDES",
@@ -297,9 +173,9 @@ export default {
 
     dashboard_layout,
     data_table,
+    VuePdfApp
     // Datepicker
-    FormWizard,
-    TabContent
+    
   },
   data() {
     return {
@@ -337,7 +213,10 @@ export default {
   methods: {
     ...mapActions([ 'fetchRDES','fetchRDEById']),
     ...mapGetters(['getCurrentToken']),
-
+    
+    togglePdfDisplay(){
+    this.viewPdf=!this.viewPdf;
+    },
     registerPreQualifiedRDE() {
       this.register_prequalified_rde = true
     },
@@ -401,10 +280,8 @@ export default {
             window.location.replace('/member-countries')
             console.log(resp)
       })      
-    }, 
-    togglePdfDisplay(){
-      this.viewPdf=!this.viewPdf;
     },
+    
      getOccupations() {
       console.log('getting occupations...')
       this.$store.dispatch('fetchOccupations').then(resp => {
