@@ -15,18 +15,18 @@
                 <div class="flex flex-col justify-center">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
+                    <path d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
                   </svg>
                 </div>
                 <div class="flex flex-col justify-center"><p class="px-2 ">Update {{ object_title }}</p></div>
               </div>
               <div class="flex flex-col justify-center hover:bg-havelock-blue-100  rounded-full  w-7 h-7">
                 <div class="flex flex-row justify-center">
-                  <svg @click="back" class="w-5 h-5 hover:w-4 hover:h-4 hover:cursor-pointer text-center" fill="none"
-                       stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M6 18L18 6M6 6l12 12"></path>
+                  <svg class="w-5 h-5 hover:w-4 hover:h-4 hover:cursor-pointer text-center" fill="none" stroke="currentColor"
+                       viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" @click="back">
+                    <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
                   </svg>
                 </div>
               </div>
@@ -35,8 +35,8 @@
               <div class="flex justify-center">
                 <loading v-if="loading"></loading>
               </div>
-              <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage"
-                             :schema="optionsPopulatedSchema" :form-errors="formErrors">
+              <FormulateForm v-if="jsonSchema" v-model="form" :errors="getErrorMessage" :form-errors="formErrors"
+                             :schema="optionsPopulatedSchema" class="w-full">
 
               </FormulateForm>
 
@@ -50,8 +50,8 @@
                   <p>Cancel</p>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
                   </svg>
                 </div>
               </button>
@@ -62,8 +62,8 @@
                   <p>Save</p>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
                   </svg>
                 </div>
               </button>
@@ -80,6 +80,7 @@
 import {mapGetters} from "vuex";
 import displayServerErrMessage from '@/utils/functions'
 import Loading from "./loading";
+
 export default {
   name: "modal_update_template",
   components: {Loading},
@@ -90,7 +91,7 @@ export default {
       formErrors: [],
       modal_hidden: true,
       loading: false,
-      fetchedOptions:[],
+      fetchedOptions: [],
       optionsPopulatedSchema: []
     }
   },
@@ -99,7 +100,7 @@ export default {
       type: String,
       default: ''
     },
-    vuex_save_action:{
+    vuex_save_action: {
       type: String,
     },
     object_id: {},
@@ -112,11 +113,11 @@ export default {
         return []
       }
     },
-   size: {
+    size: {
       type: String,
       default: "max-w-sm",
     },
-    optionsList: { type: Array, default: () => [] },
+    optionsList: {type: Array, default: () => []},
   },
   methods: {
     performUpdateAction() {
@@ -129,7 +130,7 @@ export default {
         this.back()
         // eslint-disable-next-line no-unused-vars
       }).catch(err => {
-      }).then(()=>{
+      }).then(() => {
         this.loading = false
       });
     },
@@ -140,55 +141,32 @@ export default {
         this.form = resp
       }).catch(err => {
         displayServerErrMessage(err)
-      }).then(()=>{
+      }).then(() => {
         this.loading = false
       })
-    },
-    fetchOptions() {
-      // let schema =[]
-      this.optionsList.map((option,index)=>{
-        this.$store.dispatch(option).then((resp)=>{
-          this.fetchedOptions.push(resp)
-        }).then(()=>{
-          console.log("index", index +1, this.optionsList.length)
-          if(index +1 === this.optionsList.length){
-            this.populateSchema()
-          }
-        })
-      })
-
-    },
-    populateSchema(){
-      let schema = JSON.stringify(this.jsonSchema)
-      console.log("schema", schema)
-      this.fetchedOptions.map((option, index)=>{
-        schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
-      })
-      this.optionsPopulatedSchema = JSON.parse(schema)
     },
     back() {
       this.$router.back()
     },
-      fetchOptions() {
-      this.optionsList.map((option,index)=>{
-        this.$store.dispatch(option).then((resp)=>{
+    fetchOptions() {
+      this.optionsList.map((option, index) => {
+        this.$store.dispatch(option).then((resp) => {
           this.fetchedOptions.push(resp)
-        }).then(()=>{
-          console.log("index", index +1, this.optionsList.length)
-          if(index +1 === this.optionsList.length){
+        }).then(() => {
+          console.log("index", index + 1, this.optionsList.length)
+          if (index + 1 === this.optionsList.length) {
             this.populateSchema()
           }
         })
       })
-    
     },
-    populateSchema(){              
-        let schema = JSON.stringify(this.jsonSchema)
-        this.fetchedOptions.map((option, index)=>{
-             schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
-        })
-        console.log("after", schema)
-        this.jsonSchema = JSON.parse(schema)
+    populateSchema() {
+      let schema = JSON.stringify(this.jsonSchema)
+      this.fetchedOptions.map((option, index) => {
+        schema = schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
+      })
+      console.log("after", schema)
+      this.jsonSchema = JSON.parse(schema)
     }
   },
   computed: {
