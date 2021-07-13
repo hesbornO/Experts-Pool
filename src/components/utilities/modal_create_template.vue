@@ -25,7 +25,7 @@
                 <div class="flex justify-center">
                   <loading v-if="loading"></loading>
                 </div>
-                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="jsonSchema" :form-errors="formErrors">
+                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="optionsPopulatedSchema" :form-errors="formErrors">
 
                 </FormulateForm>
                 <slot v-else></slot>
@@ -68,7 +68,8 @@ export default {
       formErrors: [],
       modal_hidden: true,
       loading: false,
-      fetchedOptions:[]
+      fetchedOptions:[],
+      optionsPopulatedSchema: []
     }
   },
   props:{
@@ -89,7 +90,7 @@ export default {
 				type: String,
 				default: "max-w-sm",
 			},
-      optionsList: { type: Array, default: () => [] },
+    optionsList: { type: Array, default: () => [] },
   },
   created(){
     this.fetchOptions();
@@ -119,6 +120,7 @@ export default {
       this.$router.back()
     },
     fetchOptions() {
+      // let schema =[]
       this.optionsList.map((option,index)=>{
         this.$store.dispatch(option).then((resp)=>{
           this.fetchedOptions.push(resp)
@@ -131,16 +133,12 @@ export default {
       })
     
     },
-    populateSchema(){      
-        console.log("called", this.jsonSchema)
-        console.log("called", JSON.stringify(this.jsonSchema))
-        
+    populateSchema(){
         let schema = JSON.stringify(this.jsonSchema)
         this.fetchedOptions.map((option, index)=>{
              schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
         })
-        console.log("after", schema)
-        this.jsonSchema = JSON.parse(schema)
+        this.optionsPopulatedSchema = JSON.parse(schema)
     }
   },
   computed: {

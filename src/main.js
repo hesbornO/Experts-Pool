@@ -15,7 +15,7 @@ Vue.use(VueToast, {
 Vue.use(VueFormulate, {
   classes: {
     outer: 'mb-4',
-    input: 'border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1',
+    input: 'capitalize border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1',
     label: 'font-medium text-sm mb-4',
     help: 'text-xs mb-1 text-gray-600 mb-2',
     error: 'text-red-700 text-xs mb-1'

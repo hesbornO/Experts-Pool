@@ -36,7 +36,7 @@
                 <loading v-if="loading"></loading>
               </div>
               <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage"
-                             :schema="jsonSchema" :form-errors="formErrors">
+                             :schema="optionsPopulatedSchema" :form-errors="formErrors">
 
               </FormulateForm>
 
@@ -89,7 +89,9 @@ export default {
       inputErrors: {},
       formErrors: [],
       modal_hidden: true,
-      loading: false
+      loading: false,
+      fetchedOptions:[],
+      optionsPopulatedSchema: []
     }
   },
   props: {
@@ -110,10 +112,11 @@ export default {
         return []
       }
     },
-     size: {
-				type: String,
-				default: "max-w-sm",
-			},
+   size: {
+      type: String,
+      default: "max-w-sm",
+    },
+    optionsList: { type: Array, default: () => [] },
   },
   methods: {
     performUpdateAction() {
@@ -141,6 +144,28 @@ export default {
         this.loading = false
       })
     },
+    fetchOptions() {
+      // let schema =[]
+      this.optionsList.map((option,index)=>{
+        this.$store.dispatch(option).then((resp)=>{
+          this.fetchedOptions.push(resp)
+        }).then(()=>{
+          console.log("index", index +1, this.optionsList.length)
+          if(index +1 === this.optionsList.length){
+            this.populateSchema()
+          }
+        })
+      })
+
+    },
+    populateSchema(){
+      let schema = JSON.stringify(this.jsonSchema)
+      console.log("schema", schema)
+      this.fetchedOptions.map((option, index)=>{
+        schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
+      })
+      this.optionsPopulatedSchema = JSON.parse(schema)
+    },
     back() {
       this.$router.back()
     }
@@ -150,6 +175,7 @@ export default {
   },
   mounted() {
     this.fetchObject()
+    this.fetchOptions()
   }
 }
 </script>

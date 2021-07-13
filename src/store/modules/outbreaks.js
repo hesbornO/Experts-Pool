@@ -37,7 +37,7 @@ const actions = {
                 relative_url = "/outbreak/" + payload
             }
             api.get(relative_url).then(resp => {
-                commit("setOubreak", resp.data)
+                commit("setOutbreak", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
