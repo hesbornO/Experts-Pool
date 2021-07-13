@@ -185,16 +185,12 @@ export default {
        })
     }
   },
-  created() {
-    this.fetchData()
-  },
   mounted() {
     this.fetchData()
   },
   watch: {
     $route: {
       async handler() {
-        console.log('match', this.$route.matched.length)
         if (
             this.$route.matched.length === 1 || (this.$route.matched.length > 1 && this.pageResult).length === 0 )
         {

@@ -28,16 +28,14 @@
                 {
                     "type": "select",
                     "label": "Competencies",
-                    "name": "competencies_list",
-                    "validation": "required",
+                    "name": "competencies",
                     "multiple":"multiple",  
                     "options":[0]
                 },
                 {
                     "type": "select",
                     "label": "Affected Regions",
-                    "name": "affected_regions_list",
-                    "validation": "required",
+                    "name": "affected_regions",
                     "options":[1],
                     "multiple":"multiple"
                     

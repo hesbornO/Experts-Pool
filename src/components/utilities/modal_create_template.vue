@@ -113,7 +113,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
       }).catch(err=>{
       }).then(()=>{
-        this.loading = false
+        // this.loading = false
       });
     },
     back(){
@@ -125,7 +125,6 @@ export default {
         this.$store.dispatch(option).then((resp)=>{
           this.fetchedOptions.push(resp)
         }).then(()=>{
-          console.log("index", index +1, this.optionsList.length)
           if(index +1 === this.optionsList.length){
             this.populateSchema()
           }
@@ -139,6 +138,7 @@ export default {
              schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
         })
         this.optionsPopulatedSchema = JSON.parse(schema)
+        this.loading = false
     }
   },
   computed: {
