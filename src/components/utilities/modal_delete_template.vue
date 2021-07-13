@@ -8,7 +8,7 @@
 
         <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
         <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:max-h-lg sm:w-full">
+            class="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:max-h-lg sm:w-full">
           <div class="bg-white sm:pb-4 flex flex-col justify-between text-red-400">
             <div class="w-full flex flex-row justify-between text-center border-b border-gray-200 py-3.5 px-3">
               <div class="flex flex-row">

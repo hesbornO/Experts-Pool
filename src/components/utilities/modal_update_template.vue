@@ -8,7 +8,7 @@
 
         <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
         <div
-            :class="['inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
+            :class="['inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all',size]">
           <div class="bg-white sm:pb-4 flex flex-col justify-between text-havelock-blue">
             <div class="w-full flex flex-row justify-between text-center border-b border-gray-200 py-3.5 px-3">
               <div class="flex flex-row">
@@ -149,7 +149,10 @@ export default {
       }).catch(err => {
         displayServerErrMessage(err)
       }).then(()=>{
-        // this.loading = false
+        if(this.optionsList.length ===0){
+          this.loading = false
+        }
+        //
       })
     },
     fetchOptions() {
@@ -178,6 +181,13 @@ export default {
       this.$forceUpdate()
       this.loading = false
     },
+    tryOptions(){
+      if (this.optionsList.length>0){
+        this.fetchOptions()
+      }else{
+        this.optionsPopulatedSchema = this.jsonSchema
+      }
+    },
     back() {
       this.$router.back()
     }
@@ -186,7 +196,7 @@ export default {
     ...mapGetters(['getErrorMessage'])
   },
   mounted() {
-    this.fetchOptions()
+    this.tryOptions()
     this.fetchObject()
   }
 }

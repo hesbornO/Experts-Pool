@@ -166,14 +166,10 @@ const routes = [{
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: {
-                    jsonSchema: [{
-                        "type": "text",
-                        "label": "Region Name",
-                        "name": "name",
-                        "validation": "required"
-                    }],
+                    jsonSchema: region_schema,
                     vuex_action: 'postRegion',
-                    object_title: 'Region'
+                    object_title: 'Region',
+                    optionsList:['fetchCountries'],
                 }
             },
             {
@@ -187,7 +183,8 @@ const routes = [{
                         vuex_fetch_action: 'fetchRegionById',
                         vuex_save_action: 'updateRegionById',
                         object_title: x.params.regionName,
-                        object_id: x.params.regionId
+                        object_id: x.params.regionId,
+                        optionsList:['fetchCountries'],
                     }
 
                 }
