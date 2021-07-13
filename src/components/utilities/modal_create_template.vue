@@ -112,6 +112,7 @@ export default {
           this.back()
         // eslint-disable-next-line no-unused-vars
       }).catch(err=>{
+        this.loading = false
       }).then(()=>{
         // this.loading = false
       });
