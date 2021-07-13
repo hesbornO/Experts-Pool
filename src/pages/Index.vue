@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="flex flex-col w-2/12 justify-end ">
-            <button
+            <!-- <button
                 class="btn btn-blue "
                 @click="registerPreQualifiedRDE()">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -60,174 +60,73 @@
                       stroke-width="2"></path>
               </svg>
               <span class="px-1">add pre-qualified RDE</span>
-            </button>
+            </button> -->
+            <router-link
+                :to="{name:'CreateRDE'}"
+                class="btn btn-blue  text-xs"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"></path>
+              </svg>
+              <span class="px-1">Add RDE</span>
+            </router-link>
+            <router-link
+                class="btn btn-blue"
+               :to="{name: 'CreateCountry'}">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"></path>
+              </svg>
+              <span class="px-1">Add Member Country</span>
+            </router-link>
           </div>
 
         </div>
-        <table id="tblData" class="w-full whitespace-no-wrap">
-          <thead class="">
-          <tr
-              class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-          >
-            <th class="px-4 py-3 w-3/12">Name</th>
-            <th class="px-4 py-3 w-1/12">Specialization</th>
-            <th class="px-4 py-3 w-1/12">Country</th>
-            <th class="px-4 py-3 w-2/12">Status</th>
-            <th class="px-4 py-3 w-2/12">Current Deployment</th>
-            <th class="px-4 py-3 w-3/12">Competencies</th>
-            <th class="px-4 py-3 w-3/12">Action</th>
-          </tr>
-          </thead>
 
-          <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-          <tr v-for="(RDE,index) in RDES.results" :key="index"
-            
-              class="text-gray-600 dark:text-gray-400 border">
-            <td class="px-4 py-4">
-              <div class="flex items-center space-x-4 text-sm text-gray-400">
-                <div class="flex flex-col space-y-1">
-                  <p class="font-semibold text-gray-600">{{RDE.last_name + ', '+ RDE.first_name}}</p>
-                  <p class="text-xs text-gray-600 dark:text-gray-400 font-mono">
-                    <!-- {{ RDE.RDENumber }} -->
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-sm capitalize" >
-              <span v-if="RDE.occupation">
-                {{ RDE.occupation.name }}
+
+
+      <!-- RDE List -->
+      <data_table v-bind="$attrs">
+        <template v-slot="{item}">
+          <td class="px-4 py-3 text-sm capitalize">{{item.last_name?item.last_name:''+', '+item.first_name?item.first_name:''}}</td>
+          <td class="px-4 py-3 text-sm capitalize">{{item.occupation?item.occupation.name:''}}</td>
+          <td class="px-4 py-3 text-sm capitalize">{{item.region_of_residence?item.region_of_residence.name:''}}</td>
+          <td :class="['capitalize px-4 py-3 text-sm leading-tight rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='available'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">{{item.application_status?item.application_status.replace('_',' '):''}}</td>
+          <td class="px-4 py-3 text-sm capitalize">{{item.current_deployment?item.current_deployment:''}}</td>
+          <td class="px-4 py-3 text-sm capitalize">
+            <span v-if="item.competencies">
+              <span v-for="(competency,index) in item.competencies" :key="index">
+                {{competency.name?competency.name:''}}<span v-if="index+1<item.competencies.length">, </span>
               </span>
-            </td>
-            <td class="px-4 py-3 text-sm">
-              <span v-if="RDE.region_of_residence">
-                {{ RDE.region_of_residence.name }}
-              </span>
-            </td>
-            <td class="px-4 py-3 text-xs">
-                <span
-                    :class="['capitalize leading-tight rounded-md',RDE.application_status=='pending_approval'?'px-2 py-1   text-yellow-700 bg-yellow-100 dark:bg-yellow-100 dark:text-yellow-100':RDE.application_status=='available'?'px-2 py-1 text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100':RDE.application_status=='deployed'?'px-2 py-1 text-purple-700 bg-purple-100  dark:bg-purple-700 dark:text-purple-100':'']"
-                >
-                  {{ RDE.application_status.replace('_',' ') }}
-                </span>
-            </td>
-            <td class="px-4 py-3 text-sm">
-              <!-- <span v-if="Object.keys(RDE.current_deployment).length > 0">{{ RDE.current_deployment.outbreak }}, {{ RDE.current_deployment.country }}</span> -->
+            </span>
 
-            </td>
-            <td v-if="RDE.competencies" class="px-4 py-3 text-sm">
-              <span v-for="(competency,index) in RDE.competencies" :key="index" class="capitalize">
-                {{competency.name}} <span v-if="index+1 <RDE.competencies.length">, </span>
-              </span>
+          </td>
+          <td class="px-4 py-3 text-sm flex flex-row space-x-1">
+            <router-link
+                :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                class="btn btn-green h-1/2 text-xs"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+              <span class="px-1">Update</span>
+            </router-link>
 
-            </td>
-            <td class="px-4 py-3 text-sm">    
-                <button class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-green-100 text-green-500 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex" @click="getRDEById(RDE.id)">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                    <span class="px-1">Update</span>
-                  </button>         
-
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div
-          class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+                      <router-link
+          :to="{name:'DeleteRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+          class="btn btn-red h-1/2 text-xs"
       >
-        <!-- <span v-if="RDES" class="flex items-center col-span-3">
-          Showing {{ RDES.length }} of {{ RDES.length }}
-        </span> -->
-        <span class="col-span-2"></span>
-        <!-- Pagination -->
-        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-          <nav aria-label="Table navigation">
-            <ul class="inline-flex items-center">
-              <li>
-                <button
-                    aria-label="Previous"
-                    class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                >
-                  <svg
-                      aria-hidden="true"
-                      class="w-4 h-4 fill-current"
-                      viewBox="0 0 20 20"
-                  >
-                    <path
-                        clip-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  1
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  2
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  3
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  4
-                </button>
-              </li>
-              <li>
-                <span class="px-3 py-1">...</span>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  8
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  9
-                </button>
-              </li>
-              <li>
-                <button
-                    aria-label="Next"
-                    class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                >
-                  <svg
-                      aria-hidden="true"
-                      class="w-4 h-4 fill-current"
-                      viewBox="0 0 20 20"
-                  >
-                    <path
-                        clip-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+        <span class="px-1">Delete</span>
+      </router-link>
+          </td>
+        </template>
+      </data_table>      
+      <!-- end of list -->
+         
       </div>
-      <iframe id="txtArea1" style="display:none"></iframe>
+      
     </div>
 
     <!-- Pre qualified RDE sign up modal -->
@@ -258,7 +157,7 @@
                 </h3>
                 <!--  -->
                 <!--  -->
-                <!-- <form-wizard >
+                <form-wizard class="w-full">
                   <tab-content title="Personal details"
                               icon="ti-user">
                     My first tab content
@@ -271,7 +170,7 @@
                               icon="ti-check">
                     Yuhuuu! This seems pretty damn simple
                   </tab-content>
-                </form-wizard> -->
+                </form-wizard>
                         
         
      
@@ -377,27 +276,30 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
-// import Vue from 'vue'
+import Vue from 'vue'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
+import data_table from "../components/layouts/DataTableTemplate";
+
 // import Datepicker from 'vuejs-datepicker';
 
 //global registration
-
+import VueFormWizard from 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+Vue.use(VueFormWizard)
 //local registration
-// import {FormWizard, TabContent} from 'vue-form-wizard'
-// import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-// Vue.use(VueFormWizard)
-
+import {FormWizard, TabContent} from 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
 export default {
   name: "RDES",
   components: {
 
     dashboard_layout,
+    data_table,
     // Datepicker
-    // FormWizard,
-    // TabContent
+    FormWizard,
+    TabContent
   },
   data() {
     return {

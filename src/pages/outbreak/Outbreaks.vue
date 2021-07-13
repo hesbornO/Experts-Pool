@@ -84,7 +84,6 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
@@ -112,27 +111,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'fetchAllOutbreaks','fetchOutbreakById','deleteOutbreakById']),
-    ...mapGetters(['getCurrentToken']),
-   
-    getOutbreaks(){
-        this.$store.dispatch('fetchAllOutbreaks').then(resp => {
-        this.Outbreaks = resp;  
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getOutBreakById(OutbreakID){    
-      this.fetchOutbreakById(OutbreakID).then(resp=>{            
-          this.form= resp
-      })
-    }
-    
+      
     
 
   },
   mounted() {
-    // this.getOutbreaks()
 
   },
   computed: {}
