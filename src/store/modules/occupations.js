@@ -1,8 +1,8 @@
 import api from "@/api";
 
 const state = {
-    occupations: [],    
-    occupation: {}
+    occupations: [],
+    occupation: {},
 }
 
 const getters = {
@@ -12,8 +12,7 @@ const getters = {
 }
 
 const actions = {
-    // occupations
-    fetchOccupations({ commit }, payload) {
+    fetchAllOccupations({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/occupation/'
             if (payload === undefined) {
@@ -45,6 +44,7 @@ const actions = {
             })
         })
     },
+    // eslint-disable-next-line no-unused-vars
     deleteOccupationById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/occupation/'
@@ -54,8 +54,8 @@ const actions = {
             } else {
                 relative_url = "/occupation/" + payload
             }
+            // console.log('payload:',payload)
             api.delete(relative_url).then(resp => {
-                commit("setOccupation", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -68,6 +68,9 @@ const actions = {
                 commit("setOccupation", resp.data)
                 resolve(resp.data)
             }).catch(err => {
+                if (err.response.status !== 400) {
+                    this.$toast.error('an unknown error occurred')
+                }
                 commit("setError", err.response.data)
                 reject(err.response.data)
             })
@@ -91,13 +94,12 @@ const actions = {
             })
         });
     },
-    // end of occupations
 
 }
 
 const mutations = {
-    setOccupations: (state, occupations) => (state.occupations = occupations),    
-    setOccupation: (state, occupation) => (state.occupation = occupation),    
+    setOccupations: (state, occupations) => (state.occupations = occupations),
+    setOccupation: (state, occupation) => (state.occupatio = occupation),
 }
 
 
