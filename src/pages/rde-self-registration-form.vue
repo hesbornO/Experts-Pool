@@ -106,14 +106,14 @@
             </div>
           </label>
           <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Country of Residence</span>
+            <span class="text-gray-700  font font-semibold dark:text-gray-400">Region</span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.region_of_residence_id" id="country">              
-                <option v-for="(country,index) in countries" :key="index" @input="filterRegions(country.name)" :value="country.id">{{country.name}}</option>
+              v-model="form.region_of_residence_id" id="region">              
+                <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.name}}</option>
               </select>
                <span v-if="getErrorMessage['region_of_residence_id']">
                 <span v-if="getErrorMessage['region_of_residence_id'].length>0">
@@ -337,7 +337,7 @@
             >
               <input
                   class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                  placeholder="John"
+                  placeholder="Jane Doe"
                   name="next_of_kin_name"
                   validation="required"
                   v-model="form.next_of_kin_name"

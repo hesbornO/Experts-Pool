@@ -73,7 +73,7 @@
         <data_table v-bind="$attrs">
           <template v-slot="{item}">
             <td class="px-4 py-3 text-sm capitalize">
-              {{ item.last_name ? item.last_name : '' + ', ' + item.first_name ? item.first_name : '' }}
+              {{ item.last_name ? item.last_name : ''}}, {{ item.first_name ? item.first_name : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.occupation ? item.occupation.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize">
@@ -91,40 +91,70 @@
                   v-if="index+1<item.competencies_objects.length">, </span>
               </span>
             </span><br>
-              <!-- CV preview modal -->
-              <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']">
-                <div class="flex items-end  min-h-full text-center sm:block ">
-                  <div aria-hidden="true" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+             
+
+            </td>
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1">
+                <span v-if="item.cv">
+                  <button class="btn btn-blue"
+                          @click="togglePdfDisplay">
+                    <span v-if="!viewPdf">View CV</span>
+                  </button>
+                </span>
+             
+                 <router-link
+                    :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"
+                    class="btn btn-green h-1/2 text-xs"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"></path>
+                  </svg>
+                  <span class="px-1">Update</span>
+                </router-link>
+             
+                <router-link
+                    :to="{name:'DeleteRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                    class="btn btn-red h-1/2 text-xs"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"></path>
+                  </svg>
+                  <span class="px-1">Delete</span>
+                </router-link>
+
+
+                 <!-- CV preview modal -->
+               <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
+                <div class="flex items-end  min-h-full text-center sm:block ">            
+                  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
                   <!-- This element is to trick the browser into centering the modal contents. -->
-                  <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-
-                  <div
-                      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
+                  <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                
+                  <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                      <div class="h-96">
+                      <div class="h-96">                 
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                          <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900">
+                          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
                             Uploaded CV
                           </h3>
-                          <div class="h-96">
-                            <vue-pdf-app
-                                :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"
-                                :pdf="item.cv"></vue-pdf-app>
+                          <div class="h-96" v-if="item.cv">                      
+                            <vue-pdf-app :pdf="item.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="bg-gray-150 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                      <button
-                          class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm hidden"
-                          type="button">
-
-                      </button>
-                      <button
-                          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase"
-                          type="button"
-                          @click="togglePdfDisplay">
+                      <button></button>
+                      <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay">
                         Close
                       </button>
                     </div>
@@ -132,42 +162,6 @@
                 </div>
               </div>
               <!-- end of CV preview modal -->
-
-            </td>
-            <td class="px-4 py-3 text-sm flex flex-row space-x-1">
-              <span v-if="item.cv">
-              <button class="btn btn-blue"
-                      @click="togglePdfDisplay">
-              <span v-if="!viewPdf">View CV</span>
-              <span v-if="viewPdf">Close preview</span>
-            </button>
-            </span>
-              <router-link
-                  :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-green h-1/2 text-xs"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path
-                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      stroke-linecap="round" stroke-linejoin="round"
-                      stroke-width="2"></path>
-                </svg>
-                <span class="px-1">Update</span>
-              </router-link>
-              <router-link
-                  :to="{name:'DeleteRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-red h-1/2 text-xs"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      stroke-linecap="round" stroke-linejoin="round"
-                      stroke-width="2"></path>
-                </svg>
-                <span class="px-1">Delete</span>
-              </router-link>
             </td>
           </template>
         </data_table>
@@ -201,7 +195,6 @@ export default {
     dashboard_layout,
     data_table,
     VuePdfApp
-    // Datepicker
 
   },
   data() {
@@ -255,7 +248,6 @@ export default {
     },
     submitPreQualifiedRDE() {
       this.register_prequalified_rde = false
-      // alert('RDE registered successfully!!')
     },
     getRDES() {
       this.$store.dispatch('fetchRDES').then(resp => {
@@ -288,7 +280,6 @@ export default {
       reader.onload = e => {
         const dataUri = e.target.result;
         if (dataUri) {
-          // this.compress(dataUri);
           this.form.cv = dataUri
           this.fileUploaded += 1
         }
@@ -309,10 +300,8 @@ export default {
     },
 
     getOccupations() {
-      console.log('getting occupations...')
       this.$store.dispatch('fetchOccupations').then(resp => {
         this.occupations = resp;
-        // console.log('countries:', this.countries)             
       }).catch(err => {
         console.log(err);
       })
@@ -320,7 +309,6 @@ export default {
     getCountries() {
       this.$store.dispatch('fetchCountries').then(resp => {
         this.countries = resp;
-        // console.log('countries:', this.countries)             
       }).catch(err => {
         console.log(err);
       })

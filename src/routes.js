@@ -52,7 +52,7 @@ const routes = [{
                 props: {
                     jsonSchema: rde_schema,
                     vuex_action: 'postRDE',
-                    object_title: 'Add RDE',
+                    object_title: 'RDE',
                     size: 'w-1/2',
                     optionsList: ['fetchAllCompetencies']
                 }
@@ -67,7 +67,7 @@ const routes = [{
                         jsonSchema: rde_schema,
                         vuex_fetch_action: 'fetchRDEById',
                         vuex_save_action: 'updateRDEById',
-                        object_title: `${x.params.rdeName} details`,
+                        object_title: `' ${x.params.rdeName}'s ' details`,
                         object_id: x.params.rdeId,
                         optionsList: ['fetchAllCompetencies'],
                         size: 'w-1/2'
