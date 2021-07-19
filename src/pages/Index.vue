@@ -73,7 +73,7 @@
         <data_table v-bind="$attrs">
           <template v-slot="{item}">
             <td class="px-4 py-3 text-sm capitalize">
-              {{ item.last_name ? item.last_name : ''}}, {{ item.first_name ? item.first_name : '' }}
+              {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.occupation ? item.occupation.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize">
@@ -162,6 +162,42 @@
                 </div>
               </div>
               <!-- end of CV preview modal -->
+
+            </td>
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1">
+              <span v-if="item.cv">
+              <!-- <button class="btn btn-blue"
+                      @click="togglePdfDisplay">
+              <span v-if="!viewPdf">View CV</span>
+              <span v-if="viewPdf">Close preview</span>
+            </button> -->
+            </span>
+              <router-link
+                  :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-green h-1/2 text-xs"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"></path>
+                </svg>
+                <span class="px-1">Update</span>
+              </router-link>
+              <router-link
+                  :to="{name:'DeleteRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-red h-1/2 text-xs"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"></path>
+                </svg>
+                <span class="px-1">Delete</span>
+              </router-link>
             </td>
           </template>
         </data_table>
@@ -177,7 +213,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+// import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
@@ -231,8 +267,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchRDES', 'fetchRDEById']),
-    ...mapGetters(['getCurrentToken']),
+    // ...mapActions(['fetchRDES', 'fetchRDEById']),
+    // ...mapGetters(['getCurrentToken']),
 
     togglePdfDisplay() {
       this.viewPdf = !this.viewPdf;
@@ -246,30 +282,31 @@ export default {
     closeUpdateRDEModal() {
       this.update_rde_details = false
     },
-    submitPreQualifiedRDE() {
-      this.register_prequalified_rde = false
-    },
-    getRDES() {
-      this.$store.dispatch('fetchRDES').then(resp => {
-        this.RDES = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getRDEById(RDEId) {
-      this.update_rde_details = true
-      this.fetchRDEById(RDEId).then(resp => {
-        this.form = resp
-      })
+    // submitPreQualifiedRDE() {
+    //   this.register_prequalified_rde = false
+    //   // alert('RDE registered successfully!!')
+    // },
+    // getRDES() {
+    //   this.$store.dispatch('fetchRDES').then(resp => {
+    //     this.RDES = resp;
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
+    // getRDEById(RDEId) {
+    //   this.update_rde_details = true
+    //   this.fetchRDEById(RDEId).then(resp => {
+    //     this.form = resp
+    //   })
 
-    },
-    postRDEUpdateById() {
-      let payload = {}
-      this.updateCountryById(payload).then(resp => {
-        window.location.replace('/member-countries')
-        console.log(resp)
-      })
-    },
+    // },
+    // postRDEUpdateById() {
+    //   let payload = {}
+    //   this.updateCountryById(payload).then(resp => {
+    //     window.location.replace('/member-countries')
+    //     console.log(resp)
+    //   })
+    // },
     processFile(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) {
@@ -286,55 +323,56 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    registerRDE() {
-      this.form.competencies_list = [this.form.competencies_list]
-      this.form.region_of_residence_id = 21
-      console.log('form', this.form)
+    // registerRDE() {
+    //   this.form.competencies_list = [this.form.competencies_list]
+    //   this.form.region_of_residence_id = 21
+    //   console.log('form', this.form)
 
-      let payload = this.form
-      this.postRDE(payload).then(resp => {
-        this.$store.dispatch('setError', {})
-        window.location.replace('/member-countries')
-        console.log(resp)
-      })
-    },
+    //   let payload = this.form
+    //   this.postRDE(payload).then(resp => {
+    //     this.$store.dispatch('setError', {})
+    //     window.location.replace('/member-countries')
+    //     console.log(resp)
+    //   })
+    // },
 
-    getOccupations() {
-      this.$store.dispatch('fetchOccupations').then(resp => {
-        this.occupations = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getCountries() {
-      this.$store.dispatch('fetchCountries').then(resp => {
-        this.countries = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getRegions() {
-      this.$store.dispatch('fetchRegions').then(resp => {
-        this.regions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
+    // getOccupations() {
+    //   console.log('getting occupations...')
+    //   this.$store.dispatch('fetchOccupations').then(resp => {
+    //     this.occupations = resp;
+    //     // console.log('countries:', this.countries)             
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
+    // getCountries() {
+    //   this.$store.dispatch('fetchCountries').then(resp => {
+    //     this.countries = resp;
+    //     // console.log('countries:', this.countries)             
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
+    // getRegions() {
+    //   this.$store.dispatch('fetchRegions').then(resp => {
+    //     this.regions = resp;
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
 
 
   },
   mounted() {
-    this.getRDES()
-    this.getCountries()
-    this.getRegions()
-    this.getOccupations()
+    // this.getRDES()
+    // this.getCountries()
+    // this.getRegions()
+    // this.getOccupations()
 
   },
   computed: {
-    ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
-    ...mapActions(['fetchCountries', 'fetchRegions', 'fetchOccupations', 'postRDE'])
-
-
+    // ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
+    // ...mapActions(['fetchCountries', 'fetchRegions', 'fetchOccupations', 'postRDE'])
   }
 };
 </script>

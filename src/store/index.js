@@ -10,6 +10,7 @@ import RDE from './modules/RDE'
 import occupations from './modules/occupations'
 import outbreaks from './modules/outbreaks'
 import competencies from './modules/competencies'
+import users from './modules/users'
 
 
 export default new Vuex.Store({
@@ -32,6 +33,7 @@ export default new Vuex.Store({
         RDE,
         occupations,
         outbreaks,
-        competencies        
+        competencies,
+        users
     }
 })
