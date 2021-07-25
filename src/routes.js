@@ -3,9 +3,12 @@ import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Index.vue";
 import MemberCountries from "./pages/countries/MemberCountries.vue";
-import Regions from "./pages/regions/Regions.vue";
+import Regions from "./pages/countries/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
 import Competence from "./pages/competence/Competence.vue";
+import Occupation from "./pages/occupations/Occupations.vue";
+import UserGroups from "./pages/users/UserGroups.vue";
+import Users from "./pages/users/Users.vue";
 import CreateAccount from "./pages/create-account.vue";
 import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
@@ -21,6 +24,9 @@ import country_schema from '@/schemas/country_schema.json'
 import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
+import occupation_schema from '@/schemas/occupation_schema.json'
+import user_group_schema from '@/schemas/user_group_schema.json'
+import user_schema from '@/schemas/user_schema.json'
 import rde_schema from '@/schemas/rde_schema.json'
 import modal_update_template from "./components/utilities/modal_update_template";
 
@@ -99,6 +105,7 @@ const routes = [{
             '</svg>',
         verboseName: 'Register RDE'
     },
+    // member countries
     {
         path: "/member-countries/",
         name: "MemberCountries",
@@ -152,6 +159,7 @@ const routes = [{
             },
         ]
     },
+    // regions
     {
         path: '/member-countries/:countryId/:countryName/regions/',
         name: 'Regions',
@@ -170,7 +178,7 @@ const routes = [{
                     jsonSchema: region_schema,
                     vuex_action: 'postRegion',
                     object_title: 'Region',
-                    optionsList:['fetchCountries'],
+                    optionsList: ['fetchCountries'],
                 }
             },
             {
@@ -185,7 +193,7 @@ const routes = [{
                         vuex_save_action: 'updateRegionById',
                         object_title: x.params.regionName,
                         object_id: x.params.regionId,
-                        optionsList:['fetchCountries'],
+                        optionsList: ['fetchCountries'],
                     }
 
                 }
@@ -262,6 +270,7 @@ const routes = [{
             },
         ]
     },
+    // end of outbreaks
     // competence
     {
         path: "/competence/",
@@ -317,6 +326,173 @@ const routes = [{
             },
         ]
     },
+    // end of competence
+    // occupation
+    {
+        path: "/occupation/",
+        name: "Occupation",
+        component: Occupation,
+        props: {
+            vuex_data_action: 'fetchAllOccupations',
+            table_headings: ['NAME', 'CREATED AT', 'UPDATED AT', 'ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
+        children: [{
+                path: 'create-occupation',
+                name: 'CreateOccupation',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: occupation_schema,
+                    vuex_action: 'postOccupation',
+                    object_title: 'Add Occupation',
+                    size: 'w-1/2',
+                    optionsList: []
+                }
+            },
+            {
+                path: 'update-occupation/:occupationName/:occupationId',
+                name: 'UpdateOccupation',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: occupation_schema,
+                        vuex_fetch_action: 'fetchOccupationById',
+                        vuex_save_action: 'updateOccupationById',
+                        object_title: x.params.occupationName,
+                        object_id: x.params.occupationId,
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-occupation/:occupationName/:occupationId',
+                name: 'DeleteOccupation',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteOccupationById',
+                        vuex_payload: x.params.occupationId,
+                        object_title: x.params.occupationName
+                    }
+                }
+            },
+        ]
+    },
+    // end of occupation
+    // user groups
+    {
+        path: "/user-groups/",
+        name: "UserGroups",
+        component: UserGroups,
+        props: {
+            vuex_data_action: 'fetchUserGroups',
+            table_headings: ['NAME', 'ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+        children: [{
+                path: 'create-user-group',
+                name: 'CreateUserGroup',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: user_group_schema,
+                    vuex_action: 'postUserGroup',
+                    object_title: 'Add User Group',
+                    size: 'w-1/2',
+                    optionsList: []
+                }
+            },
+            {
+                path: 'update-user-group/:userGroupName/:userGroupId',
+                name: 'UpdateUserGroup',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: user_group_schema,
+                        vuex_fetch_action: 'fetchUserGroupById',
+                        vuex_save_action: 'updateUserGroupById',
+                        object_title: x.params.userGroupName,
+                        object_id: x.params.userGroupId,
+                        size: 'w-1/2'
+                    }
+                }
+            },
+            {
+                path: 'delete-user-group/:userGroupName/:userGroupId',
+                name: 'DeleteUserGroup',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteUserGroupById',
+                        vuex_payload: x.params.userGroupId,
+                        object_title: x.params.userGroupName
+                    }
+                }
+            },
+        ]
+    },
+    // end of user groups
+    // users
+    {
+        path: "/users/",
+        name: "Users",
+        component: Users,
+        props: {
+            vuex_data_action: 'fetchUsers',
+            table_headings: ['USERNAME', 'NAME', 'PHONE NUMBER', 'GROUPS', 'STAFF NUMBER', 'ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+        children: [{
+                path: 'create-user',
+                name: 'CreateUser',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: user_schema,
+                    vuex_action: 'postUser',
+                    object_title: 'Add User',
+                    size: 'w-1/2',
+                    optionsList: []
+                }
+            },
+            {
+                path: 'update-user/:userId',
+                name: 'UpdateUser',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: user_schema,
+                        vuex_fetch_action: 'fetchUserById',
+                        vuex_save_action: 'updateUserById',
+                        object_title: 'Update User',
+                        object_id: x.params.userId,
+                        size: 'w-1/2'
+                    }
+                }
+            },
+            {
+                path: 'delete-user/:userId',
+                name: 'DeleteUser',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteUserById',
+                        vuex_payload: x.params.userId,
+                        object_title: 'Delete user'
+                    }
+                }
+            },
+        ]
+    },
+    // end of users
 
     {
         path: "/create-account",

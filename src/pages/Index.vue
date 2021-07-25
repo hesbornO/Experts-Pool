@@ -73,7 +73,7 @@
         <data_table v-bind="$attrs">
           <template v-slot="{item}">
             <td class="px-4 py-3 text-sm capitalize">
-              {{ item.last_name ? item.last_name : '' + ', ' + item.first_name ? item.first_name : '' }}
+              {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.occupation ? item.occupation.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize">
@@ -136,11 +136,11 @@
             </td>
             <td class="px-4 py-3 text-sm flex flex-row space-x-1">
               <span v-if="item.cv">
-              <button class="btn btn-blue"
+              <!-- <button class="btn btn-blue"
                       @click="togglePdfDisplay">
               <span v-if="!viewPdf">View CV</span>
               <span v-if="viewPdf">Close preview</span>
-            </button>
+            </button> -->
             </span>
               <router-link
                   :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
@@ -183,7 +183,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+// import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
@@ -238,8 +238,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchRDES', 'fetchRDEById']),
-    ...mapGetters(['getCurrentToken']),
+    // ...mapActions(['fetchRDES', 'fetchRDEById']),
+    // ...mapGetters(['getCurrentToken']),
 
     togglePdfDisplay() {
       this.viewPdf = !this.viewPdf;
@@ -253,31 +253,31 @@ export default {
     closeUpdateRDEModal() {
       this.update_rde_details = false
     },
-    submitPreQualifiedRDE() {
-      this.register_prequalified_rde = false
-      // alert('RDE registered successfully!!')
-    },
-    getRDES() {
-      this.$store.dispatch('fetchRDES').then(resp => {
-        this.RDES = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getRDEById(RDEId) {
-      this.update_rde_details = true
-      this.fetchRDEById(RDEId).then(resp => {
-        this.form = resp
-      })
+    // submitPreQualifiedRDE() {
+    //   this.register_prequalified_rde = false
+    //   // alert('RDE registered successfully!!')
+    // },
+    // getRDES() {
+    //   this.$store.dispatch('fetchRDES').then(resp => {
+    //     this.RDES = resp;
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
+    // getRDEById(RDEId) {
+    //   this.update_rde_details = true
+    //   this.fetchRDEById(RDEId).then(resp => {
+    //     this.form = resp
+    //   })
 
-    },
-    postRDEUpdateById() {
-      let payload = {}
-      this.updateCountryById(payload).then(resp => {
-        window.location.replace('/member-countries')
-        console.log(resp)
-      })
-    },
+    // },
+    // postRDEUpdateById() {
+    //   let payload = {}
+    //   this.updateCountryById(payload).then(resp => {
+    //     window.location.replace('/member-countries')
+    //     console.log(resp)
+    //   })
+    // },
     processFile(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) {
@@ -295,58 +295,56 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    registerRDE() {
-      this.form.competencies_list = [this.form.competencies_list]
-      this.form.region_of_residence_id = 21
-      console.log('form', this.form)
+    // registerRDE() {
+    //   this.form.competencies_list = [this.form.competencies_list]
+    //   this.form.region_of_residence_id = 21
+    //   console.log('form', this.form)
 
-      let payload = this.form
-      this.postRDE(payload).then(resp => {
-        this.$store.dispatch('setError', {})
-        window.location.replace('/member-countries')
-        console.log(resp)
-      })
-    },
+    //   let payload = this.form
+    //   this.postRDE(payload).then(resp => {
+    //     this.$store.dispatch('setError', {})
+    //     window.location.replace('/member-countries')
+    //     console.log(resp)
+    //   })
+    // },
 
-    getOccupations() {
-      console.log('getting occupations...')
-      this.$store.dispatch('fetchOccupations').then(resp => {
-        this.occupations = resp;
-        // console.log('countries:', this.countries)             
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getCountries() {
-      this.$store.dispatch('fetchCountries').then(resp => {
-        this.countries = resp;
-        // console.log('countries:', this.countries)             
-      }).catch(err => {
-        console.log(err);
-      })
-    },
-    getRegions() {
-      this.$store.dispatch('fetchRegions').then(resp => {
-        this.regions = resp;
-      }).catch(err => {
-        console.log(err);
-      })
-    },
+    // getOccupations() {
+    //   console.log('getting occupations...')
+    //   this.$store.dispatch('fetchOccupations').then(resp => {
+    //     this.occupations = resp;
+    //     // console.log('countries:', this.countries)             
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
+    // getCountries() {
+    //   this.$store.dispatch('fetchCountries').then(resp => {
+    //     this.countries = resp;
+    //     // console.log('countries:', this.countries)             
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
+    // getRegions() {
+    //   this.$store.dispatch('fetchRegions').then(resp => {
+    //     this.regions = resp;
+    //   }).catch(err => {
+    //     console.log(err);
+    //   })
+    // },
 
 
   },
   mounted() {
-    this.getRDES()
-    this.getCountries()
-    this.getRegions()
-    this.getOccupations()
+    // this.getRDES()
+    // this.getCountries()
+    // this.getRegions()
+    // this.getOccupations()
 
   },
   computed: {
-    ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
-    ...mapActions(['fetchCountries', 'fetchRegions', 'fetchOccupations', 'postRDE'])
-
-
+    // ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
+    // ...mapActions(['fetchCountries', 'fetchRegions', 'fetchOccupations', 'postRDE'])
   }
 };
 </script>
