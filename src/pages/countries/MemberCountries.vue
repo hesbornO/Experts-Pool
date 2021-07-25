@@ -89,17 +89,8 @@ export default {
         name: '',
         phone_code: ''
       },
-      register_prequalified_rde: false,
-      transactions: {},
-      search: '',
       countries: {},
-      delete_country: false,
-      add_member_country: false,
-      update_member_country: false,
       regions: {},
-      add_region: false,
-      update_region: false,
-      filteredRegions: {},
     }
   },
   methods: {

@@ -67,26 +67,12 @@ export default {
   },
   data() {
     return {
-      add_outbreak: false,
-      search: '',
-      status: '',
-      countries: '',
-      specializations: '',
       form:{},
-      competencies:{}
     }
   },
   methods: {
-    
-    
-    
-
   },
-  mounted() {
-
-  },
-  computed: {}
-};
+}
 </script>
 
 <style>
