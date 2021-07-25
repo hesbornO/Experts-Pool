@@ -54,10 +54,6 @@
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
 
-
-// import Datepicker from 'vuejs-datepicker';
-
-
 export default {
   name: "Outbreaks",
   components: {
