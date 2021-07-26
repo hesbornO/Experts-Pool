@@ -83,19 +83,11 @@ export default {
   },
   data() {
     return {
-      add_outbreak: false,
-      search: '',
-      status: '',
-      countries: '',
-      specializations: '',
       form:{},
       Outbreaks:{}
     }
   },
   methods: {
-      
-    
-
   },
   mounted() {
 
