@@ -1,37 +1,35 @@
 [{
     "component": "div",
     "class": "px-2 py-3",
-    "children": [
-        {
-            "component":"h5",
-            "class":"text-havelock-blue font-semibold uppercase mb-3 text-sm",
-            "children":"Personal Details"
+    "children": [{
+            "component": "h5",
+            "class": "text-havelock-blue font-semibold uppercase mb-3 text-sm",
+            "children": "Personal Details"
         },
         {
             "component": "div",
             "class": "grid grid-cols-3 gap-3",
-            "children": [
-                {
+            "children": [{
                     "type": "text",
                     "label": "First Name",
                     "name": "first_name",
-                    "placeholder":"e.g John",
-                    "help":"Specify first name",
+                    "placeholder": "e.g John",
+                    "help": "Specify first name",
                     "validation": "required"
                 },
                 {
                     "type": "text",
                     "label": "Middle Name",
                     "name": "middle_name",
-                    "placeholder":"e.g Joseph",
-                    "help":"Specify middle name"
+                    "placeholder": "e.g Joseph",
+                    "help": "Specify middle name"
                 },
                 {
                     "type": "text",
                     "label": "Last Name",
                     "name": "last_name",
-                    "placeholder":"e.g Doe",
-                    "help":"Specify last name",
+                    "placeholder": "e.g Doe",
+                    "help": "Specify last name",
                     "validation": "required"
                 }
             ]
@@ -39,29 +37,35 @@
         {
             "component": "div",
             "class": "grid grid-cols-3 gap-3",
-            "children": [
-                {
+            "children": [{
                     "type": "date",
                     "label": "Date of birth",
                     "name": "date_of_birth",
-                    "placeholder":"--select date--",
-                    "help":"Specify date of birth",
+                    "placeholder": "--select date--",
+                    "help": "Specify date of birth",
                     "validation": "required"
                 },
                 {
-                    "type": "text",
+                    "type": "select",
                     "label": "Gender",
                     "name": "gender",
-                    "placeholder":"e.g. Male",
-                    "help":"Specify gender",
+                    "options": {
+                        "F": "Female",
+                        "M": "Male",
+                        "T": "Transgender",
+                        "O": "Prefer not to answer"
+                    },
+                    "placeholder": "--select gender--",
+                    "help": "Specify gender",
                     "validation": "required"
                 },
                 {
-                    "type": "text",
+                    "type": "select",
                     "label": "Occupation",
                     "name": "occupation_id",
-                    "placeholder":"e.g doctor",
-                    "help":"Specify occupation",
+                    "placeholder": "--select--",
+                    "options": [0],
+                    "help": "Specify occupation",
                     "validation": "required"
                 }
             ]
@@ -69,52 +73,57 @@
         {
             "component": "div",
             "class": "grid grid-cols-3 gap-3",
-            "children": [
-                {
-                    "component":"div",
-                    "class":"grid grid-cols-2 gap-3",
-                    "children":[
-                        {
-                            "type": "text",
+            "children": [{
+                    "component": "div",
+                    "class": "grid grid-cols-2 gap-3",
+                    "children": [{
+                            "type": "select",
                             "label": "ID Type",
                             "name": "id_type",
-                            "placeholder":"e.g. National ID",
-                            "help":"Specify ID type",
+                            "placeholder": "--select ID type--",
+                            "options": {
+                                "national_id": "National ID",
+                                "birth_cert": "Birth Certificate",
+                                "alien_id": "Alien ID",
+                                "military_id": "Military ID",
+                                "passport": "Passport No."
+                            },
+                            "help": "Specify ID type",
                             "validation": "required"
                         },
                         {
                             "type": "text",
                             "label": "ID Number",
                             "name": "id_number",
-                            "placeholder":"e.g. 123456",
-                            "help":"Specify ID number",
+                            "placeholder": "e.g. 123456",
+                            "help": "Specify ID number",
                             "validation": "required"
                         }
                     ]
-                },                
+                },
                 {
                     "type": "text",
                     "label": "Phone Number",
                     "name": "phone",
-                    "placeholder":"e.g. 07123...",
-                    "help":"Specify phone number",
+                    "placeholder": "e.g. 07123...",
+                    "help": "Specify phone number",
                     "validation": "required"
                 },
                 {
                     "type": "text",
                     "label": "Email",
                     "name": "email",
-                    "placeholder":"e.g john.doe@gmail.com",
-                    "help":"Specify email address",
+                    "placeholder": "e.g john.doe@gmail.com",
+                    "help": "Specify email address",
                     "validation": "required"
                 }
             ]
         },
         {
-            "component":"h3",
-            "class":"text-havelock-blue font-semibold uppercase mb-3 text-sm",
-            "children":"Next of Kin Details"
-        },        
+            "component": "h3",
+            "class": "text-havelock-blue font-semibold uppercase mb-3 text-sm",
+            "children": "Next of Kin Details"
+        },
 
         {
             "component": "div",
@@ -134,31 +143,31 @@
             ]
         },
         {
-            "component":"h3",
-            "class":"text-havelock-blue font-semibold uppercase mb-3 text-sm",
-            "children":"Other"
-        },   
+            "component": "h3",
+            "class": "text-havelock-blue font-semibold uppercase mb-3 text-sm",
+            "children": "Other"
+        },
         {
             "component": "div",
             "class": "grid grid-cols-2 gap-3",
-            "children": [
-                {
-                    "type": "text",
+            "children": [{
+                    "type": "select",
                     "label": "Region of Residence",
                     "name": "region_of_residence_id",
+                    "options": [1],
                     "validation": "required"
                 },
                 {
                     "type": "select",
                     "label": "Competencies",
                     "name": "competencies",
-                    "options":[0],
-                    "multiple":"multiple",
+                    "options": [2],
+                    "multiple": "multiple",
                     "validation": "required"
                 }
             ]
         },
-       
+
         {
             "type": "textarea",
             "label": "Note",
@@ -166,6 +175,6 @@
             "name": "note"
         }
 
-        
+
     ]
 }]

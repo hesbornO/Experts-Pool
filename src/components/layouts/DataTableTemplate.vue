@@ -155,6 +155,7 @@ export default {
     }
   },
   props: {
+    object_id: {},
     table_headings: {
       type: Array,
       default: ()=>{return []}
@@ -175,7 +176,7 @@ export default {
     fetchData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch(this.vuex_data_action).then(resp => {
+       this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:'').then(resp => {
          this.pageResult = resp
 
        }).catch(err=>{

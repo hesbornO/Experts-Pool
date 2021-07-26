@@ -59,8 +59,8 @@ const routes = [{
                     jsonSchema: rde_schema,
                     vuex_action: 'postRDE',
                     object_title: 'RDE',
-                    size: 'w-1/2',
-                    optionsList: ['fetchAllCompetencies']
+                    size: 'w-3/4',
+                    optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies']
                 }
             },
             {
@@ -75,8 +75,8 @@ const routes = [{
                         vuex_save_action: 'updateRDEById',
                         object_title: `' ${x.params.rdeName}'s ' details`,
                         object_id: x.params.rdeId,
-                        optionsList: ['fetchAllCompetencies'],
-                        size: 'w-1/2'
+                        optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
+                        size: 'w-3/4'
                     }
 
                 }
@@ -164,9 +164,12 @@ const routes = [{
         path: '/member-countries/:countryId/:countryName/regions/',
         name: 'Regions',
         component: Regions,
-        props: {
-            vuex_data_action: 'fetchRegions',
-            table_headings: ['NAME', 'Country', 'ACTION']
+        props: x => {
+            return {
+                vuex_data_action: 'fetchRegions',
+                object_id: `?country=${x.params.countryId}`,
+                table_headings: ['NAME', 'Country', 'ACTION']
+            }
         },
         showInLeftBar: false,
         children: [{
