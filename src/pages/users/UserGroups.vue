@@ -21,7 +21,7 @@
     </div>
     <data_table v-bind="$attrs">
       <template v-slot="{item}">        
-        <td class="px-4 py-3 text-sm capitalize">{{item.name }}</td>        
+        <td class="px-4 py-3 text-sm uppercase">{{item.name }}</td>        
         <td class="px-4 py-3 text-sm flex flex-row space-x-1">   
           <router-link
               :to="{name:'UpdateUserGroup', params:{userGroupId:item.id, userGroupName: item.name}}"
