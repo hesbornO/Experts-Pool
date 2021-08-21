@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Index.vue";
+import Deployments from "./pages/deployments/Deployments.vue";
 import MemberCountries from "./pages/countries/MemberCountries.vue";
 import Regions from "./pages/countries/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
@@ -9,7 +10,7 @@ import Competence from "./pages/competence/Competence.vue";
 import Occupation from "./pages/occupations/Occupations.vue";
 import UserGroups from "./pages/users/UserGroups.vue";
 import Users from "./pages/users/Users.vue";
-import CreateAccount from "./pages/create-account.vue";
+import SignUp from "./pages/sign-up.vue";
 import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
 import MyAccount from "./pages/my-account.vue";
@@ -21,6 +22,7 @@ import modal_create_template from "./components/utilities/modal_create_template"
 
 //schemas
 import country_schema from '@/schemas/country_schema.json'
+import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
 import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
@@ -39,6 +41,7 @@ const routes = [{
         component: Login,
         showInLeftBar: false
     },
+    //home
     {
         path: "/home",
         name: "home",
@@ -96,6 +99,7 @@ const routes = [{
             },
         ]
     },
+    // self-registration
     {
         path: "/rde-self-registration-form",
         name: "RdeSelfRegistrationForm",
@@ -104,6 +108,37 @@ const routes = [{
             '  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />\n' +
             '</svg>',
         verboseName: 'Register RDE'
+    },
+    //deployments
+    {
+        path: "/deployments",
+        name: "Deployments",
+        component: Deployments,
+        props: {
+            vuex_data_action: 'fetchRDES',
+            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'STATUS', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'ACTIONS']
+        },
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>`,
+        children: [{
+            path: 'deploy-rde/:rdeName/:rdeId',
+            name: 'DeployRDE',
+            component: modal_update_template,
+            showInLeftBar: false,
+            props: x => {
+                return {
+                    jsonSchema: deploy_rde_schema,
+                    vuex_fetch_action: 'fetchRDEById',
+                    vuex_save_action: 'updateRDEById',
+                    object_title: `' ${x.params.rdeName}'s ' details`,
+                    object_id: x.params.rdeId,
+                    optionsList: ['fetchAllOutbreaks'],
+                    size: 'w-3/4'
+                }
+
+            }
+        }]
     },
     // member countries
     {
@@ -496,11 +531,10 @@ const routes = [{
         ]
     },
     // end of users
-
     {
-        path: "/create-account",
+        path: "/sign-up",
         name: "CreateAccount",
-        component: CreateAccount,
+        component: SignUp,
         showInLeftBar: false
     },
 

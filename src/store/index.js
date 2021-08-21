@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 import transaction from './modules/transactions'
 import countries from './modules/countries'
 import login from './modules/login'
+import signup from './modules/signup'
 import RDE from './modules/RDE'
 import occupations from './modules/occupations'
 import outbreaks from './modules/outbreaks'
@@ -30,6 +31,7 @@ export default new Vuex.Store({
         transaction,
         countries,
         login,
+        signup,
         RDE,
         occupations,
         outbreaks,
