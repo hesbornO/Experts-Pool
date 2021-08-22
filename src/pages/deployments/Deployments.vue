@@ -6,20 +6,20 @@
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
           <div class="flex flex-row space-x-8 w-10/12">
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Specialization</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">Outbreaks</p>
               <select
-                  v-model="specializations"
+                 v-model="fetched_outbreaks"
                   :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2  form-select w-full']"
-                  name="specialization" @change="filterBySpecialization(specialization)">
-                <option selected value="">All</option>
-                <option v-for="(specialization,index) in RDE_specializations" :key="index">
-                  {{ specialization.text }}
+                  placeholder="--select country--">
+                <option selected value="">All</option> {{this.outbreaks}}
+                <option v-for="(outbreak,index) in this.outbreaks.results" :key="index">
+                  {{ outbreak.name}}
                 </option>
               </select>
             </div>
             <div class="flex-auto flex-col space-y-2">
               <p class="text-gray-600 leading-relaxed text-capitalize">Countries</p>
-              <select v-model="countries"
+              <select v-model="fetched_countries"
                       :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
                       name="country" placeholder="--select country--" @change="filterByCountry(country)">
                 <option selected value="">All</option>
@@ -167,7 +167,8 @@ export default {
       register_prequalified_rde: false,
       search: '',
       status: '',
-      countries: '',
+      fetched_outbreaks: '',
+      fetched_countries: '',
       viewPdf: false,
       eac_countries: [
         {text: 'Burundi', value: 'burundi'},
@@ -190,6 +191,7 @@ export default {
       form: {},
       update_rde_details: false,
       occupations: {},
+      outbreaks:[],
       fileUploaded: 0,
 
 
@@ -215,13 +217,13 @@ export default {
     //   this.register_prequalified_rde = false
     //   // alert('RDE registered successfully!!')
     // },
-    // getRDES() {
-    //   this.$store.dispatch('fetchRDES').then(resp => {
-    //     this.RDES = resp;
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
+    getOutbreaks() {
+      this.$store.dispatch('fetchAllOutbreaks').then(resp => {
+        this.outbreaks = resp;
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     // getRDEById(RDEId) {
     //   this.update_rde_details = true
     //   this.fetchRDEById(RDEId).then(resp => {
@@ -289,6 +291,9 @@ export default {
     //     console.log(err);
     //   })
     // },
+    filterByOutbreak(){
+
+    }
 
 
   },
@@ -297,6 +302,7 @@ export default {
     // this.getCountries()
     // this.getRegions()
     // this.getOccupations()
+    this.getOutbreaks()
 
   },
   computed: {

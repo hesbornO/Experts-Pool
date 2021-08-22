@@ -16,9 +16,9 @@ import ForgotPassword from "./pages/forgot-password.vue";
 import MyAccount from "./pages/my-account.vue";
 import PageNotFound from "./pages/404.vue";
 import modal_delete_template from "./components/utilities/modal_delete_template";
-// import CreateMemberCountry from "./pages/countries/CreateMemberCountry";
 import modal_create_template from "./components/utilities/modal_create_template";
-// import paragraph from "./components/layouts/paragraph";
+import modal_update_template from "./components/utilities/modal_update_template";
+import modal_deploy_template from "./components/utilities/modal_deploy_template";
 
 //schemas
 import country_schema from '@/schemas/country_schema.json'
@@ -30,7 +30,6 @@ import occupation_schema from '@/schemas/occupation_schema.json'
 import user_group_schema from '@/schemas/user_group_schema.json'
 import user_schema from '@/schemas/user_schema.json'
 import rde_schema from '@/schemas/rde_schema.json'
-import modal_update_template from "./components/utilities/modal_update_template";
 
 
 Vue.use(VueRouter);
@@ -118,20 +117,18 @@ const routes = [{
             vuex_data_action: 'fetchRDES',
             table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'STATUS', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'ACTIONS']
         },
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>`,
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
         children: [{
             path: 'deploy-rde/:rdeName/:rdeId',
             name: 'DeployRDE',
-            component: modal_update_template,
+            component: modal_deploy_template,
             showInLeftBar: false,
             props: x => {
                 return {
                     jsonSchema: deploy_rde_schema,
-                    vuex_fetch_action: 'fetchRDEById',
-                    vuex_save_action: 'updateRDEById',
-                    object_title: `' ${x.params.rdeName}'s ' details`,
+                    // vuex_fetch_action: 'fetchRDEById',
+                    vuex_save_action: 'deployRDE',
+                    object_title: `' ${x.params.rdeName}' ?`,
                     object_id: x.params.rdeId,
                     optionsList: ['fetchAllOutbreaks'],
                     size: 'w-3/4'

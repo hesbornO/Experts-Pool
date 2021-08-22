@@ -2,14 +2,14 @@ import api from "@/api";
 
 const state = {
     RDES: [],
-    RDE:{}
+    RDE: {}
 }
 
 const getters = {
     allRDES(state) {
         return state.RDES
     }
-    
+
 }
 
 const actions = {
@@ -73,6 +73,17 @@ const actions = {
             })
         });
     },
+    deployRDE({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post("/deployment/", payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
     updateRDEById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -91,12 +102,13 @@ const actions = {
             })
         });
     },
+
     // end of countries
 }
 
 const mutations = {
-    setRDES: (state, RDES) => (state.RDES = RDES),       
-    setRDE: (state, RDE) => (state.RDE = RDE),       
+    setRDES: (state, RDES) => (state.RDES = RDES),
+    setRDE: (state, RDE) => (state.RDE = RDE),
 }
 
 
