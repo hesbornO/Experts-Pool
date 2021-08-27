@@ -102,8 +102,46 @@ const actions = {
             })
         });
     },
+    approveRDEById({ commit }, payload) {
+        console.log('payload 2:',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload+ "/"
+                payload = {application_status:'approved'}
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    disapproveRDEById({ commit }, payload) {
+        console.log('payload 2:',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload+ "/"
+                payload = {application_status:'pending_approval'}
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
 
-    // end of countries
+    
 }
 
 const mutations = {

@@ -73,13 +73,14 @@
         <data_table v-bind="$attrs">
           <template v-slot="{item}">
             <td class="px-4 py-3 text-sm capitalize">
+              <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" v-if="item.application_status==='approved'"></path></svg>
               {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.occupation ? item.occupation.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize">
               {{ item.region_of_residence ? item.region_of_residence.name : '' }}
             </td>
-            <td :class="['capitalize px-4 py-3 text-sm leading-tight rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='available'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
               {{ item.application_status ? item.application_status.replace('_', ' ') : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.current_deployment ? item.current_deployment : 'None' }}
@@ -101,43 +102,54 @@
                     <span v-if="!viewPdf">View CV</span>
                   </button>
                 </span> -->
-                <router-link
-                    :to="{name:'ApproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
-                    class="btn btn-blue h-1/2 text-xs"
-                    v-if="item.application_status === 'pending_approval'"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span class="px-1">Approve</span>
-                </router-link>
-             
-                 <router-link
-                    :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"
-                    class="btn btn-green h-1/2 text-xs"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                        stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2"></path>
-                  </svg>
-                  <span class="px-1">Update</span>
-                </router-link>
-             
-                <router-link
-                    :to="{name:'DeleteRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
-                    class="btn btn-red h-1/2 text-xs"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2"></path>
-                  </svg>
-                  <span class="px-1">Delete</span>
-                </router-link>
+                
 
+                  <router-link
+                      :to="{name:'ApproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                      class="btn btn-blue h-1/2 text-xs"
+                      v-if="item.application_status === 'pending_approval'"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span class="px-1">Approve</span>
+                  </router-link>
+                  <router-link
+                      :to="{name:'DisapproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                      class="btn btn-orange h-1/2 text-xs"
+                      v-if="item.application_status === 'approved'"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="px-1">Disapprove</span>
+                  </router-link>
+              
+                  <router-link
+                      :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"
+                      class="btn btn-green h-1/2 text-xs"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                      <path
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
+                    </svg>
+                    <span class="px-1">Update</span>
+                  </router-link>
+              
+                  <router-link
+                      :to="{name:'DeleteRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                      class="btn btn-red h-1/2 text-xs"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                      <path
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
+                    </svg>
+                    <span class="px-1">Delete</span>
+                  </router-link>
+
+                
 
                  <!-- CV preview modal -->
                <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
@@ -366,5 +378,8 @@ export default {
 
 .btn-green {
   @apply bg-green-200 text-green-700 hover:bg-green-700 hover:text-white
+}
+.btn-orange {
+  @apply bg-orange-200 text-orange-700 hover:bg-orange-700 hover:text-white
 }
 </style>

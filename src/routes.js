@@ -19,6 +19,8 @@ import modal_delete_template from "./components/utilities/modal_delete_template"
 import modal_create_template from "./components/utilities/modal_create_template";
 import modal_update_template from "./components/utilities/modal_update_template";
 import modal_deploy_template from "./components/utilities/modal_deploy_template";
+import modal_approve_rde_template from "./components/utilities/modal_approve_rde_template";
+import modal_disapprove_rde_template from "./components/utilities/modal_disapprove_rde_template";
 
 //schemas
 import country_schema from '@/schemas/country_schema.json'
@@ -96,6 +98,32 @@ const routes = [{
                     }
                 }
             },
+            {
+                path: 'approve-rde/:rdeName/:rdeId',
+                name: 'ApproveRDE',
+                component: modal_approve_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'approveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'disapprove-rde/:rdeName/:rdeId',
+                name: 'DisapproveRDE',
+                component: modal_disapprove_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'disapproveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
         ]
     },
     // self-registration
@@ -131,7 +159,7 @@ const routes = [{
                     object_title: `' ${x.params.rdeName}' ?`,
                     object_id: x.params.rdeId,
                     optionsList: ['fetchAllOutbreaks'],
-                    size: 'w-3/4'
+                    size: 'w-1/2'
                 }
 
             }

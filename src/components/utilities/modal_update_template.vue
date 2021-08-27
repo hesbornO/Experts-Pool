@@ -19,7 +19,7 @@
                           d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
                   </svg>
                 </div>
-                <div class="flex flex-col justify-center"><p class="px-2 ">{{$router.includes('approve-rde')?'Approve ':$router.includes('update-rde')?'Update ':''}}{{ object_title }}</p></div>
+                <div class="flex flex-col justify-center"><p class="px-2 ">Update {{object_title }}</p></div>
               </div>
               <div class="flex flex-col justify-center hover:bg-havelock-blue-100  rounded-full  w-7 h-7">
                 <div class="flex flex-row justify-center">
