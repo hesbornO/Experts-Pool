@@ -101,6 +101,14 @@
                     <span v-if="!viewPdf">View CV</span>
                   </button>
                 </span> -->
+                <router-link
+                    :to="{name:'ApproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                    class="btn btn-blue h-1/2 text-xs"
+                    v-if="item.application_status === 'pending_approval'"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span class="px-1">Approve</span>
+                </router-link>
              
                  <router-link
                     :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"

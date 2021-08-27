@@ -47,7 +47,10 @@
     </div>
     <div
         class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-        <span class="flex items-center col-span-3" v-if="pageResult">
+        <span class="flex items-center col-span-3" v-if="pageResult.results">
+          Showing {{ pageResult.results.length }} of {{ pageResult.results.length }}
+        </span>
+        <span class="flex items-center col-span-3" v-else-if="pageResult">
           Showing {{ pageResult.length }} of {{ pageResult.length }}
         </span>
       <span class="col-span-2"></span>
