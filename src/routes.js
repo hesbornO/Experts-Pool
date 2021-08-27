@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Index.vue";
+import rde_profile from "./pages/rde_profile.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
 import MemberCountries from "./pages/countries/MemberCountries.vue";
 import Regions from "./pages/countries/Regions.vue";
@@ -125,6 +126,19 @@ const routes = [{
                 }
             },
         ]
+    },
+    {
+        path: '/home/profile/:rdeId/:rdeName',
+        name: 'rdeProfile',
+        component: rde_profile,
+        showInLeftBar: false,
+        props: x => {
+            return {
+                vuex_data_action: 'fetchRDEById',
+                object_id: `?country=${x.params.countryId}`,
+                table_headings: ['NAME', 'Country', 'ACTION']
+            }
+        },
     },
     // self-registration
     {
