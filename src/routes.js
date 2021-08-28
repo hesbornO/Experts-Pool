@@ -125,6 +125,7 @@ const routes = [{
                     }
                 }
             },
+            
         ]
     },
     {
@@ -139,6 +140,65 @@ const routes = [{
                 table_headings: ['NAME', 'Country', 'ACTION']
             }
         },
+        children:[            
+            {
+                path: 'approve-rde',
+                name: 'ApproveRDEfromProfile',
+                component: modal_approve_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'approveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'disapprove-rde',
+                name: 'DisapproveRDEfromProfile',
+                component: modal_disapprove_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'disapproveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'update-rde',
+                name: 'UpdateRDEfromProfile',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: rde_schema,
+                        vuex_fetch_action: 'fetchRDEById',
+                        vuex_save_action: 'updateRDEById',
+                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-rde',
+                name: 'DeleteRDEfromProfile',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+        ]
     },
     // self-registration
     {

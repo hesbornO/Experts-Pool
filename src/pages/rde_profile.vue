@@ -1,12 +1,91 @@
 <template>
-  <dashboard_layout :page_title="`${$route.params.rdeName}'s Profile`">
-    <!-- {{this.rdeProfile.id}} -->
+  <dashboard_layout :page_title="`${$route.params.rdeName}'s Profile`" :show-back=true>
     <span class="flex justify-between">
-      <span></span>
-      <button class='flex justify-end p-1 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Change theme</button>
+      <button @click="goBack()" class="btn btn-blue mb-2 flex flex-row justify-between w-24" >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+        </svg>
+        Back
+      </button>
+      <span>
+        <button class='flex justify-end p-1 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Change theme</button>
+      </span>
     </span>
-    <tabs :mode="mode">
+    <hr class="pt-2 pb-2">
+    
+    <span class="flex justify-between">
+      <span class="flex">
+        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status=='approved'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+              Status: {{ this.rdeProfile.application_status ? this.rdeProfile.application_status.replace('_', ' ') : '' }}
+        </span>
+        <span class="">
+          <router-link
+            :to="{name:'ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-green h-1/2 text-xs"
+            v-if="this.rdeProfile.application_status === 'pending_approval'"
+            title="Click to approve"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span class="px-1">Approve</span>
+          </router-link>
+
+          <router-link
+              :to="{name:'DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+              class="btn btn-orange h-1/2 text-xs"
+              v-if="this.rdeProfile.application_status === 'approved'"
+              title="Click to disapprove"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="px-1">Disapprove</span>
+          </router-link>
+        </span>        
+      </span>
+      
+      <span class="flex justify-between gap-8">
+        <router-link
+            :to="{name:'UpdateRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+            class="btn btn-green h-3/4 text-xs"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"></path>
+          </svg>
+          <span class="px-1">Update Profile</span>
+        </router-link>
+    
+        <router-link
+            :to="{name:'DeleteRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-red h-3/4 text-xs"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"></path>
+          </svg>
+          <span class="px-1">Delete Profile</span>
+        </router-link>
+
+      </span>      
+    </span>
+    
+    <hr class="pt-2 pb-4">
+
+    <tabs :mode="mode">      
+      
       <tab title="Personal details" class="grid grid-cols-3 space-x-4">
+        <span v-if="this.isloading" class=" mt-5 flex justify-center">
+          <hollow-dots-spinner
+              :animation-duration="1500"
+              :dot-size="15"
+              :dots-num="3"
+              color="#ff1d5e"
+            />
+        </span>
         <!-- name -->
         <span v-if="this.rdeProfile.last_name" class="col-span-1 px-4">
           Full Name:
@@ -46,9 +125,8 @@
             DOB:
           <span class="flex px-2" >
             <span class="font-semibold font-mono text-lg px-3">
-              {{this.rdeProfile.date_of_birth?this.rdeProfile.date_of_birth:'Undefined'}} 
-              <!-- ({{Math.abs(new Date(Date.now()-this.rdeProfile.date_of_birth).getUTCFullYear()-1970)}})
-              {{~~((Date.now()-(+new Date(this.rdeProfile.date_of_birth)))/(31557600000))}} -->
+              {{this.rdeProfile.date_of_birth?this.rdeProfile.date_of_birth:'Undefined'}} <span class="font-normal text-orange-300 lowercase">({{age}} years)</span>
+             
             </span>            
           </span>
         </span>
@@ -104,7 +182,6 @@
 
       </tab>
 
-
       <tab title="Next of Kin details" class="grid grid-cols-3 space-x-4">
         <!-- full name -->
         <span v-if="this.rdeProfile.next_of_kin_name" class="col-span-1 px-4">
@@ -145,20 +222,19 @@
         </span>
       </tab>
 
-
       <tab title="Other info" class="space-x-4 grid grid-cols-3">
         <span v-if="this.rdeProfile.competencies_objects" class="col-span-3">
           <span v-if="this.rdeProfile.competencies_objects.length>0">
             <span class="text-blue-500 font-mono font-semibold text-lg capitalize">Competencies list</span>
             <table class="w-3/4 border border-black rounded-lg">
-              <thead class="text-2xl border border-black bg-gray-200">
+              <thead class="text-2xl border border-black bg-gray-400">
                 <th class="flex justify-center p-2 border ">Name</th>
                 <th class=" p-2 border border-black">Date Created</th>
               </thead>
               <tbody>
                 <tr v-for="(competency,index) in this.rdeProfile.competencies_objects" :key="index" class="border border-black ">                  
                   <td class="p-3 text-xl capitalize font-mono border border-black"><span class="text-md p-1 font-mono">{{index+1}}.</span>{{competency.name}}</td>
-                  <td class="p-3 text-xl capitalize font-mono border border-black">{{competency.created_at}}</td>
+                  <td class="p-3 text-xl capitalize font-mono border border-black">{{new Date(competency.created_at)}}</td>
                 </tr>
                 <tr >
                   <td class="p-2">
@@ -180,7 +256,7 @@
 
             <!-- CV preview modal -->
           <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
-            <div class="flex items-end  min-h-full text-center sm:block ">            
+            <div class="flex this.rdeProfiles-end  min-h-full text-center sm:block ">            
               <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
               <!-- This element is to trick the browser into centering the modal contents. -->
@@ -224,6 +300,7 @@
 import {mapGetters} from 'vuex'
 import Tab from './tabs/Tab.vue'
 import Tabs from './tabs/Tabs.vue'
+import { HollowDotsSpinner } from 'epic-spinners'
 
 import api from "@/api";
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
@@ -238,7 +315,8 @@ export default {
     dashboard_layout,
     Tab,
     Tabs,
-    VuePdfApp
+    VuePdfApp,
+    HollowDotsSpinner
   },
   data() {
     return {
@@ -249,6 +327,7 @@ export default {
       mailto: "mailto:",
 			tel: "tel:",
       viewPdf: false,
+      isloading:false
 
     }
   },
@@ -257,8 +336,10 @@ export default {
         return new Promise((resolve, reject) => {            
             let fetchUrl = `/profile/${this.$route.params.rdeId}`
             api.get(fetchUrl).then(resp => {
+                this.isloading=true
                 this.rdeProfile=resp.data
                 resolve(resp.data)
+                this.isloading=false
             }).catch(err => {
                 reject(err)
             })
@@ -274,11 +355,32 @@ export default {
      togglePdfDisplay() {
       this.viewPdf = !this.viewPdf;
     },
+    goBack(){
+      this.$router.back()
+    },
   },
   computed: {
-    ...mapGetters(['getErrorMessage'])
+    ...mapGetters(['getErrorMessage']),
+    age:function()
+    {
+        var today = new Date();
+        var birthDate = new Date(this.rdeProfile.date_of_birth);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+        {
+            age--;
+        }
+        return age;
+    }
 
   },
+  watch:{
+     $route(){
+        this.fetchRDEById()
+    }
+  },
+
   created(){
     this.fetchRDEById()
   }
@@ -304,4 +406,6 @@ export default {
     margin-bottom: 10px;
     padding: 5px;
   }
+  /* spinner */
+  
 </style>

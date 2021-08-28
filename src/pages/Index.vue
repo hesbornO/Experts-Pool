@@ -379,7 +379,7 @@ export default {
 }
 
 .btn-blue {
-  @apply bg-havelock-blue-200 text-havelock-blue-700 hover:bg-havelock-blue-700 hover:text-white
+  @apply bg-havelock-blue-200 text-havelock-blue-700 hover:bg-havelock-blue-700 hover:text-white 
 }
 
 .btn-red {

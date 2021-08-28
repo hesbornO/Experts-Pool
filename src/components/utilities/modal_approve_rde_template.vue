@@ -33,7 +33,7 @@
             </div>
             <div class="flex flex-col justify-start px-3 py-3">
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <p>Approve {{object_title}} ? This Action Cannot be UnDone !</p>
+                <p>Approve {{object_title}} ?</p>
               </div>
             </div>
               <div class="flex flex-row justify-between w-full border-t px-3 pt-3 font-semibold text-white">

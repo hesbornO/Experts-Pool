@@ -4,7 +4,8 @@
     <div class="flex flex-col flex-1 w-full ">
 
       <Navigation/>
-      <div class="container px-6 mx-auto grid ">
+      <div class="container px-6 mx-auto grid " :showBack="showBack">
+        
         <h2 class="my-6 text-xl font-semibold text-gray-700 dark:text-gray-200">
           {{ page_title }}
         </h2>
@@ -24,9 +25,16 @@ export default {
     Sidebar,
     Navigation
   },
-  props: [
-    'page_title'
-  ]
+  props:{
+    showBack:{
+      type: Boolean,
+      default: false
+    },
+    page_title:{
+      type:String,
+      default:''
+    }
+  }
 
 }
 </script>
