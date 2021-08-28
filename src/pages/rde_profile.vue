@@ -8,7 +8,7 @@
         Back
       </button>
       <span>
-        <button class='flex justify-end p-1 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Change theme</button>
+        <button class='flex justify-end p-1 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Switch theme</button>
       </span>
     </span>
     <hr class="pt-2 pb-2">
