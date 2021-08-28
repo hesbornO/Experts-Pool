@@ -1,27 +1,255 @@
 <template>
-  <dashboard_layout :page_title="`RDE Profile`">
-    {{this.rdeProfile}}
+  <dashboard_layout :page_title="`${$route.params.rdeName}'s Profile`">
+    <!-- {{this.rdeProfile.id}} -->
+    <span class="flex justify-between">
+      <span></span>
+      <button class='flex justify-end p-1 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Change theme</button>
+    </span>
+    <tabs :mode="mode">
+      <tab title="Personal details" class="grid grid-cols-3 space-x-4">
+        <!-- name -->
+        <span v-if="this.rdeProfile.last_name" class="col-span-1 px-4">
+          Full Name:
+          <span class="font-mono font-semibold text-lg">
+            {{this.rdeProfile.last_name?this.rdeProfile.last_name:''}} 
+            {{this.rdeProfile.first_name?', '+this.rdeProfile.first_name:''}}
+            {{this.rdeProfile.middle_name?' '+this.rdeProfile.middle_name:''}}
+          </span>
+        </span>
+
+        <!-- gender -->
+        <span class="col-span-1 flex gap-8" v-if="this.rdeProfile.gender">
+          Gender:
+          <span class="font-mono font-semibold text-lg">
+            {{this.rdeProfile.gender.toLowerCase()==='m'?'Male':this.rdeProfile.gender.toLowerCase()==='f'?'Female':this.rdeProfile.gender.toLowerCase()==='t'?'Transgender':'Undefined'}}
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
+          </span>        
+        </span>
+
+        <!-- id -->
+        <span class="col-span-1 flex ">
+          <span class="capitalize">
+            {{this.rdeProfile.id_type?this.rdeProfile.id_type.replace('_',' ') + ':':''}}
+            <span class="font-semibold font-mono text-lg">
+              {{this.rdeProfile.id_number?this.rdeProfile.id_number:''}}
+            </span>
+          </span>
+        </span>
+
+        <!-- date of birth -->
+        <span class="col-span-1 flex capitalize -mt-16" v-if="this.rdeProfile.date_of_birth">
+            DOB:
+          <span class="flex px-2" >
+            <span class="font-semibold font-mono text-lg px-3">
+              {{this.rdeProfile.date_of_birth?this.rdeProfile.date_of_birth:'Undefined'}} 
+              <!-- ({{Math.abs(new Date(Date.now()-this.rdeProfile.date_of_birth).getUTCFullYear()-1970)}})
+              {{~~((Date.now()-(+new Date(this.rdeProfile.date_of_birth)))/(31557600000))}} -->
+            </span>            
+          </span>
+        </span>
+        <!-- Tel -->
+        <span class="col-span-1 flex capitalize -mt-16" v-if="this.rdeProfile.phone">
+          Tel:
+          <span class="flex px-2" >
+            <span class="font-semibold font-mono text-md px-1" v-if="this.rdeProfile.phone">
+              <a class="flex text-blue-400  " :href="`tel:`+this.rdeProfile.phone" target="_blank" title="Click to call">
+                <span class="px-3">
+                  {{this.rdeProfile.phone?this.rdeProfile.phone:'Undefined'}}
+                </span>
+                <span >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </span>
+              </a>                        
+            </span>                        
+          </span>
+        </span>
+
+        <!-- email -->
+        <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeProfile.email">
+            Email:
+          <span class="flex px-2" >
+              <a :href="mailto.concat(this.rdeProfile.email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
+								<span class="pr-2">{{this.rdeProfile.email?this.rdeProfile.email:'Undefined'}}</span>
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+								</svg>
+							</a>
+          </span>
+        </span>
+
+        <!-- location -->
+        <span class="col-span-1 flex capitalize -mt-28" v-if="this.rdeProfile.region_of_residence">
+            Location:
+          <span class="flex px-2" >
+            <span class="font-semibold font-mono text-lg px-3">
+              {{this.rdeProfile.region_of_residence.name?this.rdeProfile.region_of_residence.name:''}}{{this.rdeProfile.region_of_residence.country.name?', '+this.rdeProfile.region_of_residence.country.name:''}}
+            </span>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          </span>
+        </span>
+        <!-- Occupation -->
+        <span class="col-span-1 flex capitalize -mt-28" v-if="this.rdeProfile.occupation">
+            Occupation:
+          <span class="flex px-2" >
+            <span class="font-semibold font-mono text-lg px-3">
+              {{this.rdeProfile.occupation.name?this.rdeProfile.occupation.name:''}}
+            </span>
+          </span>
+        </span>
+
+      </tab>
+
+
+      <tab title="Next of Kin details" class="grid grid-cols-3 space-x-4">
+        <!-- full name -->
+        <span v-if="this.rdeProfile.next_of_kin_name" class="col-span-1 px-4">
+          Full Name:
+          <span class="font-mono font-semibold text-lg">
+            {{this.rdeProfile.next_of_kin_name?this.rdeProfile.next_of_kin_name:'Undefined'}}             
+          </span>
+        </span>
+
+        <!-- next of kin tel -->
+        <span class="col-span-1 flex capitalize" v-if="this.rdeProfile.next_of_kin_phone">
+          Tel:
+          <span class="flex px-2" >
+            <span class="font-semibold font-mono text-md px-1" v-if="this.rdeProfile.next_of_kin_phone">
+              <a class="flex text-blue-400  " :href="`tel:`+this.rdeProfile.next_of_kin_phone" target="_blank" title="Click to call">
+                <span class="px-3">
+                  {{this.rdeProfile.next_of_kin_phone?this.rdeProfile.next_of_kin_phone:'Undefined'}}
+                </span>
+                <span >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </span>
+              </a>                        
+            </span>                        
+          </span>
+        </span>
+
+        <!-- next of kin email -->
+        <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeProfile.next_of_kin_email">
+            Email :
+          <span class="flex px-2" >
+              <a :href="mailto.concat(this.rdeProfile.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
+								<span class="pr-2">{{this.rdeProfile.next_of_kin_email?this.rdeProfile.next_of_kin_email:'Undefined'}}</span>
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+								</svg>
+							</a>
+          </span>
+        </span>
+      </tab>
+
+
+      <tab title="Other info" class="space-x-4 grid grid-cols-3">
+        <span v-if="this.rdeProfile.competencies_objects" class="col-span-3">
+          <span v-if="this.rdeProfile.competencies_objects.length>0">
+            <span class="text-blue-500 font-mono font-semibold text-lg capitalize">Competencies list</span>
+            <table class="w-3/4 border border-black rounded-lg">
+              <thead class="text-2xl border border-black bg-gray-200">
+                <th class="flex justify-center p-2 border ">Name</th>
+                <th class=" p-2 border border-black">Date Created</th>
+              </thead>
+              <tbody>
+                <tr v-for="(competency,index) in this.rdeProfile.competencies_objects" :key="index" class="border border-black ">                  
+                  <td class="p-3 text-xl capitalize font-mono border border-black"><span class="text-md p-1 font-mono">{{index+1}}.</span>{{competency.name}}</td>
+                  <td class="p-3 text-xl capitalize font-mono border border-black">{{competency.created_at}}</td>
+                </tr>
+                <tr >
+                  <td class="p-2">
+                    Showing {{this.rdeProfile.competencies_objects.length}} of {{this.rdeProfile.competencies_objects.length}} competencies.
+                  </td>
+                </tr>
+              </tbody>             
+            </table>
+          </span>
+        </span>
+
+        <span v-if="this.rdeProfile.cv">          
+          <button @click="togglePdfDisplay" 
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+            >
+            <span v-if="!viewPdf">View CV</span>
+            <span v-if="viewPdf">Close CV</span>
+          </button>
+
+            <!-- CV preview modal -->
+          <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
+            <div class="flex items-end  min-h-full text-center sm:block ">            
+              <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+              <!-- This element is to trick the browser into centering the modal contents. -->
+              <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            
+              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div class="h-96">                 
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                        {{$route.params.rdeName}}'s CV Preview
+                      </h3>
+                      <div class="h-96" v-if="this.rdeProfile.cv">                      
+                        <vue-pdf-app :pdf="this.rdeProfile.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-gray-150 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button></button>
+                  <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
+        <span v-else class="text-semibold text-orange-300 p-2">
+          No CV Uploaded. Please upload CV!
+        </span>
+
+
+      </tab>
+    </tabs>
     <router-view></router-view>
   </dashboard_layout>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import Tab from './tabs/Tab.vue'
+import Tabs from './tabs/Tabs.vue'
+
 import api from "@/api";
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
-// import data_table from "../../components/layouts/DataTableTemplate";
+
+import VuePdfApp from "vue-pdf-app";
+import "vue-pdf-app/dist/icons/main.css";
 
 export default {
   name: "Regions",
   components: {
     // data_table,
     dashboard_layout,
+    Tab,
+    Tabs,
+    VuePdfApp
   },
   data() {
     return {
       rdeProfile:{},
       form: {        
       },
+      mode: 'light',
+      mailto: "mailto:",
+			tel: "tel:",
+      viewPdf: false,
+
     }
   },
   methods:{
@@ -36,6 +264,16 @@ export default {
             })
         })
     },
+    changeStyle () {
+      if (this.mode === 'dark') {
+        this.mode = 'light'
+      } else {
+        this.mode = 'dark'
+      }
+    },
+     togglePdfDisplay() {
+      this.viewPdf = !this.viewPdf;
+    },
   },
   computed: {
     ...mapGetters(['getErrorMessage'])
@@ -46,3 +284,24 @@ export default {
   }
 };
 </script>
+<style lang="css">
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Karla', sans-serif;
+  }
+  .wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .change__style {
+    background-color: #eee;
+    font-size: 1em;
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+</style>
