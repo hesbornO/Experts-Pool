@@ -22,6 +22,7 @@ import modal_update_template from "./components/utilities/modal_update_template"
 import modal_deploy_template from "./components/utilities/modal_deploy_template";
 import modal_approve_rde_template from "./components/utilities/modal_approve_rde_template";
 import modal_disapprove_rde_template from "./components/utilities/modal_disapprove_rde_template";
+import modal_upload_cv_template from "./components/utilities/modal_upload_cv_template";
 
 //schemas
 import country_schema from '@/schemas/country_schema.json'
@@ -198,6 +199,19 @@ const routes = [{
                     }
                 }
             },
+            {
+                path: 'upload-cv',
+                name: 'UploadCVfromProfile',
+                component: modal_upload_cv_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'uploadCVById',
+                        vuex_payload: {cv:x.params.cv, rdeId:x.params.rdeId},
+                        object_title: x.params.rdeName
+                    }
+                }
+            },            
         ]
     },
     // self-registration

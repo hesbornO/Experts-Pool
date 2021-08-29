@@ -156,7 +156,7 @@
                           stroke-linecap="round" stroke-linejoin="round"
                           stroke-width="2"></path>
                     </svg>
-                    <span class="px-1">Delete</span>
+                    <span class="px-1">Deactivate</span>
                   </router-link>
 
                 
