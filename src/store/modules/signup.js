@@ -1,5 +1,5 @@
-import api from "@/api";
-
+import axios from "axios";
+import {baseUrl} from "../../utils/constants"
 const state = {
     user: {},
     token: '',
@@ -22,7 +22,7 @@ const actions = {
 
     signUp({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            api.post("/users/", payload).then(resp => {
+            axios.post(baseUrl+"api/users/", payload).then(resp => {
                 commit("setToken", resp.data.access)
                 localStorage.setItem('token', resp.data.access)
                 resolve(resp.data)

@@ -71,7 +71,7 @@
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">Password</span>
                     <input
-                    v-model="password "
+                    v-model="password"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="***************"
                       type="password"
@@ -142,14 +142,14 @@ import {mapActions, mapGetters} from 'vuex'
 export default {
   data() {
     return {
-      first_name: '',
-      last_name: '',
-      username: '',
-      phone_number: '',
-      email: '',
-      password: '',
+      first_name: 'Jane',
+      last_name: 'Doe',
+      username: 'JaneDoe',
+      phone_number: '0712345678',
+      email: 'jane.doe@gmail.com',
+      password: 'jane',
+      password_confirm:'jane',
       groups: [],
-      staff_number: '2',
       showSidebar: false
     }
   },
