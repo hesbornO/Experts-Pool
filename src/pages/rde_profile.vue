@@ -78,16 +78,11 @@
     <tabs :mode="mode">      
       
       <tab title="Personal details" class="grid grid-cols-3 space-x-4">
-        <span v-if="this.isloading" class=" mt-5 flex justify-center">
-          <hollow-dots-spinner
-              :animation-duration="1500"
-              :dot-size="15"
-              :dots-num="3"
-              color="#ff1d5e"
-            />
+        <span v-if="this.loading" class=" mt-5 flex justify-center">
+          <loading></loading>
         </span>
         <!-- name -->
-        <span v-if="this.rdeProfile.last_name" class="col-span-1 px-4">
+        <span v-if="this.rdeProfile.last_name" class="col-span-1 px-4 p-2">
           Full Name:
           <span class="font-mono font-semibold text-lg">
             {{this.rdeProfile.last_name?this.rdeProfile.last_name:''}} 
@@ -97,7 +92,7 @@
         </span>
 
         <!-- gender -->
-        <span class="col-span-1 flex gap-8" v-if="this.rdeProfile.gender">
+        <span class="col-span-1 flex gap-4" v-if="this.rdeProfile.gender">
           Gender:
           <span class="font-mono font-semibold text-lg">
             {{this.rdeProfile.gender.toLowerCase()==='m'?'Male':this.rdeProfile.gender.toLowerCase()==='f'?'Female':this.rdeProfile.gender.toLowerCase()==='t'?'Transgender':'Undefined'}}
@@ -121,7 +116,7 @@
         </span>
 
         <!-- date of birth -->
-        <span class="col-span-1 flex capitalize -mt-16" v-if="this.rdeProfile.date_of_birth">
+        <span class="col-span-1 flex capitalize " v-if="this.rdeProfile.date_of_birth">
             DOB:
           <span class="flex px-2" >
             <span class="font-semibold font-mono text-lg px-3">
@@ -131,10 +126,10 @@
           </span>
         </span>
         <!-- Tel -->
-        <span class="col-span-1 flex capitalize -mt-16" v-if="this.rdeProfile.phone">
+        <span class="col-span-1 flex capitalize " v-if="this.rdeProfile.phone">
           Tel:
           <span class="flex px-2" >
-            <span class="font-semibold font-mono text-md px-1" v-if="this.rdeProfile.phone">
+            <span class=" font-mono text-md px-1" v-if="this.rdeProfile.phone">
               <a class="flex text-blue-400  " :href="`tel:`+this.rdeProfile.phone" target="_blank" title="Click to call">
                 <span class="px-3">
                   {{this.rdeProfile.phone?this.rdeProfile.phone:'Undefined'}}
@@ -148,10 +143,10 @@
         </span>
 
         <!-- email -->
-        <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeProfile.email">
+        <span class="col-span-1 flex md:w-1/2 capitalize " v-if="this.rdeProfile.email">
             Email:
           <span class="flex px-2" >
-              <a :href="mailto.concat(this.rdeProfile.email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
+              <a :href="mailto.concat(this.rdeProfile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase">
 								<span class="pr-2">{{this.rdeProfile.email?this.rdeProfile.email:'Undefined'}}</span>
 								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -161,17 +156,21 @@
         </span>
 
         <!-- location -->
-        <span class="col-span-1 flex capitalize -mt-28" v-if="this.rdeProfile.region_of_residence">
+        <span class="col-span-1 flex capitalize " v-if="this.rdeProfile.region_of_residence">
+          <span>
             Location:
+          </span>
           <span class="flex px-2" >
             <span class="font-semibold font-mono text-lg px-3">
               {{this.rdeProfile.region_of_residence.name?this.rdeProfile.region_of_residence.name:''}}{{this.rdeProfile.region_of_residence.country.name?', '+this.rdeProfile.region_of_residence.country.name:''}}
             </span>
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="animate-ping pt-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </span>
           </span>
         </span>
         <!-- Occupation -->
-        <span class="col-span-1 flex capitalize -mt-28" v-if="this.rdeProfile.occupation">
+        <span class="col-span-1 flex capitalize " v-if="this.rdeProfile.occupation">
             Occupation:
           <span class="flex px-2" >
             <span class="font-semibold font-mono text-lg px-3">
@@ -179,23 +178,24 @@
             </span>
           </span>
         </span>
+        <span></span>
 
-      </tab>
-
-      <tab title="Next of Kin details" class="grid grid-cols-3 space-x-4">
-        <!-- full name -->
-        <span v-if="this.rdeProfile.next_of_kin_name" class="col-span-1 px-4">
+      <!-- next of kin details -->
+         <!-- full name -->
+        <span class="text-green-500  font-semibold text-md capitalize col-span-3" v-if="this.rdeProfile.next_of_kin_name || this.rdeProfile.next_of_kin_email">Next of kin details</span>
+        <span v-if="this.rdeProfile.next_of_kin_name" class="col-span-1 p-2">
           Full Name:
           <span class="font-mono font-semibold text-lg">
             {{this.rdeProfile.next_of_kin_name?this.rdeProfile.next_of_kin_name:'Undefined'}}             
           </span>
         </span>
 
+
         <!-- next of kin tel -->
         <span class="col-span-1 flex capitalize" v-if="this.rdeProfile.next_of_kin_phone">
           Tel:
           <span class="flex px-2" >
-            <span class="font-semibold font-mono text-md px-1" v-if="this.rdeProfile.next_of_kin_phone">
+            <span class=" font-mono text-md px-1" v-if="this.rdeProfile.next_of_kin_phone">
               <a class="flex text-blue-400  " :href="`tel:`+this.rdeProfile.next_of_kin_phone" target="_blank" title="Click to call">
                 <span class="px-3">
                   {{this.rdeProfile.next_of_kin_phone?this.rdeProfile.next_of_kin_phone:'Undefined'}}
@@ -220,34 +220,25 @@
 							</a>
           </span>
         </span>
-      </tab>
 
-      <tab title="Other info" class="space-x-4 grid grid-cols-3">
-        <span v-if="this.rdeProfile.competencies_objects" class="col-span-3">
+        <span v-if="this.rdeProfile.competencies_objects && !this.loading" class="text-green-500 font-semibold text-lg capitalize col-span-3">Competencies</span>
+        <span v-if="this.rdeProfile.competencies_objects && !this.loading" class="col-span-3">
           <span v-if="this.rdeProfile.competencies_objects.length>0">
-            <span class="text-blue-500 font-mono font-semibold text-lg capitalize">Competencies list</span>
-            <table class="w-3/4 border border-black rounded-lg">
-              <thead class="text-2xl border border-black bg-gray-400">
-                <th class="flex justify-center p-2 border ">Name</th>
-                <th class=" p-2 border border-black">Date Created</th>
-              </thead>
-              <tbody>
-                <tr v-for="(competency,index) in this.rdeProfile.competencies_objects" :key="index" class="border border-black ">                  
-                  <td class="p-3 text-xl capitalize font-mono border border-black"><span class="text-md p-1 font-mono">{{index+1}}.</span>{{competency.name}}</td>
-                  <td class="p-3 text-xl capitalize font-mono border border-black">{{new Date(competency.created_at)}}</td>
-                </tr>
-                <tr >
-                  <td class="p-2">
-                    Showing {{this.rdeProfile.competencies_objects.length}} of {{this.rdeProfile.competencies_objects.length}} competencies.
-                  </td>
-                </tr>
-              </tbody>             
-            </table>
+            <span v-for="(competency,index) in this.rdeProfile.competencies_objects" :key="index">
+              <span>
+                <button class="pill_button">{{competency.name}}</button>              
+              </span>
+            </span>            
           </span>
         </span>
 
+      </tab>
 
-        <span v-if="this.rdeProfile.cv" class="">          
+      <tab title="CV" class="grid grid-cols-3 space-x-4">
+         <span v-if="this.loading" class=" mt-5 flex justify-center">
+          <loading></loading>
+        </span>
+          <span v-if="this.rdeProfile.cv && !this.loading" class="">          
           <span class="text-blue-500 font-mono font-semibold text-lg capitalize pt-5">Curriculum Vitae</span> <br>
           <span class="flex justify-between">
             <span>
@@ -465,9 +456,22 @@
           <!-- end of CV preview modal -->
         </span>
 
+       
+      </tab>
+
+      <tab title="Deployments" class="space-x-4 grid grid-cols-3">
+         <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
+          <loading></loading>
+        </span>
+        <span v-if="!this.loading">
+          <span v-if="this.rdeProfile.deployments">
+            {{this.rdeProfile.deployments}}
+          </span>
+          <span v-else class="text-yellow-400 animate-pulse">
+            No deployments yet.
+          </span>
+        </span>
         
-
-
       </tab>
     </tabs>
     <router-view></router-view>
@@ -475,13 +479,12 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 import Tab from './tabs/Tab.vue'
 import Tabs from './tabs/Tabs.vue'
-import { HollowDotsSpinner } from 'epic-spinners'
 
-import api from "@/api";
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
+import Loading from "../components/utilities/loading";
 
 import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
@@ -494,7 +497,7 @@ export default {
     Tab,
     Tabs,
     VuePdfApp,
-    HollowDotsSpinner,
+    Loading
   },
   data() {
     return {
@@ -506,24 +509,22 @@ export default {
 			tel: "tel:",
       viewPdf: false,
       fileUploaded:0,
-      isloading:false,
+      loading:false,
       displayUploadButton:false
 
     }
   },
   methods:{
-    fetchRDEById() {
-        return new Promise((resolve, reject) => {            
-            let fetchUrl = `/profile/${this.$route.params.rdeId}`
-            api.get(fetchUrl).then(resp => {
-                this.isloading=true
-                this.rdeProfile=resp.data
-                resolve(resp.data)
-                this.isloading=false
-            }).catch(err => {
-                reject(err)
-            })
-        })
+    fetchRDEData(){
+      this.loading = true
+      // eslint-disable-next-line no-unused-vars
+       this.$store.dispatch('fetchRDEById',this.$route.params.rdeId).then(resp => {
+         this.rdeProfile = resp
+       }).catch(err=>{
+         this.$store.dispatch('setErrorMsg', err.data)
+       }).then(()=>{
+         this.loading = false
+       })
     },
     changeStyle () {
       if (this.mode === 'dark') {
@@ -561,6 +562,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getErrorMessage']),
+    ...mapActions(['fetchRDEById']),
     age:function()
     {
         var today = new Date();
@@ -577,12 +579,12 @@ export default {
   },
   watch:{
      $route(){
-        this.fetchRDEById()
+        this.fetchRDEData()
     }
   },
 
-  created(){
-    this.fetchRDEById()
+  mounted(){
+    this.fetchRDEData()
   }
 };
 </script>
@@ -607,5 +609,23 @@ export default {
     padding: 5px;
   }
   /* spinner */
+
+  .pill_button {
+  background-color: rgba(179, 162, 11, 0.596);
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform:capitalize;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.pill_button:hover {
+  background-color: rgba(179, 162, 11, 0.295);
+}
   
 </style>
