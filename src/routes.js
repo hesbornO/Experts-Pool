@@ -20,6 +20,7 @@ import modal_delete_template from "./components/utilities/modal_delete_template"
 import modal_create_template from "./components/utilities/modal_create_template";
 import modal_update_template from "./components/utilities/modal_update_template";
 import modal_deploy_template from "./components/utilities/modal_deploy_template";
+import modal_end_deployment_template from "./components/utilities/modal_end_deployment_template";
 import modal_approve_rde_template from "./components/utilities/modal_approve_rde_template";
 import modal_disapprove_rde_template from "./components/utilities/modal_disapprove_rde_template";
 import modal_upload_cv_template from "./components/utilities/modal_upload_cv_template";
@@ -27,6 +28,7 @@ import modal_upload_cv_template from "./components/utilities/modal_upload_cv_tem
 //schemas
 import country_schema from '@/schemas/country_schema.json'
 import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
+import end_rde_deployment_schema from '@/schemas/end_rde_deployment_schema.json'
 import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
@@ -126,6 +128,23 @@ const routes = [{
                     }
                 }
             },
+            {
+                path: 'deploy-rde/:rdeName/:rdeId',
+                name: 'DeployRDE',
+                component: modal_deploy_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: deploy_rde_schema,
+                        vuex_save_action: 'deployRDE',
+                        object_title: `' ${x.params.rdeName}' ?`,
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchOutbreakOptions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            }
 
         ]
     },
@@ -226,25 +245,24 @@ const routes = [{
     //deployments
     {
         path: "/deployments",
-        name: "Deployments",
+        name: "Active Deployments",
         component: Deployments,
         props: {
-            vuex_data_action: 'fetchRDES',
-            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'STATUS', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'ACTIONS']
+            vuex_data_action: 'fetchRDEDeployments',
+            table_headings: ['NAME', 'CONTACT', 'REGION', 'SPECIALIZATION', 'COMPETENCE', 'CURRENT DEPLOYMENT', 'Deployment date', 'ACTIONS']
         },
         icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
         children: [{
-            path: 'deploy-rde/:rdeName/:rdeId',
-            name: 'DeployRDE',
-            component: modal_deploy_template,
+            path: 'end-deployment/:rdeName/:rdeId',
+            name: 'endRDEdeployment',
+            component: modal_end_deployment_template,
             showInLeftBar: false,
             props: x => {
                 return {
-                    jsonSchema: deploy_rde_schema,
-                    vuex_save_action: 'deployRDE',
-                    object_title: `' ${x.params.rdeName}' ?`,
+                    jsonSchema: end_rde_deployment_schema,
+                    vuex_save_action: 'endRDEdeployment',
+                    object_title: `' ${x.params.rdeName}' `,
                     object_id: x.params.rdeId,
-                    optionsList: ['fetchOutbreakOptions'],
                     size: 'w-1/2'
                 }
 

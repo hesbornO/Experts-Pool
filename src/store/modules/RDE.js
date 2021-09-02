@@ -2,7 +2,9 @@ import api from "@/api";
 
 const state = {
     RDES: [],
-    RDE: {}
+    RDE: {},
+    deployments: [],
+    deployment: {}
 }
 
 const getters = {
@@ -84,6 +86,40 @@ const actions = {
             })
         });
     },
+    endRDEdeployment({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment/" + payload + "/"
+                    // payload = { application_status: 'approved' }
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setDeployment", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    fetchRDEDeployments({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setDeployments", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     updateRDEById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -108,8 +144,8 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload+ "/"
-                payload = {application_status:'approved'}
+                relative_url = "/profile/" + payload + "/"
+                payload = { application_status: 'approved' }
             }
             api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
@@ -126,8 +162,8 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload.rdeId+ "/"
-                payload={cv:payload.cv}
+                relative_url = "/profile/" + payload.rdeId + "/"
+                payload = { cv: payload.cv }
             }
             api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
@@ -139,14 +175,14 @@ const actions = {
         });
     },
     disapproveRDEById({ commit }, payload) {
-        console.log('payload 2:',payload)
+        console.log('payload 2:', payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload+ "/"
-                payload = {application_status:'pending_approval'}
+                relative_url = "/profile/" + payload + "/"
+                payload = { application_status: 'pending_approval' }
             }
             api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
@@ -158,12 +194,14 @@ const actions = {
         });
     },
 
-    
+
 }
 
 const mutations = {
     setRDES: (state, RDES) => (state.RDES = RDES),
     setRDE: (state, RDE) => (state.RDE = RDE),
+    setDeployments: (state, deployments) => (state.deployments = deployments),
+    setDeployment: (state, deployment) => (state.deployment = deployment),
 }
 
 

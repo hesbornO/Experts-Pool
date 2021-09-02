@@ -57,40 +57,65 @@
         </div>
 
 
-        <!-- RDE List -->
+        <!-- Deployments List -->
         <data_table v-bind="$attrs">
           <template v-slot="{item}">
-            <td class="px-4 py-3 text-sm capitalize"  v-if="item.application_status==='approved'">
+            <td class="px-4 py-3 text-sm capitalize" >
               <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" v-if="item.application_status==='approved'"></path></svg>
-              {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
+              {{ item.profile.last_name ? item.profile.last_name : ''}} {{item.profile.first_name ?', ' + item.profile.first_name : '' }} {{item.profile.middle_name? item.profile.middle_name:''}}
             </td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approved'">{{ item.occupation ? item.occupation.name : '' }}</td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approved'">
-              {{ item.region_of_residence ? item.region_of_residence.name : '' }}
-            </td>
-            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']" v-if="item.application_status==='approved'">
-              {{ item.application_status ? item.application_status.replace('_', ' ') : '' }}
-            </td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approved'">{{ item.current_deployment ? item.current_deployment : 'None' }}
-            </td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approved'">
-            <span v-if="item.competencies_objects">
-              <span v-for="(competency,index) in item.competencies_objects" :key="index">
-                {{ competency.name ? competency.name : '' }}<span
-                  v-if="index+1<item.competencies_objects.length">, </span>
+            <td class="p-2 text-sm capitalize" >
+              <span>
+                <a class="flex text-blue-400  " :href="`tel:`+item.profile.phone" target="_blank" title="Click to call">
+                  <span class="">
+                    {{item.profile.phone?item.profile.phone:'Undefined'}}
+                  </span>
+                  <span >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                  </span>
+                </a>
+              </span><br>
+              <span v-if="item.profile.email">
+                <a :href="mailto.concat(item.profile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase" title="Click to send mail">
+                  <span class="pr-2">{{item.profile.email?item.profile.email:'Undefined'}}</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </a>
               </span>
-            </span><br>
-             
-
             </td>
-            <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.application_status==='approved'">                
-                 <router-link
-                    :to="{name:'DeployRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"
-                    class="btn btn-green h-1/2 text-xs"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
-                  <span class="px-1">Deploy</span>
-                </router-link>
+            <td class="px-4 py-3 text-sm capitalize" >
+              {{ item.profile.region_of_residence.name ? item.profile.region_of_residence.name : '' }} {{item.profile.region_of_residence.country.name?', '+item.profile.region_of_residence.country.name:''}}
+            </td>            
+            <td class="px-4 py-3 text-sm capitalize" >{{ item.profile.occupation.name ? item.profile.occupation.name : '' }}</td>
+            <td class="px-4 py-3 text-sm capitalize">
+              <span v-if="item.profile.competencies_objects">
+                <span v-for="(competency,index) in item.profile.competencies_objects" :key="index">
+                  {{ competency.name ? competency.name : '' }}<span
+                    v-if="index+1<item.profile.competencies_objects.length">, </span>
+                </span>
+              </span><br>            
+            </td>
+            <td class="px-4 py-3 text-sm font-semibold capitalize text-orange-400 font-mono">{{ item.outbreak.name ? item.outbreak.name : 'None' }}
+            </td>
+            <td class="p-2 text-sm  capitalize font-mono">
+              <span>
+                {{ item.start_date ?' ' + item.start_date : '' }}
+              </span>              
+            </td>
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1">                
+              <span v-if="item.end_date">
+                {{ item.end_date ?'Deployment ended on' + item.end_date : '' }}
+              </span>
+                 
+              <router-link
+                :to="{name:'endRDEdeployment', params:{rdeId:item.id, rdeName: item.profile.first_name.concat(' ').concat(item.profile.last_name)}}"
+                class="btn btn-orange h-1/2 text-xs"
+                v-else
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                <span class="px-1">End Deployment</span>
+              </router-link>
              
                
 
@@ -194,6 +219,9 @@ export default {
       occupations: {},
       outbreaks:[],
       fileUploaded: 0,
+      mailto: "mailto:",
+			tel: "tel:",
+
 
 
     }

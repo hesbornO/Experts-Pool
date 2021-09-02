@@ -146,7 +146,7 @@
         <span class="col-span-1 flex md:w-1/2 capitalize " v-if="this.rdeProfile.email">
             Email:
           <span class="flex px-2" >
-              <a :href="mailto.concat(this.rdeProfile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase">
+              <a :href="mailto.concat(this.rdeProfile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase" title="Click to send mail">
 								<span class="pr-2">{{this.rdeProfile.email?this.rdeProfile.email:'Undefined'}}</span>
 								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
