@@ -1,6 +1,7 @@
 import api from "@/api";
 
 const state = {
+    OutbreakOptions: [],
     Outbreaks: [],
     Outbreak: {},
 }
@@ -28,6 +29,22 @@ const actions = {
             })
         })
     },
+    fetchOutbreakOptions({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak_options/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak_options/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOutbreaks", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     fetchOutbreakById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/outbreak/'
@@ -45,10 +62,10 @@ const actions = {
         })
     },
     // eslint-disable-next-line no-unused-vars
-    deleteOutbreakById({commit},payload) {
+    deleteOutbreakById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/outbreak/'
-            
+
             if (payload === undefined) {
                 payload = ''
             } else {
@@ -67,7 +84,7 @@ const actions = {
                 commit("setOutbreak", resp.data)
                 resolve(resp.data)
             }).catch(err => {
-                if(err.response.status !== 400){
+                if (err.response.status !== 400) {
                     this.$toast.error('an unknown error occurred')
                 }
                 commit("setError", err.response.data)
@@ -97,6 +114,7 @@ const actions = {
 }
 
 const mutations = {
+    setOutbreakOptions: (state, OutbreakOptions) => (state.OutbreakOptions = OutbreakOptions),
     setOutbreaks: (state, Outbreaks) => (state.Outbreaks = Outbreaks),
     setOutbreak: (state, Outbreak) => (state.Outbreak = Outbreak),
 }

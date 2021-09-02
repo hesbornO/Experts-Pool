@@ -126,7 +126,7 @@ const routes = [{
                     }
                 }
             },
-            
+
         ]
     },
     {
@@ -141,8 +141,7 @@ const routes = [{
                 table_headings: ['NAME', 'Country', 'ACTION']
             }
         },
-        children:[            
-            {
+        children: [{
                 path: 'approve-rde',
                 name: 'ApproveRDEfromProfile',
                 component: modal_approve_rde_template,
@@ -207,11 +206,11 @@ const routes = [{
                 props: x => {
                     return {
                         vuex_action: 'uploadCVById',
-                        vuex_payload: {cv:x.params.cv, rdeId:x.params.rdeId},
+                        vuex_payload: { cv: x.params.cv, rdeId: x.params.rdeId },
                         object_title: x.params.rdeName
                     }
                 }
-            },            
+            },
         ]
     },
     // self-registration
@@ -242,11 +241,10 @@ const routes = [{
             props: x => {
                 return {
                     jsonSchema: deploy_rde_schema,
-                    // vuex_fetch_action: 'fetchRDEById',
                     vuex_save_action: 'deployRDE',
                     object_title: `' ${x.params.rdeName}' ?`,
                     object_id: x.params.rdeId,
-                    optionsList: ['fetchAllOutbreaks'],
+                    optionsList: ['fetchOutbreakOptions'],
                     size: 'w-1/2'
                 }
 

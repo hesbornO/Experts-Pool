@@ -127,8 +127,10 @@ export default {
   methods: {
     performDeployAction() {
       this.loading = true
-      this.form.profile_id = this.$route.params.rdeId
+      this.form.profile_id = parseInt(this.$route.params.rdeId)
       console.log('form:',this.form)
+      // this.form.outbreak_id  = parseInt(this.form.outbreak_id)
+      // console.log('outbreak id:',this.form.outbreak_id)
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
             "" + this.object_title + " Deployed Successfully"
