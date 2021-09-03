@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Home">
+  <dashboard_layout page_title="Active Deployments">
 
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
