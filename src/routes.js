@@ -36,6 +36,7 @@ import occupation_schema from '@/schemas/occupation_schema.json'
 import user_group_schema from '@/schemas/user_group_schema.json'
 import user_schema from '@/schemas/user_schema.json'
 import rde_schema from '@/schemas/rde_schema.json'
+import recommend_schema from '@/schemas/recommend_schema.json'
 
 
 Vue.use(VueRouter);
@@ -141,7 +142,7 @@ const routes = [{
                     }
                 }
             },
-            
+
             {
                 path: 'disapprove-rde-eac/:rdeName/:rdeId',
                 name: 'eacDisapproval',
@@ -257,6 +258,21 @@ const routes = [{
                     }
                 }
             },
+            {
+                path: 'make-recommendation',
+                name: 'makeRDErecommendation',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: recommend_schema,
+                        vuex_action: 'recommendToRDE',
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName + ' recommendation',
+                        size: '3/4'
+                    }
+                }
+            },
         ]
     },
     // self-registration
@@ -368,9 +384,9 @@ const routes = [{
                 name: 'CreateRegion',
                 component: modal_create_template,
                 showInLeftBar: false,
-                props:x=> {
-                    return{
-                        country_id:x.params.countryId,
+                props: x => {
+                    return {
+                        country_id: x.params.countryId,
                         jsonSchema: region_schema,
                         vuex_action: 'postRegion',
                         object_title: 'Region',

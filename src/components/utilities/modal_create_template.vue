@@ -91,7 +91,8 @@ export default {
 				default: "max-w-sm",
 			},
     optionsList: { type: Array, default: () => [] },
-    country_id:[String, Number]
+    country_id:[String, Number],
+    profile:[String, Number]
   },
   created(){
     this.tryOptions();
@@ -100,6 +101,9 @@ export default {
     executeAction(){
       this.loading = true
       let payload = {}
+      if(this.profile){
+        this.form.profile=this.profile
+      }
       this.form.country_id = this.country_id
       if (this.vuex_payload){
         payload = this.vuex_payload

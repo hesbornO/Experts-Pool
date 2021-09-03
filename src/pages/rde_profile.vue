@@ -238,7 +238,7 @@
          <span v-if="this.loading" class=" mt-5 flex justify-center">
           <loading></loading>
         </span>
-          <span v-if="this.rdeProfile.cv && !this.loading" class="">          
+        <span v-if="this.rdeProfile.cv_upload_status && !this.loading" class="">          
           <span class="text-blue-500 font-mono font-semibold text-lg capitalize pt-5">Curriculum Vitae</span> <br>
           <span class="flex justify-between">
             <span>
@@ -372,12 +372,12 @@
           </div>
         </span>
 
-        <span v-else class="text-semibold text-orange-300 p-2">
+        <span v-if="!this.rdeProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
           <span class="text-blue-500 font-mono font-semibold text-lg capitalize p-3">Curriculum Vitae</span> <br>
 
           No CV Uploaded. Please upload CV!
           <label class="block mt-4 text-sm">
-            <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
+            <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf docs only)</span></span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
@@ -386,11 +386,11 @@
                       id="cvFile"
                       :name="form.cv"
                       class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                      placeholder="john.doe@gmail.com"
                       validation="required"  
-                      accept=".pdf,.doc,.docx,application/msword" 
+                      accept=".pdf" 
                       @input="processFile"                
-              />        
+              />       
+                    
                 <span v-if="getErrorMessage['cv']">
                 <span v-if="getErrorMessage['cv'].length>0">
                   <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
@@ -400,6 +400,12 @@
               </span>   
             </div>
           </label>  
+          <input  type="text"
+                      :name="form.profile_id"
+                      class=" hidden"
+                      validation="required"  
+                      :value="$route.params.rdeId" 
+              />  
 
           <span class="flex justify-between p-2">
             <button @click="togglePdfDisplay" 
@@ -459,6 +465,39 @@
        
       </tab>
 
+      <tab title="Recommendations" class="space-x-4 grid grid-cols-3">
+         <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
+          <loading></loading>
+        </span>
+        <span v-if="rdeProfile.recommendations && !this.loading" class="col-span-2">
+          <table class="w-full border border-black p-3" v-if="rdeProfile.recommendations.length>0">
+            <thead class="text-lg font-semibold font-mono border border-black p-2 ">
+              <th>Recommendation</th>
+              <th class="border border-black">Recommended By</th>
+            </thead>
+            <tbody>
+              <tr v-for="(recommendation, index) in this.rdeProfile.recommendations" :key="index" class="text-md border border-black">
+                <td class="p-2">{{recommendation.comment?recommendation.comment:''}}</td>
+                <td class="border-l border-black p-2 uppercase">{{recommendation.author.username?recommendation.author.username:''}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
+            No recommendations yet.
+          </span>
+        </span>
+        
+        <span class="colspan-1 flex justify-end">
+          <router-link
+            :to="{name:'makeRDErecommendation', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+            class="btn btn-blue h-1/6 text-md"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+            <span class="px-1">Make recommendation</span>
+          </router-link>
+        </span>
+        
+      </tab>
       <tab title="Deployments" class="space-x-4 grid grid-cols-3">
          <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
           <loading></loading>
@@ -502,7 +541,7 @@ export default {
   data() {
     return {
       rdeProfile:{},
-      form: {        
+      form: {   
       },
       mode: 'light',
       mailto: "mailto:",
@@ -553,7 +592,7 @@ export default {
             const dataUri = e.target.result;
             if (dataUri) {
                 // this.compress(dataUri);
-                this.form.cv = dataUri                    
+                this.form.cv = dataUri    
                 this.fileUploaded+=1                    
             }
         };

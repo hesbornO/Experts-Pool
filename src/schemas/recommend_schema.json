@@ -1,0 +1,12 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+        "type": "textarea",
+        "label": "Comment",
+        "name": "comment",
+        "rows": 5,
+        "validation": "required"
+    }]
+
+}]

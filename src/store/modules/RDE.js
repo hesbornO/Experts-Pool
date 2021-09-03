@@ -194,14 +194,14 @@ const actions = {
     },
     uploadCVById({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            let relative_url = '/profile/'
+            let relative_url = '/profile_cv/'
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload.rdeId + "/"
-                payload = { cv: payload.cv }
+                // relative_url = "/profile/" + payload.rdeId + "/"
+                payload = { cv: payload.cv, profile_id: payload.rdeId }
             }
-            api.patch(relative_url, payload).then(resp => {
+            api.post(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
@@ -221,6 +221,23 @@ const actions = {
                 payload = { application_status: 'pending_approval' }
             }
             api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    recommendToRDE({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/recommendation/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                console.log('patchUrl', relative_url)
+            }
+            api.post(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
