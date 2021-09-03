@@ -103,8 +103,8 @@ const routes = [{
                 }
             },
             {
-                path: 'approve-rde/:rdeName/:rdeId',
-                name: 'ApproveRDE',
+                path: 'approve-rde-ps/:rdeName/:rdeId',
+                name: 'partnerStateApproval',
                 component: modal_approve_rde_template,
                 showInLeftBar: false,
                 props: x => {
@@ -116,13 +116,40 @@ const routes = [{
                 }
             },
             {
-                path: 'disapprove-rde/:rdeName/:rdeId',
-                name: 'DisapproveRDE',
+                path: 'disapprove-rde-ps/:rdeName/:rdeId',
+                name: 'partnerStateDisapproval',
                 component: modal_disapprove_rde_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         vuex_action: 'disapproveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'approve-rde-eac/:rdeName/:rdeId',
+                name: 'eacApproval',
+                component: modal_approve_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'eac_approveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            
+            {
+                path: 'disapprove-rde-eac/:rdeName/:rdeId',
+                name: 'eacDisapproval',
+                component: modal_disapprove_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'eac_disapproveRDEById',
                         vuex_payload: x.params.rdeId,
                         object_title: x.params.rdeName
                     }

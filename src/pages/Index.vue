@@ -80,8 +80,8 @@
             <td class="px-4 py-3 text-sm capitalize">
               {{ item.region_of_residence ? item.region_of_residence.name: '' }}{{item.region_of_residence.country.name?', '+ item.region_of_residence.country.name:''}}
             </td>
-            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
-              {{ item.application_status ? item.application_status.replace('_', ' ') : '' }}
+            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+              {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.current_deployment ? item.current_deployment : 'None' }}
             </td>
@@ -109,21 +109,40 @@
                   <span class="px-1">View Profile</span>
               </router-link>
               <router-link
-                  :to="{name:'ApproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  :to="{name:'partnerStateApproval', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-blue h-1/2 text-xs"
                   v-if="item.application_status === 'pending_approval'"
+
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                <span class="px-1">Approve</span>
+                <span class="px-1">Partner State approval</span>
               </router-link>
               <router-link
-                  :to="{name:'DisapproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  :to="{name:'partnerStateDisapproval', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-orange h-1/2 text-xs"
-                  v-if="item.application_status === 'approved'"
+                  v-if="item.application_status === 'approved_by_partner_state'"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="px-1">Disapprove</span>
+                <span class="px-1">Partner State Disapproval</span>
               </router-link>
+              <router-link
+                  :to="{name:'eacApproval', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-blue h-1/2 text-xs"
+                  v-if="item.application_status === 'approved_by_partner_state'"
+
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span class="px-1">EAC Approval</span>
+              </router-link>
+              <router-link
+                  :to="{name:'eacDisapproval', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-orange h-1/2 text-xs"
+                  v-if="item.application_status === 'approval_complete'"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="px-1">EAC Disapproval</span>
+              </router-link>
+              
               
                   <!-- <router-link
                       :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"

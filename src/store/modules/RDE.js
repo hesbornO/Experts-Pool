@@ -145,7 +145,43 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/profile/" + payload + "/"
-                payload = { application_status: 'approved' }
+                payload = { application_status: 'approved_by_partner_state' }
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    eac_approveRDEById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload + "/"
+                payload = { application_status: 'approval_complete' }
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    eac_disapproveRDEById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload + "/"
+                payload = { application_status: 'approved_by_partner_state' }
             }
             api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
