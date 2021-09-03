@@ -91,6 +91,7 @@ export default {
 				default: "max-w-sm",
 			},
     optionsList: { type: Array, default: () => [] },
+    country_id:[String, Number]
   },
   created(){
     this.tryOptions();
@@ -99,6 +100,7 @@ export default {
     executeAction(){
       this.loading = true
       let payload = {}
+      this.form.country_id = this.country_id
       if (this.vuex_payload){
         payload = this.vuex_payload
       }else{

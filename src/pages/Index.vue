@@ -78,7 +78,7 @@
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.occupation ? item.occupation.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize">
-              {{ item.region_of_residence ? item.region_of_residence.name : '' }}
+              {{ item.region_of_residence ? item.region_of_residence.name: '' }}{{item.region_of_residence.country.name?', '+ item.region_of_residence.country.name:''}}
             </td>
             <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
               {{ item.application_status ? item.application_status.replace('_', ' ') : '' }}
@@ -95,41 +95,35 @@
              
 
             </td>
-            <td class="px-4 py-3 text-sm flex flex-row space-x-1">
-                <!-- <span v-if="item.cv">
-                  <button class="btn btn-blue"
-                          @click="togglePdfDisplay">
-                    <span v-if="!viewPdf">View CV</span>
-                  </button>
-                </span> -->
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1">            
                 
-                  <router-link
-                      :to="{name:'rdeProfile', params:{rdeId:item.id, rdeName: item.last_name}}"
-                      class="btn btn-blue items-center text-xs"
-                  >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="2"></path>
-                      </svg>
-                      <span class="px-1">View Profile</span>
-                  </router-link>
-                  <router-link
-                      :to="{name:'ApproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
-                      class="btn btn-blue h-1/2 text-xs"
-                      v-if="item.application_status === 'pending_approval'"
-                  >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span class="px-1">Approve</span>
-                  </router-link>
-                  <router-link
-                      :to="{name:'DisapproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
-                      class="btn btn-orange h-1/2 text-xs"
-                      v-if="item.application_status === 'approved'"
-                  >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span class="px-1">Disapprove</span>
-                  </router-link>
+              <router-link
+                  :to="{name:'rdeProfile', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-blue items-center text-xs"
+              >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
+                  </svg>
+                  <span class="px-1">View Profile</span>
+              </router-link>
+              <router-link
+                  :to="{name:'ApproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-blue h-1/2 text-xs"
+                  v-if="item.application_status === 'pending_approval'"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span class="px-1">Approve</span>
+              </router-link>
+              <router-link
+                  :to="{name:'DisapproveRDE', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  class="btn btn-orange h-1/2 text-xs"
+                  v-if="item.application_status === 'approved'"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="px-1">Disapprove</span>
+              </router-link>
               
                   <!-- <router-link
                       :to="{name:'UpdateRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"
@@ -284,31 +278,7 @@ export default {
     closeUpdateRDEModal() {
       this.update_rde_details = false
     },
-    // submitPreQualifiedRDE() {
-    //   this.register_prequalified_rde = false
-    //   // alert('RDE registered successfully!!')
-    // },
-    // getRDES() {
-    //   this.$store.dispatch('fetchRDES').then(resp => {
-    //     this.RDES = resp;
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
-    // getRDEById(RDEId) {
-    //   this.update_rde_details = true
-    //   this.fetchRDEById(RDEId).then(resp => {
-    //     this.form = resp
-    //   })
-
-    // },
-    // postRDEUpdateById() {
-    //   let payload = {}
-    //   this.updateCountryById(payload).then(resp => {
-    //     window.location.replace('/member-countries')
-    //     console.log(resp)
-    //   })
-    // },
+  
     processFile(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) {
@@ -325,51 +295,12 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    // registerRDE() {
-    //   this.form.competencies_list = [this.form.competencies_list]
-    //   this.form.region_of_residence_id = 21
-    //   console.log('form', this.form)
-
-    //   let payload = this.form
-    //   this.postRDE(payload).then(resp => {
-    //     this.$store.dispatch('setError', {})
-    //     window.location.replace('/member-countries')
-    //     console.log(resp)
-    //   })
-    // },
-
-    // getOccupations() {
-    //   console.log('getting occupations...')
-    //   this.$store.dispatch('fetchOccupations').then(resp => {
-    //     this.occupations = resp;
-    //     // console.log('countries:', this.countries)             
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
-    // getCountries() {
-    //   this.$store.dispatch('fetchCountries').then(resp => {
-    //     this.countries = resp;
-    //     // console.log('countries:', this.countries)             
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
-    // getRegions() {
-    //   this.$store.dispatch('fetchRegions').then(resp => {
-    //     this.regions = resp;
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
+    
 
 
   },
   mounted() {
-    // this.getRDES()
-    // this.getCountries()
-    // this.getRegions()
-    // this.getOccupations()
+    //
 
   },
   computed: {

@@ -341,11 +341,14 @@ const routes = [{
                 name: 'CreateRegion',
                 component: modal_create_template,
                 showInLeftBar: false,
-                props: {
-                    jsonSchema: region_schema,
-                    vuex_action: 'postRegion',
-                    object_title: 'Region',
-                    optionsList: ['fetchCountries'],
+                props:x=> {
+                    return{
+                        country_id:x.params.countryId,
+                        jsonSchema: region_schema,
+                        vuex_action: 'postRegion',
+                        object_title: 'Region',
+                        optionsList: ['fetchCountries'],
+                    }
                 }
             },
             {
