@@ -180,7 +180,7 @@
         </span>
         <span></span>
 
-      <!-- next of kin details -->
+        <!-- next of kin details -->
          <!-- full name -->
         <span class="text-green-500  font-semibold text-md capitalize col-span-3" v-if="this.rdeProfile.next_of_kin_name || this.rdeProfile.next_of_kin_email">Next of kin details</span>
         <span v-if="this.rdeProfile.next_of_kin_name" class="col-span-1 p-2">
@@ -239,14 +239,13 @@
           <loading></loading>
         </span>
         <span v-if="this.rdeProfile.cv_upload_status && !this.loading" class="">          
-          <span class="text-blue-500 font-mono font-semibold text-lg capitalize pt-5">Curriculum Vitae</span> <br>
           <span class="flex justify-between">
             <span>
-              <button @click="togglePdfDisplay" 
+              <button @click="togglePdfDisplay('fetchCV')" 
                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                 >
                 <span v-if="!viewPdf">View CV</span>
-                <span v-if="viewPdf">Close CV</span>
+                <!-- <span v-if="viewPdf">Close CV</span> -->
               </button>
             </span>
             <span>
@@ -283,7 +282,7 @@
                 </label>  
 
                 <span class="flex justify-between p-2">
-                  <button @click="togglePdfDisplay" 
+                  <button @click="togglePdfDisplay(null)" 
                     class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                     v-if="fileUploaded>0">
                     <span v-if="!viewPdf">Preview upload</span>
@@ -302,7 +301,7 @@
                   </button>
                 </span>
 
-                <!-- CV preview modal -->        
+                <!-- Uploaded CV preview modal -->        
                 <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
                   <div class="flex items-end  min-h-full text-center sm:block ">            
                     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -327,20 +326,20 @@
                         <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm hidden">
                           
                         </button>
-                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay">
+                        <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay(null)">
                           Close
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- end of CV preview modal -->
+                <!-- end of uploaded CV preview modal -->
               </span>
 
             </span>
           </span>
 
-            <!-- CV preview modal -->
+            <!--Existing CV preview modal -->
           <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
             <div class="flex this.rdeProfiles-end  min-h-full text-center sm:block ">            
               <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -355,8 +354,8 @@
                       <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
                         {{$route.params.rdeName}}'s CV Preview
                       </h3>
-                      <div class="h-96" v-if="this.rdeProfile.cv">                      
-                        <vue-pdf-app :pdf="this.rdeProfile.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
+                      <div class="h-96" v-if="this.RDEcv">                      
+                        <vue-pdf-app :pdf="this.RDEcv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
                       </div>
                     </div>
                   </div>
@@ -370,10 +369,11 @@
               </div>
             </div>
           </div>
+            <!--End of existing CV preview modal -->
+
         </span>
 
         <span v-if="!this.rdeProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
-          <span class="text-blue-500 font-mono font-semibold text-lg capitalize p-3">Curriculum Vitae</span> <br>
 
           No CV Uploaded. Please upload CV!
           <label class="block mt-4 text-sm">
@@ -408,7 +408,7 @@
               />  
 
           <span class="flex justify-between p-2">
-            <button @click="togglePdfDisplay" 
+            <button @click="togglePdfDisplay(rdeProfile.cv_upload_status)" 
               class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
               v-if="fileUploaded>0">
               <span v-if="!viewPdf">Preview upload</span>
@@ -426,40 +426,7 @@
               </router-link>
             </button>
           </span>
-
-          <!-- CV preview modal -->        
-          <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
-            <div class="flex items-end  min-h-full text-center sm:block ">            
-              <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-              <!-- This element is to trick the browser into centering the modal contents. -->
-              <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            
-              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div class="h-96">                 
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                        Uploaded CV
-                      </h3>
-                      <div class="h-96" v-if="form.cv">                      
-                        <vue-pdf-app :pdf="form.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="bg-gray-150 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm hidden">
-                    
-                  </button>
-                  <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay">
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end of CV preview modal -->
+          
         </span>
 
        
@@ -498,17 +465,43 @@
         </span>
         
       </tab>
-      <tab title="Deployments" class="space-x-4 grid grid-cols-3">
+      
+      <tab title="Deployments" class="space-x-4 grid grid-cols-4">
          <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
           <loading></loading>
         </span>
-        <span v-if="!this.loading">
-          <span v-if="this.rdeProfile.deployments">
-            {{this.rdeProfile.deployments}}
-          </span>
+        <span v-if="!this.loading && rdeDeployments" class="col-span-3">            
+          <table class="w-full col-span-3 border border-black p-3" v-if="rdeDeployments.length>0">
+            <thead class="text-lg font-semibold font-mono border border-black p-2 ">
+              <th class="border border-black">Outbreak</th>
+              <th class="border border-black">Description</th>
+              <th class="border border-black">Region</th>
+              <th class="border border-black">Start date</th>
+              <th class="border border-black">End date</th>
+            </thead>
+            <tbody>
+              <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
+                <td class="border-l border-black p-2 capitalize">{{index+1}}. {{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
+                <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
+                <td class="border-l border-black p-2 capitalize">Region</td>
+                <td class="border-l border-black p-2 uppercase">{{deployment.start_date?deployment.start_date:''}}</td>
+                <td class="border-l border-black p-2 uppercase">{{deployment.end_date?deployment.end_date:''}}</td>
+              </tr>
+            </tbody>
+          </table>            
           <span v-else class="text-yellow-400 animate-pulse">
             No deployments yet.
           </span>
+        </span>
+        <span class="colspan-1 flex justify-end">
+          <router-link
+            :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+            class="btn btn-blue h-1/6 text-md"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+
+            <span class="px-1">Deploy</span>
+          </router-link>
         </span>
         
       </tab>
@@ -541,12 +534,14 @@ export default {
   data() {
     return {
       rdeProfile:{},
+      rdeDeployments:{},
       form: {   
       },
       mode: 'light',
       mailto: "mailto:",
 			tel: "tel:",
       viewPdf: false,
+      RDEcv:'',
       fileUploaded:0,
       loading:false,
       displayUploadButton:false
@@ -564,6 +559,16 @@ export default {
        }).then(()=>{
          this.loading = false
        })
+       this.fetchRDEdeployments(this.$route.params.rdeId)
+    },
+    fetchRDEdeployments(rde_id){
+      this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
+         this.rdeDeployments = resp
+       }).catch(err=>{
+         this.$store.dispatch('setErrorMsg', err.data)
+       }).then(()=>{
+         this.loading = false
+       })
     },
     changeStyle () {
       if (this.mode === 'dark') {
@@ -572,8 +577,19 @@ export default {
         this.mode = 'dark'
       }
     },
-     togglePdfDisplay() {
-      this.viewPdf = !this.viewPdf;
+     togglePdfDisplay(action) {
+       this.viewPdf = !this.viewPdf;
+      if(action==='fetchCV'){
+        this.loading=true
+        this.$store.dispatch('fetchRDEcv', this.$route.params.rdeId).then(resp=>{
+          this.RDEcv = resp
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg',err.data)
+        }).then(()=>{
+          this.loading=false
+        })
+      }
+
     },
      toggleUploadField() {
       this.displayUploadButton = !this.displayUploadButton;
@@ -601,7 +617,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getErrorMessage']),
-    ...mapActions(['fetchRDEById']),
+    ...mapActions(['fetchRDEById','getRDEprofileDeployment','fetchRDEcv']),
     age:function()
     {
         var today = new Date();

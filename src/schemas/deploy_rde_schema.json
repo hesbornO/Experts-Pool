@@ -1,4 +1,12 @@
-[{
+[
+    {
+        "type": "select",
+        "options": [0],
+        "label": "Outbreak",
+        "name": "outbreak_id",
+        "validation": "required"
+    },
+    {
         "component": "div",
         "class": "grid grid-cols-2 gap-2",
         "children": [{
@@ -14,12 +22,6 @@
             }
         ]
 
-    },
-    {
-        "type": "select",
-        "options": [0],
-        "label": "Outbreak",
-        "name": "outbreak_id",
-        "validation": "required"
     }
+    
 ]

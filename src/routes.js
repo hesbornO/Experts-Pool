@@ -176,6 +176,7 @@ const routes = [{
 
         ]
     },
+    // PROFILE
     {
         path: '/home/profile/:rdeId/:rdeName',
         name: 'rdeProfile',
@@ -273,6 +274,23 @@ const routes = [{
                     }
                 }
             },
+            {
+                path: 'deploy-rde',
+                name: 'deployRDEfromProfile',
+                component: modal_deploy_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: deploy_rde_schema,
+                        vuex_save_action: 'deployRDE',
+                        object_title: `' ${x.params.rdeName}' ?`,
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchOutbreakOptions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            }
         ]
     },
     // self-registration
