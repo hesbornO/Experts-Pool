@@ -15,6 +15,7 @@ const getters = {
 }
 
 const actions = {
+    // rde CRUD
     fetchRDES({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -31,6 +32,17 @@ const actions = {
             })
         })
     },
+    postRDE({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post("/profile/", payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
     fetchRDEById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -46,6 +58,24 @@ const actions = {
                 reject(err)
             })
         })
+    },
+    updateRDEById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
     },
     deleteRDEById({ commit }, payload) {
         return new Promise((resolve, reject) => {
@@ -64,9 +94,16 @@ const actions = {
             })
         })
     },
-    postRDE({ commit }, payload) {
+    uploadCVById({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            api.post("/profile/", payload).then(resp => {
+            let relative_url = '/profile_cv/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                // relative_url = "/profile/" + payload.rdeId + "/"
+                payload = { cv: payload.cv, profile_id: payload.rdeId }
+            }
+            api.post(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
@@ -75,6 +112,25 @@ const actions = {
             })
         });
     },
+    fetchRDEcv({ commit }, payload) {
+        console.log('cv payload:',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile_cv/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile_cv/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    
+    // deployments
     deployRDE({ commit }, payload) {
         return new Promise((resolve, reject) => {
             api.post("/deployment/", payload).then(resp => {
@@ -120,24 +176,25 @@ const actions = {
             })
         })
     },
-    updateRDEById({ commit }, payload) {
+    getRDEprofileDeployment({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            let relative_url = '/profile/'
+            let relative_url = '/get_profile_deployments/'
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload.id + "/"
-                console.log('patchUrl', relative_url)
+                relative_url = "/get_profile_deployments/" + payload
             }
-            api.patch(relative_url, payload).then(resp => {
+            api.get(relative_url).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
-                commit("setError", err.response.data)
-                reject(err.response.data)
+                reject(err)
             })
-        });
+        })
     },
+
+    
+    //approvals
     approveRDEById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -179,6 +236,7 @@ const actions = {
             let relative_url = '/profile/'
             if (payload === undefined) {
                 payload = ''
+                console.log('')
             } else {
                 relative_url = "/profile/" + payload + "/"
                 payload = { application_status: 'approved_by_partner_state' }
@@ -192,24 +250,7 @@ const actions = {
             })
         });
     },
-    uploadCVById({ commit }, payload) {
-        return new Promise((resolve, reject) => {
-            let relative_url = '/profile_cv/'
-            if (payload === undefined) {
-                payload = ''
-            } else {
-                // relative_url = "/profile/" + payload.rdeId + "/"
-                payload = { cv: payload.cv, profile_id: payload.rdeId }
-            }
-            api.post(relative_url, payload).then(resp => {
-                commit("setRDE", resp.data)
-                resolve(resp.data)
-            }).catch(err => {
-                commit("setError", err.response.data)
-                reject(err.response.data)
-            })
-        });
-    },
+    
     disapproveRDEById({ commit }, payload) {
         console.log('payload 2:', payload)
         return new Promise((resolve, reject) => {
@@ -229,6 +270,9 @@ const actions = {
             })
         });
     },
+    
+    
+    // recommendations
     recommendToRDE({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/recommendation/'
