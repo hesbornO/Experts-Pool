@@ -15,8 +15,8 @@
     
     <span class="flex justify-between">
       <span class="flex">
-        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status=='approved'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
-              Status: {{ this.rdeProfile.application_status ? this.rdeProfile.application_status.replace('_', ' ') : '' }}
+        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+              Status: {{ this.rdeProfile.application_status ? this.rdeProfile.application_status.replace(/[_-]/g, " ") : '' }}
         </span>
         <span class="">
           <router-link

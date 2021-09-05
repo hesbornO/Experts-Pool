@@ -395,14 +395,14 @@
                <label class="block mt-4 text-sm col-span-2">
                   <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
                   <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">            
-                    <select name="competencies_list" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-                    v-model="form.competencies_list" id="competencies_list"  multiple>
+                    <select name="competencies" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+                    v-model="form.competencies" id="competencies"  multiple>
                       <option value="" disabled selected>--Select competency--</option>     
-                      <option v-for="(competency,index) in competencies" :key="index"  :value="competency.id">{{competency.name}}</option>
+                      <option v-for="(competency,index) in competencies_list" :key="index"  :value="competency.id">{{competency.name}}</option>
                     </select>
-                    <span v-if="getErrorMessage['competencies_list']">
-                      <span v-if="getErrorMessage['competencies_list'].length>0">
-                        <span v-for="(error,index) in getErrorMessage['competencies_list']" :key="index">
+                    <span v-if="getErrorMessage['competencies']">
+                      <span v-if="getErrorMessage['competencies'].length>0">
+                        <span v-for="(error,index) in getErrorMessage['competencies']" :key="index">
                           <span class="text-red-500 animate-pulse">{{error}}</span>
                         </span>
                       </span>
@@ -505,7 +505,7 @@ export default {
        },
       occupations: {},
       countries: {},
-      competencies:{},
+      competencies_list:{},
       regions: {},
       search: '',
       status: '',
@@ -528,15 +528,11 @@ export default {
     ...mapActions(['fetchCountries','fetchRegions','fetchAllOccupations','fetchAllCompetencies','postRDE']),
     ...mapGetters(['allCountries']),
 
-     registerRDE(){
-      this.form.competencies_list = [this.form.competencies_list]
-      this.form.region_of_residence_id=21
-      console.log('form', this.form)
-
+     registerRDE(){      
       let payload = this.form
       this.postRDE(payload).then(resp=>{
             this.$store.dispatch('setError',{})
-            window.location.replace('/member-countries')
+            window.location.replace('/home')
             console.log(resp)
       })      
     }, 
@@ -550,7 +546,7 @@ export default {
     },
     getCompetencies() {
       this.$store.dispatch('fetchAllCompetencies').then(resp => {
-        this.competencies = resp;   
+        this.competencies_list = resp;   
         // console.log('countries:', this.countries)             
       }).catch(err => {
         console.log(err);
