@@ -173,14 +173,14 @@
                     <span class="px-1">Deactivate</span>
                   </router-link>                 -->
 
-                  <router-link
+                  <!-- <router-link
                       :to="{name:'DeployRDE', params:{rdeId:item.id, rdeName: item.first_name.concat(' ').concat(item.last_name)}}"
                       class="btn btn-green h-1/2 text-xs"
-                      v-if="item.application_status === 'approved'"
+                      v-if="item.application_status === 'approval_complete' || 'approved_by_partner_state'"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                     <span class="px-1">Deploy</span>
-                  </router-link>
+                  </router-link> -->
                  <!-- CV preview modal -->
                <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
                 <div class="flex items-end  min-h-full text-center sm:block ">            
