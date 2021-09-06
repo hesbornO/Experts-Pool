@@ -112,7 +112,8 @@
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
               <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.region_of_residence_id" id="region">              
+              v-model="form.region_of_residence_id" id="region"> 
+                <option value="" disabled selected>--Select region--</option>     
                 <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.name}}</option>
               </select>
                <span v-if="getErrorMessage['region_of_residence_id']">
@@ -128,46 +129,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
               </div>
             </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Location</span>
-            <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">            
-              <select name="location" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.location" id="county">
-                <option value="" selected disabled>--select--</option>
-                <option value="Bubanza">Bubanza</option>
-                <option value="Bujumbura Mairie"> Bujumbura Mairie</option>
-                <option value="Bujumbura Rural"> Bujumbura Rural</option>
-                <option value="Bururi">Bururi</option>
-                <option value="Cankuzo">Cankuzo</option>
-                <option value="Cibitoke">Cibitoke</option>
-                <option value="Gitega">Gitega</option>
-                <option value="Karuzi">Karuzi</option>
-                <option value="Kayanza">Kayanza</option>
-                <option value="Kirundo">Kirundo</option>
-                <option value="Makamba">Makamba</option>
-                <option value="Muramvya">Muramvya</option>
-                <option value="Muyinga">Muyinga</option>
-                <option value="Mwaro">Mwaro</option>
-                <option value="Ngozi">Ngozi</option>
-                <option value="Rumonge">Rumonge</option>
-                <option value="Rutana">Rutana</option>
-                <option value="Ruyigi">Ruyigi</option>
-              </select>
-               <span v-if="getErrorMessage['location']">
-                <span v-if="getErrorMessage['location'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['location']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-              </div>
-            </div>
-          </label>
+          </label>          
         </div>
 
         <!-- contact section -->
@@ -182,10 +144,10 @@
               <select name="id_type" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
               v-model="form.id_type" id="id_type">
                 <option value="" selected disabled>--select--</option>
-                <option value="alien_id">Alien ID</option>           
-                <option value="birth_cert">Birth Certificate No.</option>
-                <option value="military_id">Military ID No.</option>                
                 <option value="national_id">National ID No.</option>                
+                <option value="birth_cert">Birth Certificate No.</option>
+                <option value="alien_id">Alien ID</option>           
+                <option value="military_id">Military ID No.</option>                
                 <option value="passport">Passport.</option>                
               </select>
                <span v-if="getErrorMessage['id_type']">
@@ -286,8 +248,9 @@
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
-           <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.occupation_id" id="occupation">              
+           <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="--select--"
+              v-model="form.occupation_id" id="occupation">         
+                <option value="" disabled selected>--Select occupation--</option>     
                 <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.id">{{occupation.name}}</option>
               </select>
 
@@ -432,16 +395,14 @@
                <label class="block mt-4 text-sm col-span-2">
                   <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
                   <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">            
-                    <select name="competencies_list" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-                    v-model="form.competencies_list" id="competencies_list" >
-                      <option value="" selected disabled>--select--</option>
-                      <option :value="1">Competency 1</option>
-                      <option :value="2">Competency 2</option>
-                      <option :value="3">Competency 3</option>
+                    <select name="competencies" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+                    v-model="form.competencies" id="competencies"  multiple>
+                      <option value="" disabled selected>--Select competency--</option>     
+                      <option v-for="(competency,index) in competencies_list" :key="index"  :value="competency.id">{{competency.name}}</option>
                     </select>
-                    <span v-if="getErrorMessage['competencies_list']">
-                      <span v-if="getErrorMessage['competencies_list'].length>0">
-                        <span v-for="(error,index) in getErrorMessage['competencies_list']" :key="index">
+                    <span v-if="getErrorMessage['competencies']">
+                      <span v-if="getErrorMessage['competencies'].length>0">
+                        <span v-for="(error,index) in getErrorMessage['competencies']" :key="index">
                           <span class="text-red-500 animate-pulse">{{error}}</span>
                         </span>
                       </span>
@@ -544,14 +505,15 @@ export default {
        },
       occupations: {},
       countries: {},
+      competencies_list:{},
       regions: {},
       search: '',
       status: '',
       gender_types:{
-        0:"Male",
-        1:"Female",
-        2:"Transgender",
-        3:"Prefer Not To Say"
+        M:"Male",
+        F:"Female",
+        T:"Transgender",
+        O:"Prefer Not To Say"
       },
       id_types:[
         {value:"nationalID", label:"National ID"},
@@ -563,25 +525,28 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchCountries','fetchRegions','fetchOccupations','postRDE']),
+    ...mapActions(['fetchCountries','fetchRegions','fetchAllOccupations','fetchAllCompetencies','postRDE']),
     ...mapGetters(['allCountries']),
 
-     registerRDE(){
-      this.form.competencies_list = [this.form.competencies_list]
-      this.form.region_of_residence_id=21
-      console.log('form', this.form)
-
+     registerRDE(){      
       let payload = this.form
       this.postRDE(payload).then(resp=>{
             this.$store.dispatch('setError',{})
-            window.location.replace('/member-countries')
+            window.location.replace('/home')
             console.log(resp)
       })      
     }, 
     getOccupations() {
-      console.log('getting occupations...')
-      this.$store.dispatch('fetchOccupations').then(resp => {
+      this.$store.dispatch('fetchAllOccupations').then(resp => {
         this.occupations = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    getCompetencies() {
+      this.$store.dispatch('fetchAllCompetencies').then(resp => {
+        this.competencies_list = resp;   
         // console.log('countries:', this.countries)             
       }).catch(err => {
         console.log(err);
@@ -714,7 +679,8 @@ export default {
    mounted() {
     this.getCountries()
     this.getRegions()
-    this.getOccupations()
+    this.getOccupations()    
+    this.getCompetencies()    
   },
   
   computed: {

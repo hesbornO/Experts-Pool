@@ -15,11 +15,11 @@
     
     <span class="flex justify-between">
       <span class="flex">
-        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status=='approved'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
-              Status: {{ this.rdeProfile.application_status ? this.rdeProfile.application_status.replace('_', ' ') : '' }}
+        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+              Status: {{ this.rdeProfile.application_status ? this.rdeProfile.application_status.replace(/[_-]/g, " ") : '' }}
         </span>
         <span class="">
-          <router-link
+          <!-- <router-link
             :to="{name:'ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
             class="btn btn-green h-1/2 text-xs"
             v-if="this.rdeProfile.application_status === 'pending_approval'"
@@ -27,7 +27,7 @@
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
             <span class="px-1">Approve</span>
-          </router-link>
+          </router-link> -->
 
           <router-link
               :to="{name:'DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
@@ -483,7 +483,7 @@
               <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
                 <td class="border-l border-black p-2 capitalize">{{index+1}}. {{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
                 <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
-                <td class="border-l border-black p-2 capitalize">Region</td>
+                <td class="border-l border-black p-2 capitalize">Region?</td>
                 <td class="border-l border-black p-2 uppercase">{{deployment.start_date?deployment.start_date:''}}</td>
                 <td class="border-l border-black p-2 uppercase">{{deployment.end_date?deployment.end_date:''}}</td>
               </tr>
@@ -497,6 +497,8 @@
           <router-link
             :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
             class="btn btn-blue h-1/6 text-md"
+            v-if="this.rdeProfile.application_status === 'approval_complete' || 'approved_by_partner_state'"
+
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
 

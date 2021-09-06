@@ -21,7 +21,7 @@
     <!-- Outbreaks List -->
     <data_table v-bind="$attrs">
       <template v-slot="{item}">        
-        <td class="px-4 py-3 text-sm">{{item.name }}</td>
+        <td class="px-4 py-3 text-sm uppercase font-mono text-orange-400 font-semibold">{{item.name }}</td>
         <td class="px-4 py-3 text-sm">{{ item.description }}</td>
         <td class="px-4 py-3 text-sm flex-wrap" v-if="item.competencies">
           <span v-for="(competency,index) in item.competencies_objects" :key="index">
@@ -42,6 +42,13 @@
         <td class="px-4 py-3 text-sm">{{item.end_date}}</td>
         <td class="px-4 py-3 text-sm flex flex-row space-x-1">          
 
+          <router-link
+              :to="{name:'UpdateOutbreak', params:{outbreakId:item.id, outbreakName: item.name}}"
+              class="btn btn-blue h-1/2 text-xs"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <span class="px-1">View Deployments</span>
+          </router-link>
           <router-link
               :to="{name:'UpdateOutbreak', params:{outbreakId:item.id, outbreakName: item.name}}"
               class="btn btn-green h-1/2 text-xs"
