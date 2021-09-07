@@ -368,7 +368,7 @@
           <div class="grid grid-cols-3 gap-3">
                          
               <label class="block mt-4 text-sm">
-                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
+                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf only)</span></span>
                 <!-- focus-within sets the color for the icon when input is focused -->
                 <div
                     class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
@@ -378,16 +378,10 @@
                           :name="form.cv"
                           class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                           placeholder="john.doe@gmail.com"
-                          accept=".pdf,.doc,.docx,application/msword" 
+                          accept=".pdf" 
                           @input="processFile"                
                   />        
-                   <!-- <span v-if="getErrorMessage['cv']">
-                    <span v-if="getErrorMessage['cv'].length>0">
-                      <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
-                        <span class="text-red-500 animate-pulse">{{error}}</span>
-                      </span>
-                    </span>
-                  </span>    -->
+                   
                 </div>
               </label>  
 

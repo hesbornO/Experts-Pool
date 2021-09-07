@@ -23,8 +23,8 @@
     <data_table v-bind="$attrs">
       <template v-slot="{item}">        
         <td class="px-4 py-3 text-sm capitalize">{{item.name }}</td>
-        <td class="px-4 py-3 text-sm capitalize">{{ new Date(item.created_at).toLocaleDateString() +' at '+ new Date(item.created_at).toLocaleTimeString() }}</td>
-        <td class="px-4 py-3 text-sm capitalize">{{ new Date(item.updated_at).toLocaleDateString() +' at '+ new Date(item.updated_at).toLocaleTimeString() }}</td>
+        <td class="px-4 py-3 text-sm capitalize">{{ 'Human health?' }}</td>
+        <td class="px-4 py-3 text-sm capitalize">{{ 'Description?' }}</td>
         <td class="px-4 py-3 text-sm flex flex-row space-x-1">   
           <router-link
               :to="{name:'UpdateOccupation', params:{occupationId:item.id, occupationName: item.name}}"
