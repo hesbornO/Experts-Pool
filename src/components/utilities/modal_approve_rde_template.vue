@@ -37,7 +37,7 @@
               </div>
             </div>
               <div class="flex flex-row justify-between w-full border-t px-3 pt-3 font-semibold text-white">
-                <button class="btn btn-green flex flex-col justify-center filter opacity-60"
+                <button class="btn btn-red flex flex-col justify-center filter opacity-60"
                         type="button"
                         @click="back">
                   <div class="flex flex-row justify-between gap-x-2">
@@ -49,7 +49,7 @@
                     </svg>
                   </div>
                 </button>
-                <button class="btn btn-blue flex flex-col justify-center  "
+                <button class="btn btn-green flex flex-col justify-center  "
                         type="button"
                         @click="executeAction">
                   <div class="flex flex-row justify-between gap-x-2">

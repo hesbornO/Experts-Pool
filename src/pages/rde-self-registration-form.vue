@@ -378,17 +378,16 @@
                           :name="form.cv"
                           class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                           placeholder="john.doe@gmail.com"
-                          validation="required"  
                           accept=".pdf,.doc,.docx,application/msword" 
                           @input="processFile"                
                   />        
-                   <span v-if="getErrorMessage['cv']">
+                   <!-- <span v-if="getErrorMessage['cv']">
                     <span v-if="getErrorMessage['cv'].length>0">
                       <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
                         <span class="text-red-500 animate-pulse">{{error}}</span>
                       </span>
                     </span>
-                  </span>   
+                  </span>    -->
                 </div>
               </label>  
 
@@ -501,7 +500,7 @@ export default {
   data() {
     return {
       form:{
-        cv:''
+        // cv:''
        },
       occupations: {},
       countries: {},

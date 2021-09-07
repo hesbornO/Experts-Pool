@@ -89,6 +89,8 @@ const actions = {
             api.delete(relative_url).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
+                window.location.replace("/home")
+
             }).catch(err => {
                 reject(err)
             })
