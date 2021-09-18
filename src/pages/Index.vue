@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class="flex flex-col w-2/12 justify-end ">
-            <router-link
+            <!-- <router-link
                 :to="{name: 'CreateRDE'}"
                 class="btn btn-blue">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -62,7 +62,7 @@
                       stroke-width="2"></path>
               </svg>
               <span class="px-1">Add RDE</span>
-            </router-link>
+            </router-link> -->
           </div>
           <router-view></router-view>
 
@@ -87,20 +87,20 @@
             <td class="px-4 py-3 text-sm capitalize">
               {{ item.region_of_residence ? item.region_of_residence.name: '' }}{{item.region_of_residence.country.name?', '+ item.region_of_residence.country.name:''}}
             </td>
-            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
-              {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
-            </td>
+            
+
             <td class="px-4 py-3 text-sm capitalize">{{ item.current_deployment ? item.current_deployment : 'None' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">
-            <span v-if="item.competencies_objects">
-              <span v-for="(competency,index) in item.competencies_objects" :key="index">
-                {{ competency.name ? competency.name : '' }}<span
-                  v-if="index+1<item.competencies_objects.length">, </span>
-              </span>
-            </span><br>
-             
-
+              <span v-if="item.competencies_objects">
+                <span v-for="(competency,index) in item.competencies_objects" :key="index">
+                  {{ competency.name ? competency.name : '' }}<span
+                    v-if="index+1<item.competencies_objects.length">, </span>
+                </span>
+              </span><br>
+            </td>
+            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+              {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
             <td class="px-4 py-3 text-sm flex flex-row space-x-1">            
                 

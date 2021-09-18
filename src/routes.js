@@ -4,7 +4,7 @@ import Login from "./pages/login";
 import Home from "./pages/Index.vue";
 import rde_profile from "./pages/rde_profile.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
-import MemberCountries from "./pages/countries/MemberCountries.vue";
+import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
 import Competence from "./pages/competence/Competence.vue";
@@ -31,6 +31,7 @@ import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
 import end_rde_deployment_schema from '@/schemas/end_rde_deployment_schema.json'
 import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
+import outbreak_end_date_schema from '@/schemas/outbreak_end_date_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import user_group_schema from '@/schemas/user_group_schema.json'
@@ -54,7 +55,7 @@ const routes = [{
         component: Home,
         props: {
             vuex_data_action: 'fetchRDES',
-            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'STATUS', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'ACTIONS']
+            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'STATUS', 'ACTIONS']
         },
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -309,8 +310,11 @@ const routes = [{
         name: "Active Deployments",
         component: Deployments,
         props: {
-            vuex_data_action: 'fetchRDEDeployments',
-            table_headings: ['NAME', 'CONTACT', 'REGION', 'SPECIALIZATION', 'COMPETENCE', 'CURRENT DEPLOYMENT', 'Deployment date', 'ACTIONS']
+            // vuex_data_action: 'fetchRDEDeployments',
+            // table_headings: ['NAME', 'CONTACT', 'REGION', 'SPECIALIZATION', 'COMPETENCE', 'CURRENT DEPLOYMENT', 'Deployment date', 'ACTIONS']
+            vuex_data_action: 'fetchRDES',
+            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'STATUS', 'ACTIONS']
+
         },
         icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
         children: [{
@@ -330,11 +334,11 @@ const routes = [{
             }
         }]
     },
-    // member countries
+    // partner-states
     {
-        path: "/member-countries/",
-        name: "MemberCountries",
-        component: MemberCountries,
+        path: "/partner-states/",
+        name: "PartnerStates",
+        component: PartnerStates,
         props: {
             vuex_data_action: 'fetchCountries',
             table_headings: ['NAME', 'PHONE CODE', 'REGISTERED RDES', 'PENDING RDES', 'ACTION']
@@ -452,7 +456,7 @@ const routes = [{
         component: Outbreak,
         props: {
             vuex_data_action: 'fetchAllOutbreaks',
-            table_headings: ['NAME', 'DESCRIPTION', 'COMPETENCIES LIST', 'SEVERITY', 'AFFECTED REGIONS LIST', 'START DATE', 'END DATE', 'ACTION']
+            table_headings: ['NAME', 'DESCRIPTION', 'AFFECTED REGIONS', 'DATES', 'ACTION']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
         children: [{
@@ -482,6 +486,24 @@ const routes = [{
                         object_id: x.params.outbreakId,
                         size: 'w-1/2',
                         optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                    }
+
+                }
+            },
+            {
+                path: 'outbreak-end-date/:outbreakName/:outbreakId',
+                name: 'OutbreakEndDate',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: outbreak_end_date_schema,
+                        vuex_fetch_action: 'fetchOutbreakById',
+                        vuex_save_action: 'updateOutbreakById',
+                        object_title: x.params.outbreakName,
+                        object_id: x.params.outbreakId,
+                        size: 'w-1/2',
+                        optionsList: []
                     }
 
                 }

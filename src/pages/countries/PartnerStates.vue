@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Member Countries">
+  <dashboard_layout page_title="Partner States">
 
     <div class="grid gap-2 mb-1 md:grid-cols-2 xl:grid-cols-4">
       <div class="flex col-span-2 items-center ">

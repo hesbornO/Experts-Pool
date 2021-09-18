@@ -1,0 +1,22 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+        "component": "div",
+        "class": "grid grid-cols-2 gap-3",
+        "children": [{
+                "type": "date",
+                "label": "Start Date",
+                "name": "start_date",
+                "readonly": true,
+                "validation": "required"
+            },
+            {
+                "type": "date",
+                "label": "End Date",
+                "name": "end_date",
+                "validation": "required"
+            }
+        ]
+    }]
+}]
