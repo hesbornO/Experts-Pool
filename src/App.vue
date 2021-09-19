@@ -29,7 +29,7 @@ export default {
           localStorage.removeItem('token')
           delete axios.defaults.headers.common['Authorization']
           console.log("redirect")
-          router.push('/login')
+          router.push('/')
         }
         throw err;
       });

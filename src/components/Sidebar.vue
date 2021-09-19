@@ -74,12 +74,29 @@ export default {
   created() {
     this.$router.options.routes.forEach(route => {
       if (route.showInLeftBar !== false) {
-        this.fetched_routes.push({
-          name: route.name,
-          verboseName: route.verboseName,
-          path: route.path,
-          icon: route.icon,
-        })
+        let user_assigned_roles = localStorage.getItem('roles')
+        user_assigned_roles = user_assigned_roles.split(',')
+        console.log("user_roles ", user_assigned_roles, " router roles", route.roles)
+        if (user_assigned_roles.length > 0){
+          let matches
+          //if the route has no specified roles, don't display it
+          if(route.roles === undefined){
+            matches = []
+          }else{
+            matches = user_assigned_roles.filter(function(n) {
+              return route.roles.indexOf(n) !== -1;
+            });
+          }
+          if(matches.length > 0){
+            this.fetched_routes.push({
+              name: route.name,
+              verboseName: route.verboseName,
+              path: route.path,
+              icon: route.icon,
+            })
+          }
+        }
+
       }
     })
   }

@@ -22,6 +22,9 @@
           ></path>
         </svg>
       </button>
+      <!--level info-->
+      <p class="capitalize">{{region}} ({{ user_level }})</p>
+      <!--end of level info-->
       <!-- Search input -->
       <div class="flex justify-center flex-1 lg:mr-32">
         <div class="relative w-full max-w-xl mr-6 focus-within:text-white">
@@ -165,7 +168,7 @@
             aria-label="Account"
             aria-haspopup="true"
           >
-          <span class="font-semibold pt-1">Admin</span>
+          <span class="font-semibold pt-1 capitalize">{{username}}</span>
             <img
               class="object-cover w-8 h-8 rounded-full"
               src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
@@ -259,8 +262,6 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
-
 export default {
   name: 'Navigation',
   data() {
@@ -271,10 +272,12 @@ export default {
       dark: false,
       username: '',
       password: '',
+      user_level:'',
+      region: '',
+      fullname: ''
     }
   },
   methods: {
-    ...mapActions(['logout']),
     toggleTheme() {
       if (this.dark) {
         this.dark = false
@@ -310,21 +313,28 @@ export default {
       this.isProfileMenuOpen = false
     },
     userLogout(){
-      // let payload = ''
-      let payload = {
-        username: this.username,
-        password: this.password
-      }
-      this.logout(payload).then(resp => {
-        window.location.replace("/")
-        console.log(resp)
-      }).catch(err => {
-        console.log(err)
-      })
+      localStorage.removeItem('token')
+      localStorage.removeItem('full_name')
+      localStorage.removeItem('username')
+      localStorage.removeItem('level')
+      localStorage.removeItem('region')
+      localStorage.removeItem('roles')
+      localStorage.removeItem('is_superuser')
+      window.location.replace("/")
+
   },
     reloadPage(){
       location.reload()
+    },
+    getProfileDetails(){
+     this.user_level= localStorage.getItem('level')
+     this.region= localStorage.getItem('region')
+     this.fullname= localStorage.getItem('fullname')
+     this.username= localStorage.getItem('username')
     }
-}
+},
+  mounted() {
+    this.getProfileDetails()
+  }
 }
 </script>
