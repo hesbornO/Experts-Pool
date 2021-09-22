@@ -60,7 +60,7 @@
               </button>
               <button class="btn btn-blue flex flex-col justify-center  "
                       type="button"
-                      @click="performDeployAction">
+                      @click="performEndDeploymentAction">
                 <div class="flex flex-row justify-between gap-x-2">
                   <p>Save</p>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -108,7 +108,7 @@ export default {
     vuex_save_action:{
       type: String,
     },
-    object_id: {},
+    deployment_id: [String, Array, Number],
     object_title: {
       type: String,
       default: ''
@@ -125,15 +125,12 @@ export default {
     optionsList: { type: Array, default: () => [] },
   },
   methods: {
-    performDeployAction() {
+    performEndDeploymentAction() {
       this.loading = true
-      this.form.profile_id = parseInt(this.$route.params.rdeId)
-      console.log('form:',this.form)
-      // this.form.outbreak_id  = parseInt(this.form.outbreak_id)
-      // console.log('outbreak id:',this.form.outbreak_id)
+      this.form.deployment_id = parseInt(this.deployment_id)
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
-            "" + this.object_title + " Deployed Successfully"
+            "" + this.object_title+" successfully"
         )
         this.hidden = true;
         this.back()

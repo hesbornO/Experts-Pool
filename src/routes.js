@@ -168,7 +168,24 @@ const routes = [{
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
-                        optionsList: ['fetchOutbreakOptions'],
+                        optionsList: ['fetchOutbreakOptions','fetchRegions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'end-deployment/:rdeName/:rdeId',
+                name: 'EndRDEDeployment',
+                component: modal_end_deployment_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: end_rde_deployment_schema,
+                        vuex_save_action: 'endRDEdeployment',
+                        object_title: `' ${x.params.rdeName}' ?`,
+                        object_id: x.params.rdeId,
+                        // optionsList: ['fetchOutbreakOptions','fetchRegions'],
                         size: 'w-1/2'
                     }
 
@@ -288,7 +305,25 @@ const routes = [{
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
-                        optionsList: ['fetchOutbreakOptions'],
+                        optionsList: ['fetchOutbreakOptions','fetchRegions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'end-deployment/:rdeName/:deploymentId/:outbreakName',
+                name: 'EndRDEDeploymentFromProfile',
+                component: modal_end_deployment_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: end_rde_deployment_schema,
+                        vuex_save_action: 'endRDEdeployment',
+                        object_title: `' ${x.params.rdeName}'s' ${x.params.outbreakName} `,
+                        deployment_id: x.params.deploymentId,
+                        object_id: x.params.deploymentId,
+                        // optionsList: ['fetchOutbreakOptions','fetchRegions'],
                         size: 'w-1/2'
                     }
 
@@ -323,7 +358,7 @@ const routes = [{
         icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
         children: [{
             path: 'end-deployment/:rdeName/:rdeId',
-            name: 'endRDEdeployment',
+            name: 'EndRDEdeployment',
             component: modal_end_deployment_template,
             showInLeftBar: false,
             props: x => {

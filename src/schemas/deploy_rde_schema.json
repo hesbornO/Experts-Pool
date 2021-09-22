@@ -1,11 +1,25 @@
 [
     {
-        "type": "select",
-        "options": [0],
-        "label": "Outbreak",
-        "name": "outbreak_id",
-        "validation": "required"
+        "component":"div",
+        "class":"grid grid-cols-2 gap-2",
+        "children":[
+            {
+                "type": "select",
+                "options": [0],
+                "label": "Outbreak",
+                "name": "outbreak_id",
+                "validation": "required"
+            },
+            {
+                "type": "select",
+                "options": [1],
+                "label": "Region",
+                "name": "region",
+                "validation": "required"
+            }
+        ]
     },
+    
     {
         "component": "div",
         "class": "grid grid-cols-2 gap-2",
@@ -14,11 +28,6 @@
                 "label": "Start Date",
                 "name": "start_date",
                 "validation": "required"
-            },
-            {
-                "type": "date",
-                "label": "End Date",
-                "name": "end_date"
             }
         ]
 

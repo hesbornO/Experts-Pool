@@ -20,7 +20,7 @@ const getters ={
 const actions ={
     login({commit}, payload){
         return new Promise((resolve, reject)=>{
-           api.post("/request-otp/", payload).then(resp=>{
+           api.post("/request-token/", payload).then(resp=>{
                let access_token=resp.data.access
                commit("setToken", access_token)
                localStorage.setItem('token', access_token)

@@ -487,9 +487,21 @@
               <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
                 <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{index+1}}. {{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
                 <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
-                <td class="border-l border-black p-2 capitalize">Region?</td>
+                <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
                 <td class="border-l border-black p-2 uppercase">{{deployment.start_date?deployment.start_date:''}}</td>
-                <td class="border-l border-black p-2 uppercase">{{deployment.end_date?deployment.end_date:''}}</td>
+                <td class="border-l border-black p-2 uppercase">
+                  {{deployment.end_date?deployment.end_date:''}}
+                  <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
+                      <router-link
+                        :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
+                        class="btn btn-blue h-1/6 text-md"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+
+                        <span class="px-1">End Deployment</span>
+                      </router-link>
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>            
@@ -501,7 +513,7 @@
           <router-link
             :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
             class="btn btn-blue h-1/6 text-md"
-            v-if="this.rdeProfile.application_status === 'approval_complete' || this.rdeProfile.application_status === 'approved_by_partner_state'"
+            v-if="(this.rdeProfile.application_status === 'approval_complete' || this.rdeProfile.application_status === 'approved_by_partner_state') && !this.rdeProfile.active_deployments>0"
 
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>

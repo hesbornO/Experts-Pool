@@ -1,10 +1,21 @@
-[{
+[
+    {
     "component": "div",
     "class": "grid grid-cols-2 gap-2",
-    "children": [{
+    "children": [
+    {
         "type": "date",
         "label": "End Date",
         "name": "end_date"
-    }]
+    },
+    {
+        "type": "text",
+        "label": "Status",
+        "name": "status",
+        "value":"ended",
+        "readonly":true
+
+    }
+    ]
 
 }]

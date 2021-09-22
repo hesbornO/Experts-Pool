@@ -74,12 +74,19 @@ export default {
   created() {
     this.$router.options.routes.forEach(route => {
       if (route.showInLeftBar !== false) {
-        let user_assigned_roles = localStorage.getItem('roles')
-        user_assigned_roles = user_assigned_roles.split(',')
-        console.log("user_roles ", user_assigned_roles, " router roles", route.roles)
-        if (user_assigned_roles.length > 0){
-          let matches
-          //if the route has no specified roles, don't display it
+        let user_assigned_roles_string = localStorage.getItem('roles')
+        let user_assigned_roles = []
+        if (user_assigned_roles_string === ''){
+         //if the route has no specified roles, default to rde
+          user_assigned_roles.push('rde')
+        }else{
+          user_assigned_roles = user_assigned_roles.split(',')
+        }
+       
+        console.log("user roles", user_assigned_roles)
+        
+         let matches
+          
           if(route.roles === undefined){
             matches = []
           }else{
@@ -95,7 +102,6 @@ export default {
               icon: route.icon,
             })
           }
-        }
 
       }
     })

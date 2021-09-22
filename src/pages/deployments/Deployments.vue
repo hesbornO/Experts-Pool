@@ -60,26 +60,26 @@
         <!-- Deployments List -->
          <data_table v-bind="$attrs">
           <template v-slot="{item}" >
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approval_complete'">
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
               <span v-if="item.application_status==='approved_by_partner_state'" class="flex">
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
               </span>
-              <span v-if="item.application_status==='approval_complete'" class="flex">
+              <span v-if="item.active_deployments>0" class="flex">
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
               </span>
               
               {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
             </td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approval_complete'">{{ item.occupation ? item.occupation.name : '' }}</td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approval_complete'">
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.occupation ? item.occupation.name : '' }}</td>
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
               {{ item.region_of_residence ? item.region_of_residence.name: '' }}{{item.region_of_residence.country.name?', '+ item.region_of_residence.country.name:''}}
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approval_complete'">{{ item.current_deployment ? item.current_deployment : 'None' }}
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.current_deployment ? item.current_deployment : 'None' }}
             </td>
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.application_status==='approval_complete'">
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
               <span v-if="item.competencies_objects">
                 <span v-for="(competency,index) in item.competencies_objects" :key="index">
                   {{ competency.name ? competency.name : '' }}<span
@@ -87,10 +87,10 @@
                 </span>
               </span><br>
             </td>
-            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']" v-if="item.application_status==='approval_complete'">
+            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']" v-if="item.active_deployments>0">
               {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
-            <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.application_status==='approval_complete'">            
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.active_deployments>0">            
                 
               <router-link
                   :to="{name:'rdeProfile', params:{rdeId:item.id, rdeName: item.last_name}}"
@@ -103,40 +103,13 @@
                   </svg>
                   <span class="px-1">View Profile</span>
               </router-link>
-              <router-link
-                  :to="{name:'partnerStateApproval', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-blue h-1/2 text-xs"
-                  v-if="item.application_status === 'pending_approval'"
-
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                <span class="px-1">Partner State approval</span>
-              </router-link>
               
               <router-link
-                  :to="{name:'eacApproval', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-blue h-1/2 text-xs"
-                  v-if="item.application_status === 'approved_by_partner_state'"
-
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                <span class="px-1">EAC Approval</span>
-              </router-link>
-              <router-link
-                  :to="{name:'eacDisapproval', params:{rdeId:item.id, rdeName: item.last_name}}"
+                  :to="{name:'EndRDEdeployment', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-orange h-1/2 text-xs"
-                  v-if="item.application_status === 'approval_complete'"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="px-1">EAC Disapproval</span>
-              </router-link>
-              <router-link
-                  :to="{name:'partnerStateDisapproval', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-orange h-1/2 text-xs"
-                  v-if="item.application_status === 'approved_by_partner_state'"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="px-1">Partner State Disapproval</span>
+                <span class="px-1">End Deployment</span>
               </router-link>
               
               
