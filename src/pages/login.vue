@@ -87,13 +87,28 @@ export default {
   methods: {
     ...mapActions(['login']),
     userLogin() {
+      
       let payload = {
         username: this.username,
         password: this.password
       }
       // eslint-disable-next-line no-unused-vars
       this.login(payload).then(resp => {
-        window.location.replace("/home")
+        let user_assigned_roles_string = localStorage.getItem('roles')
+        let user_assigned_roles = []
+        if (user_assigned_roles_string === ''){
+         //if the route has no specified roles, default to rde
+          user_assigned_roles.push('rde')
+        }else{
+          console.log('assigned roles:', user_assigned_roles_string)
+          user_assigned_roles = user_assigned_roles_string.split(',')
+        }
+       
+        if(user_assigned_roles.includes('rde')&& user_assigned_roles.length==1){
+          window.location.replace("/rde-self-profile")
+        }else{
+          window.location.replace("/home")
+        }
       }).catch(err => {
         console.log(err)
       })

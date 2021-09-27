@@ -128,7 +128,7 @@
 
               <hr class="my-8" />        
               <p class="mt-4">              
-                <router-link class="w-full" to="/login"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">Already have an account? Login</span></router-link>
+                <router-link class="w-full" to="/"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">Already have an account? Login</span></router-link>
               </p>
             </div>
           </div>

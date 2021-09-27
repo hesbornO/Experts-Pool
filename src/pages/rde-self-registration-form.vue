@@ -525,7 +525,7 @@ export default {
       let payload = this.form
       this.postRDE(payload).then(resp=>{
             this.$store.dispatch('setError',{})
-            window.location.replace('/home')
+            window.location.replace('/rde-self-profile')
             console.log(resp)
       })      
     }, 

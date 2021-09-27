@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Index.vue";
 import rde_profile from "./pages/rde_profile.vue";
+import rde_self_profile from "./pages/rde_self_profile.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
@@ -168,7 +169,7 @@ const routes = [{
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
-                        optionsList: ['fetchOutbreakOptions','fetchRegions'],
+                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
                         size: 'w-1/2'
                     }
 
@@ -193,7 +194,7 @@ const routes = [{
             }
 
         ],
-        roles: ['admin']
+        roles: ['admin', 'approver']
     },
     // PROFILE
     {
@@ -208,8 +209,7 @@ const routes = [{
                 table_headings: ['NAME', 'Country', 'ACTION']
             }
         },
-        children: [
-            {
+        children: [{
                 path: 'approve-rde',
                 name: 'ApproveRDEfromProfile',
                 component: modal_approve_rde_template,
@@ -305,7 +305,7 @@ const routes = [{
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
-                        optionsList: ['fetchOutbreakOptions','fetchRegions'],
+                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
                         size: 'w-1/2'
                     }
 
@@ -332,6 +332,101 @@ const routes = [{
         ],
         roles: ['admin']
     },
+    //rde self profile
+    {
+        path: '/rde-self-profile',
+        name: 'rdeSelfProfile',
+        component: rde_self_profile,
+        showInLeftBar: true,
+        icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+        verboseName: 'Profile',
+        props: x => {
+            return {
+                vuex_data_action: 'fetchRDEById',
+                object_id: `?country=${x.params.countryId}`,
+                table_headings: ['NAME', 'Country', 'ACTION']
+            }
+        },
+        children: [{
+                path: 'rde-self-update',
+                name: 'RDESelfUIpdate',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: rde_schema,
+                        vuex_fetch_action: 'fetchRDEById',
+                        vuex_save_action: 'updateRDEById',
+                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
+                path: 'deactivate-profile',
+                name: 'DeactivateProfile',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deactivateProfile',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'rde-upload-cv',
+                name: 'RDEUploadCVfromProfile',
+                component: modal_upload_cv_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'uploadCVById',
+                        vuex_payload: { cv: x.params.cv, rdeId: x.params.rdeId },
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'request-for-deployment',
+                name: 'requestForDeployment',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: recommend_schema,
+                        vuex_action: 'requestForDeployment',
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName,
+                        size: '3/4'
+                    }
+                }
+            },
+            {
+                path: 'add-remarks',
+                name: 'AddGeneralRemarks',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: end_rde_deployment_schema,
+                        vuex_save_action: 'rdeAddRemarks',
+                        object_title: `' ${x.params.rdeName}'s' ${x.params.outbreakName} `,
+                        deployment_id: x.params.deploymentId,
+                        object_id: x.params.deploymentId,
+                        // optionsList: ['fetchOutbreakOptions','fetchRegions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            }
+        ],
+        roles: ['rde']
+    },
     // self-registration
     {
         path: "/rde-self-registration-form",
@@ -340,8 +435,8 @@ const routes = [{
         icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">\n' +
             '  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />\n' +
             '</svg>',
-        verboseName: 'Register RDE',
-        roles: ['rde']
+        verboseName: 'Register',
+        roles: []
     },
     //deployments
     {
@@ -372,7 +467,7 @@ const routes = [{
 
             }
         }],
-        roles: ['admin']
+        roles: ['admin', 'approver']
     },
     // partner-states
     {
@@ -386,8 +481,7 @@ const routes = [{
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-country',
                 name: 'CreateCountry',
                 component: modal_create_template,
@@ -443,8 +537,7 @@ const routes = [{
             }
         },
         showInLeftBar: false,
-        children: [
-            {
+        children: [{
                 path: 'create-region',
                 name: 'CreateRegion',
                 component: modal_create_template,
@@ -503,8 +596,7 @@ const routes = [{
             table_headings: ['NAME', 'DESCRIPTION', 'AFFECTED REGIONS', 'DATES', 'ACTION']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-outbreak',
                 name: 'CreateOutbreak',
                 component: modal_create_template,
@@ -580,8 +672,7 @@ const routes = [{
             table_headings: ['NAME', 'CREATED AT', 'UPDATED AT', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-competence',
                 name: 'CreateCompetence',
                 component: modal_create_template,
@@ -638,8 +729,7 @@ const routes = [{
             table_headings: ['NAME', 'one health sector', 'description', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-occupation',
                 name: 'CreateOccupation',
                 component: modal_create_template,
@@ -696,8 +786,7 @@ const routes = [{
             table_headings: ['NAME', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-user-group',
                 name: 'CreateUserGroup',
                 component: modal_create_template,
@@ -753,8 +842,7 @@ const routes = [{
             table_headings: ['USERNAME', 'NAME', 'PHONE NUMBER', 'GROUPS', 'STAFF NUMBER', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-        children: [
-            {
+        children: [{
                 path: 'create-user',
                 name: 'CreateUser',
                 component: modal_create_template,

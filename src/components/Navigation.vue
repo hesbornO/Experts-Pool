@@ -26,7 +26,7 @@
       <p class="capitalize">{{region}} ({{ user_level }})</p>
       <!--end of level info-->
       <!-- Search input -->
-      <div class="flex justify-center flex-1 lg:mr-32">
+      <!-- <div class="flex justify-center flex-1 lg:mr-32">
         <div class="relative w-full max-w-xl mr-6 focus-within:text-white">
           <div class="absolute inset-y-0 flex items-center p-2 ">
             <svg
@@ -49,7 +49,7 @@
             aria-label="Search"
           />
         </div>
-      </div>
+      </div> -->
       <ul class="flex items-center flex-shrink-0 space-x-6">
         <!-- Theme toggler -->
         <li class="flex">
