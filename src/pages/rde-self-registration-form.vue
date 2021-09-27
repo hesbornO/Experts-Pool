@@ -165,7 +165,7 @@
             </div>
           </label>
           <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">National ID</span>
+            <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Number</span>
             <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
