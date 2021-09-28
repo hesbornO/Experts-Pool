@@ -22,7 +22,7 @@
       <span></span>
     </div>
     
-    <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length > 0">
+    <span class="flex justify-between" >
       <span class="flex">
         <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
               Status: {{ this.rdeSelfProfile.application_status ? this.rdeSelfProfile.application_status.replace(/[_-]/g, " ") : '' }}
@@ -93,7 +93,7 @@
     <hr class="pt-2 pb-4">
     
 
-    <tabs :mode="mode" v-if="Object.keys(rdeSelfProfile).length > 0">      
+    <tabs :mode="mode" >      
       <!-- {{rdeSelfProfile}} -->
       <tab title="Personal details" class="grid grid-cols-3 space-x-4">
         <span v-if="this.loading" class=" mt-5 flex justify-center">
@@ -588,14 +588,15 @@ export default {
     fetchRDEData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch('fetchRDEById',this.$route.params.rdeId).then(resp => {
-         this.rdeSelfProfile = resp
+       this.$store.dispatch('fetchRDES').then(resp => {
+         let myRdeSelfProfile = resp
+         this.rdeSelfProfile=myRdeSelfProfile.results[0]
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
          this.loading = false
        })
-       this.fetchRDEdeployments(this.$route.params.rdeId)
+      //  this.fetchRDEdeployments(this.$route.params.rdeId)
     },
     fetchRDEdeployments(rde_id){
       this.$store.dispatch('getrdeSelfProfileDeployment',rde_id).then(resp => {
@@ -658,7 +659,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getErrorMessage']),
-    ...mapActions(['fetchRDEById','getrdeSelfProfileDeployment','fetchRDEcv']),
+    ...mapActions(['fetchRDEById','getrdeSelfProfileDeployment','fetchRDEcv','fetchRDES']),
     age:function()
     {
         var today = new Date();
@@ -681,7 +682,7 @@ export default {
   },
 
   mounted(){
-    // this.fetchRDEData()
+    this.fetchRDEData()
     this.getProfileDetails()  
   }
 };
