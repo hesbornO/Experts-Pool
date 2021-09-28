@@ -142,13 +142,13 @@ import {mapActions, mapGetters} from 'vuex'
 export default {
   data() {
     return {
-      first_name: 'Jane',
-      last_name: 'Doe',
-      username: 'JaneDoe',
-      phone_number: '0712345678',
-      email: 'jane.doe@gmail.com',
-      password: 'jane',
-      password_confirm:'jane',
+      first_name: '',
+      last_name: '',
+      username: '',
+      phone_number: '',
+      email: '',
+      password: '',
+      password_confirm:'',
       groups: [],
       showSidebar: false
     }

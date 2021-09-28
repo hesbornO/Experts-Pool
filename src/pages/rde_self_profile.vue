@@ -12,7 +12,7 @@
     <div class="flex justify-between">
       <span></span>
         <span v-if="Object.keys(rdeSelfProfile).length === 0" class="pb-2">
-          Click below to register <br>
+          Welcome!Click below to register <br>
           <span class="flex justify-between">
             <span></span>
             <router-link to="rde-self-registration-form" class="text-white bg-blue-500 px-2 py-1 rounded-md text-lg">Register</router-link>
@@ -22,7 +22,7 @@
       <span></span>
     </div>
     
-    <span class="flex justify-between" >
+    <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length >0">
       <span class="flex">
         <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
               Status: {{ this.rdeSelfProfile.application_status ? this.rdeSelfProfile.application_status.replace(/[_-]/g, " ") : '' }}
@@ -93,7 +93,7 @@
     <hr class="pt-2 pb-4">
     
 
-    <tabs :mode="mode" >      
+    <tabs :mode="mode" v-if="Object.keys(rdeSelfProfile).length > 0">      
       <!-- {{rdeSelfProfile}} -->
       <tab title="Personal details" class="grid grid-cols-3 space-x-4">
         <span v-if="this.loading" class=" mt-5 flex justify-center">
@@ -676,7 +676,7 @@ export default {
   },
   watch:{
      $route(){
-        // this.fetchRDEData()
+        this.fetchRDEData()
         this.displayUploadButton=false
     }
   },
