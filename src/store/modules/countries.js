@@ -166,10 +166,11 @@ const actions = {
     updateRegionById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/region/'
-            console.log('id', payload.id)
             if (payload === undefined) {
                 payload = ''
             } else {
+                payload.country_id=payload.country.id
+                delete payload['country']
                 relative_url = "/region/" + payload.id + "/"
                 console.log('patchUrl', relative_url)
             }

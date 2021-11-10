@@ -102,9 +102,11 @@
             <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
               {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
-            <td class="px-4 py-3 text-sm flex flex-row space-x-1">            
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1">   
+              <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                   
+         <!-- BUTTTOOOOOONS -->
                 
-              <router-link
+              <!-- <router-link
                   :to="{name:'rdeProfile', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-indigo items-center text-xs"
               >
@@ -114,8 +116,8 @@
                           stroke-width="2"></path>
                   </svg>
                   <span class="px-1">View Profile</span>
-              </router-link>
-              <router-link
+              </router-link> -->
+              <!-- <router-link
                   :to="{name:'partnerStateApproval', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-blue h-1/2 text-xs"
                   v-if="item.application_status === 'pending_approval'"
@@ -123,9 +125,9 @@
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 <span class="px-1">Partner State approval</span>
-              </router-link>
+              </router-link> -->
               
-              <router-link
+              <!-- <router-link
                   :to="{name:'eacApproval', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-blue h-1/2 text-xs"
                   v-if="item.application_status === 'approved_by_partner_state'"
@@ -133,23 +135,23 @@
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 <span class="px-1">EAC Approval</span>
-              </router-link>
-              <router-link
+              </router-link> -->
+              <!-- <router-link
                   :to="{name:'eacDisapproval', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-orange h-1/2 text-xs"
                   v-if="item.application_status === 'approval_complete'"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span class="px-1">EAC Disapproval</span>
-              </router-link>
-              <router-link
+              </router-link> -->
+              <!-- <router-link
                   :to="{name:'partnerStateDisapproval', params:{rdeId:item.id, rdeName: item.last_name}}"
                   class="btn btn-orange h-1/2 text-xs"
                   v-if="item.application_status === 'approved_by_partner_state'"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <span class="px-1">Partner State Disapproval</span>
-              </router-link>
+              </router-link> -->
               
               
                  <!-- CV preview modal -->
@@ -204,6 +206,8 @@ import {mapActions} from 'vuex'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
+import SplitButton from "../components/buttons/SplitButton.vue";
+
 
 
 // pdf
@@ -217,7 +221,8 @@ export default {
 
     dashboard_layout,
     data_table,
-    VuePdfApp
+    VuePdfApp,
+    SplitButton
 
   },
   data() {
@@ -249,6 +254,53 @@ export default {
     }
   },
   methods: {
+    createPrimary(item) {
+      return {
+        to: { name: "rdeProfile", params: { rdeId:item.id, rdeName: item.last_name } },
+        label: "View Profile",
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
+                  </svg>`,
+      };
+    },
+    createOptional(item) {
+      const options= [
+             
+      ];   
+      if(item.application_status === 'pending_approval'){
+        options.push({
+          to:{name:'partnerStateApproval', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"PS approval",
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+        })
+      }
+      if(item.application_status === 'approved_by_partner_state'){
+        options.push({
+          to:{name:'eacApproval', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"EAC Approval",
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+        })
+      }
+      if(item.application_status === 'approval_complete'){
+        options.push({divider:true},{
+          to:{name:'eacDisapproval', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"EAC Disapproval",
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+        })
+      }
+      if(item.application_status === 'approved_by_partner_state'){
+        options.push({divider:true},{
+          to:{name:'partnerStateDisapproval', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"PS Disapproval",
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+        })
+      }
+      
+      return options
+    },
+
     ...mapActions(['fetchCountries']),
     // ...mapGetters(['getCurrentToken']),
 
