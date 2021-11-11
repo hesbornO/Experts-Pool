@@ -8,6 +8,8 @@ import Deployments from "./pages/deployments/Deployments.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
+import DeploymentsPerOutbreak from "./pages/outbreak/DeploymentsPerOutbreak.vue";
+import AffectedRegions from "./pages/outbreak/AffectedRegions.vue";
 import Competence from "./pages/competence/Competence.vue";
 import Occupation from "./pages/occupations/Occupations.vue";
 import UserGroups from "./pages/users/UserGroups.vue";
@@ -526,7 +528,7 @@ const routes = [{
     },
     // regions
     {
-        path: '/member-countries/:countryId/:countryName/regions/',
+        path: '/partner-states/:countryId/:countryName/regions/',
         name: 'Regions',
         component: Regions,
         props: x => {
@@ -593,7 +595,7 @@ const routes = [{
         component: Outbreak,
         props: {
             vuex_data_action: 'fetchAllOutbreaks',
-            table_headings: ['NAME', 'DESCRIPTION', 'DATES', 'ACTION']
+            table_headings: ['NAME', 'DESCRIPTION', 'DURATION', 'ACTION']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
         children: [{
@@ -662,6 +664,85 @@ const routes = [{
         roles: ['admin']
     },
     // end of outbreaks
+    // affected regions
+    {
+        path: '/outbreaks/:outbreakName/affected-regions',
+        name: 'AffectedRegionsPerOutbreak',
+        component: AffectedRegions,
+        props: (x) => {
+            return {
+                affectedRegions:x.params.affectedRegions,
+                table_headings: ['NAME', 'Country', 'Outbreak']
+            }
+        },
+        showInLeftBar: false,
+        children: [{
+                path: 'create-region',
+                name: 'CreateRegion',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        country_id: x.params.countryId,
+                        jsonSchema: region_schema,
+                        vuex_action: 'postRegion',
+                        object_title: 'Region',
+                        optionsList: ['fetchCountries'],
+                    }
+                }
+            },
+            {
+                path: 'update-region/:regionName/:regionId',
+                name: 'UpdateRegion',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: region_schema,
+                        vuex_fetch_action: 'fetchRegionById',
+                        vuex_save_action: 'updateRegionById',
+                        object_title: x.params.regionName,
+                        object_id: x.params.regionId,
+                        optionsList: ['fetchCountries'],
+                    }
+
+                }
+            },
+            {
+                path: 'delete-region/:regionName/:regionId',
+                name: 'DeleteRegion',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteRegionById',
+                        vuex_payload: x.params.regionId,
+                        object_title: x.params.regionName
+                    }
+                }
+            },
+        ],
+        roles: ['admin']
+    },
+    // end of affected regions
+    
+    //deployments per outbreak 
+    {
+        path: '/outbreaks/:outbreakId/:outbreakName/deployments/',
+        name: 'DeploymentsPerOutbreak',
+        component: DeploymentsPerOutbreak,
+        props: x => {
+            return {
+                vuex_data_action: 'fetchDeploymentsPerOutbreak',
+                object_id: x.params.outbreakId,
+                table_headings: ['Name', 'Residence', 'Period', 'Status','Contacts']
+            }
+        },
+        showInLeftBar: false,        
+        roles: ['admin']
+    },
+    //end of deployments per outbreak 
+
     // competence
     {
         path: "/competence/",

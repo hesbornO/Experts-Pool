@@ -4,11 +4,15 @@ const state = {
     OutbreakOptions: [],
     Outbreaks: [],
     Outbreak: {},
+    deployments: [],
 }
 
 const getters = {
     allOutbreaks(state) {
         return state.Outbreaks
+    },
+    allDeployments(state) {
+        return state.deployments
     }
 }
 
@@ -55,6 +59,22 @@ const actions = {
             }
             api.get(relative_url).then(resp => {
                 commit("setOutbreak", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchDeploymentsPerOutbreak({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak/" + payload+'/get_rdes'
+            }
+            api.get(relative_url).then(resp => {
+                commit("deployments", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -117,6 +137,7 @@ const mutations = {
     setOutbreakOptions: (state, OutbreakOptions) => (state.OutbreakOptions = OutbreakOptions),
     setOutbreaks: (state, Outbreaks) => (state.Outbreaks = Outbreaks),
     setOutbreak: (state, Outbreak) => (state.Outbreak = Outbreak),
+    setDeployments: (state, deployments) => (state.deployments = deployments),
 }
 
 

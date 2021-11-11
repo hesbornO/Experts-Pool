@@ -80,11 +80,11 @@ export default {
          //if the route has no specified roles, default to rde
           user_assigned_roles.push('rde')
         }else{
-          console.log('assigned roles:', user_assigned_roles_string)
+          // console.log('assigned roles:', user_assigned_roles_string)
           user_assigned_roles = user_assigned_roles_string.split(',')
         }
        
-        console.log("user roles", user_assigned_roles)
+        // console.log("user roles", user_assigned_roles)
         
          let matches
           

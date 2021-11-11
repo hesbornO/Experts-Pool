@@ -251,7 +251,7 @@
            <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="--select--"
               v-model="form.occupation_id" id="occupation">         
                 <option value="" disabled selected>--Select occupation--</option>     
-                <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.id">{{occupation.name}}</option>
+                <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.value">{{occupation.name}}</option>
               </select>
 
                <span v-if="getErrorMessage['occupation_id']">
