@@ -593,9 +593,8 @@ export default {
     fetchRDEData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch('fetchRDES').then(resp => {
-         let myRdeSelfProfile = resp
-         this.rdeSelfProfile=myRdeSelfProfile.results[0]
+       this.$store.dispatch('fetchRDES','').then(resp => {         
+         this.rdeSelfProfile=resp.results[0]
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{

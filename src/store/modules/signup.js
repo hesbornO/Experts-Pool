@@ -28,7 +28,7 @@ const actions = {
                 resolve(resp.data)
             }).catch(err => {
                 commit("setError", err.response.data)
-                reject(err.response.dsata)
+                reject(err.response.data)
             })
         });
     },

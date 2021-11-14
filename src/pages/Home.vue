@@ -3,6 +3,7 @@
 
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
+        <!-- filters -->
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
           <div class="flex flex-row space-x-8 w-10/12">
             <div class="flex-auto flex-col space-y-2">
@@ -65,8 +66,106 @@
             </router-link> -->
           </div>
           <router-view></router-view>
-
         </div>
+        <!-- end of filters -->
+        <!-- Cards -->
+            <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
+                  >
+                    Total RDES
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                   {{allRDES.count}}                    
+                  </p>
+                </div>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-green-500 bg-green-200 rounded-full dark:text-green-100 dark:bg-green-500 animate-pulse"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
+                  >
+                    Active Deployments
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    ({{allRDES.count}})
+                  </p>
+                </div>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-red-500 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-500"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
+                  >
+                    Outbreaks
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    {{allOutbreaks.count}}
+                  </p>
+                </div>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
+                  >
+                    Partner States
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    {{allCountries.length}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- End of cards -->
 
 
         <!-- RDE List -->
@@ -216,7 +315,7 @@ import "vue-pdf-app/dist/icons/main.css";
 
 
 export default {
-  name: "RDES",
+  name: "Home",
   components: {
 
     dashboard_layout,
@@ -235,9 +334,9 @@ export default {
       query_list:[],
       my_argument:'',
       viewPdf: false,
+      allRDES: [],
+      allOutbreaks: [],
       allCountries: [],
-      allOccupations: [],
-      RDES: [],
       approvalStatuses: [
         {label: 'Pending Approval', value: 'pending_approval'},
         {label: 'Approved by Partner State', value: 'approved_by_partner_state'},
@@ -360,21 +459,39 @@ export default {
     },
     filter(){
      console.log(this.query_list)
-    }
-
+    },
+    fetchStats() {
+    // all RDEs
+      this.$store.dispatch('fetchRDES').then(resp => {
+        this.allRDES = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+    // all outbreaks
+      this.$store.dispatch('fetchAllOutbreaks').then(resp => {
+        this.allOutbreaks = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+    // all countries
+      this.$store.dispatch('fetchCountries').then(resp => {
+        this.allCountries = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+    },
     
 
 
   },
   mounted() {
-    this.getAllCountries()
-    this.getAllOccupations()
+    this.fetchStats()
 
 
   },
   computed: {
     // ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
-    // ...mapActions(['fetchCountries', 'fetchRegions', 'fetchOccupations', 'postRDE'])
+    ...mapActions(['fetchRDES','fetchAllOutbreaks','fetchCountries'])
   }
 };
 </script>
