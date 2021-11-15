@@ -1,7 +1,7 @@
 <template>
   <dashboard_layout page_title="Home">
 
-    <div class="w-full overflow-hidden shadow-xs ">
+    <div class="w-full overflow-hidden shadow-xs">
       <div class="w-full overflow-x-auto ">
         <!-- filters -->
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">

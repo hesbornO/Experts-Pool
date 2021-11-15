@@ -1,424 +1,345 @@
 <template>
   <dashboard_layout :page_title= "`Register RDE`">
-    
     <div>
-      <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">
-        <h3 class="text-blue-400 font-semibold">Personal Details</h3>
-        <!-- name section -->
-        <div class="grid grid-cols-3 gap-6">
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">First Name</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input
-                  v-model="form.first_name"
-                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                  type="text"
-                  required
-                  placeholder="John"
-                  name="first_name"
-              /> 
-              <span v-if="getErrorMessage['first_name']">
-                <span v-if="getErrorMessage['first_name'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['first_name']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span>  
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Middle Name</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-            <input
-                v-model="form.middle_name"
-                class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                type="text"
-                name="middle_name"
-                placeholder="Joseph"
-            />
+      <FormulateForm v-model="form" @submit="registerRDE">
+        <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">
+          <h3 class="text-blue-400 font-semibold">Personal Details</h3>
+          <!-- name section -->
+          <div class="grid grid-cols-3 gap-6">
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700 dark:text-gray-400">First Name</span>
+              <!-- focus-within sets the color for the icon when input is focused -->
               
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Last Name</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input
-                  v-model="form.last_name"
-                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                <FormulateInput
+                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    type="text"
+                    required
+                    placeholder="John"
+                    name="first_name"
+                /> 
+                <span v-if="getErrorMessage['first_name']">
+                  <span v-if="getErrorMessage['first_name'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['first_name']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span>  
+              
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Middle Name</span>
+              <!-- focus-within sets the color for the icon when input is focused -->
+             
+              <FormulateInput
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   type="text"
-                  name="last_name"
-                  validation="required"
-                  placeholder="Doe"
-              />  
-               <span v-if="getErrorMessage['last_name']">
-                <span v-if="getErrorMessage['last_name'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['last_name']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span>       
-            </div>
-          </label>
-        </div>
-        <!-- location and gender section -->
-        <div class="grid grid-cols-3 gap-4">
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Gender</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <!-- <input type="text"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="--Pick--"
-                    name="gender"
-                    :options="gender_types"
-              /> -->
-              <select name="gender" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required"
-              v-model="form.gender">
-                <option value="" selected disabled>--select--</option>
-                <option value="M">Male</option>
-                <option value="F">Female</option> 
-                <option value="T">Transgender</option>
-                <option value="O">Prefer Not To Say</option>
-              </select>
-               <span v-if="getErrorMessage['gender']">
-                <span v-if="getErrorMessage['gender'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['gender']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                </div>
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Region</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <select name="region_of_residence_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.region_of_residence_id" id="region"> 
-                <option value="" disabled selected>--Select region--</option>     
-                <option v-for="(region,index) in regions" :key="index" :value="region.value">{{region.name}}</option>
-              </select>
-               <span v-if="getErrorMessage['region_of_residence_id']">
-                <span v-if="getErrorMessage['region_of_residence_id'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['region_of_residence_id']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-              </div>
-            </div>
-          </label>          
-        </div>
-
-        <!-- contact section -->
-        <div class="grid grid-cols-3 gap-4">
-          <div class="grid grid-cols-2 gap-3">
-             <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Type</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <select name="id_type" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-              v-model="form.id_type" id="id_type">
-                <option value="" selected disabled>--select--</option>
-                <option value="national_id">National ID No.</option>                
-                <option value="birth_cert">Birth Certificate No.</option>
-                <option value="alien_id">Alien ID</option>           
-                <option value="military_id">Military ID No.</option>                
-                <option value="passport">Passport.</option>                
-              </select>
-               <span v-if="getErrorMessage['id_type']">
-                <span v-if="getErrorMessage['id_type'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['id_type']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
-              </div>
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Number</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input type="text"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="67234567"
-                    name="id_number"
-                    v-model="form.id_number"
+                  name="middle_name"
+                  placeholder="Joseph"
               />
-               <span v-if="getErrorMessage['id_number']">
-                <span v-if="getErrorMessage['id_number'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['id_number']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Last Name</span>
+                <FormulateInput
+                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    type="text"
+                    name="last_name"
+                    validation="required"
+                    placeholder="Doe"
+                />  
+                <span v-if="getErrorMessage['last_name']">
+                  <span v-if="getErrorMessage['last_name'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['last_name']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
                   </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
-              </div>
-            </div>
-          </label>
+                </span>       
+            </label>
           </div>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input type="tel"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="+25470..."
-                    name="phone"
-                    validation="required"   
-                    v-model="form.phone"                 
-              />
-               <span v-if="getErrorMessage['phone']">
-                <span v-if="getErrorMessage['phone'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['phone']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
+          <!-- location and gender section -->
+          <div class="grid grid-cols-3 gap-4">
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Gender</span>
+         
+                <select name="gender" class="p-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md" validation="required"
+                v-model="form.gender">
+                  <option value="" selected disabled>-- click to select --</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option> 
+                  <option value="T">Transgender</option>
+                  <option value="O">Prefer Not To Say</option>
+                </select>
+                <span v-if="getErrorMessage['gender']">
+                  <span v-if="getErrorMessage['gender'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['gender']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
                   </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-              </div>
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Email</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input type="email"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="john.doe@gmail.com"
-                    name="email"
-                    validation="required"
-                    v-model="form.email"
-              />
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
-              </div>
-            </div>
-          </label>
-          
-        </div>
-        
-        <div class="grid grid-cols-3 gap-4">
-           <label class="block mt-4 text-sm">
-            <span class="text-gray-700 font font-semibold dark:text-gray-400">Occupation</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-           <select name="occupation_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="--select--"
-              v-model="form.occupation_id" id="occupation">         
-                <option value="" disabled selected>--Select occupation--</option>     
-                <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.value">{{occupation.name}}</option>
-              </select>
-
-               <span v-if="getErrorMessage['occupation_id']">
-                <span v-if="getErrorMessage['occupation_id'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['occupation_id']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span>            
-            </div>
-          </label> 
-
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700 font font-semibold dark:text-gray-400">Date of Birth</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input type="date"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="--pick--"
-                    name="date_of_birth"
-                    validation="required"
-                    v-model="form.date_of_birth"
-              />   
-
-               <span v-if="getErrorMessage['date_of_birth']">
-                <span v-if="getErrorMessage['date_of_birth'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['date_of_birth']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span>            
-            </div>
-          </label>          
-        </div>
-
-        <!-- Next of kin section -->
-        <h3 class="text-blue-400 font-semibold pt-6">Next of Kin Details</h3>
-        <div class="grid grid-cols-3 gap-4">
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Full Name</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input
-                  class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                  placeholder="Jane Doe"
-                  name="next_of_kin_name"
-                  validation="required"
-                  v-model="form.next_of_kin_name"
-              />      
-               <span v-if="getErrorMessage['next_of_kin_name']">
-                <span v-if="getErrorMessage['next_of_kin_name'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['next_of_kin_name']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span>    
-            
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input type="tel"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="+2547..."
-                    name="next_of_kin_phone"
-                    validation="required"
-                    v-model="form.next_of_kin_phone"
-              />
-               <span v-if="getErrorMessage['next_of_kin_phone']">
-                <span v-if="getErrorMessage['next_of_kin_phone'].length>0">
-                  <span v-for="(error,index) in getErrorMessage['next_of_kin_phone']" :key="index">
-                    <span class="text-red-500 animate-pulse">{{error}}</span>
-                  </span>
-                </span>
-              </span> 
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-              </div>
-            </div>
-          </label>
-          <label class="block mt-4 text-sm">
-            <span class="text-gray-700  font font-semibold dark:text-gray-400">Email</span>
-            <!-- focus-within sets the color for the icon when input is focused -->
-            <div
-                class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-            >
-              <input type="email"
-                    class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                    placeholder="john.doe@gmail.com"
-                    name="next_of_kin_email"
-                    validation="required"
-                    v-model="form.next_of_kin_email"
-              />
-              <div
-                  class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
-              </div>
-            </div>
-          </label>
-        </div>
-        <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>  
-
-          <div class="grid grid-cols-3 gap-3">
-                         
-              <label class="block mt-4 text-sm">
-                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf only)</span></span>
-                <!-- focus-within sets the color for the icon when input is focused -->
+                </span> 
                 <div
-                    class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
                 >
-                  <input  type="file"
-                          id="cvFile"
-                          :name="form.cv"
-                          class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                          placeholder="john.doe@gmail.com"
-                          accept=".pdf" 
-                          @input="processFile"                
-                  />        
-                   
-                </div>
-              </label>  
-
-               <label class="block mt-4 text-sm col-span-2">
-                  <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
-                  <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">            
-                    <select name="competencies" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
-                    v-model="form.competencies" id="competencies"  multiple>
-                      <option value="" disabled selected>--Select competency--</option>     
-                      <option v-for="(competency,index) in competencies_list" :key="index"  :value="competency.id">{{competency.name}}</option>
-                    </select>
-                    <span v-if="getErrorMessage['competencies']">
-                      <span v-if="getErrorMessage['competencies'].length>0">
-                        <span v-for="(error,index) in getErrorMessage['competencies']" :key="index">
-                          <span class="text-red-500 animate-pulse">{{error}}</span>
-                        </span>
-                      </span>
-                    </span> 
-                  
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                   </div>
-                </label>              
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Region</span>
+              <!-- focus-within sets the color for the icon when input is focused -->
+              <div
+                  class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+              >
+                <select name="region_of_residence_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md p-2" validation="required" placeholder="select"
+                v-model="form.region_of_residence_id" id="region"> 
+                  <option value="" disabled selected>--Select region--</option>     
+                  <option v-for="(region,index) in regions" :key="index" :value="region.value">{{region.name}}</option>
+                </select>
+                <span v-if="getErrorMessage['region_of_residence_id']">
+                  <span v-if="getErrorMessage['region_of_residence_id'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['region_of_residence_id']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span> 
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+              </div>
+            </label>          
           </div>
-          <div class=" mt-6 text-sm flex justify-between">
-            <span v-if="fileUploaded==0"></span>
-            <button @click="togglePdfDisplay" 
-              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-              v-if="fileUploaded>0">
-              <span v-if="!viewPdf">Preview upload</span>
-              <span v-if="viewPdf">Close preview</span>
-            </button>
-            <button
-                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" @click="registerRDE">
-              SUBMIT
-            </button>
-          </div>
-      </div>  
 
+          <!-- contact section -->
+          <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 gap-3">
+              <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Type</span>
+              <!-- focus-within sets the color for the icon when input is focused -->
+                <select name="id_type" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
+                v-model="form.id_type" id="id_type">
+                  <option value="" selected disabled>-- click to select --</option>
+                  <option value="national_id">National ID No.</option>                
+                  <option value="birth_cert">Birth Certificate No.</option>
+                  <option value="alien_id">Alien ID</option>           
+                  <option value="military_id">Military ID No.</option>                
+                  <option value="passport">Passport.</option>                
+                </select>
+                <span v-if="getErrorMessage['id_type']">
+                  <span v-if="getErrorMessage['id_type'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['id_type']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span> 
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+                </div>
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Number</span>
+              <!-- focus-within sets the color for the icon when input is focused -->
+                <FormulateInput type="text"
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="67234567"
+                      name="id_number"
+                />
+                <span v-if="getErrorMessage['id_number']">
+                  <span v-if="getErrorMessage['id_number'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['id_number']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span> 
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+                </div>
+            </label>
+            </div>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>           
+                <FormulateInput type="tel"
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="+25470..."
+                      name="phone"
+                      validation="required"   
+                />
+                <span v-if="getErrorMessage['phone']">
+                  <span v-if="getErrorMessage['phone'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['phone']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span> 
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Email</span>
+              
+                <FormulateInput type="email"
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="john.doe@gmail.com"
+                      name="email"
+                      validation="required|email"
+                      error-behaviour='value'
+                />
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
+                </div>
+            </label>
+            
+          </div>
+          
+          <div class="grid grid-cols-3 gap-4">
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">Occupation</span>
+              
+            <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
+                v-model="form.occupation_id" id="occupation">         
+                  <option value="" disabled selected>--Select occupation--</option>     
+                  <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.value">{{occupation.name}}</option>
+                </select>
+
+                <span v-if="getErrorMessage['occupation_id']">
+                  <span v-if="getErrorMessage['occupation_id'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['occupation_id']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span>            
+            </label> 
+
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">Date of Birth</span>
+                <FormulateInput type="date"
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="--pick--"
+                      name="date_of_birth"
+                      validation="required"
+                />   
+
+                <span v-if="getErrorMessage['date_of_birth']">
+                  <span v-if="getErrorMessage['date_of_birth'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['date_of_birth']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span>            
+            </label>          
+          </div>
+
+          <!-- Next of kin section -->
+          <h3 class="text-blue-400 font-semibold pt-6">Next of Kin Details</h3>
+          <div class="grid grid-cols-3 gap-4">
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Full Name</span>
+                <FormulateInput
+                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                    placeholder="Jane Doe"
+                    name="next_of_kin_name"
+                    validation="required"
+                />      
+                <span v-if="getErrorMessage['next_of_kin_name']">
+                  <span v-if="getErrorMessage['next_of_kin_name'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['next_of_kin_name']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span>    
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>
+                <FormulateInput type="tel"
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="+2547..."
+                      name="next_of_kin_phone"
+                      validation="required"
+                />
+                <span v-if="getErrorMessage['next_of_kin_phone']">
+                  <span v-if="getErrorMessage['next_of_kin_phone'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['next_of_kin_phone']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span> 
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+            </label>
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Email</span>
+                <FormulateInput type="email"
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="john.doe@gmail.com"
+                      name="next_of_kin_email"
+                      validation="required|email"
+                      v-model="form.next_of_kin_email"
+                />
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
+                </div>
+            </label>
+          </div>
+          <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>  
+
+            <div class="grid grid-cols-3 gap-3">
+                          
+                <label class="block mt-4 text-sm">
+                  <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf only)</span></span>
+                    <FormulateInput  type="file"
+                            id="cvFile"
+                            :name="cv"
+                            class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                            placeholder="john.doe@gmail.com"
+                            accept=".pdf" 
+                            @input="processFile"                
+                    />        
+                </label>  
+
+                <label class="block mt-4 text-sm col-span-2">
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
+                      <select name="competencies" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
+                      v-model="form.competencies" id="competencies"  multiple>
+                        <option value="" disabled selected>--Select competency--</option>     
+                        <option v-for="(competency,index) in competencies_list" :key="index"  :value="competency.id">{{competency.name}}</option>
+                      </select>
+                      <span v-if="getErrorMessage['competencies']">
+                        <span v-if="getErrorMessage['competencies'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['competencies']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span> 
+                  </label>              
+            </div>
+            <div class=" mt-6 text-sm flex justify-between">
+              <span v-if="fileUploaded==0"></span>
+              <button @click="togglePdfDisplay" 
+                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+                v-if="fileUploaded>0">
+                <span v-if="!viewPdf">Preview upload</span>
+                <span v-if="viewPdf">Close preview</span>
+              </button>
+              <button
+                  class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" type="submit">
+                SUBMIT
+              </button>
+            </div>
+        </div>  
+      </FormulateForm>
       <!-- CV preview modal -->        
         <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
           <div class="flex items-end  min-h-full text-center sm:block ">            
@@ -454,7 +375,8 @@
       <!-- end of CV preview modal -->
                         
         
-      </div>
+    </div>
+    
   </dashboard_layout>
 </template>
 <style >
@@ -498,7 +420,10 @@ export default {
         last_name:'',
         email:'',
         phone:'',
-        region_of_residence_id:''
+        region_of_residence_id:'',
+        gender:'',
+        id_type:'',
+        occupation:''
 
        },
       occupations: {},

@@ -1,7 +1,7 @@
 <template>
       <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div
-        class="flex-1 h-full max-w-4xl mx-auto overflow-auto bg-white rounded-lg shadow-xl dark:bg-gray-800 overflo"
+        class="flex-1 h-full max-w-4xl mx-auto overflow-auto bg-white rounded-lg shadow-xl dark:bg-gray-800 overflow"
       > 
         <div class="flex flex-col overflow-y-auto md:flex-row">          
           <div class="flex items-center justify-center p-6 sm:p-12 md:w-full">
@@ -51,9 +51,9 @@
                     <FormulateInput
                       name="email"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                      placeholder="***************"
+                      placeholder="john@example.com"
                       type="email"
-                      validation="email"
+                      validation="email|required"
                       error-behavior="value"
                       required
                     />
@@ -63,7 +63,7 @@
                     <FormulateInput
                     name="phone_number"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                      placeholder="***************"
+                      placeholder="+25512345678"
                       type="tel"
                       required
                     />
@@ -186,7 +186,7 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex'
-import {baseUrl} from "../utils/constants"
+import {api_url} from "../utils/constants"
 
 const axios = require('axios').default;
 
@@ -198,7 +198,8 @@ export default {
   data() {
     return {
       form:{
-        groups:[]
+        groups:[],
+        attached_region_id:''
       },
       password:'',
       passwordFieldType:'password',
@@ -255,7 +256,7 @@ export default {
       }
     },
      getRegions() {
-      axios.get(baseUrl+'api/region/')
+      axios.get(api_url+'region/')
         .then(resp=>{
           this.regions = resp.data;
         })
