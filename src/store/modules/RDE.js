@@ -3,6 +3,7 @@ import api from "@/api";
 const state = {
     RDES: [],
     RDE: {},
+    signUpData: {},
     deployments: [],
     deployment: {}
 }
@@ -10,6 +11,9 @@ const state = {
 const getters = {
     allRDES(state) {
         return state.RDES
+    },
+    signUpInfo(state) {
+        return state.signUpData
     }
 
 }
@@ -53,6 +57,38 @@ const actions = {
                 relative_url = "/profile/" + payload
             }
             api.get(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchSignUpDataById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/users/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/users/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setSignUpData", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    suggestRDES({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/suggest_rdes/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/suggest_rdes/" + payload
+            }
+            api.post(relative_url).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
@@ -301,6 +337,7 @@ const actions = {
 const mutations = {
     setRDES: (state, RDES) => (state.RDES = RDES),
     setRDE: (state, RDE) => (state.RDE = RDE),
+    setSignUpData: (state, signUpData) => (state.signUpData = signUpData),
     setDeployments: (state, deployments) => (state.deployments = deployments),
     setDeployment: (state, deployment) => (state.deployment = deployment),
 }

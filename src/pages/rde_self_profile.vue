@@ -17,8 +17,16 @@
           Welcome! Click below to register <br>
           <span class="flex justify-between">
             <span></span>
-            <router-link to="rde-self-registration-form" class="text-white bg-blue-500 px-2 py-1 rounded-md text-lg">Register</router-link>
-            <span></span>
+            <!-- <router-link :to:{name:'RdeSelfRegistrationForm', params:{signUpData:signUpData}}, class="text-white bg-blue-500 px-2 py-1 rounded-md text-lg">Register</router-link> -->
+            <router-link
+            :to="{name:'RdeSelfRegistrationForm', params:{signUpData:this.signUpData}}"
+            class="btn btn-blue text-lg flex"            
+            title="Click to register"
+          >
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="currentColor"><path d="M12.14 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M16.14 10a3 3 0 0 0-3-3h-5v10h2v-4h1.46l2.67 4h2.4l-2.75-4.12A3 3 0 0 0 16.14 10zm-3 1h-3V9h3a1 1 0 0 1 0 2z"></path></svg> -->
+            <span class="px-1">Register</span>
+          </router-link> 
+            <span>{{this.signUpData}}</span>
           </span>
         </span>
       </span>
@@ -248,7 +256,7 @@
             <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
               <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
                 <span>
-                  <button class="pill_button">{{competency.name}}</button>              
+                  <button class="pill_button">{{competency.name?competency.name.replace('_',' '):''}}</button>              
                 </span>
               </span>            
             </span>
@@ -470,18 +478,7 @@
             <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
               No recommendations yet.
             </span>
-          </span>
-          
-          <span class="colspan-1 flex justify-end">
-            <router-link
-              :to="{name:'makeRDErecommendation', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.first_name?this.rdeSelfProfile.first_name.concat(' ').concat(this.rdeSelfProfile.last_name):''}}"
-              class="btn btn-blue h-1/6 text-md"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-              <span class="px-1">Make recommendation</span>
-            </router-link>
-          </span>
-          
+          </span>         
         </tab>
         
         <tab title="Deployments" class="space-x-4 grid grid-cols-4">
@@ -538,7 +535,7 @@
           
         </tab>
       </tabs>
-    </div>
+    </div>{{signUpData}}
     <router-view></router-view>
   </dashboard_layout>
 </template>
@@ -568,6 +565,7 @@ export default {
     return {
       rdeSelfProfile:{},
       rdeDeployments:{},
+      signUpData:{},
       form: {   
       },
       mode: 'light',
@@ -589,6 +587,23 @@ export default {
      this.region= localStorage.getItem('region')
      this.fullname= localStorage.getItem('fullname')
      this.username= localStorage.getItem('username')
+     this.signUpId= localStorage.getItem('id')
+     if(Object.keys(this.rdeSelfProfile).length === 0){
+       this.fetchSignUpData(this.signUpId)
+     }
+    },
+    fetchSignUpData(sign_up_id){
+      this.loading = true
+      // eslint-disable-next-line no-unused-vars
+       this.$store.dispatch('fetchSignUpDataById',sign_up_id).then(resp => {         
+         this.signUpData=resp
+         console.log('sign up data:', this.signUpData)
+       }).catch(err=>{
+         this.$store.dispatch('setErrorMsg', err.data)
+       }).then(()=>{
+         this.loading = false
+       })
+      //  this.fetchRDEdeployments(this.$route.params.rdeId)
     },
     fetchRDEData(){
       this.loading = true

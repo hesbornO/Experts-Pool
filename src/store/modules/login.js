@@ -31,6 +31,7 @@ const actions ={
                    localStorage.setItem('level', decoded_token.level)
                    localStorage.setItem('region', decoded_token.region)
                    localStorage.setItem('roles', decoded_token.roles)
+                   localStorage.setItem('id', decoded_token.id)
                    localStorage.setItem('is_superuser', decoded_token.is_superuser)
                    // eslint-disable-next-line no-empty
                } catch (e) {

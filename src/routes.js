@@ -9,9 +9,11 @@ import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
 import DeploymentsPerOutbreak from "./pages/outbreak/DeploymentsPerOutbreak.vue";
+import SuggestedRDES from "./pages/outbreak/SuggestedRDES.vue";
 import AffectedRegions from "./pages/outbreak/AffectedRegions.vue";
 import Competence from "./pages/competence/Competence.vue";
 import Occupation from "./pages/occupations/Occupations.vue";
+import OneHealth from "./pages/occupations/OneHealth.vue";
 import UserGroups from "./pages/users/UserGroups.vue";
 import Users from "./pages/users/Users.vue";
 import SignUp from "./pages/sign-up.vue";
@@ -37,6 +39,7 @@ import outbreak_schema from '@/schemas/outbreak_schema.json'
 import outbreak_end_date_schema from '@/schemas/outbreak_end_date_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
+import one_health_schema from '@/schemas/one_health.json'
 import user_group_schema from '@/schemas/user_group_schema.json'
 import user_schema from '@/schemas/user_schema.json'
 import rde_schema from '@/schemas/rde_schema.json'
@@ -204,11 +207,9 @@ const routes = [{
         name: 'rdeProfile',
         component: rde_profile,
         showInLeftBar: false,
-        props: x => {
+        props: () => {
             return {
-                vuex_data_action: 'fetchRDEById',
-                object_id: `?country=${x.params.countryId}`,
-                table_headings: ['NAME', 'Country', 'ACTION']
+               
             }
         },
         children: [{
@@ -314,7 +315,7 @@ const routes = [{
                 }
             },
             {
-                path: 'end-deployment/:rdeName/:deploymentId/:outbreakName',
+                path: 'end-deployment/:deploymentId/:outbreakName',
                 name: 'EndRDEDeploymentFromProfile',
                 component: modal_end_deployment_template,
                 showInLeftBar: false,
@@ -676,51 +677,7 @@ const routes = [{
             }
         },
         showInLeftBar: false,
-        children: [{
-                path: 'create-region',
-                name: 'CreateRegion',
-                component: modal_create_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        country_id: x.params.countryId,
-                        jsonSchema: region_schema,
-                        vuex_action: 'postRegion',
-                        object_title: 'Region',
-                        optionsList: ['fetchCountries'],
-                    }
-                }
-            },
-            {
-                path: 'update-region/:regionName/:regionId',
-                name: 'UpdateRegion',
-                component: modal_update_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        jsonSchema: region_schema,
-                        vuex_fetch_action: 'fetchRegionById',
-                        vuex_save_action: 'updateRegionById',
-                        object_title: x.params.regionName,
-                        object_id: x.params.regionId,
-                        optionsList: ['fetchCountries'],
-                    }
-
-                }
-            },
-            {
-                path: 'delete-region/:regionName/:regionId',
-                name: 'DeleteRegion',
-                component: modal_delete_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        vuex_action: 'deleteRegionById',
-                        vuex_payload: x.params.regionId,
-                        object_title: x.params.regionName
-                    }
-                }
-            },
+        children: [
         ],
         roles: ['admin']
     },
@@ -742,6 +699,54 @@ const routes = [{
         roles: ['admin']
     },
     //end of deployments per outbreak 
+    //suggested rdes per outbreak 
+    {
+        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/',
+        name: 'SuggestedRDESPerOutbreak',
+        component: SuggestedRDES,
+        props: (x) => {
+            return {
+                vuex_data_action: 'suggestRDES',
+                object_id: `?competencies=[${x.params.competencies}]`,
+                table_headings: ['Name', 'Residence', 'Competencies','Contacts', 'Action']
+            }
+        },    
+        children:[           
+            {
+                path: 'deploy',
+                name: 'DeployFromSuggestions',
+                component: modal_deploy_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: deploy_rde_schema,
+                        vuex_save_action: 'deployRDE',
+                        object_title: `' ${x.params.rdeName}' ?`,
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+
+        ],    
+        showInLeftBar: false,        
+        roles: ['admin']
+    },
+    {
+        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/:rdeId/:rdeName/profile',
+        name: 'ViewProfileFromSuggestions',
+        component: rde_profile,
+        props: () => {
+            return {
+                
+            }
+        },        
+        showInLeftBar: false,        
+        roles: ['admin']
+    },
+    //end of suggested rdes per outbreak 
 
     // competence
     {
@@ -750,7 +755,7 @@ const routes = [{
         component: Competence,
         props: {
             vuex_data_action: 'fetchAllCompetencies',
-            table_headings: ['NAME', 'CREATED AT', 'UPDATED AT', 'ACTIONS']
+            table_headings: ['NAME', 'TYPE', 'CREATED', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`,
         children: [{
@@ -807,7 +812,7 @@ const routes = [{
         component: Occupation,
         props: {
             vuex_data_action: 'fetchAllOccupations',
-            table_headings: ['NAME', 'one health sector', 'description', 'ACTIONS']
+            table_headings: ['NAME', 'one health sector', 'description']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
         children: [{
@@ -818,9 +823,10 @@ const routes = [{
                 props: {
                     jsonSchema: occupation_schema,
                     vuex_action: 'postOccupation',
+                    moduleName:'occupation',
                     object_title: 'Add Occupation',
                     size: 'w-1/2',
-                    optionsList: []
+                    optionsList: ['fetchAllOneHealthSectors']
                 }
             },
             {
@@ -833,9 +839,12 @@ const routes = [{
                         jsonSchema: occupation_schema,
                         vuex_fetch_action: 'fetchOccupationById',
                         vuex_save_action: 'updateOccupationById',
-                        object_title: x.params.occupationName,
+                        object_title: `'${x.params.occupationName}' occupation `,
                         object_id: x.params.occupationId,
-                        size: 'w-1/2'
+                        moduleName:'occupation',
+                        size: 'w-1/2',
+                        optionsList: ['fetchAllOneHealthSectors']
+
                     }
 
                 }
@@ -857,6 +866,65 @@ const routes = [{
         roles: ['admin']
     },
     // end of occupation
+
+    // one health sectors
+    {
+        path: "/one-health-sectors/",
+        name: "OneHealth",
+        component: OneHealth,
+        props: {
+            vuex_data_action: 'fetchAllOneHealthSectors',
+            table_headings: ['NAME', 'ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
+        children: [{
+                path: 'add-sector',
+                name: 'CreateOneHealthSector',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: one_health_schema,
+                    vuex_action: 'postSector',
+                    object_title: 'Add Sector',
+                    size: 'w-1/2',
+                    
+                }
+            },
+            {
+                path: 'update-sector/:sectorName/:sectorId',
+                name: 'UpdateOneHealthSector',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: one_health_schema,
+                        vuex_fetch_action: 'fetchSectorById',
+                        vuex_save_action: 'updateSectorById',
+                        object_title: x.params.sectorName,
+                        object_id: x.params.sectorId,
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-sector/:sectorName/:sectorId',
+                name: 'DeleteSector',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteSectorById',
+                        vuex_payload: x.params.sectorId,
+                        object_title: x.params.sectorName
+                    }
+                }
+            },
+        ],
+        roles: ['admin']
+    },
+    // end of one health sectors
+
     // user groups
     {
         path: "/user-groups/",

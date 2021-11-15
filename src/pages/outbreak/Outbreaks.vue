@@ -65,7 +65,7 @@
               </td>
               
               <td class="px-4 py-3 text-sm flex flex-row space-x-1 w-1/6">      
-                <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                   
+                <split-button :optional="createOptional(item,index)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                 
               </td>
           </tr>
           <tr>
@@ -95,12 +95,13 @@
 import AccordionDataTemplate from '../../components/layouts/AccordionDataTemplate.vue';
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
-// import data_table from "../../components/layouts/DataTableTemplate.vue";
+
 import SplitButton from "../../components/buttons/SplitButton.vue";
 
+import {mapActions} from 'vuex';
 
 
-// import Datepicker from 'vuejs-datepicker';
+
 
 
 export default {
@@ -117,10 +118,13 @@ export default {
     return {
       form:{},
       Outbreaks:{},
-      showData:false
+      showData:false,
+      competencies:[]
     }
   },
   methods: {
+    ...mapActions(['fetchAllOutbreaks']),
+
     createPrimary(item) {
       return {
         to: { name: "DeploymentsPerOutbreak", params: { outbreakId:item.id, outbreakName: item.name } },
@@ -128,14 +132,19 @@ export default {
         icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`,
       };
     },
-    createOptional(item) {
+    createOptional(item,index) {
       return [
+        {
+          to:{name:'SuggestedRDESPerOutbreak', params:{outbreakId:item.id, outbreakName: item.name, competencies:this.competencies[index]}},
+          label:'Suggested RDES',
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>'
+        },
         {
           to:{name:'AffectedRegionsPerOutbreak', params:{outbreakName:item.name, affectedRegions:item.affected_regions_objects}},
           label:'Affected Regions',
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>'
         },
-        {divider:false},
+        {divider:true},
         {
           to:{name:'UpdateOutbreak', params:{outbreakId:item.id, outbreakName: item.name}},
           label:'Update',
@@ -145,9 +154,19 @@ export default {
              
       ];   
     },
+    fetchOutbreaks() {
+      this.$store.dispatch('fetchAllOutbreaks').then(resp => {
+        this.Outbreaks = resp.results;   
+        for(let outbreak of this.Outbreaks){
+          this.competencies.push(outbreak.competencies)
+        }          
+      }).catch(err => {
+        console.log(err);
+      })
+    },
   },
   mounted() {
-
+    this.fetchOutbreaks()
   },
   computed: {}
 };

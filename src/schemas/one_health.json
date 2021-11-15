@@ -1,0 +1,12 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+        "type": "text",
+        "label": "Name",
+        "name": "name",
+        "validation": "required"
+    }
+]
+
+}]

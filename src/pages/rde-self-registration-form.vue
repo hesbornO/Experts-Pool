@@ -91,7 +91,7 @@
                 <select name="region_of_residence_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md p-2" validation="required" placeholder="select"
                 v-model="form.region_of_residence_id" id="region"> 
                   <option value="" disabled selected>--Select region--</option>     
-                  <option v-for="(region,index) in regions" :key="index" :value="region.value">{{region.name}}</option>
+                  <option v-for="(region,index) in regions" :key="index" :value="region.value">{{region.label?region.label:''}}</option>
                 </select>
                 <span v-if="getErrorMessage['region_of_residence_id']">
                   <span v-if="getErrorMessage['region_of_residence_id'].length>0">
@@ -325,6 +325,7 @@
                       </span> 
                   </label>              
             </div>
+            {{this.signUpData}}data
             <div class=" mt-6 text-sm flex justify-between">
               <span v-if="fileUploaded==0"></span>
               <button @click="togglePdfDisplay" 
@@ -339,6 +340,7 @@
               </button>
             </div>
         </div>  
+      
       </FormulateForm>
       <!-- CV preview modal -->        
         <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
@@ -412,6 +414,9 @@ export default {
     VuePdfApp,
     dashboard_layout,
     // Datepicker
+  },
+  props:{
+    signUpData:[Object]
   },
   data() {
     return {

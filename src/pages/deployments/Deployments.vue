@@ -64,11 +64,6 @@
               <span v-if="item.application_status==='approved_by_partner_state'" class="flex">
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
               </span>
-              <!-- <span v-if="item.active_deployments>0" class="flex">
-                <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
-                <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
-              </span> -->
-              
               {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.occupation ? item.occupation.name : '' }}</td>
@@ -90,30 +85,10 @@
             <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']" v-if="item.active_deployments>0">
               {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
-            <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.active_deployments>0">            
-                
-              <router-link
-                  :to="{name:'rdeProfile', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-indigo items-center text-xs"
-              >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2"></path>
-                  </svg>
-                  <span class="px-1">View Profile</span>
-              </router-link>
-              
-              <router-link
-                  :to="{name:'EndRDEdeployment', params:{rdeId:item.id, rdeName: item.last_name}}"
-                  class="btn btn-orange h-1/2 text-xs"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="px-1">End Deployment</span>
-              </router-link>
-              
-              
-                 <!-- CV preview modal -->
+            <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.active_deployments>0">    
+              <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                   
+
+              <!-- CV preview modal -->
                <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
                 <div class="flex items-end  min-h-full text-center sm:block ">            
                   <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -144,7 +119,6 @@
                 </div>
               </div>
               <!-- end of CV preview modal -->
-
             </td>
           
           </template>
@@ -170,15 +144,18 @@ import data_table from "../../components/layouts/DataTableTemplate";
 // pdf
 import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
+import SplitButton from "../../components/buttons/SplitButton.vue";
+
 
 
 export default {
-  name: "RDES",
+  name: "ActiveDeployments",
   components: {
 
     dashboard_layout,
     data_table,
-    VuePdfApp
+    VuePdfApp,
+    SplitButton
 
   },
   data() {
@@ -222,6 +199,26 @@ export default {
   methods: {
     // ...mapActions(['fetchRDES', 'fetchRDEById']),
     // ...mapGetters(['getCurrentToken']),
+    createPrimary(item) {
+      return {
+        to: { name: "rdeProfile", params: { rdeId:item.id, rdeName: item.last_name } },
+        label: "View Profile",
+        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"></path>
+                  </svg>`,
+      };
+    },
+    createOptional(item) {
+      return [
+        {
+          to:{name:'EndRDEdeployment', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"End Deployment",
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+        }
+      ]; 
+    },
 
     togglePdfDisplay() {
       this.viewPdf = !this.viewPdf;

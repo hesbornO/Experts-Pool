@@ -60,6 +60,11 @@
                   </label>
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">Phone number</span>
+                    <!-- <vue-country-code
+                      :preferredCountries="['vn', 'us', 'gb']"
+                      v-model="form.country_code"
+                      @onSelect="onSelect">
+                    </vue-country-code> -->
                     <FormulateInput
                     name="phone_number"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -77,7 +82,7 @@
                     <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
                     v-model="form.attached_region_id" id="region"> 
                       <option value="" disabled selected>--Select region--</option>     
-                      <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.name}}</option>
+                      <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.label}}</option>
                     </select>
                     <span v-if="getErrorMessage['attached_region_id']">
                       <span v-if="getErrorMessage['attached_region_id'].length>0">
@@ -211,6 +216,9 @@ export default {
   },
   methods: {
     ...mapActions(['signUp','login','fetchRegions']),
+    onSelect({name, iso2, dialCode}) {
+       console.log(name, iso2, dialCode);
+     },
     createUserAccount() {
     
       // eslint-disable-next-line no-unused-vars

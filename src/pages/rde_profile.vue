@@ -50,7 +50,7 @@
       </span>
       
       <span class="flex justify-between gap-8">
-        <router-link
+        <!-- <router-link
             :to="{name:'UpdateRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
             class="btn btn-green h-3/4 text-xs"
         >
@@ -62,7 +62,7 @@
                 stroke-width="2"></path>
           </svg>
           <span class="px-1">Update Profile</span>
-        </router-link>
+        </router-link> -->
     
         <router-link
             :to="{name:'DeleteRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
@@ -234,7 +234,7 @@
           <span v-if="this.rdeProfile.competencies_objects.length>0">
             <span v-for="(competency,index) in this.rdeProfile.competencies_objects" :key="index">
               <span>
-                <button class="pill_button">{{competency.name}}</button>              
+                <button class="pill_button">{{competency.name?competency.name.replace('_',' '):''}}</button>              
               </span>
             </span>            
           </span>

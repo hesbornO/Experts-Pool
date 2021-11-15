@@ -92,7 +92,8 @@ export default {
 			},
     optionsList: { type: Array, default: () => [] },
     country_id:[String, Number],
-    profile:[String, Number]
+    profile:[String, Number],
+    moduleName:[String, Number]
   },
   created(){
     this.tryOptions();

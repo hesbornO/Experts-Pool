@@ -123,6 +123,7 @@ export default {
       default: "max-w-sm",
     },
     optionsList: { type: Array, default: () => [] },
+    moduleName:[String, Number]
   },
   methods: {
     performUpdateAction() {
@@ -145,6 +146,9 @@ export default {
       this.loading = true
       this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
         this.form = resp
+        if(this.moduleName==='occupation'){
+          this.form.occupation_category_id=resp.occupation_category.id
+        }
         this.$forceUpdate()
       }).catch(err => {
         displayServerErrMessage(err)
