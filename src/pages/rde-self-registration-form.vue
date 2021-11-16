@@ -324,8 +324,8 @@
                         </span>
                       </span> 
                   </label>              
-            </div>
-            {{this.signUpData}}data
+            </div>            
+            
             <div class=" mt-6 text-sm flex justify-between">
               <span v-if="fileUploaded==0"></span>
               <button @click="togglePdfDisplay" 
@@ -416,7 +416,7 @@ export default {
     // Datepicker
   },
   props:{
-    signUpData:[Object]
+    // signUpData:[Object]
   },
   data() {
     return {
@@ -449,7 +449,8 @@ export default {
       ],
       viewPdf:false,
       fileUploaded:0,
-      showModal: false
+      showModal: false,
+      signUpData:{}
     }
   },
   methods: {
@@ -496,6 +497,15 @@ export default {
       }).catch(err => {
         console.log(err);
       })
+    },
+    getSignUpData(){
+      this.form.first_name=localStorage.getItem('first_name')
+      this.form.last_name=localStorage.getItem('last_name')
+      this.form.email=localStorage.getItem('email')
+      this.form.phone=localStorage.getItem('phone')
+      this.form.region_of_residence_id=localStorage.getItem('region_of_residence_id')
+      console.log('region id', this.form.region_of_residence_id)
+
     },
     filterRegions(selectedCountry){
       console.log('Selected Country', selectedCountry)
@@ -610,7 +620,8 @@ export default {
     this.getCountries()
     this.getRegions()
     this.getOccupations()    
-    this.getCompetencies()    
+    this.getCompetencies()   
+    this.getSignUpData() 
   },
   
   computed: {
