@@ -7,15 +7,15 @@ const state = {
 }
 
 const getters = {
-    getCurrentUser(state) {
-        return state.user
-    },
-    getCurrentToken(state) {
-        return state.token
-    },
-    getErrorMessage(state) {
-        return state.error
-    }
+    // getCurrentUser(state) {
+    //     return state.user
+    // },
+    // getCurrentToken(state) {
+    //     return state.token
+    // },
+    // getErrorMessage(state) {
+    //     return state.error
+    // }
 }
 
 const actions = {

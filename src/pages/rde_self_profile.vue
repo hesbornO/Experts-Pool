@@ -12,23 +12,24 @@
 
     <span class="flex justify-between" >
       <span></span>
-      <span >
-        <span v-if="Object.keys(rdeSelfProfile).length === 0" class="pb-2">
+      <span>
+          <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2">
           Welcome! Click below to register <br>
           <span class="flex justify-between">
             <span></span>
-            <!-- <router-link :to:{name:'RdeSelfRegistrationForm', params:{signUpData:signUpData}}, class="text-white bg-blue-500 px-2 py-1 rounded-md text-lg">Register</router-link> -->
             <router-link
-            :to="{name:'RdeSelfRegistrationForm', params:{signUpData:this.signUpData}}"
+            :to="{name:'RdeSelfRegistrationForm', params:{signUpData:signUpData}}"
             class="btn btn-blue text-lg flex"            
             title="Click to register"
           >
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="currentColor"><path d="M12.14 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M16.14 10a3 3 0 0 0-3-3h-5v10h2v-4h1.46l2.67 4h2.4l-2.75-4.12A3 3 0 0 0 16.14 10zm-3 1h-3V9h3a1 1 0 0 1 0 2z"></path></svg> -->
             <span class="px-1">Register</span>
           </router-link> 
-            <span>{{this.signUpData}}</span>
+            <span></span>
           </span>
         </span>
+        <div v-if="rdeSelfProfile">
+
+        </div>
       </span>
       <span></span>
     </span>
@@ -48,16 +49,7 @@
                 </span>
           </span>
           <span class="">
-            <!-- <router-link
-              :to="{name:'ApproveRDEfromProfile', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.last_name}}"
-              class="btn btn-green h-1/2 text-xs"
-              v-if="this.rdeSelfProfile.application_status === 'pending_approval'"
-              title="Click to approve"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-              <span class="px-1">Approve</span>
-            </router-link> -->
-
+      
             <router-link
                 :to="{name:'DisapproveRDEfromProfile', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.last_name}}"
                 class="btn btn-orange h-1/2 text-xs"
@@ -105,7 +97,7 @@
       <hr class="pt-2 pb-4">
       
 
-      <tabs :mode="mode" v-if="Object.keys(rdeSelfProfile).length > 0">      
+      <tabs :mode="mode" v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length > 0">      
         <!-- {{rdeSelfProfile}} -->
         <tab title="Personal details" class="grid grid-cols-3 space-x-4">
           <span v-if="this.loading" class=" mt-5 flex justify-center">
@@ -534,8 +526,8 @@
           </span>
           
         </tab>
-      </tabs>
-    </div>{{signUpData}}
+      </tabs>      
+    </div> 
     <router-view></router-view>
   </dashboard_layout>
 </template>
@@ -582,13 +574,14 @@ export default {
     }
   },
   methods:{
+    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment']),
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
      this.region= localStorage.getItem('region')
      this.fullname= localStorage.getItem('fullname')
      this.username= localStorage.getItem('username')
      this.signUpId= localStorage.getItem('id')
-     if(Object.keys(this.rdeSelfProfile).length === 0){
+     if(this.rdeSelfProfile && Object.keys(this.rdeSelfProfile).length === 0){
        this.fetchSignUpData(this.signUpId)
      }
     },
@@ -596,8 +589,12 @@ export default {
       this.loading = true
       // eslint-disable-next-line no-unused-vars
        this.$store.dispatch('fetchSignUpDataById',sign_up_id).then(resp => {         
-         this.signUpData=resp
-         console.log('sign up data:', this.signUpData)
+         this.signUpData=resp         
+         localStorage.setItem('first_name', this.signUpData.first_name)
+         localStorage.setItem('last_name', this.signUpData.last_name)
+         localStorage.setItem('email', this.signUpData.email)
+         localStorage.setItem('phone', this.signUpData.phone_number)
+         localStorage.setItem('region_of_residence_id', this.signUpData.attached_region)
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
@@ -608,17 +605,23 @@ export default {
     fetchRDEData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch('fetchRDES','').then(resp => {         
-         this.rdeSelfProfile=resp.results[0]
+       this.$store.dispatch('fetchRDES','').then(resp => {
+
+      if(resp.results.length > 0) {
+        this.rdeSelfProfile = resp.results[0]
+        this.fetchRDEdeployments(this.rdeSelfProfile.id)
+      }
+
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
          this.loading = false
        })
-      //  this.fetchRDEdeployments(this.$route.params.rdeId)
     },
     fetchRDEdeployments(rde_id){
-      this.$store.dispatch('getrdeSelfProfileDeployment',rde_id).then(resp => {
+      console.log('fetching rde deployments')
+      this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
+        console.log()
          this.rdeDeployments = resp
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
@@ -641,8 +644,9 @@ export default {
         this.viewPdfToUpload = !this.viewPdfToUpload;
       }
       if(action==='fetchCV'){
+        console.log('fetching cv')
         this.loading=true
-        this.$store.dispatch('fetchRDEcv', this.$route.params.rdeId).then(resp=>{
+        this.$store.dispatch('fetchRDEcv', this.rdeSelfProfile.id).then(resp=>{
           this.RDEcv = resp
         }).catch(err=>{
           this.$store.dispatch('setErrorMsg',err.data)
@@ -678,7 +682,6 @@ export default {
   },
   computed: {
     ...mapGetters(['getErrorMessage']),
-    ...mapActions(['fetchRDEById','getrdeSelfProfileDeployment','fetchRDEcv','fetchRDES']),
     age:function()
     {
         var today = new Date();

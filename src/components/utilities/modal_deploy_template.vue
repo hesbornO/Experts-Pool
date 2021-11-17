@@ -85,11 +85,13 @@ import displayServerErrMessage from '@/utils/functions'
 import Loading from "./loading";
 
 export default {
-  name: "modal_update_template",
+  name: "modal_deploy_template",
   components: {Loading},
   data() {
     return {
-      form: {},
+      form: {
+        outbreak_id:''
+      },
       inputErrors: {},
       formErrors: [],
       modal_hidden: true,
@@ -123,14 +125,12 @@ export default {
       default: "max-w-sm",
     },
     optionsList: { type: Array, default: () => [] },
+    moduleAction:[String]
   },
   methods: {
     performDeployAction() {
       this.loading = true
       this.form.profile_id = parseInt(this.$route.params.rdeId)
-      console.log('form:',this.form)
-      // this.form.outbreak_id  = parseInt(this.form.outbreak_id)
-      // console.log('outbreak id:',this.form.outbreak_id)
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
             "" + this.object_title + " Deployed Successfully"
@@ -145,21 +145,7 @@ export default {
         this.loading = false
       });
     },
-    fetchObject() {
-      console.log("mounting")
-      this.loading = true
-      this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
-        this.form = resp
-        this.$forceUpdate()
-      }).catch(err => {
-        displayServerErrMessage(err)
-      }).then(()=>{
-        if(this.optionsList.length ===0){
-          this.loading = false
-        }
-        //
-      })
-    },
+    
     fetchOptions() {
       // let schema =[]
       let counter =0
@@ -187,11 +173,16 @@ export default {
       this.loading = false
     },
     tryOptions(){
+
       if (this.optionsList.length>0){
         this.fetchOptions()
       }else{
         this.optionsPopulatedSchema = this.jsonSchema
       }
+
+      if(this.moduleAction=='deployRDEFromSuggestions'){        
+        this.form.outbreak_id=this.$route.params.outbreakId      
+      } 
     },
     back() {
       this.$router.back()
@@ -202,7 +193,6 @@ export default {
   },
   mounted() {
     this.tryOptions()
-    this.fetchObject()
   }
 }
 </script>

@@ -152,7 +152,6 @@ const actions = {
         });
     },
     fetchRDEcv({ commit }, payload) {
-        console.log('cv payload:',payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/profile_cv/'
             if (payload === undefined) {
@@ -182,7 +181,6 @@ const actions = {
         });
     },
     endRDEdeployment({ commit }, payload) {
-        console.log(payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/deployment/'
             if (payload === undefined) {

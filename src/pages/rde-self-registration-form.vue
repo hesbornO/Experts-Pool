@@ -299,11 +299,11 @@
                           
                 <label class="block mt-4 text-sm">
                   <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf only)</span></span>
-                    <FormulateInput  type="file"
+                    <input  type="file"
                             id="cvFile"
                             :name="cv"
                             class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                            placeholder="john.doe@gmail.com"
+                            placeholder="Please upload file"
                             accept=".pdf" 
                             @input="processFile"                
                     />        
@@ -324,10 +324,10 @@
                         </span>
                       </span> 
                   </label>              
-            </div>
-            {{this.signUpData}}data
+            </div>            
+            
             <div class=" mt-6 text-sm flex justify-between">
-              <span v-if="fileUploaded==0"></span>
+              <span v-if="fileUploaded==0"></span> 
               <button @click="togglePdfDisplay" 
                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                 v-if="fileUploaded>0">
@@ -416,7 +416,7 @@ export default {
     // Datepicker
   },
   props:{
-    signUpData:[Object]
+    // signUpData:[Object]
   },
   data() {
     return {
@@ -449,7 +449,8 @@ export default {
       ],
       viewPdf:false,
       fileUploaded:0,
-      showModal: false
+      showModal: false,
+      signUpData:{}
     }
   },
   methods: {
@@ -496,6 +497,15 @@ export default {
       }).catch(err => {
         console.log(err);
       })
+    },
+    getSignUpData(){
+      this.form.first_name=localStorage.getItem('first_name')
+      this.form.last_name=localStorage.getItem('last_name')
+      this.form.email=localStorage.getItem('email')
+      this.form.phone=localStorage.getItem('phone')
+      this.form.region_of_residence_id=localStorage.getItem('region_of_residence_id')
+      console.log('region id', this.form.region_of_residence_id)
+
     },
     filterRegions(selectedCountry){
       console.log('Selected Country', selectedCountry)
@@ -610,7 +620,8 @@ export default {
     this.getCountries()
     this.getRegions()
     this.getOccupations()    
-    this.getCompetencies()    
+    this.getCompetencies()   
+    this.getSignUpData() 
   },
   
   computed: {

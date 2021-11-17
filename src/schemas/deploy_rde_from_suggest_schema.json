@@ -7,6 +7,7 @@
                 "type": "select",
                 "options": [0],
                 "label": "Outbreak",
+                "disabled":true,
                 "placeholder":"--select outbreak--",
                 "name": "outbreak_id",
                 "validation": "required"
@@ -14,7 +15,8 @@
             {
                 "type": "select",
                 "options": [1],
-                "label": "Region",
+                "label": "Region",  
+                "placeholder":"--select region--",              
                 "name": "region",
                 "validation": "required"
             }
@@ -26,7 +28,7 @@
         "class": "grid grid-cols-2 gap-2",
         "children": [{
                 "type": "date",
-                "label": "Start Date",
+                "label": "Start Date",                
                 "name": "start_date",
                 "validation": "required"
             }
