@@ -181,9 +181,7 @@ export default {
       }
 
       if(this.moduleAction=='deployRDEFromSuggestions'){        
-        this.form.outbreak_id=this.$route.params.outbreakId
-        // this.form.outbreak_id.disabled=true
-        // document.getElementById("outbreakField").disabled = true;
+        this.form.outbreak_id=this.$route.params.outbreakId      
       } 
     },
     back() {

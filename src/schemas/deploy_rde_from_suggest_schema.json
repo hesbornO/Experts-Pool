@@ -7,8 +7,7 @@
                 "type": "select",
                 "options": [0],
                 "label": "Outbreak",
-                "class":"",
-                "id":"outbreakField",                
+                "disabled":true,
                 "placeholder":"--select outbreak--",
                 "name": "outbreak_id",
                 "validation": "required"
@@ -16,7 +15,8 @@
             {
                 "type": "select",
                 "options": [1],
-                "label": "Region",                
+                "label": "Region",  
+                "placeholder":"--select region--",              
                 "name": "region",
                 "validation": "required"
             }

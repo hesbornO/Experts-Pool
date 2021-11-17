@@ -442,7 +442,7 @@
           </span>
         </span>
         
-        <span class="colspan-1 flex justify-end">
+        <span class="colspan-1 flex justify-end" v-if="this.rdeProfile">
           <router-link
             :to="{name:'makeRDErecommendation', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
             class="btn btn-blue h-1/6 text-md"
