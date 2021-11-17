@@ -495,7 +495,7 @@
         </span>
         <span class="colspan-1 flex justify-end">
           <router-link
-            :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+            :to="{name:'DeployFromSuggestions', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
             class="btn btn-blue h-1/6 text-md"
             v-if="(this.rdeProfile.application_status === 'approval_complete' || this.rdeProfile.application_status === 'approved_by_partner_state') && !this.rdeProfile.active_deployments>0"
 

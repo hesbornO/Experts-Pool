@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Home.vue";
 import rde_profile from "./pages/rde_profile.vue";
+import rde_profile_suggested from "./pages/rde_profile_suggested.vue";
 import rde_self_profile from "./pages/rde_self_profile.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
@@ -33,6 +34,7 @@ import modal_upload_cv_template from "./components/utilities/modal_upload_cv_tem
 //schemas
 import country_schema from '@/schemas/country_schema.json'
 import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
+import deploy_rde_from_suggest_schema from '@/schemas/deploy_rde_from_suggest_schema.json'
 import end_rde_deployment_schema from '@/schemas/end_rde_deployment_schema.json'
 import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
@@ -306,7 +308,7 @@ const routes = [{
                     return {
                         jsonSchema: deploy_rde_schema,
                         vuex_save_action: 'deployRDE',
-                        object_title: `' ${x.params.rdeName}' ?`,
+                        object_title: `' ${x.params.rdeName}' ?`,                        
                         object_id: x.params.rdeId,
                         optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
                         size: 'w-1/2'
@@ -477,6 +479,82 @@ const routes = [{
         }],
         roles: ['admin', 'approver']
     },
+    // outbreaks
+    {
+        path: "/outbreaks/",
+        name: "Outbreaks",
+        component: Outbreak,
+        props: {
+            vuex_data_action: 'fetchAllOutbreaks',
+            table_headings: ['NAME', 'DESCRIPTION', 'DURATION', 'ACTION']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+        children: [{
+                path: 'create-outbreak',
+                name: 'CreateOutbreak',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: outbreak_schema,
+                    vuex_action: 'postOutbreak',
+                    object_title: 'Outbreak',
+                    size: 'w-1/2',
+                    optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                }
+            },
+            {
+                path: 'update-outbreak/:outbreakName/:outbreakId',
+                name: 'UpdateOutbreak',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: outbreak_schema,
+                        vuex_fetch_action: 'fetchOutbreakById',
+                        vuex_save_action: 'updateOutbreakById',
+                        object_title: x.params.outbreakName,
+                        object_id: x.params.outbreakId,
+                        size: 'w-1/2',
+                        optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                    }
+
+                }
+            },
+            {
+                path: 'outbreak-end-date/:outbreakName/:outbreakId',
+                name: 'OutbreakEndDate',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: outbreak_end_date_schema,
+                        vuex_fetch_action: 'fetchOutbreakById',
+                        vuex_save_action: 'updateOutbreakById',
+                        object_title: x.params.outbreakName,
+                        object_id: x.params.outbreakId,
+                        size: 'w-1/2',
+                        optionsList: []
+                    }
+
+                }
+            },
+            {
+                path: 'delete-outbreak/:outbreakName/:outbreakId',
+                name: 'DeleteOutbreak',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteOutbreakById',
+                        vuex_payload: x.params.outbreakId,
+                        object_title: x.params.outbreakName
+                    }
+                }
+            },
+        ],
+        roles: ['admin']
+    },
+    // end of outbreaks
     // partner-states
     {
         path: "/partner-states/",
@@ -594,82 +672,7 @@ const routes = [{
         roles: ['admin']
     },
 
-    // outbreaks
-    {
-        path: "/outbreaks/",
-        name: "Outbreaks",
-        component: Outbreak,
-        props: {
-            vuex_data_action: 'fetchAllOutbreaks',
-            table_headings: ['NAME', 'DESCRIPTION', 'DURATION', 'ACTION']
-        },
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-        children: [{
-                path: 'create-outbreak',
-                name: 'CreateOutbreak',
-                component: modal_create_template,
-                showInLeftBar: false,
-                props: {
-                    jsonSchema: outbreak_schema,
-                    vuex_action: 'postOutbreak',
-                    object_title: 'Outbreak',
-                    size: 'w-1/2',
-                    optionsList: ['fetchAllCompetencies', 'fetchRegions']
-                }
-            },
-            {
-                path: 'update-outbreak/:outbreakName/:outbreakId',
-                name: 'UpdateOutbreak',
-                component: modal_update_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        jsonSchema: outbreak_schema,
-                        vuex_fetch_action: 'fetchOutbreakById',
-                        vuex_save_action: 'updateOutbreakById',
-                        object_title: x.params.outbreakName,
-                        object_id: x.params.outbreakId,
-                        size: 'w-1/2',
-                        optionsList: ['fetchAllCompetencies', 'fetchRegions']
-                    }
-
-                }
-            },
-            {
-                path: 'outbreak-end-date/:outbreakName/:outbreakId',
-                name: 'OutbreakEndDate',
-                component: modal_update_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        jsonSchema: outbreak_end_date_schema,
-                        vuex_fetch_action: 'fetchOutbreakById',
-                        vuex_save_action: 'updateOutbreakById',
-                        object_title: x.params.outbreakName,
-                        object_id: x.params.outbreakId,
-                        size: 'w-1/2',
-                        optionsList: []
-                    }
-
-                }
-            },
-            {
-                path: 'delete-outbreak/:outbreakName/:outbreakId',
-                name: 'DeleteOutbreak',
-                component: modal_delete_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        vuex_action: 'deleteOutbreakById',
-                        vuex_payload: x.params.outbreakId,
-                        object_title: x.params.outbreakName
-                    }
-                }
-            },
-        ],
-        roles: ['admin']
-    },
-    // end of outbreaks
+    
     // affected regions
     {
         path: '/outbreaks/:outbreakName/affected-regions',
@@ -713,10 +716,26 @@ const routes = [{
             return {
                 vuex_data_action: 'suggestRDES',
                 object_id: `?competencies=[${x.params.competencies}]`,
-                table_headings: ['Name', 'Residence', 'Competencies','Contacts', 'Action']
+                table_headings: ['Name', 'Residence', 'Competencies','Contact','Status', 'Action']
             }
         },    
         children:[           
+           
+
+        ],    
+        showInLeftBar: false,        
+        roles: ['admin']
+    },
+    {
+        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/:rdeId/:rdeName/profile',
+        name: 'ViewProfileFromSuggestions',        
+        component: rde_profile_suggested,
+        props: () => {
+            return {
+                
+            }
+        },       
+        children:[
             {
                 path: 'deploy',
                 name: 'DeployFromSuggestions',
@@ -724,7 +743,8 @@ const routes = [{
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: deploy_rde_schema,
+                        jsonSchema: deploy_rde_from_suggest_schema,
+                        moduleAction:'deployRDEFromSuggestions',
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
@@ -734,20 +754,7 @@ const routes = [{
 
                 }
             },
-
-        ],    
-        showInLeftBar: false,        
-        roles: ['admin']
-    },
-    {
-        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/:rdeId/:rdeName/profile',
-        name: 'ViewProfileFromSuggestions',
-        component: rde_profile,
-        props: () => {
-            return {
-                
-            }
-        },        
+        ], 
         showInLeftBar: false,        
         roles: ['admin']
     },

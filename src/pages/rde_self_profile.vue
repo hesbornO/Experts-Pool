@@ -574,7 +574,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES']),
+    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment']),
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
      this.region= localStorage.getItem('region')
@@ -607,24 +607,28 @@ export default {
       // eslint-disable-next-line no-unused-vars
        this.$store.dispatch('fetchRDES','').then(resp => {
 
-         if(resp.results.length > 0) this.rdeSelfProfile = resp.results[0]
+      if(resp.results.length > 0) {
+        this.rdeSelfProfile = resp.results[0]
+        this.fetchRDEdeployments(this.rdeSelfProfile.id)
+      }
 
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
          this.loading = false
        })
-      //  this.fetchRDEdeployments(this.$route.params.rdeId)
     },
-    // fetchRDEdeployments(rde_id){
-    //   this.$store.dispatch('getrdeSelfProfileDeployment',rde_id).then(resp => {
-    //      this.rdeDeployments = resp
-    //    }).catch(err=>{
-    //      this.$store.dispatch('setErrorMsg', err.data)
-    //    }).then(()=>{
-    //      this.loading = false
-    //    })
-    // },
+    fetchRDEdeployments(rde_id){
+      console.log('fetching rde deployments')
+      this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
+        console.log()
+         this.rdeDeployments = resp
+       }).catch(err=>{
+         this.$store.dispatch('setErrorMsg', err.data)
+       }).then(()=>{
+         this.loading = false
+       })
+    },
     changeStyle () {
       if (this.mode === 'dark') {
         this.mode = 'light'
@@ -640,8 +644,9 @@ export default {
         this.viewPdfToUpload = !this.viewPdfToUpload;
       }
       if(action==='fetchCV'){
+        console.log('fetching cv')
         this.loading=true
-        this.$store.dispatch('fetchRDEcv', this.$route.params.rdeId).then(resp=>{
+        this.$store.dispatch('fetchRDEcv', this.rdeSelfProfile.id).then(resp=>{
           this.RDEcv = resp
         }).catch(err=>{
           this.$store.dispatch('setErrorMsg',err.data)

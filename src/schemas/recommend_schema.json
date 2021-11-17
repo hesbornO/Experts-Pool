@@ -4,9 +4,13 @@
     "children": [{
         "type": "textarea",
         "label": "Recommendation",
+        "placeholder":"Type here...",        
         "name": "comment",
         "rows": 5,
-        "validation": "required"
+        "validation": "required",
+        "validationMessages":{
+            "required":"Recommendation is required"
+        }
     }]
 
 }]
