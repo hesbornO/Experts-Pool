@@ -181,7 +181,6 @@ const actions = {
         });
     },
     endRDEdeployment({ commit }, payload) {
-        console.log(payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/deployment/'
             if (payload === undefined) {
