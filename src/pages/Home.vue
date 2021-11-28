@@ -89,10 +89,8 @@
               >
                 Total RDES
               </p>
-              <p
-                class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-              >
-                {{allRDES.count}}                    
+              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" v-if="stats.active_deployments>=0 && stats.undeployed_rdes>=0">
+                {{(stats.active_deployments+stats.undeployed_rdes)}}                    
               </p>
             </div>
           </div>
@@ -105,16 +103,12 @@
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             </div>
-            <div>
-              <p
-                class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
-              >
+            <div v-if="stats">
+              <p class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold" >
                 Active Deployments
               </p>
-              <p
-                class="text-lg font-semibold text-gray-700 dark:text-gray-200"
-              >
-                ({{allRDES.count}})
+              <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" >
+                {{stats.active_deployments?stats.active_deployments:''}}
               </p>
             </div>
           </div>
@@ -277,6 +271,7 @@ export default {
   },
   data() {
     return {
+      allOccupations:[],
       register_prequalified_rde: false,
       search: '',
       selected_status: '',
@@ -285,7 +280,7 @@ export default {
       query_list:[],
       my_argument:'',
       viewPdf: false,
-      allRDES: [],
+      stats: [],
       allOutbreaks: [],
       allCountries: [],
       approvalStatuses: [
@@ -349,10 +344,7 @@ export default {
       }
       
       return options
-    },
-
-    ...mapActions(['fetchCountries']),
-    // ...mapGetters(['getCurrentToken']),
+    },   
 
     togglePdfDisplay() {
       this.viewPdf = !this.viewPdf;
@@ -411,38 +403,36 @@ export default {
     filter(){
      console.log(this.query_list)
     },
-    fetchStats() {
-    // all RDEs
-      this.$store.dispatch('fetchRDES').then(resp => {
-        this.allRDES = resp;   
+    fetch_stats() {
+    // stats
+      this.$store.dispatch('fetchStats').then(resp => {
+        this.stats = resp;   
       }).catch(err => {
         console.log(err);
       })
     // all outbreaks
-      this.$store.dispatch('fetchAllOutbreaks').then(resp => {
-        this.allOutbreaks = resp;   
-      }).catch(err => {
+      this.$store.dispatch('fetchAllOutbreaks').then(resp=>{
+        this.allOutbreaks=resp;
+      }).catch(err=>{
         console.log(err);
       })
     // all countries
-      this.$store.dispatch('fetchCountries').then(resp => {
-        this.allCountries = resp;   
-      }).catch(err => {
-        console.log(err);
-      })
+    this.$store.dispatch('fetchCountries').then(resp=>{
+      this.allCountries=resp;
+    }).catch(err=>{
+      console.log(err);
+    })
     },
     
-
-
   },
   mounted() {
-    this.fetchStats()
-
+    this.fetch_stats()
+    this.getAllOccupations()
 
   },
   computed: {
     // ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
-    ...mapActions(['fetchRDES','fetchAllOutbreaks','fetchCountries'])
+    ...mapActions(['fetchRDES','fetchStats','fetchAllOutbreaks','fetchCountries','fetchAllOccupations'])
   }
 };
 </script>

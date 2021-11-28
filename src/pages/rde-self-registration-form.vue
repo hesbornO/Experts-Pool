@@ -312,7 +312,7 @@
                 <label class="block mt-4 text-sm col-span-2">
                     <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
                       <select name="competencies" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
-                      v-model="form.competencies" id="competencies"  multiple>
+                      v-model="form.competencies" id="competencies"  multiple rows="10">
                         <option value="" disabled selected>--Select competency--</option>     
                         <option v-for="(competency,index) in competencies_list" :key="index"  :value="competency.id">{{competency.name}}</option>
                       </select>
@@ -409,7 +409,7 @@ Vue.use(VueTailwind, components)
 
 
 export default {
-  name: `${app_name}-self-registration`,
+  name: `${app_name}-self-registration-form`,
   components: {
     VuePdfApp,
     dashboard_layout,

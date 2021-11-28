@@ -1,6 +1,7 @@
 import api from "@/api";
 
 const state = {
+    stats: [],
     RDES: [],
     RDE: {},
     signUpData: {},
@@ -19,6 +20,24 @@ const getters = {
 }
 
 const actions = {
+    // stats
+    fetchStats({ commit }, payload) {
+        console.log('payload',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/fetch_stats/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/fetch_stats/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setStats", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     // rde CRUD
     fetchRDES({ commit }, payload) {
         console.log('payload',payload)
@@ -333,6 +352,7 @@ const actions = {
 }
 
 const mutations = {
+    setStats: (state, stats) => (state.stats = stats),
     setRDES: (state, RDES) => (state.RDES = RDES),
     setRDE: (state, RDE) => (state.RDE = RDE),
     setSignUpData: (state, signUpData) => (state.signUpData = signUpData),

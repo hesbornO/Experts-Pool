@@ -508,12 +508,12 @@
                 </tr>
               </tbody>
             </table>            
-            <span v-else class="text-yellow-400 animate-pulse">
+            <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
               No deployments yet.
             </span>
           </span>
           <span class="colspan-1 flex justify-end">
-            <router-link
+            <!-- <router-link
               :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.first_name?this.rdeSelfProfile.first_name.concat(' ').concat(this.rdeSelfProfile.last_name):''}}"
               class="btn btn-blue h-1/6 text-md"
               v-if="(this.rdeSelfProfile.application_status === 'approval_complete' || this.rdeSelfProfile.application_status === 'approved_by_partner_state') && !this.rdeSelfProfile.active_deployments>0"
@@ -522,7 +522,7 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
 
               <span class="px-1">Deploy</span>
-            </router-link>
+            </router-link> -->
           </span>
           
         </tab>
