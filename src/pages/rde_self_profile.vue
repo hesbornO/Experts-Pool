@@ -14,7 +14,7 @@
       <span></span>
       <span>
           <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2">
-          Welcome! Click below to register <br>
+          Welcome! Click below to add profile information <br>
           <span class="flex justify-between">
             <span></span>
             <router-link
@@ -22,7 +22,7 @@
             class="btn btn-blue text-lg flex"            
             title="Click to register"
           >
-            <span class="px-1">Register</span>
+            <span class="px-1">Create Profile</span>
           </router-link> 
             <span></span>
           </span>
