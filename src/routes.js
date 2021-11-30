@@ -201,7 +201,7 @@ const routes = [{
             }
 
         ],
-        roles: ['admin', 'approver']
+        roles: ['admin', 'eac_admin', 'country_admin','approver']
     },
     // PROFILE
     {
@@ -335,7 +335,7 @@ const routes = [{
                 }
             }
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     //rde self profile
     {
@@ -477,7 +477,7 @@ const routes = [{
 
             }
         }],
-        roles: ['admin', 'approver']
+        roles: ['admin', 'eac_admin', 'country_admin', 'approver']
     },
     // outbreaks
     {
@@ -552,7 +552,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of outbreaks
     // partner-states
@@ -608,7 +608,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // regions
     {
@@ -669,7 +669,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
 
     
@@ -687,7 +687,7 @@ const routes = [{
         showInLeftBar: false,
         children: [
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of affected regions
     
@@ -704,7 +704,7 @@ const routes = [{
             }
         },
         showInLeftBar: false,        
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     //end of deployments per outbreak 
     //suggested rdes per outbreak 
@@ -724,7 +724,7 @@ const routes = [{
 
         ],    
         showInLeftBar: false,        
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     {
         path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/:rdeId/:rdeName/profile',
@@ -756,7 +756,7 @@ const routes = [{
             },
         ], 
         showInLeftBar: false,        
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     //end of suggested rdes per outbreak 
 
@@ -814,7 +814,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of competence
     // occupation
@@ -875,7 +875,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of occupation
 
@@ -933,7 +933,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of one health sectors
 
@@ -990,7 +990,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of user groups
     // users
@@ -1046,7 +1046,7 @@ const routes = [{
                 }
             },
         ],
-        roles: ['admin']
+        roles: ['admin', 'eac_admin']
     },
     // end of users
     {

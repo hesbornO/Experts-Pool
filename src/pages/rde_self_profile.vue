@@ -494,7 +494,7 @@
                   <td class="border-l border-black p-2 uppercase">{{deployment.start_date?deployment.start_date:''}}</td>
                   <td class="border-l border-black p-2 uppercase">
                     {{deployment.end_date?deployment.end_date:''}}
-                    <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
+                    <!-- <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
                         <router-link
                           :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
                           class="btn btn-blue h-1/6 text-md"
@@ -503,7 +503,7 @@
 
                           <span class="px-1">End Deployment</span>
                         </router-link>
-                    </span>
+                    </span> -->
                   </td>
                 </tr>
               </tbody>

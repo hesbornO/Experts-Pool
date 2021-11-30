@@ -251,7 +251,6 @@
           <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
             <label class="block mt-4 text-sm">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
-              <!-- focus-within sets the color for the icon when input is focused -->
               <div
                   class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
               >

@@ -23,7 +23,7 @@
         </svg>
       </button>
       <!--level info-->
-      <p class="capitalize">{{region}} ({{ user_level }})</p>
+      <p class="capitalize">{{region}} <span class="uppercase">({{ user_level }})</span></p>
       <!--end of level info-->
       <!-- Search input -->
       <!-- <div class="flex justify-center flex-1 lg:mr-32">
@@ -168,7 +168,7 @@
             aria-label="Account"
             aria-haspopup="true"
           >
-          <span class="font-semibold pt-1 capitalize">{{username}}</span>
+          <span class="font-semibold pt-1 ">{{username}}</span>
             <img
               class="object-cover w-8 h-8 rounded-full"
               src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"

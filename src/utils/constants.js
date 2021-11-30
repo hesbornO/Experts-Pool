@@ -1,5 +1,5 @@
 // let baseUrl = "http://35.208.99.81:84/";
-let baseUrl = "http://9d8a-197-232-113-104.ngrok.io/";
+let baseUrl = "https://9d9e-105-160-118-203.ngrok.io/";
 // let baseUrl = "http://localhost:8000/";
 let api_url = baseUrl + 'api/'
 let app_name = 'RDE'
