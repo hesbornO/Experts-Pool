@@ -192,6 +192,8 @@ export default {
   mounted() {
     this.fetchData()
   },
+
+
   watch: {
     $route: {
       async handler() {
