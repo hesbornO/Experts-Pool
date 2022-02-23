@@ -22,9 +22,9 @@ import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
 import MyAccount from "./pages/my-account.vue";
 import PageNotFound from "./pages/404.vue";
-import modal_delete_template from "./components/utilities/modal_delete_template";
 import modal_create_template from "./components/utilities/modal_create_template";
 import modal_update_template from "./components/utilities/modal_update_template";
+import modal_delete_template from "./components/utilities/modal_delete_template";
 import modal_deploy_template from "./components/utilities/modal_deploy_template";
 import modal_end_deployment_template from "./components/utilities/modal_end_deployment_template";
 import modal_approve_rde_template from "./components/utilities/modal_approve_rde_template";
@@ -214,9 +214,11 @@ const routes = [{
                
             }
         },
-        children: [{
-                path: 'approve-rde',
-                name: 'ApproveRDEfromProfile',
+        children: [
+            // partner state
+            {
+                path: 'ps-approve-rde',
+                name: 'PSApproveRDEfromProfile',
                 component: modal_approve_rde_template,
                 showInLeftBar: false,
                 props: x => {
@@ -228,13 +230,40 @@ const routes = [{
                 }
             },
             {
-                path: 'disapprove-rde',
-                name: 'DisapproveRDEfromProfile',
+                path: 'ps-disapprove-rde',
+                name: 'PSDisapproveRDEfromProfile',
                 component: modal_disapprove_rde_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         vuex_action: 'disapproveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            // EAC
+            {
+                path: 'eac-approve-rde',
+                name: 'EAC_ApproveRDEfromProfile',
+                component: modal_approve_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'eac_approveRDEById',
+                        vuex_payload: x.params.rdeId,
+                        object_title: x.params.rdeName
+                    }
+                }
+            },
+            {
+                path: 'eac-disapprove-rde',
+                name: 'EAC_DisapproveRDEfromProfile',
+                component: modal_disapprove_rde_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'eac_disapproveRDEById',
                         vuex_payload: x.params.rdeId,
                         object_title: x.params.rdeName
                     }
@@ -259,13 +288,13 @@ const routes = [{
                 }
             },
             {
-                path: 'delete-rde',
-                name: 'DeleteRDEfromProfile',
+                path: 'update-status',
+                name: 'UpdateRDEStatus',
                 component: modal_delete_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        vuex_action: 'deleteRDEById',
+                        // vuex_action: 'deleteRDEById',
                         vuex_payload: x.params.rdeId,
                         object_title: x.params.rdeName
                     }

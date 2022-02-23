@@ -20,12 +20,10 @@
           <td class="px-4 py-3 w-1/6 font-mono">{{$route.params.outbreakName}}</td> 
 
         </tr>
-
-        
       </tbody>
     
     </table>
-    
+    <div v-if="affectedRegions.length===0" class="text-gray-700 dark:text-gray-400 border px-4 py-3 font-mono flex justify-center">No regions attached</div>
     <router-view></router-view>
   </dashboard_layout>
 </template>
@@ -41,7 +39,7 @@ export default {
     dashboard_layout,
   },
   props:{
-    affectedRegions:[Object],
+    affectedRegions:[],
     showBack:{
       type: Boolean,
       default: false

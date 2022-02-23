@@ -4,7 +4,7 @@
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length > 0">
         <span></span>
         <span>
-          <button class='flex justify-end p-1 px-2 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Switch theme</button>
+          
         </span>
       </span>
     </span>
@@ -13,23 +13,22 @@
     <span class="flex justify-between" >
       <span></span>
       <span>
-          <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2">
-          Welcome! Click below to add profile information <br>
-          <span class="flex justify-between">
-            <span></span>
-            <router-link
-            :to="{name:'RdeSelfRegistrationForm', params:{signUpData:signUpData}}"
-            class="btn btn-blue text-lg flex"            
-            title="Click to register"
-          >
-            <span class="px-1">Create Profile</span>
-          </router-link> 
-            <span></span>
-          </span>
-        </span>
-        <div v-if="rdeSelfProfile">
-
-        </div>
+          <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2 text-xl">
+            <span class="py-5">
+              Welcome <span class="  text-gray-600 capitalize py-1">{{username}}</span>! Click below to register. <br>
+            </span>
+            <span class="flex justify-between">
+              <span></span>
+              <router-link
+              :to="{name:'RdeSelfRegistrationForm', params:{signUpData:signUpData}}"
+              class="btn btn-blue text-lg flex mb-5"            
+              title="Click to register"
+              >
+                <span class="px-1">Create Profile</span>
+              </router-link> 
+                <span></span>
+            </span>
+          </span>        
       </span>
       <span></span>
     </span>
@@ -47,6 +46,7 @@
                   <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
                   <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
                 </span>
+                <span class="text-sm text-orange-400 flex">{{rdeSelfProfile.active_deployments>0?'Deployed':''}}</span>
           </span>
           <span class="">
       
@@ -78,18 +78,45 @@
           </router-link>
       
           <router-link
-              :to="{name:'DeleteRDEfromProfile', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.last_name}}"
-              class="btn btn-red h-3/4 text-xs"
+              :to="{name:'UpdateRDEStatus', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.last_name}}"
+              class="btn btn-orange h-3/4 text-xs"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-              <path
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2"></path>
-            </svg>
-            <span class="px-1">Deactivate Profile</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+            <span class="px-1">Update status</span>
           </router-link>
+         
+          <button
+            :class="['flex rounded-md focus:outline-none focus:shadow-outline-purple',mode !== 'dark'?'':'']"
+            @click='changeStyle()'
+            aria-label="Toggle color mode" :title="`${mode==='dark'}`"
+          >
+            <template v-if="this.mode === 'dark'">
+              <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                fill="dark"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                ></path>
+              </svg>
+            </template>
+            <template v-if="this.mode !== 'dark'">
+              <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                fill="orange"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </template>
+          </button>
 
         </span>      
       </span>
@@ -291,7 +318,7 @@
                           class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                           placeholder="john.doe@gmail.com"
                           validation="required"  
-                          accept=".pdf,.doc,.docx,application/msword" 
+                          accept=".pdf" 
                           @input="processFile"                
                   />        
                     <span v-if="getErrorMessage['cv']">
@@ -371,7 +398,7 @@
                     <div class="h-96">                 
                       <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                          {{$route.params.rdeName}}'s CV Preview
+                          {{(rdeSelfProfile.last_name?rdeSelfProfile.last_name+' ':'')+(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+(rdeSelfProfile.middle_name?' '+rdeSelfProfile.middle_name:'')}}'s CV Preview
                         </h3>
                         <div class="h-96" v-if="this.RDEcv">                      
                           <vue-pdf-app :pdf="this.RDEcv.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      

@@ -26,25 +26,47 @@
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
               </span>
         </span>
-        <span class="">
-          <!-- <router-link
-            :to="{name:'ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-            class="btn btn-green h-1/2 text-xs"
+        <span class="flex ">
+          <!-- Partner State -->
+          <router-link
+            :to="{name:'PSApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-green h-3/4 text-xs mr-1"
             v-if="this.rdeProfile.application_status === 'pending_approval'"
             title="Click to approve"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="px-1">Approve</span>
-          </router-link> -->
+            <span class="px-1">PS Approval</span>
+          </router-link>
 
           <router-link
-              :to="{name:'DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-              class="btn btn-orange h-1/2 text-xs"
-              v-if="this.rdeProfile.application_status === 'approved'"
+              :to="{name:'PSDisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+              class="btn btn-orange h-3/4 text-xs mr-1"
+              v-if="rdeProfile.application_status === 'approved_by_partner_state' && rdeProfile.active_deployments===0"
               title="Click to disapprove"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="px-1">Disapprove</span>
+            <span class="px-1">PS Disapproval</span>
+          </router-link>
+
+          <!-- EAC  -->
+          <router-link
+            :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-green h-3/4 text-xs mr-1"
+            v-if="this.rdeProfile.application_status === 'approved_by_partner_state'"
+            title="Click to approve"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span class="px-1">EAC Approval</span>
+          </router-link>
+
+          <router-link
+              :to="{name:'EAC_DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+              class="btn btn-orange h-3/4 text-xs mr-1"
+              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0"
+              title="Click to disapprove"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="px-1">EAC Disapproval</span>
           </router-link>
         </span>        
       </span>

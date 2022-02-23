@@ -1,5 +1,11 @@
 <template>
-  <dashboard_layout :page_title= "`Register RDE`">
+  <dashboard_layout :page_title= "`Register RDE`" >
+    <button @click="goBack" class="btn btn-blue mb-2 flex flex-row justify-between w-24" >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+      </svg>
+      Back
+    </button>
     <div>
       <FormulateForm v-model="form" @submit="registerRDE">
         <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">
@@ -118,11 +124,11 @@
                 <select name="id_type" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
                 v-model="form.id_type" id="id_type">
                   <option value="" selected disabled>-- click to select --</option>
-                  <option value="national_id">National ID No.</option>                
-                  <option value="birth_cert">Birth Certificate No.</option>
+                  <option value="national_id">National ID</option>                
+                  <option value="birth_cert">Birth Certificate</option>
                   <option value="alien_id">Alien ID</option>           
-                  <option value="military_id">Military ID No.</option>                
-                  <option value="passport">Passport.</option>                
+                  <option value="military_id">Military ID</option>                
+                  <option value="passport">Passport</option>                
                 </select>
                 <span v-if="getErrorMessage['id_type']">
                   <span v-if="getErrorMessage['id_type'].length>0">
@@ -613,7 +619,10 @@ export default {
         });
 
     });
-    }
+    },
+    goBack(){
+      this.$router.back()
+    },
   },
 
    mounted() {
