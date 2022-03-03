@@ -43,24 +43,26 @@
             
               <td class="px-4 py-3 text-xs w-1/6 capitalize font-semibold">
                 <span class="flex">
-                  <span class="flex">
-                    <span v-if="item.start_date">From  
+                  <span class="">
+                    <span v-if="item.start_date">
+                      From 
                       <span class="text-red-400"> {{item.start_date?' '+item.start_date:''}}</span>
-                    </span>
-                    <br/>
+                    </span> <br>                   
                     <span v-if="item.end_date" class="px-2 lowercase">to 
                       <span class="text-blue-400"> {{item.end_date?' '+item.end_date:''}}</span>
                     </span>
+                    <span v-if="!item.end_date" class="px-2">
+                      <router-link
+                        :to="{name:'OutbreakEndDate', params:{outbreakId:item.id, outbreakName: item.name}}"
+                          class="btn btn-blue h-1/3 text-xs"
+                          title="Click to add end date"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span class="px-1">Add End Date</span>
+                      </router-link>  
+                    </span>
                   </span>
-                  <span v-if="!item.end_date" class="px-2">
-                    <router-link
-                      :to="{name:'OutbreakEndDate', params:{outbreakId:item.id, outbreakName: item.name}}"
-                        class="btn btn-blue h-full text-xs"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                      <span class="px-1">End Date</span>
-                    </router-link>  
-                  </span>
+                  
                 </span>
               </td>
               

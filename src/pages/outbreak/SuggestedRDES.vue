@@ -19,7 +19,7 @@
           </div>
         <td class="px-4 py-3 text-sm ">
           <span class="flex flex-row space-x-1 text-blue-500">
-            <span v-if="item.phone"><a :href="`tel:${item.phone}`" title="Click to call">{{item.phone}}</a> | </span> 
+            <!-- <span v-if="item.phone"><a :href="`tel:${item.phone}`" title="Click to call">{{item.phone}}</a></span>  -->
             <span v-if="item.email"><a :href="`mailto:${item.email}`" title="Click to mail">{{item.email}}</a></span> 
           
           </span>

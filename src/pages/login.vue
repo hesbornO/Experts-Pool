@@ -54,7 +54,7 @@
 
                 <!-- You should use a button here, as the anchor is only used for the example  -->
                 <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple ',submitting?'opacity-75 cursor-not-allowed':'']" type="submit" v-bind:disabled="submitting" title="Click to login">
-                  {{submitting?'Logging in...':'Log In'}}
+                  {{submitting?'Logging in...':'Log in'}}
                 </button>
               </FormulateForm>
               <hr class="my-8"/>
@@ -93,8 +93,9 @@ export default {
   methods: {
     ...mapActions(['login']),
     userLogin() {
-      console.log('submitting: ',this.submitting)
       this.submitting = true
+      console.log('submitting: ',this.submitting)
+
       
       // eslint-disable-next-line no-unused-vars
       this.login(this.form).then(resp => {

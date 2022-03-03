@@ -15,8 +15,8 @@ import AffectedRegions from "./pages/outbreak/AffectedRegions.vue";
 import Competence from "./pages/competence/Competence.vue";
 import Occupation from "./pages/occupations/Occupations.vue";
 import OneHealth from "./pages/occupations/OneHealth.vue";
-import UserGroups from "./pages/users/UserGroups.vue";
-import Users from "./pages/users/Users.vue";
+// import UserGroups from "./pages/users/UserGroups.vue";
+// import Users from "./pages/users/Users.vue";
 import SignUp from "./pages/sign-up.vue";
 import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
@@ -42,8 +42,8 @@ import outbreak_end_date_schema from '@/schemas/outbreak_end_date_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import one_health_schema from '@/schemas/one_health.json'
-import user_group_schema from '@/schemas/user_group_schema.json'
-import user_schema from '@/schemas/user_schema.json'
+// import user_group_schema from '@/schemas/user_group_schema.json'
+// import user_schema from '@/schemas/user_schema.json'
 import rde_schema from '@/schemas/rde_schema.json'
 import recommend_schema from '@/schemas/recommend_schema.json'
 
@@ -918,7 +918,8 @@ const routes = [{
             table_headings: ['NAME', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
-        children: [{
+        children: [
+            {
                 path: 'add-sector',
                 name: 'CreateOneHealthSector',
                 component: modal_create_template,
@@ -967,116 +968,116 @@ const routes = [{
     // end of one health sectors
 
     // user groups
-    {
-        path: "/user-groups/",
-        name: "UserGroups",
-        component: UserGroups,
-        props: {
-            vuex_data_action: 'fetchUserGroups',
-            table_headings: ['NAME', 'ACTIONS']
-        },
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
-        children: [{
-                path: 'create-user-group',
-                name: 'CreateUserGroup',
-                component: modal_create_template,
-                showInLeftBar: false,
-                props: {
-                    jsonSchema: user_group_schema,
-                    vuex_action: 'postUserGroup',
-                    object_title: 'Add User Group',
-                    size: 'w-1/2',
-                    optionsList: []
-                }
-            },
-            {
-                path: 'update-user-group/:userGroupName/:userGroupId',
-                name: 'UpdateUserGroup',
-                component: modal_update_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        jsonSchema: user_group_schema,
-                        vuex_fetch_action: 'fetchUserGroupById',
-                        vuex_save_action: 'updateUserGroupById',
-                        object_title: x.params.userGroupName,
-                        object_id: x.params.userGroupId,
-                        size: 'w-1/2'
-                    }
-                }
-            },
-            {
-                path: 'delete-user-group/:userGroupName/:userGroupId',
-                name: 'DeleteUserGroup',
-                component: modal_delete_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        vuex_action: 'deleteUserGroupById',
-                        vuex_payload: x.params.userGroupId,
-                        object_title: x.params.userGroupName
-                    }
-                }
-            },
-        ],
-        roles: ['admin', 'eac_admin']
-    },
+    // {
+    //     path: "/user-groups/",
+    //     name: "UserGroups",
+    //     component: UserGroups,
+    //     props: {
+    //         vuex_data_action: 'fetchUserGroups',
+    //         table_headings: ['NAME', 'ACTIONS']
+    //     },
+    //     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+    //     children: [{
+    //             path: 'create-user-group',
+    //             name: 'CreateUserGroup',
+    //             component: modal_create_template,
+    //             showInLeftBar: false,
+    //             props: {
+    //                 jsonSchema: user_group_schema,
+    //                 vuex_action: 'postUserGroup',
+    //                 object_title: 'Add User Group',
+    //                 size: 'w-1/2',
+    //                 optionsList: []
+    //             }
+    //         },
+    //         {
+    //             path: 'update-user-group/:userGroupName/:userGroupId',
+    //             name: 'UpdateUserGroup',
+    //             component: modal_update_template,
+    //             showInLeftBar: false,
+    //             props: x => {
+    //                 return {
+    //                     jsonSchema: user_group_schema,
+    //                     vuex_fetch_action: 'fetchUserGroupById',
+    //                     vuex_save_action: 'updateUserGroupById',
+    //                     object_title: x.params.userGroupName,
+    //                     object_id: x.params.userGroupId,
+    //                     size: 'w-1/2'
+    //                 }
+    //             }
+    //         },
+    //         {
+    //             path: 'delete-user-group/:userGroupName/:userGroupId',
+    //             name: 'DeleteUserGroup',
+    //             component: modal_delete_template,
+    //             showInLeftBar: false,
+    //             props: x => {
+    //                 return {
+    //                     vuex_action: 'deleteUserGroupById',
+    //                     vuex_payload: x.params.userGroupId,
+    //                     object_title: x.params.userGroupName
+    //                 }
+    //             }
+    //         },
+    //     ],
+    //     roles: ['admin', 'eac_admin']
+    // },
     // end of user groups
     // users
-    {
-        path: "/users/",
-        name: "Users",
-        component: Users,
-        props: {
-            vuex_data_action: 'fetchUsers',
-            table_headings: ['USERNAME', 'NAME', 'PHONE NUMBER', 'GROUPS', 'STAFF NUMBER', 'ACTIONS']
-        },
-        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
-        children: [{
-                path: 'create-user',
-                name: 'CreateUser',
-                component: modal_create_template,
-                showInLeftBar: false,
-                props: {
-                    jsonSchema: user_schema,
-                    vuex_action: 'postUser',
-                    object_title: 'Add User',
-                    size: 'w-1/2',
-                    optionsList: []
-                }
-            },
-            {
-                path: 'update-user/:userId',
-                name: 'UpdateUser',
-                component: modal_update_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        jsonSchema: user_schema,
-                        vuex_fetch_action: 'fetchUserById',
-                        vuex_save_action: 'updateUserById',
-                        object_title: 'Update User',
-                        object_id: x.params.userId,
-                        size: 'w-1/2'
-                    }
-                }
-            },
-            {
-                path: 'delete-user/:userId',
-                name: 'DeleteUser',
-                component: modal_delete_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        vuex_action: 'deleteUserById',
-                        vuex_payload: x.params.userId,
-                        object_title: 'Delete user'
-                    }
-                }
-            },
-        ],
-        roles: ['admin', 'eac_admin']
-    },
+    // {
+    //     path: "/users/",
+    //     name: "Users",
+    //     component: Users,
+    //     props: {
+    //         vuex_data_action: 'fetchUsers',
+    //         table_headings: ['USERNAME', 'NAME', 'PHONE NUMBER', 'GROUPS', 'STAFF NUMBER', 'ACTIONS']
+    //     },
+    //     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+    //     children: [{
+    //             path: 'create-user',
+    //             name: 'CreateUser',
+    //             component: modal_create_template,
+    //             showInLeftBar: false,
+    //             props: {
+    //                 jsonSchema: user_schema,
+    //                 vuex_action: 'postUser',
+    //                 object_title: 'Add User',
+    //                 size: 'w-1/2',
+    //                 optionsList: []
+    //             }
+    //         },
+    //         {
+    //             path: 'update-user/:userId',
+    //             name: 'UpdateUser',
+    //             component: modal_update_template,
+    //             showInLeftBar: false,
+    //             props: x => {
+    //                 return {
+    //                     jsonSchema: user_schema,
+    //                     vuex_fetch_action: 'fetchUserById',
+    //                     vuex_save_action: 'updateUserById',
+    //                     object_title: 'Update User',
+    //                     object_id: x.params.userId,
+    //                     size: 'w-1/2'
+    //                 }
+    //             }
+    //         },
+    //         {
+    //             path: 'delete-user/:userId',
+    //             name: 'DeleteUser',
+    //             component: modal_delete_template,
+    //             showInLeftBar: false,
+    //             props: x => {
+    //                 return {
+    //                     vuex_action: 'deleteUserById',
+    //                     vuex_payload: x.params.userId,
+    //                     object_title: 'Delete user'
+    //                 }
+    //             }
+    //         },
+    //     ],
+    //     roles: ['admin', 'eac_admin']
+    // },
     // end of users
     {
         path: "/sign-up",
@@ -1084,7 +1085,6 @@ const routes = [{
         component: SignUp,
         showInLeftBar: false
     },
-
     {
         path: "/forgot-password",
         name: "ForgotPassword",

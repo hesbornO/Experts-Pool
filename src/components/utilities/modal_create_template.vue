@@ -25,7 +25,8 @@
                 <div class="flex justify-center">
                   <loading v-if="loading"></loading>
                 </div>
-                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="optionsPopulatedSchema" :form-errors="formErrors">
+                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="optionsPopulatedSchema" :form-errors="formErrors" invalid-message="Not all fields were filled out properly">
+                    <FormulateErrors class="rounded-sm text-xs px-4 py-3 text-red-700 bg-red-100 border border-red-300" />
 
                 </FormulateForm>
                 <slot v-else></slot>

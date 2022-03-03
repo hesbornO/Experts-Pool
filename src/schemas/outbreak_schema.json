@@ -11,10 +11,15 @@
                     "validation": "required"
                 },
                 {
-                    "type": "text",
+                    "type": "select",
                     "label": "Severity",
                     "name": "severity",
-                    "value": "minor",
+                    "placeholder":"--Select severity--",
+                    "options": {
+                        "minor": "Minor",
+                        "medium": "Medium",
+                        "severe": "Severe"                  
+                      },
                     "validation": "required"
                 }
                 
