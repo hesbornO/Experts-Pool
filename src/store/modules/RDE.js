@@ -155,13 +155,8 @@ const actions = {
     uploadCVById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile_cv/'
-            if (payload === undefined) {
-                payload = ''
-            } else {
-                // relative_url = "/profile/" + payload.rdeId + "/"
-                payload = { cv: payload.cv, profile_id: payload.rdeId }
-            }
-            api.post(relative_url, payload).then(resp => {
+            
+            api.post(relative_url, payload, {headers:{'Content-Type':'multipart/form-data'}}).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {

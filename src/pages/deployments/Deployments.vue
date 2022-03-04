@@ -86,7 +86,7 @@
               {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
             <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.active_deployments>0">    
-              <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                   
+              <split-button  :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                   
 
               <!-- CV preview modal -->
                <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >

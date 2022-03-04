@@ -398,7 +398,6 @@
                       class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                       validation="required"  
                       accept=".pdf" 
-                      @input="processFile"                
               />       
                     
                 <span v-if="getErrorMessage['cv']">
@@ -424,15 +423,8 @@
                 <span v-if="!viewPdfToUpload" class="">Preview upload</span>
               </button>
               <button
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" v-if="form.cv">
-                <router-link
-                    :to="{name:'UploadCVfromProfile', params:{rdeId:this.rdeProfile.id, cv: form.cv}}"
-                    class="flex "
-                    title="Click to submit cv"
-                  >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span class="px-1 ">Submit CV</span>
-                </router-link>
+                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="saveCV">
+                Submit CV
               </button>
             </span>
           
@@ -454,7 +446,7 @@
             <tbody>
               <tr v-for="(recommendation, index) in this.rdeProfile.recommendations" :key="index" class="text-md border border-black">
                 <td class="p-2">{{recommendation.comment?recommendation.comment:''}}</td>
-                <td class="border-l border-black p-2 uppercase">{{recommendation.author.username?recommendation.author.username:''}}</td>
+                <td class="border-l border-black p-2 ">{{recommendation.author.username?recommendation.author.username:''}}</td>
               </tr>
             </tbody>
           </table>
@@ -490,11 +482,11 @@
             </thead>
             <tbody>
               <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
-                <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{index+1}}. {{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
+                <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
                 <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
                 <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
-                <td class="border-l border-black p-2 uppercase">{{deployment.start_date?deployment.start_date:''}}</td>
-                <td class="border-l border-black p-2 uppercase">
+                <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
+                <td class="border-l border-black p-2 text-xs">
                   {{deployment.end_date?deployment.end_date:''}}
                   <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
                       <router-link
@@ -573,6 +565,17 @@ export default {
     }
   },
   methods:{
+    saveCV(){
+      let formData = new FormData()
+      formData.append('profile_id',this.rdeProfile.id)
+      formData.append('cv', document.getElementById('cvFile').files[0])
+      this.$store.dispatch('uploadCVById', formData).then(()=>{
+        this.$toast.success("uploaded")
+      }).catch(err=>{
+        console.log(err)
+      })
+      location.reload()
+    },
     fetchRDEData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars

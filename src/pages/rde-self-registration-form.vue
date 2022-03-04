@@ -303,7 +303,7 @@
 
             <div class="grid grid-cols-3 gap-3">
                           
-                <label class="block mt-4 text-sm">
+                <!-- <label class="block mt-4 text-sm">
                   <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf only)</span></span>
                     <input  type="file"
                             id="cvFile"
@@ -313,7 +313,7 @@
                             accept=".pdf" 
                             @input="processFile"                
                     />        
-                </label>  
+                </label>   -->
 
                 <label class="block mt-4 text-sm col-span-2">
                     <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
