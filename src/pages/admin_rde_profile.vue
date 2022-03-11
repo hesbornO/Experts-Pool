@@ -26,25 +26,47 @@
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
               </span>
         </span>
-        <span class="">
-          <!-- <router-link
-            :to="{name:'ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-            class="btn btn-green h-1/2 text-xs"
+        <span class="flex ">
+          <!-- Partner State -->
+          <router-link
+            :to="{name:'PSApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-green h-3/4 text-xs mr-1"
             v-if="this.rdeProfile.application_status === 'pending_approval'"
             title="Click to approve"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="px-1">Approve</span>
-          </router-link> -->
+            <span class="px-1">PS Approval</span>
+          </router-link>
 
           <router-link
-              :to="{name:'DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-              class="btn btn-orange h-1/2 text-xs"
-              v-if="this.rdeProfile.application_status === 'approved'"
+              :to="{name:'PSDisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+              class="btn btn-orange h-3/4 text-xs mr-1"
+              v-if="rdeProfile.application_status === 'approved_by_partner_state' && rdeProfile.active_deployments===0"
               title="Click to disapprove"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="px-1">Disapprove</span>
+            <span class="px-1">PS Disapproval</span>
+          </router-link>
+
+          <!-- EAC  -->
+          <router-link
+            :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-green h-3/4 text-xs mr-1"
+            v-if="this.rdeProfile.application_status === 'approved_by_partner_state'"
+            title="Click to approve"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span class="px-1">EAC Approval</span>
+          </router-link>
+
+          <router-link
+              :to="{name:'EAC_DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+              class="btn btn-orange h-3/4 text-xs mr-1"
+              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0"
+              title="Click to disapprove"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="px-1">EAC Disapproval</span>
           </router-link>
         </span>        
       </span>
@@ -54,6 +76,7 @@
         <router-link
             :to="{name:'DeleteRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
             class="btn btn-red h-3/4 text-xs"
+            v-if="user_level==='eac'"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
@@ -251,7 +274,6 @@
           <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
             <label class="block mt-4 text-sm">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
-              <!-- focus-within sets the color for the icon when input is focused -->
               <div
                   class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
               >
@@ -281,8 +303,15 @@
                 <span v-if="!viewPdfToUpload" class="">Preview upload</span>
               </button>
               <button
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV">
-                Submit CV
+                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" v-if="form.cv">
+                <router-link
+                    :to="{name:'UploadCVfromProfile', params:{rdeId:this.rdeProfile.id, cv: form.cv}}"
+                    class="flex "
+                    title="Click to submit cv"
+                  >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span class="px-1 ">Submit CV</span>
+                </router-link>
               </button>
             </span>
 
@@ -357,10 +386,9 @@
 
         <span v-if="!this.rdeProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
 
-          No CV Uploaded. Please upload CV!
-          <label class="block mt-4 text-sm">
+          No CV Uploaded. 
+          <!-- <label class="block mt-4 text-sm">
             <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf docs only)</span></span>
-            <!-- focus-within sets the color for the icon when input is focused -->
             <div
                 class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
             >
@@ -395,17 +423,10 @@
                 <span v-if="!viewPdfToUpload" class="">Preview upload</span>
               </button>
               <button
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV">
-                <router-link
-                    :to="{name:'UploadCVfromProfile', params:{rdeId:this.rdeProfile.id, cv: form.cv}}"
-                    class="flex "
-                    title="Click to submit cv"
-                  >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                  <span class="px-1 ">Submit CV</span>
-                </router-link>
+                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="saveCV">
+                Submit CV
               </button>
-            </span>
+          </span> -->
           
         </span>
 
@@ -434,9 +455,9 @@
           </span>
         </span>
         
-        <span class="colspan-1 flex justify-end" v-if="this.rdeProfile">
+        <span class="colspan-1 flex justify-end" v-if="user_level==='country' || user_level==='eac'">
           <router-link
-            :to="{name:'makeRDErecommendation', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+            :to="{name:'makeRDErecommendation', params:{rdeId:this.rdeProfile.id}}"
             class="btn btn-blue h-1/6 text-md"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
@@ -467,7 +488,7 @@
                 <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
                 <td class="border-l border-black p-2 text-xs">
                   {{deployment.end_date?deployment.end_date:''}}
-                  <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
+                  <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date && user_level==='eac'">
                       <router-link
                         :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
                         class="btn btn-blue h-1/6 text-md"
@@ -487,15 +508,16 @@
         </span>
         <span class="colspan-1 flex justify-end">
           <router-link
-            :to="{name:'DeployFromSuggestions', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+            :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
             class="btn btn-blue h-1/6 text-md"
-            v-if="(this.rdeProfile.application_status === 'approval_complete' || this.rdeProfile.application_status === 'approved_by_partner_state') && !this.rdeProfile.active_deployments>0"
+            v-if="user_level==='eac' && this.rdeProfile.application_status === 'approval_complete' && !this.rdeProfile.active_deployments>0"
 
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
 
             <span class="px-1">Deploy</span>
           </router-link>
+          <span v-if="rdeProfile.active_deployments>0" class="font-mono font-semibold italic text-orange-500">Deployed</span>
         </span>
         
       </tab>
@@ -539,13 +561,27 @@ export default {
       RDEcv:'',
       fileUploaded:0,
       loading:false,
-      displayUploadButton:false
+      displayUploadButton:false,
+      user_level:'',
+
 
     }
   },
   methods:{
-    
+    saveCV(){
+      let formData = new FormData()
+      formData.append('profile_id',this.rdeProfile.id)
+      formData.append('cv', document.getElementById('cvFile').files[0])
+      this.$store.dispatch('uploadCVById', formData).then(()=>{
+        this.$toast.success("uploaded")
+      }).catch(err=>{
+        console.log(err)
+      })
+      // location.reload()
+    },
     fetchRDEData(){
+      this.user_level= localStorage.getItem('level')
+
       this.loading = true
       // eslint-disable-next-line no-unused-vars
        this.$store.dispatch('fetchRDEById',this.$route.params.rdeId).then(resp => {
@@ -597,18 +633,6 @@ export default {
     },
     goBack(){
       this.$router.back()
-    },
-
-    saveCV(){
-      let formData = new FormData()
-      formData.append('profile_id',this.rdeProfile.id)
-      formData.append('cv', this.$refs.cvFile.files[0])
-      this.$store.dispatch('uploadCVById', formData).then(()=>{
-        this.$toast.success("uploaded")
-      }).catch(err=>{
-        console.log(err)
-      })
-      location.reload()
     },
     processFile(e) {
         const files = e.target.files || e.dataTransfer.files;

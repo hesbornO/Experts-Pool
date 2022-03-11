@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Home.vue";
-import rde_profile from "./pages/rde_profile.vue";
-import rde_profile_suggested from "./pages/rde_profile_suggested.vue";
-import rde_self_profile from "./pages/rde_self_profile.vue";
+import admin_rde_profile from "./pages/admin_rde_profile.vue";
+import rde_profile_suggested from "./pages/outbreak/rde_profile_suggested.vue";
+import rde_self_profile from "./pages/RDE/rde_self_profile.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
@@ -18,7 +18,7 @@ import OneHealth from "./pages/occupations/OneHealth.vue";
 // import UserGroups from "./pages/users/UserGroups.vue";
 // import Users from "./pages/users/Users.vue";
 import SignUp from "./pages/sign-up.vue";
-import SelfRegistrationForm from "./pages/rde-self-registration-form.vue";
+import SelfRegistrationForm from "./pages/RDE/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
 import MyAccount from "./pages/my-account.vue";
 import PageNotFound from "./pages/404.vue";
@@ -63,7 +63,7 @@ const routes = [{
         component: Home,
         props: {
             vuex_data_action: 'fetchRDES',
-            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'STATUS', 'ACTIONS']
+            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'DEPLOYED?', 'COMPETENCE', 'STATUS', 'ACTIONS']
         },
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -113,32 +113,6 @@ const routes = [{
                 }
             },
             {
-                path: 'approve-rde-ps/:rdeName/:rdeId',
-                name: 'partnerStateApproval',
-                component: modal_approve_rde_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        vuex_action: 'approveRDEById',
-                        vuex_payload: x.params.rdeId,
-                        object_title: x.params.rdeName
-                    }
-                }
-            },
-            {
-                path: 'disapprove-rde-ps/:rdeName/:rdeId',
-                name: 'partnerStateDisapproval',
-                component: modal_disapprove_rde_template,
-                showInLeftBar: false,
-                props: x => {
-                    return {
-                        vuex_action: 'disapproveRDEById',
-                        vuex_payload: x.params.rdeId,
-                        object_title: x.params.rdeName
-                    }
-                }
-            },
-            {
                 path: 'approve-rde-eac/:rdeName/:rdeId',
                 name: 'eacApproval',
                 component: modal_approve_rde_template,
@@ -151,7 +125,6 @@ const routes = [{
                     }
                 }
             },
-
             {
                 path: 'disapprove-rde-eac/:rdeName/:rdeId',
                 name: 'eacDisapproval',
@@ -203,11 +176,11 @@ const routes = [{
         ],
         roles: ['admin', 'eac_admin', 'country_admin','approver']
     },
-    // PROFILE
+    //EAC PROFILE
     {
         path: '/home/profile/:rdeId/:rdeName',
-        name: 'rdeProfile',
-        component: rde_profile,
+        name: 'adminRdeProfile',
+        component: admin_rde_profile,
         showInLeftBar: false,
         props: () => {
             return {
@@ -365,7 +338,7 @@ const routes = [{
             }
         ],
         roles: ['admin', 'eac_admin']
-    },
+    },    
     //rde self profile
     {
         path: '/rde-self-profile',
@@ -460,7 +433,8 @@ const routes = [{
             }
         ],
         roles: ['rde']
-    },
+    },   
+    
     // self-registration
     {
         path: "/rde-self-registration-form",
@@ -484,9 +458,8 @@ const routes = [{
         component: Deployments,
         props: {
             // vuex_data_action: 'fetchRDEDeployments',
-            // table_headings: ['NAME', 'CONTACT', 'REGION', 'SPECIALIZATION', 'COMPETENCE', 'CURRENT DEPLOYMENT', 'Deployment date', 'ACTIONS']
             vuex_data_action: 'fetchRDES',
-            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'CURRENT DEPLOYMENT', 'COMPETENCE', 'STATUS', 'ACTIONS']
+            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'DEPLOYED?', 'COMPETENCE', 'STATUS']
 
         },
         icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
@@ -511,7 +484,7 @@ const routes = [{
     // outbreaks
     {
         path: "/outbreaks/",
-        name: "Outbreaks",
+        name: "Public Health Events",
         component: Outbreak,
         props: {
             vuex_data_action: 'fetchAllOutbreaks',

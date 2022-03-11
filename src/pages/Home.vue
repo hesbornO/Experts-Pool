@@ -182,7 +182,7 @@
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize">{{ item.current_deployment ? item.current_deployment : 'None' }}
+            <td class="px-4 py-3 text-sm capitalize">{{ item.active_deployments>0?'Yes' : 'No' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">
               <span v-if="item.competencies_objects">
@@ -234,7 +234,7 @@
           
           </template>
         </data_table>
-        <!-- end of list -->
+        <!-- end of list -->     
 
       </div>
 
@@ -293,55 +293,41 @@ export default {
       form: {},
       update_rde_details: false,
       fileUploaded: 0,
-      query:{my_key:''}
+      query:{my_key:''},
+      user_level:'',
+
 
 
     }
   },
   methods: {
-    createPrimary(item) {
+    createPrimary(item) {      
       return {
-        to: { name: "rdeProfile", params: { rdeId:item.id, rdeName: item.last_name } },
-        label: "View Profile",
-        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2"></path>
-                  </svg>`,
-      };
+          to:{name:'adminRdeProfile', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"View Profile",
+          icon:'<svg class="w-5 h-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>'
+        };
     },
     createOptional(item) {
       const options= [
              
       ];   
-      if(item.application_status === 'pending_approval'){
-        options.push({
-          to:{name:'partnerStateApproval', params:{rdeId:item.id, rdeName: item.last_name}},
-          label:"PS approval",
-          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
-        })
-      }
-      if(item.application_status === 'approved_by_partner_state'){
+    
+      if(this.user_level==='eac' && item.application_status==='pending_approval'){
         options.push({
           to:{name:'eacApproval', params:{rdeId:item.id, rdeName: item.last_name}},
           label:"EAC Approval",
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
         })
       }
-      if(item.application_status === 'approval_complete'){
+      if(item.application_status === 'approval_complete' && this.user_level==='eac'){
         options.push({divider:true},{
           to:{name:'eacDisapproval', params:{rdeId:item.id, rdeName: item.last_name}},
           label:"EAC Disapproval",
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
         })
       }
-      if(item.application_status === 'approved_by_partner_state'){
-        options.push({divider:true},{
-          to:{name:'partnerStateDisapproval', params:{rdeId:item.id, rdeName: item.last_name}},
-          label:"PS Disapproval",
-          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
-        })
-      }
+      
       
       return options
     },   
@@ -422,7 +408,9 @@ export default {
     }).catch(err=>{
       console.log(err);
     })
+    this.user_level= localStorage.getItem('level')
     },
+
     
   },
   mounted() {

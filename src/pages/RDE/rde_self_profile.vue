@@ -480,15 +480,15 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
-import Tab from './tabs/Tab.vue'
-import Tabs from './tabs/Tabs.vue'
+import Tab from '../tabs/Tab.vue'
+import Tabs from '../tabs/Tabs.vue'
 
-import dashboard_layout from '../components/layouts/dashboard_layout.vue';
-import Loading from "../components/utilities/loading";
+import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
+import Loading from "../../components/utilities/loading";
 
 // import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
-import {  baseUrl } from '../utils/constants';
+import {  baseUrl } from '../../utils/constants';
 
 export default {
   name: "Regions",
@@ -531,7 +531,7 @@ export default {
       }).catch(err=>{
         console.log(err)
       })
-      location.reload()
+      // location.reload()
     },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
