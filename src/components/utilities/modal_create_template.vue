@@ -94,7 +94,9 @@ export default {
     optionsList: { type: Array, default: () => [] },
     country_id:[String, Number],
     profile:[String, Number],
-    moduleName:[String, Number]
+    moduleName:[String, Number],
+    moduleAction:[String]
+
   },
   created(){
     this.tryOptions();
@@ -134,6 +136,9 @@ export default {
       }else{
         this.optionsPopulatedSchema = this.jsonSchema
       }
+       if(this.moduleAction=='addRDEQualification'){        
+        this.form.profile_id=this.$route.params.rdeId      
+      } 
     },
     fetchOptions() {
       // let schema =[]

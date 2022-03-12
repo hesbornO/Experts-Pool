@@ -96,10 +96,7 @@ export default {
   methods: {
     ...mapActions(['login']),
     userLogin() {
-      this.submitting = true
-      console.log('submitting: ',this.submitting)
-
-      
+      this.submitting = true  
       // eslint-disable-next-line no-unused-vars
       this.login(this.form).then(resp => {
         let user_assigned_roles_string = localStorage.getItem('roles')

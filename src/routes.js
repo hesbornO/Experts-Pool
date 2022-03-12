@@ -13,6 +13,7 @@ import DeploymentsPerOutbreak from "./pages/outbreak/DeploymentsPerOutbreak.vue"
 import SuggestedRDES from "./pages/outbreak/SuggestedRDES.vue";
 import AffectedRegions from "./pages/outbreak/AffectedRegions.vue";
 import Competence from "./pages/competence/Competence.vue";
+import QualificationTypes from "./pages/AcademicQualificationTypes/Types.vue";
 import Occupation from "./pages/occupations/Occupations.vue";
 import OneHealth from "./pages/occupations/OneHealth.vue";
 // import UserGroups from "./pages/users/UserGroups.vue";
@@ -40,6 +41,8 @@ import region_schema from '@/schemas/region_schema.json'
 import outbreak_schema from '@/schemas/outbreak_schema.json'
 import outbreak_end_date_schema from '@/schemas/outbreak_end_date_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
+import academic_qualification_type from '@/schemas/academic_qualification_type.json'
+import add_qualification_schema from '@/schemas/add_qualification_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import one_health_schema from '@/schemas/one_health.json'
 // import user_group_schema from '@/schemas/user_group_schema.json'
@@ -354,7 +357,8 @@ const routes = [{
                 table_headings: ['NAME', 'Country', 'ACTION']
             }
         },
-        children: [{
+        children: [
+            {
                 path: 'rde-self-update',
                 name: 'RDESelfUIpdate',
                 component: modal_update_template,
@@ -430,7 +434,43 @@ const routes = [{
                     }
 
                 }
-            }
+            },
+            {
+                path: 'add-qualification/:rdeId/:rdeName',
+                name: 'addRDEQualification',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_qualification_schema,
+                        vuex_action: 'postRDEQualification',
+                        moduleAction:"addRDEQualification",
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName + ' qualification',
+                        // optionsList: ['fetchAcademicQualificationTypeOptions'],
+                        size: 'max-w-5xl'
+                    }
+                }
+            },
+            {
+                path: 'update-qualification/:qualificationId/:rdeName',
+                name: 'updateRDEQualification',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_qualification_schema,
+                        vuex_fetch_action: 'fetchRDEQualificationById',
+                        vuex_save_action: 'updateRDEQualificationById',
+                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_id: x.params.qualificationId,
+                        optionsList: [],
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+
         ],
         roles: ['rde']
     },   
@@ -939,6 +979,63 @@ const routes = [{
         roles: ['admin', 'eac_admin']
     },
     // end of one health sectors
+    // qualification types
+    {
+        path: "/qualification-types/",
+        name: "QualificationTypes",
+        component: QualificationTypes,
+        props: {
+            vuex_data_action: 'fetchAllQualificationTypes',
+            table_headings: ['NAME', 'CREATED', 'ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`,
+        children: [{
+                path: 'add-qualification-type',
+                name: 'AddQualificationType',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: academic_qualification_type,
+                    vuex_action: 'postQualificationType',
+                    object_title: 'Qualification Type',
+                    size: 'w-1/2',
+                    // optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                }
+            },
+            {
+                path: 'update-qualification-type/:qualificationTypeName/:qualificationTypeId',
+                name: 'UpdateQualificationType',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: academic_qualification_type,
+                        vuex_fetch_action: 'fetchQualificationTypeById',
+                        vuex_save_action: 'updateQualificationTypeById',
+                        object_title: x.params.qualificationTypeName,
+                        object_id: x.params.qualificationTypeId,
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-qualification-type/:qualificationTypeName/:qualificationTypeId',
+                name: 'DeleteQualificationType',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteQualificationTypeById',
+                        vuex_payload: x.params.qualificationTypeId,
+                        object_title: x.params.qualificationTypeName
+                    }
+                }
+            },
+        ],
+        roles: ['admin', 'eac_admin']
+    },
+    // end of qualification types
 
     // user groups
     // {

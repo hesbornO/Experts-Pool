@@ -301,8 +301,7 @@ const actions = {
                 reject(err.response.data)
             })
         });
-    },
-    
+    },    
     disapproveRDEById({ commit }, payload) {
         console.log('payload 2:', payload)
         return new Promise((resolve, reject) => {
@@ -321,8 +320,7 @@ const actions = {
                 reject(err.response.data)
             })
         });
-    },
-    
+    },   
     
     // recommendations
     recommendToRDE({ commit }, payload) {
@@ -341,6 +339,77 @@ const actions = {
                 reject(err.response.data)
             })
         });
+    },
+      // academic qualifications
+    postRDEQualification({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile-academic-qualification/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                console.log('patchUrl', relative_url)
+            }
+            api.post(relative_url, payload).then(resp => {
+                commit("setQualification", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    fetchRDEQualificationById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile-academic-qualification/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setQualification", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    updateRDEQualificationById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile-academic-qualification/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile-academic-qualification/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setQualification", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    deleteRDEQualificationById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile-academic-qualification/'
+
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile-academic-qualification/" + payload
+            }
+            api.delete(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+                window.location.replace("/rde-self-profile")
+
+            }).catch(err => {
+                reject(err)
+            })
+        })
     },
 
 

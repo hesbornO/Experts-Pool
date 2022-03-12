@@ -283,116 +283,138 @@
 
         </tab>
 
-        <tab title="CV" class="grid grid-cols-3 space-x-4">
-          <span v-if="this.loading" class=" mt-5 flex justify-center">
-            <loading></loading>
-          </span>
-          <span v-if="this.rdeSelfProfile.cv_upload_status && !this.loading" class="">          
-            <span class="flex justify-between">
-              <span>
-                <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                  >
-                  <span v-if="!viewPdf">View uploaded CV</span>
-                </button>
-              </span>
-              <span>
-                <span>
-                  <button
-                      class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
-                    Update CV
-                  </button>
+        <tab title="Qualifications" class="md:grid md:grid-cols-2 space-x-4">
+          <div class="col-span-1 rounded-md border-2 border-green-700">
+            <span class="flex justify-between p-4">  
+              <span></span>              
+              <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
+              <span></span>              
+            </span> 
+            <div class="w-full px-4">
+              <!-- add qualification button -->
+              <button class="flex justify-between w-full px-4 py-2 ">
+                <span></span>
+                <span class="">
+                  <span class="flex ">                 
+                    <router-link
+                      :to="{name:'addRDEQualification', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                      class="btn btn-blue h-1/6 text-md"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                      <span class="px-1">Add Qualification</span>
+                    </router-link>
+                  </span>
+                </span>                  
+                <span></span>
+              </button>
+            </div>
+            
+          </div>
+
+          <div class="col-span-1 rounded-md border-2 border-green-700">
+            <span v-if="this.loading" class=" mt-5 flex justify-center">
+              <loading></loading>
+            </span>
+            <div class="">          
+              <!-- CV exists -->
+              <span v-if="this.rdeSelfProfile.cv_upload_status && !this.loading" class="">  
+                <span class="flex justify-between p-4">  
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">Curriculum Vitae (CV)</span>      
+                  <span></span>              
+                </span>  
+                <span class="flex justify-between p-4">
+                  <span>
+                    <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
+                      class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+                      >
+                      <span>View uploaded CV</span>
+                    </button>
+                  </span>
+                  <span>
+                    <span>
+                      <button
+                          class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
+                        Update CV
+                      </button>
+                    </span>
+                  </span>
+                </span>
+                <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
+                  <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach CV <span class="text-xs italic">(pdf and word docs)</span></span>
+                    <div
+                        class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+                    >
+                      <input  type="file"
+                              id="newCV"
+                              :name="form.cv"
+                              @change="displaySubmit('newCV')"
+                              class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                              placeholder="john.doe@gmail.com"
+                              validation="required"  
+                              accept=".pdf" 
+                      />        
+                        <span v-if="getErrorMessage['cv']">
+                        <span v-if="getErrorMessage['cv'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span>   
+                    </div>
+                  </label>  
+
+                  <span class="flex justify-between p-2">
+                    <span></span>
+                    <span></span>
+                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV('newCV')" v-if="fileUploaded"> Submit CV</button>
+                  </span>
                 </span>
               </span>
-            </span>
-            <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
-              <label class="block mt-4 text-sm">
-                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
-                <!-- focus-within sets the color for the icon when input is focused -->
-                <div
-                    class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-                >
-                  <input  type="file"
-                          id="cvFile"
-                          :name="form.cv"
-                          class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                          placeholder="john.doe@gmail.com"
-                          validation="required"  
-                          accept=".pdf" 
-                  />        
-                    <span v-if="getErrorMessage['cv']">
-                    <span v-if="getErrorMessage['cv'].length>0">
-                      <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
-                        <span class="text-red-500 animate-pulse">{{error}}</span>
-                      </span>
-                    </span>
-                  </span>   
-                </div>
-              </label>  
 
-              <span class="flex justify-between p-2">
-                <span></span>
-                <button @click="togglePdfDisplay('preview new upload','viewPdfToUpload')" 
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                  v-if="fileUploaded>0">
-                  <span class="">Preview upload</span>
-                </button>
-                <button
-                    class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV"> Submit CV
-                 
-                </button>
-              </span>
-            </span>
-          </span>
+              <!-- No CV -->
+              <span v-if="!this.rdeSelfProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
 
-          <span v-if="!this.rdeSelfProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
-
-            No CV Uploaded. Please upload CV!
-            <label class="block mt-4 text-sm">
-                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
-                <!-- focus-within sets the color for the icon when input is focused -->
-                <div
-                    class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-                >
-                  <input  type="file"
-                          id="cvFile"
-                          :name="form.cv"
-                          class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                          placeholder="john.doe@gmail.com"
-                          validation="required"  
-                          accept=".pdf" 
-                  />        
-                    <span v-if="getErrorMessage['cv']">
-                    <span v-if="getErrorMessage['cv'].length>0">
-                      <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
-                        <span class="text-red-500 animate-pulse">{{error}}</span>
-                      </span>
-                    </span>
-                  </span>   
-                </div>
-              </label>
-            <input  type="text"
-                        :name="form.profile_id"
-                        class=" hidden"
+                No CV Uploaded. Please upload CV!
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach CV <span class="text-xs italic">(pdf and word docs)</span></span>
+                    <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
+                      <input  
+                        type="file"
+                        id="noCVFile"
+                        :name="form.cv"
+                        @change="displaySubmit('noCVFile')"
+                        class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                        placeholder="john.doe@gmail.com"
                         validation="required"  
-                        :value="$route.params.rdeId" 
-                />  
+                        accept=".pdf" 
+                      />        
+                        <span v-if="getErrorMessage['cv']">
+                        <span v-if="getErrorMessage['cv'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span>   
+                    </div>
+                  </label>
+                <input  type="text"
+                            :name="form.profile_id"
+                            class=" hidden"
+                            validation="required"  
+                            :value="$route.params.rdeId" 
+                    />  
 
-            <span class="flex justify-between p-2">
-                <span></span>
-                <button @click="togglePdfDisplay('preview new upload','viewPdfToUpload')" 
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                  v-if="fileUploaded>0">
-                  <span class="">Preview upload</span>
-                </button>
-                <button
-                    class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV"> Submit CV
-                 
-                </button>
+                <span class="flex justify-between p-2">
+                    <span></span>
+                    <span></span>
+                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV('noCVFile')" v-if="fileUploaded"> Submit CV</button>
+                  </span>
+                
               </span>
-            
-          </span>
-
+            </div>
+          </div>         
         
         </tab>
 
@@ -506,6 +528,7 @@ export default {
       rdeDeployments:{},
       signUpData:{},
       form: {   
+        cv:''
       },
       mode: 'light',
       mailto: "mailto:",
@@ -522,12 +545,16 @@ export default {
   },
   methods:{
     ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment']),
-    saveCV(){
+    displaySubmit(field_id){
+      if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
+    },
+    saveCV(field_id){
       let formData = new FormData()
       formData.append('profile_id',this.rdeSelfProfile.id)
-      formData.append('cv', document.getElementById('cvFile').files[0])
+      formData.append('cv', document.getElementById(field_id).files[0])
       this.$store.dispatch('uploadCVById', formData).then(()=>{
         this.$toast.success("uploaded")
+        location.reload()
       }).catch(err=>{
         console.log(err)
       })
