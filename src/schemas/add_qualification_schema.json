@@ -17,6 +17,7 @@
                     "type": "select",
                     "options": [0],
                     "label": "Qualification Type",
+                    "placeholder":"--Select type--",
                     "name": "qualification_type_id",
                     "validation": "required"
                 }

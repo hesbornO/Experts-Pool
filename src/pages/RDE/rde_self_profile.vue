@@ -283,14 +283,56 @@
 
         </tab>
 
-        <tab title="Qualifications" class="md:grid md:grid-cols-2 space-x-4">
-          <div class="col-span-1 rounded-md border-2 border-green-700">
+        <tab title="Qualifications" class="md:grid md:grid-cols-4 space-x-4">
+          <div class="col-span-3 rounded-md border-2 border-green-700">
             <span class="flex justify-between p-4">  
               <span></span>              
               <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
               <span></span>              
             </span> 
             <div class="w-full px-4">
+              <div v-if="rdeQualifications.length>0">               
+                <table class="w-full p-4 border-black border-b border-t">
+                  <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                    <td class="p-3 border-l border-black border-b">Name</td>
+                    <td class="p-3 border-l border-black border-b">Type</td>
+                    <td class="p-3 border-l border-black border-b">Institution</td>
+                    <td class="p-3 border-l border-black border-b">Dates</td>
+                    <td class="p-3 border-l border-r border-black border-b">Actions</td>                    
+                  </thead>
+
+                  <tbody>
+                    <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
+                      <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
+                      <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
+                      <td class="p-3 border-l border-black">{{qualification.institution}}</td>
+                      <td class="p-3 border-l border-r border-black text-xs">From {{qualification.start_date}} to {{qualification.end_date}}</td>
+                      <td class="p-3  border-black flex">
+                        <span>
+                          <router-link
+                            :to="{name:'updateRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
+                            class="btn btn-green bg-blue-400 hover:bg-blue-500 h-full text-md text-white mr-1"
+                          >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="px-1">Update</span>
+                          </router-link>
+                        </span>
+                        <span>
+                          <router-link
+                            :to="{name:'deleteRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
+                            class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                          >
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <span class="px-1">Delete</span>
+                          </router-link>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div v-else class="text-yellow-500 font-mono">No qualifications uploaded.</div>     
+
               <!-- add qualification button -->
               <button class="flex justify-between w-full px-4 py-2 ">
                 <span></span>
@@ -298,7 +340,7 @@
                   <span class="flex ">                 
                     <router-link
                       :to="{name:'addRDEQualification', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
-                      class="btn btn-blue h-1/6 text-md"
+                      class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                       <span class="px-1">Add Qualification</span>
@@ -539,12 +581,14 @@ export default {
       fileUploaded:0,
       loading:false,
       username: '',
-      displayUploadButton:false
+      displayUploadButton:false,
+      rdeQualifications:[]
+      
 
     }
   },
   methods:{
-    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment']),
+    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
     displaySubmit(field_id){
       if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
     },
@@ -589,22 +633,30 @@ export default {
     },
     fetchRDEData(){
       this.loading = true
-      // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch('fetchRDES','').then(resp => {
+      this.$store.dispatch('fetchRDES','').then(resp => {
+        if(resp.results.length > 0) {
+          this.rdeSelfProfile = resp.results[0]
+          this.fetchRDEdeployments(this.rdeSelfProfile.id)
+        }
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg', err.data)
+        }).then(()=>{
+          this.loading = false
+      })
 
-      if(resp.results.length > 0) {
-        this.rdeSelfProfile = resp.results[0]
-        this.fetchRDEdeployments(this.rdeSelfProfile.id)
-      }
+      //fetch academic RDE qualifications      
+      this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
+        if(resp.results.length > 0) {
+          this.rdeQualifications = resp.results
+        }
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg', err.data)
+        }).then(()=>{
+          this.loading = false
+      })
 
-       }).catch(err=>{
-         this.$store.dispatch('setErrorMsg', err.data)
-       }).then(()=>{
-         this.loading = false
-       })
     },
     fetchRDEdeployments(rde_id){
-      console.log('fetching rde deployments')
       this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
         console.log()
          this.rdeDeployments = resp

@@ -14,6 +14,7 @@ import SuggestedRDES from "./pages/outbreak/SuggestedRDES.vue";
 import AffectedRegions from "./pages/outbreak/AffectedRegions.vue";
 import Competence from "./pages/competence/Competence.vue";
 import QualificationTypes from "./pages/AcademicQualificationTypes/Types.vue";
+import OutbreakTypes from "./pages/outbreak/Types.vue";
 import Occupation from "./pages/occupations/Occupations.vue";
 import OneHealth from "./pages/occupations/OneHealth.vue";
 // import UserGroups from "./pages/users/UserGroups.vue";
@@ -49,6 +50,7 @@ import one_health_schema from '@/schemas/one_health.json'
 // import user_schema from '@/schemas/user_schema.json'
 import rde_schema from '@/schemas/rde_schema.json'
 import recommend_schema from '@/schemas/recommend_schema.json'
+import outbreak_type from '@/schemas/outbreak_type.json'
 
 
 Vue.use(VueRouter);
@@ -447,13 +449,13 @@ const routes = [{
                         moduleAction:"addRDEQualification",
                         profile: x.params.rdeId,
                         object_title: x.params.rdeName + ' qualification',
-                        // optionsList: ['fetchAcademicQualificationTypeOptions'],
+                        optionsList: ['fetchAllQualificationTypes'],
                         size: 'max-w-5xl'
                     }
                 }
             },
             {
-                path: 'update-qualification/:qualificationId/:rdeName',
+                path: 'update-qualification/:qualificationId/:qualificationName',
                 name: 'updateRDEQualification',
                 component: modal_update_template,
                 showInLeftBar: false,
@@ -462,10 +464,25 @@ const routes = [{
                         jsonSchema: add_qualification_schema,
                         vuex_fetch_action: 'fetchRDEQualificationById',
                         vuex_save_action: 'updateRDEQualificationById',
-                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_title: `' ${x.params.qualificationName}'s ' details`,
                         object_id: x.params.qualificationId,
-                        optionsList: [],
+                        optionsList: ['fetchAllQualificationTypes'],
+                        moduleAction:"updateRDEQualification",
                         size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-qualification/:qualificationId/:qualificationName',
+                name: 'deleteRDEQualification',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        object_title: `' ${x.params.qualificationName} ' qualification`,
+                        vuex_action: 'deleteRDEQualificationById',
+                        vuex_payload: x.params.qualificationId,
                     }
 
                 }
@@ -523,7 +540,7 @@ const routes = [{
     },
     // outbreaks
     {
-        path: "/outbreaks/",
+        path: "/events/",
         name: "Public Health Events",
         component: Outbreak,
         props: {
@@ -532,7 +549,7 @@ const routes = [{
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
         children: [{
-                path: 'create-outbreak',
+                path: 'add-event',
                 name: 'CreateOutbreak',
                 component: modal_create_template,
                 showInLeftBar: false,
@@ -541,11 +558,12 @@ const routes = [{
                     vuex_action: 'postOutbreak',
                     object_title: 'Outbreak',
                     size: 'w-1/2',
-                    optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                    optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes'],
+                    moduleAction:'CreateOutbreak'
                 }
             },
             {
-                path: 'update-outbreak/:outbreakName/:outbreakId',
+                path: 'update-event/:outbreakName/:outbreakId',
                 name: 'UpdateOutbreak',
                 component: modal_update_template,
                 showInLeftBar: false,
@@ -557,13 +575,15 @@ const routes = [{
                         object_title: x.params.outbreakName,
                         object_id: x.params.outbreakId,
                         size: 'w-1/2',
-                        optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                        optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes'],
+                        moduleAction:'UpdateOutbreak'
+
                     }
 
                 }
             },
             {
-                path: 'outbreak-end-date/:outbreakName/:outbreakId',
+                path: 'event-end-date/:outbreakName/:outbreakId',
                 name: 'OutbreakEndDate',
                 component: modal_update_template,
                 showInLeftBar: false,
@@ -581,7 +601,7 @@ const routes = [{
                 }
             },
             {
-                path: 'delete-outbreak/:outbreakName/:outbreakId',
+                path: 'delete-event/:outbreakName/:outbreakId',
                 name: 'DeleteOutbreak',
                 component: modal_delete_template,
                 showInLeftBar: false,
@@ -1036,6 +1056,64 @@ const routes = [{
         roles: ['admin', 'eac_admin']
     },
     // end of qualification types
+    // outbreak types
+    {
+        path: "/outbreak-types/",
+        name: "OutbreakTypes",
+        component: OutbreakTypes,
+        props: {
+            vuex_data_action: 'fetchAllOutbreakTypes',
+            table_headings: ['NAME',  'ACTIONS']
+        },
+        icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>`,
+        children: [{
+                path: 'add-outbreak-type',
+                name: 'AddOutbreakType',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: {
+                    jsonSchema: outbreak_type,
+                    vuex_action: 'postOutbreakType',
+                    object_title: 'Outbreak Type',
+                    size: 'w-1/2',
+                    // optionsList: ['fetchAllCompetencies', 'fetchRegions']
+                }
+            },
+            {
+                path: 'update-outbreak-type/:outbreakTypeName/:outbreakTypeId',
+                name: 'UpdateOutbreakType',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: outbreak_type,
+                        vuex_fetch_action: 'fetchOutbreakTypeById',
+                        vuex_save_action: 'updateOutbreakTypeById',
+                        object_title: x.params.outbreakTypeName,
+                        object_id: x.params.outbreakTypeId,
+                        size: 'w-1/2',
+                        moduleName:'UpdateOutbreakType'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-outbreak-type/:outbreakTypeName/:outbreakTypeId',
+                name: 'DeleteOutbreakType',
+                component: modal_delete_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'deleteOutbreakTypeById',
+                        vuex_payload: x.params.outbreakTypeId,
+                        object_title: x.params.outbreakTypeName
+                    }
+                }
+            },
+        ],
+        roles: ['admin', 'eac_admin']
+    },
+    // end of outbreak types
 
     // user groups
     // {

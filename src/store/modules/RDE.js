@@ -6,7 +6,8 @@ const state = {
     RDE: {},
     signUpData: {},
     deployments: [],
-    deployment: {}
+    deployment: {},
+    qualification:{}
 }
 
 const getters = {
@@ -364,7 +365,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload
+                relative_url = "/profile-academic-qualification/" + payload
             }
             api.get(relative_url).then(resp => {
                 commit("setQualification", resp.data)
@@ -411,6 +412,22 @@ const actions = {
             })
         })
     },
+    fetchQualificationsById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile-academic-qualification/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile-academic-qualification/?profile=" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
 
 
 }
@@ -422,6 +439,7 @@ const mutations = {
     setSignUpData: (state, signUpData) => (state.signUpData = signUpData),
     setDeployments: (state, deployments) => (state.deployments = deployments),
     setDeployment: (state, deployment) => (state.deployment = deployment),
+    setQualification: (state, qualification) => (state.qualification = qualification),
 }
 
 
