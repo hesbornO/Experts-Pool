@@ -13,6 +13,7 @@ import outbreaks from './modules/outbreaks'
 import competencies from './modules/competencies'
 import qualificationTypes from './modules/academic_qualification_types'
 import users from './modules/users'
+import language from './modules/language'
 
 
 export default new Vuex.Store({
@@ -38,6 +39,7 @@ export default new Vuex.Store({
         outbreaks,
         competencies,
         qualificationTypes,
-        users
+        users,
+        language
     }
 })

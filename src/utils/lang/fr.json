@@ -1,0 +1,11 @@
+{
+  "actions":
+    {
+      "create": "créer",
+      "delete": "effacer",
+      "edit": "Éditer"
+    },
+  "tables": {
+    "home_table_headings": ["NAMEZ", "SPECIALIZATION", "REGION", "CURRENT DEPLOYMENT", "COMPETENCE", "STATUS", "ACTIONZ"]
+  }
+}

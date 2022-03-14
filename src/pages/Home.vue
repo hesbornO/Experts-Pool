@@ -161,9 +161,8 @@
         </div>
         <!-- End of cards -->
 
-
         <!-- RDE List -->
-        <data_table v-bind="$attrs">
+        <data_table v-bind="$attrs" :table_headings="activeLanguage.store.tables.home_table_headings">
           <template v-slot="{item}">
             <td class="px-4 py-3 text-sm capitalize">
               <span v-if="item.application_status==='approved_by_partner_state'" class="flex">
@@ -246,7 +245,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
@@ -419,7 +418,7 @@ export default {
 
   },
   computed: {
-    // ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
+    ...mapGetters(['activeLanguage',]),
     ...mapActions(['fetchRDES','fetchStats','fetchAllOutbreaks','fetchCountries','fetchAllOccupations'])
   }
 };
