@@ -87,6 +87,10 @@
           </button>
         </li>
         <!-- Notifications menu -->
+        <select name="language">
+          <option>Eng</option>
+          <option>Fr</option>
+        </select>
       
         <!-- Profile menu -->
         <li class="relative">

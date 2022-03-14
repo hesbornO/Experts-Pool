@@ -1,0 +1,9 @@
+{
+  "actions": [
+    {
+      "create": "créer",
+      "delete": "effacer",
+      "edit": "Éditer"
+    }
+  ]
+}

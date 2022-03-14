@@ -12,6 +12,7 @@ import occupations from './modules/occupations'
 import outbreaks from './modules/outbreaks'
 import competencies from './modules/competencies'
 import users from './modules/users'
+import language from './modules/language'
 
 
 export default new Vuex.Store({
@@ -36,6 +37,7 @@ export default new Vuex.Store({
         occupations,
         outbreaks,
         competencies,
-        users
+        users,
+        language
     }
 })
