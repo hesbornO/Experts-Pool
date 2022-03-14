@@ -1,7 +1,7 @@
 <template>
   <dashboard_layout :page_title="`Suggested Rapidly Deployable Experts (RDES) for ${$route.params.outbreakName}`">
     <!-- Suggested rdes -->
-    
+    {{activeLanguage.store.actions.create}}
     <data_table v-bind="$attrs" :show-back=true>
       <template v-slot="{item}">
         <td class="px-4 py-3 text-sm">
@@ -44,14 +44,12 @@ import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
 import SplitButton from "../../components/buttons/SplitButton.vue";
 
-
-
 export default {
   name: "Regions",
   components: {
     data_table,
     dashboard_layout,
-    SplitButton
+    SplitButton,
   },
   data() {
     return {
@@ -59,7 +57,6 @@ export default {
         name: '',
         country_id: ''
       },
-
     }
   },
   methods:{
@@ -79,13 +76,11 @@ export default {
         }
       ];   
     },
-    
-   
   },
   mounted(){
   },
   computed: {
-    ...mapGetters(['getErrorMessage'])
+    ...mapGetters(['getErrorMessage', 'activeLanguage'])
 
   }
 };

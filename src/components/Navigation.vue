@@ -86,10 +86,10 @@
             </template>
           </button>
         </li>
+        {{selected_language}}
         <!-- Notifications menu -->
-        <select name="language">
-          <option>Eng</option>
-          <option>Fr</option>
+        <select v-model="selected_language"  name="language" class="rounded-sm border border-gray-300 text-gray-600 px-2 focus:border-blue-100 form-select w-full">
+          <option v-for="(language, index) in allLanguages" :key="index" :value="language.name">{{language.name}}</option>
         </select>
       
         <!-- Profile menu -->
@@ -196,6 +196,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'Navigation',
   data() {
@@ -208,7 +210,17 @@ export default {
       password: '',
       user_level:'',
       region: '',
-      fullname: ''
+      fullname: '',
+      selected_language:''
+    }
+  },
+  computed:{
+    ...mapGetters(['allLanguages', 'activeLanguage']),
+  },
+  watch: {
+    selected_language: function (){
+      this.$store.dispatch('switchLanguage', this.selected_language)
+      // window.location.reload()
     }
   },
   methods: {
@@ -269,6 +281,8 @@ export default {
 },
   mounted() {
     this.getProfileDetails()
+    this.$store.dispatch('switchLanguage', localStorage.getItem('active_language_name'))
+    this.selected_language = this.activeLanguage.name
   }
 }
 </script>

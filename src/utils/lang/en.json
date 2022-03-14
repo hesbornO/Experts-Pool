@@ -1,9 +1,10 @@
 {
-  "actions": [
-    {
-      "create": "Create",
-      "delete": "Delete",
-      "edit": "Edit"
-    }
-  ]
+  "actions": {
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "tables": {
+    "home_table_headings": ["NAME", "SPECIALIZATION", "REGION", "CURRENT DEPLOYMENT", "COMPETENCE", "STATUS", "ACTION"]
+  }
 }
