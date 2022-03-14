@@ -93,6 +93,7 @@ export default {
 			},
     optionsList: { type: Array, default: () => [] },
     country_id:[String, Number],
+    object_id:[String, Number],
     profile:[String, Number],
     moduleName:[String, Number],
     moduleAction:[String]
@@ -111,8 +112,29 @@ export default {
       this.form.country_id = this.country_id
       if (this.vuex_payload){
         payload = this.vuex_payload
+        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById'){
+          if(this.form.profile) delete this.form.profile
+          
+          payload={professional_experience:payload}
+          
+          if(this.moduleAction ==='postRDEExperienceById') payload=[{professional_experience:[payload]}]
+          
+          if(this.moduleAction ==='postRDEReferenceById') payload=[{references:[payload]}]
+
+          payload.id=this.object_id        
+        } 
       }else{
         payload = this.form
+        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById'){
+          if(this.form.profile) delete payload.profile
+          
+          if(this.moduleAction ==='postRDEExperienceById') payload={professional_experience:[payload]}
+          
+          if(this.moduleAction ==='postRDEReferenceById') payload={references:[payload]}
+
+          payload.id=this.object_id
+        } 
+        
       }
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(

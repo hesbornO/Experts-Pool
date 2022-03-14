@@ -1,0 +1,61 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [
+        {
+            "component":"div",
+            "class":"px-2 py-3 grid grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "text",
+                    "label": "Title",
+                    "name": "title",
+                    "validation": "required"
+                },
+                {
+                    "type": "text",
+                    "label": "Institution/Company",
+                    "name": "institution",
+                    "validation": "required"
+                }
+            ]
+            
+        },
+        {
+            "component":"div",
+            "class":"px-2 py-3 grid grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "date",
+                    "label": "Start Date",
+                    "name": "start_date",
+                    "validation": "required"
+                },
+                {
+                    "type": "date",
+                    "label": "End Date",
+                    "name": "end_date",
+                    "validation": "required"
+                }
+            ]
+            
+        },
+        {
+            "component":"div",
+            "class":"px-2 py-3 grid grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "textarea",
+                    "class":"col-span-2",
+                    "label": "Description",
+                    "name": "description",
+                    "rows":5,
+                    "validation": "required"
+                }
+            ]
+            
+        }
+        
+    ]
+        
+}]

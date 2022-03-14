@@ -7,7 +7,9 @@ const state = {
     signUpData: {},
     deployments: [],
     deployment: {},
-    qualification:{}
+    qualification:{},
+    experience:{},
+    reference:{}
 }
 
 const getters = {
@@ -428,6 +430,42 @@ const actions = {
             })
         })
     },
+    postRDEExperienceById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                delete payload.id
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setExperience", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    postRDEReferenceById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setReference", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
 
 
 }
@@ -440,6 +478,8 @@ const mutations = {
     setDeployments: (state, deployments) => (state.deployments = deployments),
     setDeployment: (state, deployment) => (state.deployment = deployment),
     setQualification: (state, qualification) => (state.qualification = qualification),
+    setExperience: (state, experience) => (state.experience = experience),
+    setReference: (state, reference) => (state.reference = reference),
 }
 
 

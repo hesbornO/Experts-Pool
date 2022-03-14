@@ -227,7 +227,9 @@
               </span>
             </span>
           </span>
-          <span></span>
+          <span>
+            
+          </span>
 
           <!-- next of kin details -->
           <!-- full name -->
@@ -285,72 +287,171 @@
 
         <tab title="Qualifications" class="md:grid md:grid-cols-4 space-x-4">
           <div class="col-span-3 rounded-md border-2 border-green-700">
-            <span class="flex justify-between p-4">  
-              <span></span>              
-              <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
-              <span></span>              
-            </span> 
-            <div class="w-full px-4">
-              <div v-if="rdeQualifications.length>0">               
-                <table class="w-full p-4 border-black border-b border-t">
-                  <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
-                    <td class="p-3 border-l border-black border-b">Name</td>
-                    <td class="p-3 border-l border-black border-b">Type</td>
-                    <td class="p-3 border-l border-black border-b">Institution</td>
-                    <td class="p-3 border-l border-black border-b">Dates</td>
-                    <td class="p-3 border-l border-r border-black border-b">Actions</td>                    
-                  </thead>
+            <!-- academic qualifications -->
+            <div>
+              <span class="flex justify-between p-4">  
+                <span></span>              
+                <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
+                <span></span>              
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeQualifications.length>0">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">Name</td>
+                      <td class="p-3 border-l border-black border-b">Type</td>
+                      <td class="p-3 border-l border-black border-b">Institution</td>
+                      <td class="p-3 border-l border-black border-b">Dates</td>
+                      <td class="p-3 border-l border-r border-black border-b">Actions</td>                    
+                    </thead>
 
-                  <tbody>
-                    <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
-                      <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
-                      <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
-                      <td class="p-3 border-l border-black">{{qualification.institution}}</td>
-                      <td class="p-3 border-l border-r border-black text-xs">From {{qualification.start_date}} to {{qualification.end_date}}</td>
-                      <td class="p-3  border-black flex">
-                        <span>
-                          <router-link
-                            :to="{name:'updateRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
-                            class="btn btn-green bg-blue-400 hover:bg-blue-500 h-full text-md text-white mr-1"
-                          >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="px-1">Update</span>
-                          </router-link>
-                        </span>
-                        <span>
-                          <router-link
-                            :to="{name:'deleteRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
-                            class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
-                          >
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            <span class="px-1">Delete</span>
-                          </router-link>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
+                        <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.institution}}</td>
+                        <td class="p-3 border-l border-r border-black text-xs">From {{qualification.start_date}} to {{qualification.end_date}}</td>
+                        <td class="p-3  border-black flex">
+                          <span>
+                            <router-link
+                              :to="{name:'updateRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
+                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                              <span class="px-1">Update</span>
+                            </router-link>
+                          </span>
+                          <span>
+                            <router-link
+                              :to="{name:'deleteRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
+                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                              <span class="px-1">Delete</span>
+                            </router-link>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">No qualifications uploaded.</div>     
+
+                <!-- add qualification button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addRDEQualification', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">Add Qualification</span>
+                      </router-link>
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
               </div>
-              <div v-else class="text-yellow-500 font-mono">No qualifications uploaded.</div>     
-
-              <!-- add qualification button -->
-              <button class="flex justify-between w-full px-4 py-2 ">
-                <span></span>
-                <span class="">
-                  <span class="flex ">                 
-                    <router-link
-                      :to="{name:'addRDEQualification', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
-                      class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                      <span class="px-1">Add Qualification</span>
-                    </router-link>
-                  </span>
-                </span>                  
-                <span></span>
-              </button>
             </div>
-            
+
+            <!-- professional experience -->
+            <div>
+              <span class="flex justify-between p-4">  
+                <span></span>              
+                <span class="text-yellow-700 font-semibold text-base">Professional Experience</span>      
+                <span></span>              
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeSelfProfile.professional_experience">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">Title</td>
+                      <td class="p-3 border-l border-black border-b">Description</td>
+                      <td class="p-3 border-l border-black border-b">Institution/Company</td>
+                      <td class="p-3 border-l border-r border-black border-b">Dates</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(experience,index) in rdeSelfProfile.professional_experience" :key="index">
+                        <td class="p-3 border-l border-black">{{experience.title}}</td>
+                        <td class="p-3 border-l border-black">{{experience.description}}</td>
+                        <td class="p-3 border-l border-black">{{experience.institution}}</td>
+                        <td class="p-3 border-l border-r border-black text-xs">From {{experience.start_date}} to {{experience.end_date}}</td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">No experience uploaded.</div>     
+
+                <!-- add qualification button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addRDEExperience', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">Add Experience</span>
+                      </router-link>
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <!-- references -->
+            <div>
+              <span class="flex justify-between p-4">  
+                <span></span>              
+                <span class="text-yellow-700 font-semibold text-base">References</span>      
+                <span></span>              
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeSelfProfile.references">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">Name</td>
+                      <td class="p-3 border-l border-black border-b">Contact</td>
+                      <td class="p-3 border-l border-black border-b">Institution/Company</td>
+                      <td class="p-3 border-l border-r border-black border-b">Description</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
+                        <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.institution}}</td>                        
+                        <td class="p-3 border-l border-black">{{qualification.institution}}</td>                        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">No references listed.</div>     
+
+                <!-- add reference button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addRDEReference', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">Add Reference</span>
+                      </router-link>
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>    
+
           </div>
 
           <div class="col-span-1 rounded-md border-2 border-green-700">
@@ -468,7 +569,7 @@
             <table class="w-full border border-black p-3" v-if="rdeSelfProfile.recommendations.length>0">
               <thead class="text-lg font-semibold font-mono border border-black p-2 ">
                 <th>Recommendation</th>
-                <th class="border border-black">Recommended By</th>
+                <th class="border border-black">Made By</th>
               </thead>
               <tbody>
                 <tr v-for="(recommendation, index) in this.rdeSelfProfile.recommendations" :key="index" class="text-md border border-black">

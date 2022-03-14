@@ -44,6 +44,8 @@ import outbreak_end_date_schema from '@/schemas/outbreak_end_date_schema.json'
 import competence_schema from '@/schemas/competence_schema.json'
 import academic_qualification_type from '@/schemas/academic_qualification_type.json'
 import add_qualification_schema from '@/schemas/add_qualification_schema.json'
+import add_experience_schema from '@/schemas/add_experience_schema.json'
+import add_reference_schema from '@/schemas/add_reference_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import one_health_schema from '@/schemas/one_health.json'
 // import user_group_schema from '@/schemas/user_group_schema.json'
@@ -379,6 +381,24 @@ const routes = [{
                 }
             },
             {
+                path: 'rde-self-update:rdeId',
+                name: 'updateRDEPersonalDetails',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: rde_schema,
+                        vuex_fetch_action: 'fetchRDEById',
+                        vuex_save_action: 'updateRDEById',
+                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
                 path: 'deactivate-profile',
                 name: 'DeactivateProfile',
                 component: modal_update_template,
@@ -485,6 +505,42 @@ const routes = [{
                         vuex_payload: x.params.qualificationId,
                     }
 
+                }
+            },
+            // experience
+            {
+                path: 'add-experience/:rdeId/:rdeName',
+                name: 'addRDEExperience',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_experience_schema,
+                        vuex_action: 'postRDEExperienceById',
+                        moduleAction:"postRDEExperienceById",
+                        object_id: x.params.rdeId,
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName + ' experience',
+                        size: 'max-w-5xl'
+                    }
+                }
+            },
+            // reference
+            {
+                path: 'add-reference/:rdeId/:rdeName',
+                name: 'addRDEReference',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_reference_schema,
+                        vuex_action: 'postRDEReferenceById',
+                        moduleAction:"postRDEReferenceById",
+                        object_id: x.params.rdeId,
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName + ' reference',
+                        size: 'max-w-5xl'
+                    }
                 }
             },
 
