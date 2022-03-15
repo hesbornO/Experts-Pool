@@ -86,7 +86,6 @@
             </template>
           </button>
         </li>
-        {{selected_language}}
         <!-- Notifications menu -->
         <select v-model="selected_language"  name="language" class="rounded-sm border border-gray-300 text-gray-600 px-2 focus:border-blue-100 form-select w-full">
           <option v-for="(language, index) in allLanguages" :key="index" :value="language.name">{{language.name}}</option>

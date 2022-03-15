@@ -1,19 +1,19 @@
 <template>
-  <dashboard_layout :page_title= "`Register RDE`" >
+  <dashboard_layout :page_title="activeLanguage.store.titles.complete_registration" >
     <button @click="goBack" class="btn btn-blue mb-2 flex flex-row justify-between w-24" >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
       </svg>
-      Back
+      {{activeLanguage.store.actions.back}}
     </button>
     <div>
       <FormulateForm v-model="form" @submit="registerRDE">
         <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">
-          <h3 class="text-blue-400 font-semibold">Personal Details</h3>
+          <h3 class="text-blue-400 font-semibold">{{activeLanguage.store.rde_self_registration_form.personal_details}}</h3>
           <!-- name section -->
           <div class="md:grid md:grid-cols-3 gap-6">
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700 dark:text-gray-400">First Name</span>
+              <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.first_name}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
               
                 <FormulateInput
@@ -33,7 +33,7 @@
               
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Middle Name</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.middle_name}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
              
               <FormulateInput
@@ -45,7 +45,7 @@
                 
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Last Name</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.last_name}}</span>
                 <FormulateInput
                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                     type="text"
@@ -65,11 +65,11 @@
           <!-- location and gender section -->
           <div class="md:grid md:grid-cols-3 gap-4">
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Gender</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.gender}}</span>
          
                 <select name="gender" class="p-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md" validation="required"
                 v-model="form.gender">
-                  <option value="" selected disabled>-- click to select --</option>
+                  <option value="" selected disabled>-- {{activeLanguage.store.actions.click_to_select}} --</option>
                   <option value="M">Male</option>
                   <option value="F">Female</option> 
                   <option value="O">Prefer Not To Say</option>
@@ -88,7 +88,7 @@
                   </div>
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Region</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.region}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
               <div
                   class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
@@ -118,11 +118,11 @@
           <div class="md:grid md:grid-cols-3 gap-4">
             <div class="md:grid md:grid-cols-2 gap-3">
               <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Type</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.id_type}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
                 <select name="id_type" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
                 v-model="form.id_type" id="id_type">
-                  <option value="" selected disabled>-- click to select --</option>
+                  <option value="" selected disabled>-- {{activeLanguage.store.actions.click_to_select}} --</option>
                   <option value="national_id">National ID</option>                
                   <option value="birth_cert">Birth Certificate</option>
                   <option value="alien_id">Alien ID</option>           
@@ -143,7 +143,7 @@
                 </div>
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">ID Number</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.id_number}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
                 <FormulateInput type="text"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -166,10 +166,10 @@
             </div>
             <label class="block mt-4 text-sm">
               <span class="flex justify-between">              
-                <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>  
+                <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.phone}}</span>  
                 <select v-model="countryCode" @change="mapCountryCode('phone')" class="w-2/3 rounded-md ">
                   <optgroup label="Countries">
-                    <option value="" disabled selected class=" place-self-center">--Select country--</option>
+                    <option value="" disabled selected class=" place-self-center">--{{activeLanguage.store.actions.select_country}}--</option>
                     <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                     <option data-countryCode="AD" value="376">Andorra (+376)</option>
                     <option data-countryCode="AO" value="244">Angola (+244)</option>
@@ -417,7 +417,7 @@
                 </div>
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Email</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.email}}</span>
               
                 <FormulateInput type="email"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -437,7 +437,7 @@
           
           <div class="md:grid md:grid-cols-3 gap-4">
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700 font font-semibold dark:text-gray-400">Occupation</span>
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.email}}</span>
               
             <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
                 v-model="form.occupation_id" id="occupation">         
@@ -455,7 +455,7 @@
             </label> 
 
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700 font font-semibold dark:text-gray-400">Date of Birth</span>
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.email}}</span>
                 <FormulateInput 
                   type="date"
                   id="datefield"
@@ -477,10 +477,10 @@
           </div>
 
           <!-- Next of kin section -->
-          <h3 class="text-blue-400 font-semibold pt-6">Next of Kin Details</h3>
+          <h3 class="text-blue-400 font-semibold pt-6">{{activeLanguage.store.rde_self_registration_form.next_of_kin_details}}</h3>
           <div class="md:grid md:grid-cols-3 gap-4">
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Full Name</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.full_name}}</span>
                 
                 <FormulateInput
                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -498,10 +498,10 @@
             </label>
             <label class="block mt-4 text-sm">
               <span class="flex justify-between">              
-                <span class="text-gray-700  font font-semibold dark:text-gray-400">Phone</span>
+                <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.phone}}</span>
                 <select v-model="nextOfKinCountryCode" @change="mapNOKCountryCode('next_of_kin_phone')" class="w-2/3 rounded-md ">
                   <optgroup label="Countries">
-                    <option value="" disabled selected>--Select country--</option>
+                    <option value="" disabled selected>--{{activeLanguage.store.actions.select_country}}--</option>
                     <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                     <option data-countryCode="AD" value="376">Andorra (+376)</option>
                     <option data-countryCode="AO" value="244">Angola (+244)</option>
@@ -723,7 +723,6 @@
                 <FormulateInput type="tel" id='next_of_kin_phone'
                       v-model="form.next_of_kin_phone"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                      placeholder="Select country"
                       name="next_of_kin_phone"
                        :validation-rules="{
                         validateLength: ({ value }) => value.length > 5 && value.length<16,
@@ -752,7 +751,7 @@
                 </div>
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">Email</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.email}}</span>
                 <FormulateInput type="email"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="john.doe@gmail.com"
@@ -767,11 +766,11 @@
                 </div>
             </label>
           </div>
-          <h6 class="text-blue-400 font-semibold pt-6">Other info</h6>  
+          <h6 class="text-blue-400 font-semibold pt-6">{{activeLanguage.store.rde_self_registration_form.other_info}}</h6>  
 
             <div class="md:grid md:grid-cols-3 gap-3">                        
                   <label class="block mt-4 text-sm col-span-2">
-                    <span class="text-gray-700  font font-semibold dark:text-gray-400">Competencies</span>
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.competencies}}</span>
                       <select name="competencies" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
                       v-model="form.competencies" id="competencies"  multiple rows="10">
                         <option value="" disabled selected>--Select competency--</option>     
@@ -797,7 +796,7 @@
               </button>
               <button
                   :class="['uppercase px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue', isLoading?'disabled:opacity-75 cursor-not-allowed':'']" v-bind:disabled="isLoading" type="submit">
-                {{isLoading?'Submitting...':'submit'}}
+                {{isLoading?activeLanguage.store.actions.submit+'...':activeLanguage.store.actions.submit}}
               </button>
             </div>
         </div>  
@@ -923,7 +922,8 @@ export default {
   },
   methods: {
     ...mapActions(['fetchCountries','fetchRegions','fetchAllOccupations','fetchAllCompetencies','postRDE']),
-    ...mapGetters(['allCountries']),
+    ...mapGetters(['allCountries',]),
+    
     mapCountryCode(field){
       if(field==='phone') this.form.phone='+'+this.countryCode
             
@@ -1122,7 +1122,7 @@ export default {
   },
   
   computed: {
-    ...mapGetters(['allRegions','getErrorMessage'])
+    ...mapGetters(['allRegions','getErrorMessage','activeLanguage'])
   }
 };
 </script>

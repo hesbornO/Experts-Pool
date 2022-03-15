@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Home">
+  <dashboard_layout :page_title="activeLanguage.store.titles.home_page_title">
 
     <div class="w-full overflow-hidden shadow-xs">
       <div class="w-full overflow-x-auto ">
@@ -7,7 +7,7 @@
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
           <div class="flex flex-row space-x-8 w-10/12">
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Occupation</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.occupation}}</p>
               <select
                   v-model="selected_occupation"
                   :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2  form-select w-full']"
@@ -19,7 +19,7 @@
               </select>
             </div>
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Country</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.partner_state}}</p>
               <select v-model="selected_country"
                       :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
                       name="country" placeholder="--select country--" @change="addQueryParams('country', selected_country)"> 
@@ -30,7 +30,7 @@
               </select>
             </div>
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Status</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.status}}</p>
               <select v-model="selected_status"
                       :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
                       name="status" placeholder="select status" @change="addQueryParams('status', selected_status)">
@@ -48,7 +48,7 @@
                      xmlns="http://www.w3.org/2000/svg">
                   <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                 </svg>
-                <span class="px-1">Filter</span>
+                <span class="px-1">{{activeLanguage.store.actions.filter}}</span>
               </button>
             </div>
           </div>
@@ -87,7 +87,7 @@
               <p
                 class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
               >
-                Total RDES
+                {{activeLanguage.store.titles.total_rdes}}
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" v-if="stats.active_deployments>=0 && stats.undeployed_rdes>=0">
                 {{(stats.active_deployments+stats.undeployed_rdes)}}                    
@@ -105,7 +105,7 @@
             </div>
             <div v-if="stats">
               <p class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold" >
-                Active Deployments
+                {{activeLanguage.store.titles.active_deployments}}
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" >
                 {{stats.active_deployments?stats.active_deployments:''}}
@@ -127,7 +127,7 @@
               <p
                 class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
               >
-                Outbreaks
+                {{activeLanguage.store.titles.public_health_events}}
               </p>
               <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200"
@@ -149,7 +149,7 @@
               <p
                 class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
               >
-                Partner States
+                {{activeLanguage.store.titles.partner_states}}
               </p>
               <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200"

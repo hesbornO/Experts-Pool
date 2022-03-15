@@ -1,5 +1,6 @@
 import en from '../../utils/lang/en.json'
 import fr from '../../utils/lang/fr.json'
+import sw from '../../utils/lang/sw.json'
 
 const state = {
     languages: [
@@ -10,6 +11,10 @@ const state = {
         {
             'name': 'français',
             'store': fr
+        },
+        {
+            'name': 'swahili',
+            'store': sw
         }
     ],
     active_language: {

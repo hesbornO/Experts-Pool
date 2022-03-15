@@ -1,0 +1,46 @@
+{
+  "actions": {
+    "create": "Unda",
+    "delete": "Futa",
+    "edit": "Hariri",
+    "filter": "Chuja",
+    "back":"Nyuma",
+    "submit":"Wasilisha",
+    "select_country":"chagua nchi",
+    "click_to_select":"bofya ili kuchagua"
+
+
+  },
+  "tables": {
+    "home_table_headings": ["JINA", "UTAALAMU", "MKOA", "UTUMIZAJI WA SASA", "UWEZO", "HALI", "KITENDO"]
+  },
+  "titles":{
+    "home_page_title":"Nyumbani",
+    "total_rdes":"Jumla ya RDES",
+    "active_deployments":"Usambazaji Amilifu",
+    "public_health_events":"Matukio ya Afya ya Umma",
+    "partner_states":"Nchi Wanachama",
+    "occupation":"Kazi",
+    "partner_state":"Nchi Mshirika",
+    "status":"Hali",
+    "complete_registration":"Kamilisha Usajili"
+  },
+  "rde_self_registration_form":{
+    "personal_details":"Maelezo ya Kibinafsi",
+    "next_of_kin_details":"Maelezo ya Jamaa",
+    "other_info":"Habari Nyingine",
+    "first_name":"Jina la kwanza",
+    "middle_name":"Jina la kati",
+    "last_name":"Jina la familia",
+    "competencies":"Umahiri",
+    "email":"Barua pepe",
+    "phone":"Simu",
+    "full_name":"Jina kamili",
+    "dob":"Tarehe ya kuzaliwa",
+    "occupation":"Kazi",
+    "id_number":"Nambari ya kitambulisho",
+    "id_type":"Aina ya kitambulisho",
+    "region":"Mkoa",
+    "gender":"Jinsia"
+  }
+}

@@ -563,7 +563,7 @@ const routes = [{
                 signUpData:x.params.signUpData
             }
         },
-        roles: []
+        roles: ['rde']
     },
     //deployments
     {
