@@ -400,6 +400,7 @@
                         validateLength: 'Phone number must be between 5 and 16 digits long.',
                         validateString: `'Phone number must start with '+''`,
                       }"
+                      error-behavior="live"
                       validation="required|validateLength|validateString"
                       :show-optional="false"
                 />
@@ -424,7 +425,7 @@
                       placeholder="john.doe@gmail.com"
                       name="email"
                       validation="required|email"
-                      error-behaviour='value'
+                      error-behaviour='live'
                 />
                 <div
                     class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
@@ -437,7 +438,7 @@
           
           <div class="md:grid md:grid-cols-3 gap-4">
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.email}}</span>
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.occupation}}</span>
               
             <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
                 v-model="form.occupation_id" id="occupation">         
@@ -455,7 +456,7 @@
             </label> 
 
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.email}}</span>
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.dob}}</span>
                 <FormulateInput 
                   type="date"
                   id="datefield"
@@ -733,8 +734,10 @@
                         validateString: `'Phone number must start with '+''`,
                       }"
                       validation="required|validateLength|validateString"
+                      placeholder="Please select country"
                       :show-optional="false"
                       disabled
+                      error-behavior="live"
                       
                 />
                 <span v-if="getErrorMessage['next_of_kin_phone']">
@@ -758,6 +761,7 @@
                       name="next_of_kin_email"
                       validation="required|email"
                       v-model="form.next_of_kin_email"
+                      error-behavior="live"
                 />
                 <div
                     class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
