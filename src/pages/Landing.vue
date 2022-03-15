@@ -18,7 +18,7 @@
         </li>
 
         <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500 hover:text-white transition ease-linear duration-300">
-          <router-link :to="{name:'RdeSelfRegistrationForm'}" >Sign Up</router-link>
+          <router-link :to="{name:'CreateAccount'}" >Sign Up</router-link>
         </li>
       </ul>
     </nav>
