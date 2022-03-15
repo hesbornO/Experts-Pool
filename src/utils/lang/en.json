@@ -2,9 +2,44 @@
   "actions": {
     "create": "Create",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "filter": "Filter",
+    "back":"Back",
+    "submit":"Submit",
+    "select_country":"Select country",
+    "click_to_select":"Click to select"
+
   },
   "tables": {
     "home_table_headings": ["NAME", "SPECIALIZATION", "REGION", "CURRENT DEPLOYMENT", "COMPETENCE", "STATUS", "ACTION"]
+  },
+  "titles":{
+    "home_page_title":"Home",
+    "total_rdes":"Total RDES",
+    "active_deployments":"Active Deployments",
+    "public_health_events":"Public Health Events",
+    "occupation":"Occupation",
+    "partner_state":"Partner State",
+    "status":"Status",
+    "complete_registration":"Complete Registration"
+  },
+  "rde_self_registration_form":{
+    "personal_details":"Personal Details",
+    "next_of_kin_details":"Next of Kin Details",
+    "other_info":"Other Info",
+    "first_name":"First Name",
+    "middle_name":"Middle Name",
+    "last_name":"Last Name",
+    "competencies":"Competencies",
+    "email":"Email",
+    "phone":"Phone",
+    "full_name":"Full Name",
+    "dob":"Date of Birth",
+    "occupation":"Occupation",
+    "id_number":"ID Number",
+    "id_type":"ID Type",
+    "region":"Region",
+    "gender":"Gender"
+    
   }
 }

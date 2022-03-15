@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Outbreaks">
+  <dashboard_layout page_title="Public Health Events">
     <div class="mb-3 flex flex-row justify-end">      
       <router-link
           :to="{name:'CreateOutbreak', params:{}}"
@@ -10,7 +10,7 @@
           <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"></path>
         </svg>
-        <span class="px-1">Add Outbreak</span>
+        <span class="px-1">Add Event</span>
       </router-link>
     </div>
      <div class="grid grid-cols-3">

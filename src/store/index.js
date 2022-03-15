@@ -11,6 +11,7 @@ import RDE from './modules/RDE'
 import occupations from './modules/occupations'
 import outbreaks from './modules/outbreaks'
 import competencies from './modules/competencies'
+import qualificationTypes from './modules/academic_qualification_types'
 import users from './modules/users'
 import language from './modules/language'
 
@@ -37,6 +38,7 @@ export default new Vuex.Store({
         occupations,
         outbreaks,
         competencies,
+        qualificationTypes,
         users,
         language
     }

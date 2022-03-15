@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout :page_title="`${username}'s Profile`" :show-back="false" >
+  <dashboard_layout :page_title="``" :show-back="false" >
     <span v-if="rdeSelfProfile">
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length > 0">
         <span></span>
@@ -77,13 +77,13 @@
             <span class="px-1">Update Profile</span>
           </router-link>
       
-          <router-link
+          <!-- <router-link
               :to="{name:'UpdateRDEStatus', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.last_name}}"
               class="btn btn-orange h-3/4 text-xs"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
             <span class="px-1">Update status</span>
-          </router-link>
+          </router-link> -->
          
           <button
             :class="['flex rounded-md focus:outline-none focus:shadow-outline-purple',mode !== 'dark'?'':'']"
@@ -227,7 +227,9 @@
               </span>
             </span>
           </span>
-          <span></span>
+          <span>
+            
+          </span>
 
           <!-- next of kin details -->
           <!-- full name -->
@@ -283,197 +285,334 @@
 
         </tab>
 
-        <tab title="CV" class="grid grid-cols-3 space-x-4">
-          <span v-if="this.loading" class=" mt-5 flex justify-center">
-            <loading></loading>
-          </span>
-          <span v-if="this.rdeSelfProfile.cv_upload_status && !this.loading" class="">          
-            <span class="flex justify-between">
-              <span>
-                <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                  >
-                  <span v-if="!viewPdf">View uploaded CV</span>
-                </button>
+        <tab title="Qualifications" class="md:grid md:grid-cols-4 space-x-4">
+          <div class="col-span-4 rounded-md border-2 border-green-700">
+            <!-- academic qualifications -->
+            <div>
+              <span class="p-4">
+                <hr class=" text-green-500 bg-green-500"/>
+                <span class="flex justify-between">  
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
+                  <span></span>              
+                </span> 
               </span>
-              <span>
-                <span>
-                  <button
-                      class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
-                    Update CV
-                  </button>
-                </span>
-              </span>
-            </span>
-            <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
-              <label class="block mt-4 text-sm">
-                <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf and word docs)</span></span>
-                <!-- focus-within sets the color for the icon when input is focused -->
-                <div
-                    class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-                >
-                  <input  type="file"
-                          id="cvFile"
-                          :name="form.cv"
-                          class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                          placeholder="john.doe@gmail.com"
-                          validation="required"  
-                          accept=".pdf" 
-                          @input="processFile"                
-                  />        
-                    <span v-if="getErrorMessage['cv']">
-                    <span v-if="getErrorMessage['cv'].length>0">
-                      <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
-                        <span class="text-red-500 animate-pulse">{{error}}</span>
-                      </span>
+              <div class="w-full px-4">
+                <div v-if="rdeQualifications.length>0">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">Name</td>
+                      <td class="p-3 border-l border-black border-b">Type</td>
+                      <td class="p-3 border-l border-black border-b">Institution</td>
+                      <td class="p-3 border-l border-black border-b">Dates</td>
+                      <td class="p-3 border-l border-r border-black border-b">Actions</td>                    
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
+                        <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.institution}}</td>
+                        <td class="p-3 border-l border-r border-black text-xs">From {{qualification.start_date}} to {{qualification.end_date}}</td>
+                        <td class="p-3  border-black flex">
+                          <span>
+                            <router-link
+                              :to="{name:'updateRDEQualification', params:{}}"
+                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
+                              title="Update"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </router-link>
+                          </span>
+                          <span>
+                            <router-link
+                              :to="{name:'deleteRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
+                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                              title="Delete"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </router-link>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">No qualifications uploaded.</div>     
+
+                <!-- add qualification button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addRDEQualification', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">Add Qualification</span>
+                      </router-link>
                     </span>
-                  </span>   
-                </div>
-              </label>  
-
-              <span class="flex justify-between p-2">
-                <button @click="togglePdfDisplay('preview new upload','viewPdfToUpload')" 
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                  v-if="fileUploaded>0">
-                  <span v-if="!viewPdfToUpload" class="">Preview upload</span>
+                  </span>                  
+                  <span></span>
                 </button>
-                <button
-                    class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" v-if="form.cv">
-                  <router-link
-                      :to="{name:'UploadCVfromProfile', params:{rdeId:this.rdeSelfProfile.id, cv: form.cv}}"
-                      class="flex "
-                      title="Click to submit cv"
-                    >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span class="px-1 ">Submit CV</span>
-                  </router-link>
-                </button>
-              </span>
-
-              <!-- Uploaded CV preview modal -->        
-              <div :class="[viewPdfToUpload?'fixed z-1 inset-0':'hidden']" >
-                <div class="flex items-end  min-h-full text-center sm:block ">            
-                  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-                  <!-- This element is to trick the browser into centering the modal contents. -->
-                  <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                
-                  <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                      <div class="h-96">                 
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                            Uploaded CV 
-                          </h3>
-                          <div class="h-96" v-if="form.cv">                      
-                            <vue-pdf-app :pdf="form.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-gray-150 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                      <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm hidden">
-                        
-                      </button>
-                      <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay(null,'viewPdfToUpload')">
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end of uploaded CV preview modal -->
-            </span>
-
-              <!--Existing CV preview modal -->
-            <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
-              <div class="flex this.rdeSelfProfiles-end  min-h-full text-center sm:block ">            
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-                <!-- This element is to trick the browser into centering the modal contents. -->
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-              
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:max-h-7xl sm:w-full">
-                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="h-96">                 
-                      <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                          {{(rdeSelfProfile.last_name?rdeSelfProfile.last_name+' ':'')+(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+(rdeSelfProfile.middle_name?' '+rdeSelfProfile.middle_name:'')}}'s CV Preview
-                        </h3>
-                        <div class="h-96" v-if="this.RDEcv">                      
-                          <vue-pdf-app :pdf="this.RDEcv.cv" :class="['min-w-7xl min-h-7xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']"></vue-pdf-app>                      
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="bg-gray-150 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button></button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-md px-4 py-2 bg-red-400 hover:bg-red-600  font-semibold text-lg text-white focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-base uppercase" @click="togglePdfDisplay(null,'viewPdf')">
-                      Close
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
-              <!--End of existing CV preview modal -->
 
-          </span>
+            <!-- professional experience -->
+            <div>
+              <span class="p-4"> 
+                <hr class="text-green-500 bg-green-500"/>
+                <span class="flex justify-between">                
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">Professional Experience</span>      
+                  <span></span>              
+                </span> 
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeSelfProfile.professional_experience">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">Title</td>
+                      <td class="p-3 border-l border-black border-b">Description</td>
+                      <td class="p-3 border-l border-black border-b">Institution/Company</td>
+                      <td class="p-3 border-l border-r border-black border-b">Dates</td>
+                      <td class="p-3 border-l border-r border-black border-b">Action</td>
+                    </thead>
 
-          <span v-if="!this.rdeSelfProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(experience,index) in rdeSelfProfile.professional_experience" :key="index">
+                        <td class="p-3 border-l border-black">{{experience.title}}</td>
+                        <td class="p-3 border-l border-black">{{experience.description}}</td>
+                        <td class="p-3 border-l border-black">{{experience.institution}}</td>
+                        <td class="p-3 border-l border-r border-black text-xs">From {{experience.start_date}} to {{experience.end_date}}</td>
+                        <td class="p-3  border-black flex">
+                          <span>
+                            <router-link
+                              :to="{name:'updateRDEExperience', params:{}}"
+                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
+                              title="Update"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </router-link>
+                          </span>
+                          <span>
+                            <router-link
+                              :to="{name:'deleteRDEExperience', params:{}}"
+                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                              title="Delete"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </router-link>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">No experience uploaded.</div>     
 
-            No CV Uploaded. Please upload CV!
-            <label class="block mt-4 text-sm">
-              <span class="text-gray-700 font font-semibold dark:text-gray-400">CV Attachment <span class="text-xs italic">(pdf docs only)</span></span>
-              <!-- focus-within sets the color for the icon when input is focused -->
-              <div
-                  class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-              >
-                <input  type="file"
-                        id="cvFile"
-                        :name="form.cv"
-                        class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                        validation="required"  
-                        accept=".pdf" 
-                        @input="processFile"                
-                />       
-                      
-                  <span v-if="getErrorMessage['cv']">
-                  <span v-if="getErrorMessage['cv'].length>0">
-                    <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
-                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                <!-- add qualification button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addRDEExperience', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">Add Experience</span>
+                      </router-link>
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <!-- references -->
+            <div>
+              <span class=" p-4"> 
+                <hr class="text-green-500 bg-green-500"/>
+                <span class="flex justify-between">
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">References</span>      
+                  <span></span>              
+                </span> 
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeSelfProfile.references">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">Name</td>
+                      <td class="p-3 border-l border-black border-b">Contact</td>
+                      <td class="p-3 border-l border-black border-b">Institution/Company</td>
+                      <td class="p-3 border-l border-r border-black border-b">Description</td>
+                      <td class="p-3 border-l border-r border-black border-b">Action</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(reference,index) in rdeSelfProfile.references" :key="index">
+                        <td class="p-3 border-l border-black">{{reference.name}}</td>
+                        <td class="p-3 border-l border-black flex justify-between">
+                          <span> <a :href="reference.phone_number">{{reference.phone_number}}</a>
+                            </span>  
+                          <span>{{reference.email}}</span> 
+                        </td>
+                        <td class="p-3 border-l border-black">{{reference.institution}}</td>                        
+                        <td class="p-3 border-l border-black">{{reference.description}}</td>  
+                        <td class="p-3  border-l border-black flex">
+                          <span>
+                            <router-link
+                              :to="{name:'updateRDEReference', params:{}}"
+                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
+                              title="Update"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </router-link>
+                          </span>
+                          <span>
+                            <router-link
+                              :to="{name:'deleteRDEReference', params:{}}"
+                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                              title="Delete"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </router-link>
+                          </span>
+                        </td>                      
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">No references listed.</div>     
+
+                <!-- add reference button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addRDEReference', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">Add Reference</span>
+                      </router-link>
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>    
+
+          </div>
+
+          <!-- CV -->
+          <div class="col-start-2 col-end-4 rounded-md border-2 border-green-700 mt-5 ml-20">
+            <span v-if="this.loading" class=" mt-5 flex justify-center">
+              <loading></loading>
+            </span>
+            <div class="">          
+              <!-- CV exists -->
+              <span v-if="this.rdeSelfProfile.cv_upload_status && !this.loading" class="">  
+                <span class="flex justify-between p-4">  
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">Curriculum Vitae (CV)</span>      
+                  <span></span>              
+                </span>  
+                <span class="flex justify-between p-4">
+                  <span>
+                    <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
+                      class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+                      >
+                      <span>View CV</span>
+                    </button>
+                  </span>
+                  <span>
+                    <span>
+                      <button
+                          class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
+                        Update CV
+                      </button>
                     </span>
                   </span>
-                </span>   
-              </div>
-            </label>  
-            <input  type="text"
-                        :name="form.profile_id"
-                        class=" hidden"
-                        validation="required"  
-                        :value="$route.params.rdeId" 
-                />  
-
-            <span class="flex justify-between p-2">
-                <button @click="togglePdfDisplay('preview new upload','viewPdfToUpload')" 
-                  class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                  v-if="fileUploaded>0">
-                  <span v-if="!viewPdfToUpload" class="">Preview upload</span>
-                </button>
-                <button
-                    class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" v-if="form.cv">
-                  <router-link
-                      :to="{name:'UploadCVfromProfile', params:{rdeId:this.rdeSelfProfile.id, cv: form.cv}}"
-                      class="flex "
-                      title="Click to submit cv"
+                </span>
+                <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
+                  <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach CV <span class="text-xs italic">(pdf and word docs)</span></span>
+                    <div
+                        class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                     >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span class="px-1 ">Submit CV</span>
-                  </router-link>
-                </button>
-              </span>
-            
-          </span>
+                      <input  type="file"
+                              id="newCV"
+                              :name="form.cv"
+                              @change="displaySubmit('newCV')"
+                              class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                              placeholder="john.doe@gmail.com"
+                              validation="required"  
+                              accept=".pdf" 
+                      />        
+                        <span v-if="getErrorMessage['cv']">
+                        <span v-if="getErrorMessage['cv'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span>   
+                    </div>
+                  </label>  
 
+                  <span class="flex justify-between p-2">
+                    <span></span>
+                    <span></span>
+                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV('newCV')" v-if="fileUploaded"> Submit CV</button>
+                  </span>
+                </span>
+              </span>
+
+              <!-- No CV -->
+              <span v-if="!this.rdeSelfProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
+
+                No CV Uploaded. Please upload CV!
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach CV <span class="text-xs italic">(pdf and word docs)</span></span>
+                    <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
+                      <input  
+                        type="file"
+                        id="noCVFile"
+                        :name="form.cv"
+                        @change="displaySubmit('noCVFile')"
+                        class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                        placeholder="john.doe@gmail.com"
+                        validation="required"  
+                        accept=".pdf" 
+                      />        
+                        <span v-if="getErrorMessage['cv']">
+                        <span v-if="getErrorMessage['cv'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span>   
+                    </div>
+                  </label>
+                <input  type="text"
+                            :name="form.profile_id"
+                            class=" hidden"
+                            validation="required"  
+                            :value="$route.params.rdeId" 
+                    />  
+
+                <span class="flex justify-between p-2">
+                    <span></span>
+                    <span></span>
+                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV('noCVFile')" v-if="fileUploaded"> Submit CV</button>
+                  </span>
+                
+              </span>
+            </div>
+          </div>         
         
         </tab>
 
@@ -485,7 +624,7 @@
             <table class="w-full border border-black p-3" v-if="rdeSelfProfile.recommendations.length>0">
               <thead class="text-lg font-semibold font-mono border border-black p-2 ">
                 <th>Recommendation</th>
-                <th class="border border-black">Recommended By</th>
+                <th class="border border-black">Made By</th>
               </thead>
               <tbody>
                 <tr v-for="(recommendation, index) in this.rdeSelfProfile.recommendations" :key="index" class="text-md border border-black">
@@ -515,11 +654,11 @@
               </thead>
               <tbody>
                 <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
-                  <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{index+1}}. {{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
+                  <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
                   <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
                   <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
-                  <td class="border-l border-black p-2 uppercase">{{deployment.start_date?deployment.start_date:''}}</td>
-                  <td class="border-l border-black p-2 uppercase">
+                  <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
+                  <td class="border-l border-black p-2 text-xs">
                     {{deployment.end_date?deployment.end_date:''}}
                     <!-- <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
                         <router-link
@@ -561,14 +700,15 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
-import Tab from './tabs/Tab.vue'
-import Tabs from './tabs/Tabs.vue'
+import Tab from '../tabs/Tab.vue'
+import Tabs from '../tabs/Tabs.vue'
 
-import dashboard_layout from '../components/layouts/dashboard_layout.vue';
-import Loading from "../components/utilities/loading";
+import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
+import Loading from "../../components/utilities/loading";
 
-import VuePdfApp from "vue-pdf-app";
+// import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
+import {  baseUrl } from '../../utils/constants';
 
 export default {
   name: "Regions",
@@ -577,7 +717,7 @@ export default {
     dashboard_layout,
     Tab,
     Tabs,
-    VuePdfApp,
+    // VuePdfApp,
     Loading
   },
   data() {
@@ -586,6 +726,7 @@ export default {
       rdeDeployments:{},
       signUpData:{},
       form: {   
+        cv:''
       },
       mode: 'light',
       mailto: "mailto:",
@@ -596,12 +737,29 @@ export default {
       fileUploaded:0,
       loading:false,
       username: '',
-      displayUploadButton:false
+      displayUploadButton:false,
+      rdeQualifications:[]
+      
 
     }
   },
   methods:{
-    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment']),
+    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
+    displaySubmit(field_id){
+      if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
+    },
+    saveCV(field_id){
+      let formData = new FormData()
+      formData.append('profile_id',this.rdeSelfProfile.id)
+      formData.append('cv', document.getElementById(field_id).files[0])
+      this.$store.dispatch('uploadCVById', formData).then(()=>{
+        this.$toast.success("uploaded")
+        location.reload()
+      }).catch(err=>{
+        console.log(err)
+      })
+      // location.reload()
+    },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
      this.region= localStorage.getItem('region')
@@ -631,22 +789,30 @@ export default {
     },
     fetchRDEData(){
       this.loading = true
-      // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch('fetchRDES','').then(resp => {
+      this.$store.dispatch('fetchRDES','').then(resp => {
+        if(resp.results.length > 0) {
+          this.rdeSelfProfile = resp.results[0]
+          this.fetchRDEdeployments(this.rdeSelfProfile.id)
+        }
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg', err.data)
+        }).then(()=>{
+          this.loading = false
+      })
 
-      if(resp.results.length > 0) {
-        this.rdeSelfProfile = resp.results[0]
-        this.fetchRDEdeployments(this.rdeSelfProfile.id)
-      }
+      //fetch academic RDE qualifications      
+      this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
+        if(resp.results.length > 0) {
+          this.rdeQualifications = resp.results
+        }
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg', err.data)
+        }).then(()=>{
+          this.loading = false
+      })
 
-       }).catch(err=>{
-         this.$store.dispatch('setErrorMsg', err.data)
-       }).then(()=>{
-         this.loading = false
-       })
     },
     fetchRDEdeployments(rde_id){
-      console.log('fetching rde deployments')
       this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
         console.log()
          this.rdeDeployments = resp
@@ -675,6 +841,9 @@ export default {
         this.loading=true
         this.$store.dispatch('fetchRDEcv', this.rdeSelfProfile.id).then(resp=>{
           this.RDEcv = resp
+          console.log("response", resp)
+          let relative_url=resp.cv.replace('/media/media','media')
+          window.open(baseUrl+relative_url, '_blank')
         }).catch(err=>{
           this.$store.dispatch('setErrorMsg',err.data)
         }).then(()=>{

@@ -72,7 +72,7 @@
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.current_deployment ? item.current_deployment : 'None' }}
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.active_deployments>0 ? 'Yes' : 'No' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
               <span v-if="item.competencies_objects">
@@ -86,7 +86,7 @@
               {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
             <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.active_deployments>0">    
-              <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                   
+              <!-- <split-button  :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                    -->
 
               <!-- CV preview modal -->
                <div :class="[viewPdf?'fixed z-1 inset-0':'hidden']" >
@@ -144,7 +144,7 @@ import data_table from "../../components/layouts/DataTableTemplate";
 // pdf
 import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
-import SplitButton from "../../components/buttons/SplitButton.vue";
+// import SplitButton from "../../components/buttons/SplitButton.vue";
 
 
 
@@ -155,7 +155,7 @@ export default {
     dashboard_layout,
     data_table,
     VuePdfApp,
-    SplitButton
+    // SplitButton
 
   },
   data() {
@@ -201,7 +201,7 @@ export default {
     // ...mapGetters(['getCurrentToken']),
     createPrimary(item) {
       return {
-        to: { name: "rdeProfile", params: { rdeId:item.id, rdeName: item.last_name } },
+        to: { name: "rdeProfileFromDeployments", params: { rdeId:item.id, rdeName: item.last_name } },
         label: "View Profile",
         icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg">

@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Home">
+  <dashboard_layout :page_title="activeLanguage.store.titles.home_page_title">
 
     <div class="w-full overflow-hidden shadow-xs">
       <div class="w-full overflow-x-auto ">
@@ -7,7 +7,7 @@
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
           <div class="flex flex-row space-x-8 w-10/12">
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Occupation</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.occupation}}</p>
               <select
                   v-model="selected_occupation"
                   :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2  form-select w-full']"
@@ -19,7 +19,7 @@
               </select>
             </div>
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Country</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.partner_state}}</p>
               <select v-model="selected_country"
                       :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
                       name="country" placeholder="--select country--" @change="addQueryParams('country', selected_country)"> 
@@ -30,7 +30,7 @@
               </select>
             </div>
             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Status</p>
+              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.status}}</p>
               <select v-model="selected_status"
                       :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
                       name="status" placeholder="select status" @change="addQueryParams('status', selected_status)">
@@ -48,7 +48,7 @@
                      xmlns="http://www.w3.org/2000/svg">
                   <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                 </svg>
-                <span class="px-1">Filter</span>
+                <span class="px-1">{{activeLanguage.store.actions.filter}}</span>
               </button>
             </div>
           </div>
@@ -87,7 +87,7 @@
               <p
                 class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
               >
-                Total RDES
+                {{activeLanguage.store.titles.total_rdes}}
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" v-if="stats.active_deployments>=0 && stats.undeployed_rdes>=0">
                 {{(stats.active_deployments+stats.undeployed_rdes)}}                    
@@ -105,7 +105,7 @@
             </div>
             <div v-if="stats">
               <p class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold" >
-                Active Deployments
+                {{activeLanguage.store.titles.active_deployments}}
               </p>
               <p class="text-lg font-semibold text-gray-700 dark:text-gray-200" >
                 {{stats.active_deployments?stats.active_deployments:''}}
@@ -127,7 +127,7 @@
               <p
                 class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
               >
-                Outbreaks
+                {{activeLanguage.store.titles.public_health_events}}
               </p>
               <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200"
@@ -149,7 +149,7 @@
               <p
                 class="mb-2 text-gray-600 dark:text-gray-400 font-mono font-semibold"
               >
-                Partner States
+                {{activeLanguage.store.titles.partner_states}}
               </p>
               <p
                 class="text-lg font-semibold text-gray-700 dark:text-gray-200"
@@ -181,7 +181,7 @@
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize">{{ item.current_deployment ? item.current_deployment : 'None' }}
+            <td class="px-4 py-3 text-sm capitalize">{{ item.active_deployments>0?'Yes' : 'No' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">
               <span v-if="item.competencies_objects">
@@ -233,7 +233,7 @@
           
           </template>
         </data_table>
-        <!-- end of list -->
+        <!-- end of list -->     
 
       </div>
 
@@ -292,55 +292,41 @@ export default {
       form: {},
       update_rde_details: false,
       fileUploaded: 0,
-      query:{my_key:''}
+      query:{my_key:''},
+      user_level:'',
+
 
 
     }
   },
   methods: {
-    createPrimary(item) {
+    createPrimary(item) {      
       return {
-        to: { name: "rdeProfile", params: { rdeId:item.id, rdeName: item.last_name } },
-        label: "View Profile",
-        icon: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2"></path>
-                  </svg>`,
-      };
+          to:{name:'adminRdeProfile', params:{rdeId:item.id, rdeName: item.last_name}},
+          label:"View Profile",
+          icon:'<svg class="w-5 h-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>'
+        };
     },
     createOptional(item) {
       const options= [
              
       ];   
-      if(item.application_status === 'pending_approval'){
-        options.push({
-          to:{name:'partnerStateApproval', params:{rdeId:item.id, rdeName: item.last_name}},
-          label:"PS approval",
-          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
-        })
-      }
-      if(item.application_status === 'approved_by_partner_state'){
+    
+      if(this.user_level==='eac' && item.application_status==='pending_approval'){
         options.push({
           to:{name:'eacApproval', params:{rdeId:item.id, rdeName: item.last_name}},
           label:"EAC Approval",
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
         })
       }
-      if(item.application_status === 'approval_complete'){
+      if(item.application_status === 'approval_complete' && this.user_level==='eac'){
         options.push({divider:true},{
           to:{name:'eacDisapproval', params:{rdeId:item.id, rdeName: item.last_name}},
           label:"EAC Disapproval",
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
         })
       }
-      if(item.application_status === 'approved_by_partner_state'){
-        options.push({divider:true},{
-          to:{name:'partnerStateDisapproval', params:{rdeId:item.id, rdeName: item.last_name}},
-          label:"PS Disapproval",
-          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
-        })
-      }
+      
       
       return options
     },   
@@ -421,7 +407,9 @@ export default {
     }).catch(err=>{
       console.log(err);
     })
+    this.user_level= localStorage.getItem('level')
     },
+
     
   },
   mounted() {

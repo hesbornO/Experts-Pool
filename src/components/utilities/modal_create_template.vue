@@ -93,8 +93,11 @@ export default {
 			},
     optionsList: { type: Array, default: () => [] },
     country_id:[String, Number],
+    object_id:[String, Number],
     profile:[String, Number],
-    moduleName:[String, Number]
+    moduleName:[String, Number],
+    moduleAction:[String]
+
   },
   created(){
     this.tryOptions();
@@ -109,8 +112,29 @@ export default {
       this.form.country_id = this.country_id
       if (this.vuex_payload){
         payload = this.vuex_payload
+        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById'){
+          if(this.form.profile) delete this.form.profile
+          
+          payload={professional_experience:payload}
+          
+          if(this.moduleAction ==='postRDEExperienceById') payload=[{professional_experience:[payload]}]
+          
+          if(this.moduleAction ==='postRDEReferenceById') payload=[{references:[payload]}]
+
+          payload.id=this.object_id        
+        } 
       }else{
         payload = this.form
+        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById'){
+          if(this.form.profile) delete payload.profile
+          
+          if(this.moduleAction ==='postRDEExperienceById') payload={professional_experience:[payload]}
+          
+          if(this.moduleAction ==='postRDEReferenceById') payload={references:[payload]}
+
+          payload.id=this.object_id
+        } 
+        
       }
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(
@@ -121,6 +145,7 @@ export default {
         // eslint-disable-next-line no-unused-vars
       }).catch(err=>{
         this.loading = false
+        console.log(err)
       }).then(()=>{
         // this.loading = false
       });
@@ -134,12 +159,18 @@ export default {
       }else{
         this.optionsPopulatedSchema = this.jsonSchema
       }
+       if(this.moduleAction=='addRDEQualification'){        
+        this.form.profile_id=this.$route.params.rdeId      
+      } 
+      // this.setMaxDate()
     },
-    fetchOptions() {
+    async fetchOptions() {
+      
       // let schema =[]
       this.optionsList.map((option,index)=>{
         this.$store.dispatch(option).then((resp)=>{
           this.fetchedOptions.push(resp)
+          
         }).then(()=>{
           if(index +1 === this.optionsList.length){
             this.populateSchema()
@@ -150,12 +181,30 @@ export default {
     },
     populateSchema(){
         let schema = JSON.stringify(this.jsonSchema)
+        for(var index=0;index<this.fetchedOptions.length;index++){
+          if(this.fetchedOptions[index].results) this.fetchedOptions[index] =this.fetchedOptions[index].results
+        }
         this.fetchedOptions.map((option, index)=>{
              schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
         })
         this.optionsPopulatedSchema = JSON.parse(schema)
         this.loading = false
-    }
+    },
+    setMaxDate(){
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+      if(dd<10){
+              dd='0'+dd
+          } 
+          if(mm<10){
+              mm='0'+mm
+          } 
+
+      today = yyyy+'-'+mm+'-'+dd;
+      document.getElementById("start_date_field").setAttribute("max", today);
+    },
   },
   computed: {
     ...mapGetters(['getErrorMessage'])

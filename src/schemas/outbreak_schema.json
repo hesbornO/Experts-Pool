@@ -3,7 +3,7 @@
     "class": "px-2 py-3",
     "children": [{
             "component": "div",
-            "class": "grid grid-cols-2 gap-3",
+            "class": "md:grid md:grid-cols-2 gap-3",
             "children": [{
                     "type": "text",
                     "label": "Name",
@@ -12,7 +12,7 @@
                 },
                 {
                     "type": "select",
-                    "label": "Severity",
+                    "label": "Severity Level",
                     "name": "severity",
                     "placeholder":"--Select severity--",
                     "options": {
@@ -28,7 +28,7 @@
        
         {
             "component": "div",
-            "class": "grid grid-cols-2 gap-3",
+            "class": "md:grid md:grid-cols-2 gap-3",
             "children": [
                 {
                     "type": "select",
@@ -50,13 +50,22 @@
         },
         {
             "component":"div",
-            "class":"grid grid-cols-2 gap-3",
+            "class":"md:grid md:grid-cols-2 gap-3",
             "children":[
                 {
                     "type": "date",
                     "label": "Start Date",
                     "name": "start_date",
+                    "id":"start_date_field",
+                    "max":"",
                     "validation": "required"
+                },
+                {
+                    "type": "select",
+                    "label": "Event Type",
+                    "placeholder":"--Select event type--",
+                    "name": "outbreak_type_id",
+                    "options":[2]
                 }
             ]
         },

@@ -5,6 +5,9 @@ const state = {
     Outbreaks: [],
     Outbreak: {},
     deployments: [],
+    outbreakTypes: [],
+    outbreakType: {},
+    outbreakTypeOptions: {},
 }
 
 const getters = {
@@ -13,6 +16,9 @@ const getters = {
     },
     allDeployments(state) {
         return state.deployments
+    },
+    allOutbreakTypes(state) {
+        return state.outbreakTypes
     }
 }
 
@@ -131,6 +137,107 @@ const actions = {
         });
     },
 
+    // outbreak types
+    fetchAllOutbreakTypes({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak-type/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak-type/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOutbreakTypes", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchOutbreakTypeById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak-type/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak-type/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOutbreakType", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    deleteOutbreakTypeById({commit},payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak-type/'
+            
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak-type/" + payload
+            }
+            api.delete(relative_url).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+                console.log(commit)
+            })
+        })
+    },
+    postOutbreakType({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post("/outbreak-type/", payload).then(resp => {
+                commit("setOutbreakType", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                if(err.response.status !== 400){
+                    this.$toast.error('an unknown error occurred')
+                }
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    updateOutbreakTypeById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak-type/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak-type/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.put(relative_url, payload).then(resp => {
+                commit("setOutbreakType", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    // fetchAcademicQualificationTypeOptions({ commit }, payload) {
+    //     return new Promise((resolve, reject) => {
+    //         let relative_url = '/outbreak-type-options/'
+    //         if (payload === undefined) {
+    //             payload = ''
+    //         } else {
+    //             relative_url = "/outbreak-type-options/" + payload
+    //         }
+    //         api.get(relative_url).then(resp => {
+    //             commit("setAcademicQualificationTypeOptions", resp.data)
+    //             resolve(resp.data)
+    //         }).catch(err => {
+    //             reject(err)
+    //         })
+    //     })
+    // },
+
+    // end of outbreak types
+
 }
 
 const mutations = {
@@ -138,6 +245,8 @@ const mutations = {
     setOutbreaks: (state, Outbreaks) => (state.Outbreaks = Outbreaks),
     setOutbreak: (state, Outbreak) => (state.Outbreak = Outbreak),
     setDeployments: (state, deployments) => (state.deployments = deployments),
+    setOutbreakTypes: (state, outbreakTypes) => (state.outbreakTypes = outbreakTypes),
+    setOutbreakType: (state, outbreakType) => (state.outbreakType = outbreakType),
 }
 
 

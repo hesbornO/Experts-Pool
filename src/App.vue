@@ -12,6 +12,11 @@
 import api from "@/api";
 import axios from "axios";
 import router from "@/routes";
+import Vue from 'vue';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
+
+Vue.use(VueTelInput);
 export default {
   name: 'App',
   components: {

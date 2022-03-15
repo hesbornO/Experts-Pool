@@ -3,9 +3,45 @@
     {
       "create": "créer",
       "delete": "effacer",
-      "edit": "Éditer"
+      "edit": "Éditer",
+      "filter": "Filtre",
+      "back":"Arrière",
+      "submit":"Nous faire parvenir",
+      "select_country":"choisissez le pays",
+     "click_to_select":"Cliquez pour sélectionner"
+
     },
   "tables": {
-    "home_table_headings": ["NAMEZ", "SPECIALIZATION", "REGION", "CURRENT DEPLOYMENT", "COMPETENCE", "STATUS", "ACTIONZ"]
+    "home_table_headings": ["NOM", "SPÉCIALISATION", "RÉGION", "DÉPLOIEMENT ACTUEL", "COMPÉTENCE", "STATUT", "ACTION"]
+  },
+  "titles":{
+    "home_page_title":"Maison",
+    "total_rdes":"RDES totaux",
+    "active_deployments":"Déploiements actifs",
+    "public_health_events":"Événements de santé publique",
+    "partner_states":"États partenaires",
+    "occupation":"Occupation",
+    "partner_state":"État partenaire",
+    "status":"statut",
+    "complete_registration":"Enregistrement complet"
+
+  },
+  "rde_self_registration_form":{
+    "personal_details":"Détails personnels",
+    "next_of_kin_details":"Détails sur le plus proche parent",
+    "other_info":"Autre info",
+    "first_name":"Prénom",
+    "middle_name":"Deuxième nom",
+    "last_name":"Nom de famille",
+    "competencies":"Compétences",
+    "email":"E-mail",
+    "phone":"Téléphoner",
+    "full_name":"Nom et prénom",
+    "dob":"Date de naissance",
+    "occupation":"Occupation",
+    "id_number":"Numéro d'identification",
+    "id_type":"Type d'identification",
+    "region":"Région",
+    "gender":"Le sexe"
   }
 }

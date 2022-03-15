@@ -1,0 +1,13 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [
+        {
+            "type": "text",
+            "label": "Degree level",
+            "name": "degree_level",
+            "validation": "required"
+        }
+    ]
+        
+}]

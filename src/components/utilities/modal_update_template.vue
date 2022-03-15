@@ -109,10 +109,7 @@ export default {
       type: String,
     },
     object_id: {},
-    object_title: {
-      type: String,
-      default: ''
-    },
+    object_title: [String, Number],
     jsonSchema: {
       type: Array, default: () => {
         return []
@@ -123,11 +120,15 @@ export default {
       default: "max-w-sm",
     },
     optionsList: { type: Array, default: () => [] },
-    moduleName:[String, Number]
+    moduleName:[String, Number],
+    moduleAction:[String, Number]
   },
   methods: {
     performUpdateAction() {
       this.loading = true
+      if(this.moduleName==='UpdateOutbreakType'){
+        if(this.form.value) this.form.id=this.form.value
+      }
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
             "" + this.object_title + " Updated Successfully"
@@ -148,6 +149,9 @@ export default {
         this.form = resp
         if(this.moduleName==='occupation'){
           this.form.occupation_category_id=resp.occupation_category.id
+        }
+        if(this.moduleAction==='updateRDEQualification'){
+          if(resp.qualification_type) this.form.qualification_type_id = resp.qualification_type.value
         }
         this.$forceUpdate()
       }).catch(err => {

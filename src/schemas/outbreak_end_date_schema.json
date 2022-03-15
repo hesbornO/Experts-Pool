@@ -3,7 +3,7 @@
     "class": "px-2 py-3",
     "children": [{
         "component": "div",
-        "class": "grid grid-cols-2 gap-3",
+        "class": "md:grid md:grid-cols-2 gap-3",
         "children": [{
                 "type": "date",
                 "label": "Start Date",

@@ -8,7 +8,7 @@
         },
         {
             "component": "div",
-            "class": "grid grid-cols-3 gap-3",
+            "class": "md:grid md:grid-cols-3 gap-3",
             "children": [{
                     "type": "text",
                     "label": "First Name",
@@ -36,7 +36,7 @@
         },
         {
             "component": "div",
-            "class": "grid grid-cols-3 gap-3",
+            "class": "md:grid md:grid-cols-3 gap-3",
             "children": [{
                     "type": "date",
                     "label": "Date of birth",
@@ -72,10 +72,10 @@
         },
         {
             "component": "div",
-            "class": "grid grid-cols-3 gap-3",
+            "class": "md:grid md:grid-cols-3 gap-3",
             "children": [{
                     "component": "div",
-                    "class": "grid grid-cols-2 gap-3",
+                    "class": "md:grid md:grid-cols-2 gap-3",
                     "children": [{
                             "type": "select",
                             "label": "ID Type",
@@ -127,7 +127,7 @@
 
         {
             "component": "div",
-            "class": "grid grid-cols-2 gap-3",
+            "class": "md:grid md:grid-cols-2 gap-3",
             "children": [{
                     "label": "Name",
                     "type": "text",
@@ -149,7 +149,7 @@
         },
         {
             "component": "div",
-            "class": "grid grid-cols-2 gap-3",
+            "class": "md:grid md:grid-cols-2 gap-3",
             "children": [{
                     "type": "select",
                     "label": "Region of Residence",

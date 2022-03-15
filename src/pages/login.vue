@@ -11,7 +11,10 @@
                     alt="EAC Logo"
                     />
                     </div>
-                   <div class="text-2xl font-bold py-4 flex items-center justify-center">EAC RDE</div>
+                    <div class="text-2xl font-bold py-4 ">
+                      <p class="flex items-center justify-center">EAC</p>  
+                      <p class="flex items-center justify-center"> Rapidly Deployable Experts</p>
+                    </div>
 
               </div>
               <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
@@ -93,10 +96,7 @@ export default {
   methods: {
     ...mapActions(['login']),
     userLogin() {
-      this.submitting = true
-      console.log('submitting: ',this.submitting)
-
-      
+      this.submitting = true  
       // eslint-disable-next-line no-unused-vars
       this.login(this.form).then(resp => {
         let user_assigned_roles_string = localStorage.getItem('roles')

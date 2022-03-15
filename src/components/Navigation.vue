@@ -86,7 +86,6 @@
             </template>
           </button>
         </li>
-        {{selected_language}}
         <!-- Notifications menu -->
         <select v-model="selected_language"  name="language" class="rounded-sm border border-gray-300 text-gray-600 px-2 focus:border-blue-100 form-select w-full">
           <option v-for="(language, index) in allLanguages" :key="index" :value="language.name">{{language.name}}</option>
@@ -103,12 +102,7 @@
             aria-haspopup="true"
           >
           <span class="font-semibold pt-1 ">{{username}}</span>
-            <img
-              class="object-cover w-8 h-8 rounded-full"
-              src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-              alt=""
-              aria-hidden="true"
-            />
+            <span><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
           </button>
           <template v-if="isProfileMenuOpen">
             <ul
