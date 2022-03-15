@@ -6,15 +6,20 @@
         <div class="flex flex-col overflow-y-auto md:flex-row">          
           <div class="flex items-center justify-center p-6 sm:p-12 md:w-full">
             <div class="w-full">
-              <h1
-                class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"
-              >
-                Create account
-              </h1>
+              <div class="flex justify-between">
+                <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
+                  {{activeLanguage.store.sign_up_form.create_account}}                  
+                </h1>
+                <span class="">
+                  <select v-model="selected_language"  name="language" class="bg-blue-50 rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-full">
+                    <option v-for="(language, index) in allLanguages" :key="index" :value="language.name" class="px-2">{{language.name}}</option>
+                  </select>
+                </span>
+              </div>
               <FormulateForm v-model="form" @submit="createUserAccount">               
                 <div class="grid grid-cols-3 gap-2">
                   <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">First Name</span>
+                    <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.first_name}}</span>
                     <FormulateInput
                       name="first_name"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -24,7 +29,7 @@
                     />
                   </label>
                   <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">Last Name</span>
+                    <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.last_name}}</span>
                     <FormulateInput
                       name="last_name"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -34,7 +39,7 @@
                     />
                   </label>
                   <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">Username</span>
+                    <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.username}}</span>
                     <FormulateInput
                       name="username"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -47,7 +52,7 @@
               
                 <div class="grid grid-cols-3 gap-2">
                   <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">Email</span>
+                    <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.email}}</span>
                     <FormulateInput
                       name="email"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -59,10 +64,11 @@
                     />
                   </label>
                   <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">Phone number</span>
+                    <span class="text-gray-700 dark:text-gray-400 flex justify-between">
+                      {{activeLanguage.store.sign_up_form.phone_number}}
                       <select v-model="countryCode" @change="mapCountryCode" class="w-1/2 rounded-md ">
                         <optgroup label="Countries">
-                          <option value="" disabled selected>Select country</option>
+                          <option value="" disabled selected>{{activeLanguage.store.sign_up_form.select_country}}</option>
                           <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                           <option data-countryCode="AD" value="376">Andorra (+376)</option>
                           <option data-countryCode="AO" value="244">Angola (+244)</option>
@@ -280,6 +286,8 @@
                           <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                         </optgroup>
                       </select>
+                      </span>
+                      
                       <FormulateInput
                       v-model="form.countryCode"
                       id="phone_number"
@@ -304,13 +312,13 @@
                   </label>
                    <!-- Region -->
                 <label class="block mt-4 text-sm">
-                  <span class="text-gray-700  font font-semibold dark:text-gray-400">Region of Residence</span>
+                  <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.region_of_residence}}</span>
                   <div
                       class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                   >
                     <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
                     v-model="form.attached_region_id" id="region"> 
-                      <option value="" disabled selected>--Select region--</option>     
+                      <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.select_region}}--</option>     
                       <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.label}}</option>
                     </select>
                     <span v-if="getErrorMessage['attached_region_id']">
@@ -327,14 +335,11 @@
                   </div>
                 </label> 
                 <!-- End of Region -->
-                </div>
-
-               
-
+                </div>             
 
                 <div class="grid grid-cols-2 gap-2">
                   <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">Password</span>
+                    <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.password}}</span>
                     <span class="flex">
                       <FormulateInput
                       name="password"
@@ -351,7 +356,7 @@
                   </label>
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">
-                      Confirm password
+                      {{activeLanguage.store.sign_up_form.confirm_password}}
                     </span>
                     <span class="flex">
                       <FormulateInput
@@ -392,8 +397,8 @@
 
                     />
                     <span class="ml-2 ">
-                      I agree to the
-                      <span class="underline text-blue-400"><a href="https://www.eac.int/privacy#:~:text=The%20East%20African%20Community%20is%20committed%20to%20user%20privacy.&text=If%20the%20user%20specifically%20provides,be%20published%20for%20general%20access." target="_blank">privacy policy</a></span>
+                      {{activeLanguage.store.sign_up_form.agree_to}}
+                      <span class="underline text-blue-400"><a href="https://www.eac.int/privacy#:~:text=The%20East%20African%20Community%20is%20committed%20to%20user%20privacy.&text=If%20the%20user%20specifically%20provides,be%20published%20for%20general%20access." target="_blank">{{activeLanguage.store.sign_up_form.privacy_policy}}</a></span>
                     </span>
                   </label>
                 </div>
@@ -403,13 +408,13 @@
                   class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                   type="submit"
                 >
-                  Create account
+                  {{activeLanguage.store.sign_up_form.create_account}}
                 </button>
               </FormulateForm>
 
               <hr class="my-8" />        
               <p class="mt-4">              
-                <router-link class="w-full" to="/"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">Already have an account? Login</span></router-link>
+                <router-link class="w-full" to="/"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">{{activeLanguage.store.sign_up_form.already_have_an_account}}? {{activeLanguage.store.sign_up_form.log_in}}</span></router-link>
               </p>
             </div>
           </div>
@@ -441,7 +446,7 @@ export default {
       passwordConfirmFieldType:'password',
       showSidebar: false,
       regions: [],
-
+      selected_language:''
     }
   },
   methods: {
@@ -514,12 +519,18 @@ export default {
 
   },
   computed:{
-    ...mapGetters(['getErrorMessage','getCurrentToken']),
+    ...mapGetters(['getErrorMessage','getCurrentToken', 'allLanguages', 'activeLanguage']),
    
   },
   mounted() {
     this.getRegions()
-
-  }
+    this.selected_language = this.activeLanguage.name
+  },
+  watch: {
+    selected_language: function (){
+      this.$store.dispatch('switchLanguage', this.selected_language)
+      // window.location.reload()
+    }
+  },
 }
 </script>

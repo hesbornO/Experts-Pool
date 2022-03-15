@@ -7,7 +7,9 @@
     "back":"Back",
     "submit":"Submit",
     "select_country":"Select country",
-    "click_to_select":"Click to select"
+    "click_to_select":"Click to select",
+    "log_in":"Log In"
+
 
   },
   "tables": {
@@ -22,6 +24,7 @@
     "partner_state":"Partner State",
     "status":"Status",
     "complete_registration":"Complete Registration"
+    
   },
   "rde_self_registration_form":{
     "personal_details":"Personal Details",
@@ -39,7 +42,30 @@
     "id_number":"ID Number",
     "id_type":"ID Type",
     "region":"Region",
-    "gender":"Gender"
-    
+    "gender":"Gender"    
+  },
+  "login_form":{
+    "username":"Username",
+    "password":"Password",
+    "forgot_your_password":"Forgot your password",
+    "dont_have_an_account":"Don't have an account",
+    "sign_up":"Sign Up"
+  },
+  "sign_up_form":{
+    "create_account":"Create Account",
+    "first_name":"First Name",
+    "last_name":"Last Name",
+    "username":"Username",
+    "email":"Email",
+    "phone_number":"Phone Number",
+    "select_country":"Select country",
+    "select_region":"Select region",
+    "region_of_residence":"Region of Residence",
+    "password":"Password",
+    "confirm_password":"Confirm Password",
+    "agree_to":"I agree to the",
+    "privacy_policy":"privacy policy",
+    "already_have_an_account":"Already have an account",
+    "log_in":"Log In"
   }
 }
