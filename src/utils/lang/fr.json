@@ -8,7 +8,9 @@
       "back":"Arrière",
       "submit":"Nous faire parvenir",
       "select_country":"choisissez le pays",
-     "click_to_select":"Cliquez pour sélectionner"
+      "click_to_select":"Cliquez pour sélectionner",
+      "log_in":"Connexion"
+
 
     },
   "tables": {
@@ -43,5 +45,29 @@
     "id_type":"Type d'identification",
     "region":"Région",
     "gender":"Le sexe"
+  },
+  "login_form":{
+    "username":"Nom d'utilisateur",
+    "password":"Mot de passe",
+    "forgot_your_password":"Mot de passe oublié",
+    "dont_have_an_account":"Je n'ai pas de compte",
+    "sign_up":"S'inscrire"
+  },
+  "sign_up_form":{
+    "create_account":"Créer un Compte",
+    "first_name":"Prénom",
+    "last_name":"Nom de famille",
+    "username":"Nom d'utilisateur",
+    "email":"E-mail",
+    "phone_number":"Numéro de téléphone",
+    "select_country":"Choisissez le pays",
+    "select_region":"Choisissez une région",
+    "region_of_residence":"Région de résidence",
+    "password":"Mot de passe",
+    "confirm_password":"Confirmez le mot de passe",
+    "agree_to":"je suis d'accord avec le",
+    "privacy_policy":"politique de confidentialité",
+    "already_have_an_account":"Vous avez déjà un compte",
+    "log_in":"Connexion"
   }
 }

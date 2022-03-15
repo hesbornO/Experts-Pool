@@ -6,6 +6,13 @@
           <div class="flex items-center justify-center pl-4 sm:p-8 md:w-full">
             <div class="w-full "> 
               <div class="">
+                   <div class="flex justify-end">
+                     <span class="">
+                       <select v-model="selected_language"  name="language" class="bg-blue-50 rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-full">
+                        <option v-for="(language, index) in allLanguages" :key="index" :value="language.name" class="px-2">{{language.name}}</option>
+                      </select>
+                     </span>
+                   </div>
                    <div class="pt-0 flex justify-center">
                    <img class=" w-28" src="../assets/img/eac_logo.png"
                     alt="EAC Logo"
@@ -18,18 +25,18 @@
 
               </div>
               <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
-                Login
+                {{activeLanguage.store.actions.log_in}}
               </h1>
               <FormulateForm  v-model="form" @submit="userLogin">
                 <label class="block text-sm ">
-                  <span class="text-gray-700 dark:text-gray-400">Username</span>
+                  <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.login_form.username}}</span>
                   <FormulateInput name="username" type="text"
                         placeholder="Jane Doe" class="mt-1 block w-full rounded-md border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                         required
                         />
                 </label>
                 <label class="block mt-4 text-sm">
-                  <span class="text-gray-700 dark:text-gray-400">Password</span>
+                  <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.login_form.password}}</span>
                   <span class="flex pt-3">
                     <FormulateInput name="password"
                           class="block w-full mt-1 text-sm rounded-md dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray "
@@ -57,18 +64,18 @@
 
                 <!-- You should use a button here, as the anchor is only used for the example  -->
                 <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple ',submitting?'opacity-75 cursor-not-allowed':'']" type="submit" v-bind:disabled="submitting" title="Click to login">
-                  {{submitting?'Logging in...':'Log in'}}
+                  {{submitting? activeLanguage.store.actions.log_in.replace(' ','ing ')+'...':activeLanguage.store.actions.log_in}}
                 </button>
               </FormulateForm>
               <hr class="my-8"/>
               <p class="mt-4">
                 <router-link class="w-full" to="/forgot-password"><span
-                    class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">Forgot your password?</span>
+                    class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">{{activeLanguage.store.login_form.forgot_your_password}}?</span>
                 </router-link>
               </p>
               <p class="mt-1">
                 <router-link class="w-full" to="/sign-up"><span
-                    class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">Don't have an account? Sign Up</span>
+                    class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">{{activeLanguage.store.login_form.dont_have_an_account}}? {{activeLanguage.store.login_form.sign_up}}</span>
                 </router-link>
               </p>
             </div>
@@ -90,7 +97,8 @@ export default {
       },
       passwordFieldType:'password',
       showSidebar: false,
-      submitting: false
+      submitting: false,
+      selected_language:''
     }
   },
   methods: {
@@ -127,9 +135,17 @@ export default {
 
   },
   computed:{
-    ...mapGetters(['getCurrentToken','getErrorMessage']),
+    ...mapGetters(['getCurrentToken','getErrorMessage', 'allLanguages', 'activeLanguage']),
   },
   mounted() {
-  }
+    this.selected_language = this.activeLanguage.name
+
+  },
+  watch: {
+    selected_language: function (){
+      this.$store.dispatch('switchLanguage', this.selected_language)
+      // window.location.reload()
+    }
+  },
 }
 </script>

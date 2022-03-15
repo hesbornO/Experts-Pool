@@ -7,9 +7,8 @@
     "back":"Nyuma",
     "submit":"Wasilisha",
     "select_country":"chagua nchi",
-    "click_to_select":"bofya ili kuchagua"
-
-
+    "click_to_select":"bofya ili kuchagua",
+    "log_in":"Ingia"
   },
   "tables": {
     "home_table_headings": ["JINA", "UTAALAMU", "MKOA", "UTUMIZAJI WA SASA", "UWEZO", "HALI", "KITENDO"]
@@ -42,5 +41,29 @@
     "id_type":"Aina ya kitambulisho",
     "region":"Mkoa",
     "gender":"Jinsia"
+  },
+  "login_form":{
+    "username":"Jina la mtumiaji",
+    "password":"Nenosiri",
+    "forgot_your_password":"Umesahau nenosiri yako",
+    "dont_have_an_account":"Huna akaunti",
+    "sign_up":"Jisajili"
+  },
+  "sign_up_form":{
+    "create_account":"Tengeneza Akaunti",
+    "first_name":"Jina la kwanza",
+    "last_name":"Jina la familia",
+    "username":"Jina la mtumiaji",
+    "email":"Barua pepe",
+    "phone_number":"Nambari ya simu",
+    "select_country":"Chagua nchi",
+    "select_region":"Chagua eneo",
+    "region_of_residence":"Mkoa wa Makazi",
+    "password":"Nenosiri",
+    "confirm_password":"Thibitisha Nenosiri",
+    "agree_to":"Nakubaliana na",
+    "privacy_policy":"sera ya faragha",
+    "already_have_an_account":"Tayari unayo akaunti",
+    "log_in":"Ingia"
   }
 }
