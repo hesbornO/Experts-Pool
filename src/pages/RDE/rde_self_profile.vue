@@ -15,7 +15,7 @@
       <span>
           <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2 text-xl">
             <span class="py-5">
-              Welcome <span class="  text-gray-600 capitalize py-1">{{username}}</span>! Click below to register. <br>
+              {{activeLanguage.store.rde_self_profile.welcome}} <span class="  text-blue-600 capitalize py-1">{{username}}</span>! {{activeLanguage.store.rde_self_profile.click_below_to_register}}. <br>
             </span>
             <span class="flex justify-between">
               <span></span>
@@ -24,7 +24,7 @@
               class="btn btn-blue text-lg flex mb-5"            
               title="Click to register"
               >
-                <span class="px-1">Create Profile</span>
+                <span class="px-1">{{activeLanguage.store.rde_self_profile.create_profile}}</span>
               </router-link> 
                 <span></span>
             </span>
@@ -37,7 +37,7 @@
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length >0">
         <span class="flex">
           <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
-                Status: {{ this.rdeSelfProfile.application_status ? this.rdeSelfProfile.application_status.replace(/[_-]/g, " ") : '' }}
+                {{activeLanguage.store.rde_self_profile.status}}: {{ this.rdeSelfProfile.application_status ? this.rdeSelfProfile.application_status.replace(/[_-]/g, " ") : '' }}
                 
                 <span v-if="this.rdeSelfProfile.application_status==='approved_by_partner_state'" class="flex">
                   <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
@@ -74,7 +74,7 @@
                   stroke-linecap="round" stroke-linejoin="round"
                   stroke-width="2"></path>
             </svg>
-            <span class="px-1">Update Profile</span>
+            <span class="px-1">{{activeLanguage.store.rde_self_profile.update_profile}}</span>
           </router-link>
       
           <!-- <router-link
@@ -126,13 +126,13 @@
 
       <tabs :mode="mode" v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length > 0">      
         <!-- {{rdeSelfProfile}} -->
-        <tab title="Personal details" class="grid grid-cols-3 space-x-4">
+        <tab :title="activeLanguage.store.rde_self_profile.personal_details" class="grid grid-cols-3 space-x-4">
           <span v-if="this.loading" class=" mt-5 flex justify-center">
             <loading></loading>
           </span>
           <!-- name -->
           <span v-if="this.rdeSelfProfile.last_name" class="col-span-1 px-4 p-2">
-            Full Name:
+            {{activeLanguage.store.rde_self_profile.full_name}}:
             <span class="font-mono font-semibold text-lg">
               {{this.rdeSelfProfile.last_name?this.rdeSelfProfile.last_name:''}} 
               {{this.rdeSelfProfile.first_name?', '+this.rdeSelfProfile.first_name:''}}
@@ -142,7 +142,7 @@
 
           <!-- gender -->
           <span class="col-span-1 flex gap-4" v-if="this.rdeSelfProfile.gender">
-            Gender:
+            {{activeLanguage.store.rde_self_registration_form.gender}}:
             <span class="font-mono font-semibold text-lg">
               {{this.rdeSelfProfile.gender.toLowerCase()==='m'?'Male':this.rdeSelfProfile.gender.toLowerCase()==='f'?'Female':this.rdeSelfProfile.gender.toLowerCase()==='t'?'Transgender':'Undefined'}}
             </span>
@@ -166,17 +166,17 @@
 
           <!-- date of birth -->
           <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.date_of_birth">
-              DOB:
+              {{activeLanguage.store.rde_self_registration_form.dob}}:
             <span class="flex px-2" >
               <span class="font-semibold font-mono text-lg px-3">
-                {{this.rdeSelfProfile.date_of_birth?this.rdeSelfProfile.date_of_birth:'Undefined'}} <span class="font-normal text-orange-300 lowercase">({{age}} years)</span>
+                {{this.rdeSelfProfile.date_of_birth?this.rdeSelfProfile.date_of_birth:'Undefined'}} <span class="font-normal text-orange-300 lowercase">({{age}} {{activeLanguage.store.rde_self_profile.years}})</span>
               
               </span>            
             </span>
           </span>
           <!-- Tel -->
           <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.phone">
-            Tel:
+            {{activeLanguage.store.rde_self_registration_form.phone}}:
             <span class="flex px-2" >
               <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.phone">
                 <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.phone" target="_blank" title="Click to call">
@@ -193,7 +193,7 @@
 
           <!-- email -->
           <span class="col-span-1 flex md:w-1/2 capitalize " v-if="this.rdeSelfProfile.email">
-              Email:
+              {{activeLanguage.store.rde_self_registration_form.email}}:
             <span class="flex px-2" >
                 <a :href="mailto.concat(this.rdeSelfProfile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase" title="Click to send mail">
                   <span class="pr-2">{{this.rdeSelfProfile.email?this.rdeSelfProfile.email:'Undefined'}}</span>
@@ -207,7 +207,7 @@
           <!-- location -->
           <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.region_of_residence">
             <span>
-              Location:
+              {{activeLanguage.store.rde_self_profile.location}}:
             </span>
             <span class="flex px-2" >
               <span class="font-semibold font-mono text-lg px-3">
@@ -220,7 +220,7 @@
           </span>
           <!-- Occupation -->
           <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.occupation">
-              Occupation:
+              {{activeLanguage.store.rde_self_registration_form.occupation}}:
             <span class="flex px-2" >
               <span class="font-semibold font-mono text-lg px-3">
                 {{this.rdeSelfProfile.occupation.name?this.rdeSelfProfile.occupation.name:''}}
@@ -235,7 +235,7 @@
           <!-- full name -->
           <span class="text-green-500  font-semibold text-md capitalize col-span-3" v-if="this.rdeSelfProfile.next_of_kin_name || this.rdeSelfProfile.next_of_kin_email">Next of kin details</span>
           <span v-if="this.rdeSelfProfile.next_of_kin_name" class="col-span-1 p-2">
-            Full Name:
+            {{activeLanguage.store.rde_self_profile.full_name}}:
             <span class="font-mono font-semibold text-lg">
               {{this.rdeSelfProfile.next_of_kin_name?this.rdeSelfProfile.next_of_kin_name:'Undefined'}}             
             </span>
@@ -244,7 +244,7 @@
 
           <!-- next of kin tel -->
           <span class="col-span-1 flex capitalize" v-if="this.rdeSelfProfile.next_of_kin_phone">
-            Tel:
+            {{activeLanguage.store.rde_self_registration_form.phone}}:
             <span class="flex px-2" >
               <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.next_of_kin_phone">
                 <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.next_of_kin_phone" target="_blank" title="Click to call">
@@ -261,7 +261,7 @@
 
           <!-- next of kin email -->
           <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeSelfProfile.next_of_kin_email">
-              Email :
+              {{activeLanguage.store.rde_self_registration_form.email}}Email :
             <span class="flex px-2" >
                 <a :href="mailto.concat(this.rdeSelfProfile.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
                   <span class="pr-2">{{this.rdeSelfProfile.next_of_kin_email?this.rdeSelfProfile.next_of_kin_email:'Undefined'}}</span>
@@ -272,7 +272,7 @@
             </span>
           </span>
 
-          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-semibold text-lg capitalize col-span-3">Competencies</span>
+          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-semibold text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span>
           <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
             <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
               <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
@@ -285,7 +285,7 @@
 
         </tab>
 
-        <tab title="Qualifications" class="md:grid md:grid-cols-4 space-x-4">
+        <tab :title="activeLanguage.store.rde_self_profile.qualifications" class="md:grid md:grid-cols-4 space-x-4">
           <div class="col-span-4 rounded-md border-2 border-green-700">
             <!-- academic qualifications -->
             <div>
@@ -293,7 +293,7 @@
                 <hr class=" text-green-500 bg-green-500"/>
                 <span class="flex justify-between">  
                   <span></span>              
-                  <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.academic_qualifications}}</span>      
                   <span></span>              
                 </span> 
               </span>
@@ -301,11 +301,11 @@
                 <div v-if="rdeQualifications.length>0">               
                   <table class="w-full p-4 border-black border-b border-t">
                     <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
-                      <td class="p-3 border-l border-black border-b">Name</td>
-                      <td class="p-3 border-l border-black border-b">Type</td>
-                      <td class="p-3 border-l border-black border-b">Institution</td>
-                      <td class="p-3 border-l border-black border-b">Dates</td>
-                      <td class="p-3 border-l border-r border-black border-b">Actions</td>                    
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.name}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.type}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.dates}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>                    
                     </thead>
 
                     <tbody>
@@ -338,7 +338,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div v-else class="text-yellow-500 font-mono">No qualifications uploaded.</div>     
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_qualifications_added}}.</div>     
 
                 <!-- add qualification button -->
                 <button class="flex justify-between w-full px-4 py-2 ">
@@ -350,7 +350,7 @@
                         class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="px-1">Add Qualification</span>
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.add_qualification}}</span>
                       </router-link>
                     </span>
                   </span>                  
@@ -365,7 +365,7 @@
                 <hr class="text-green-500 bg-green-500"/>
                 <span class="flex justify-between">                
                   <span></span>              
-                  <span class="text-yellow-700 font-semibold text-base">Professional Experience</span>      
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.add_experience}}</span>      
                   <span></span>              
                 </span> 
               </span> 
@@ -373,11 +373,11 @@
                 <div v-if="rdeSelfProfile.professional_experience">               
                   <table class="w-full p-4 border-black border-b border-t">
                     <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
-                      <td class="p-3 border-l border-black border-b">Title</td>
-                      <td class="p-3 border-l border-black border-b">Description</td>
-                      <td class="p-3 border-l border-black border-b">Institution/Company</td>
-                      <td class="p-3 border-l border-r border-black border-b">Dates</td>
-                      <td class="p-3 border-l border-r border-black border-b">Action</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.title}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.dates}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>
                     </thead>
 
                     <tbody>
@@ -410,7 +410,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div v-else class="text-yellow-500 font-mono">No experience uploaded.</div>     
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_experience_added}}.</div>     
 
                 <!-- add qualification button -->
                 <button class="flex justify-between w-full px-4 py-2 ">
@@ -422,7 +422,7 @@
                         class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="px-1">Add Experience</span>
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.add_experience}}</span>
                       </router-link>
                     </span>
                   </span>                  
@@ -436,7 +436,7 @@
                 <hr class="text-green-500 bg-green-500"/>
                 <span class="flex justify-between">
                   <span></span>              
-                  <span class="text-yellow-700 font-semibold text-base">References</span>      
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.references}}</span>      
                   <span></span>              
                 </span> 
               </span> 
@@ -444,11 +444,11 @@
                 <div v-if="rdeSelfProfile.references">               
                   <table class="w-full p-4 border-black border-b border-t">
                     <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
-                      <td class="p-3 border-l border-black border-b">Name</td>
-                      <td class="p-3 border-l border-black border-b">Contact</td>
-                      <td class="p-3 border-l border-black border-b">Institution/Company</td>
-                      <td class="p-3 border-l border-r border-black border-b">Description</td>
-                      <td class="p-3 border-l border-r border-black border-b">Action</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.name}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.contact}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>
                     </thead>
 
                     <tbody>
@@ -485,7 +485,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div v-else class="text-yellow-500 font-mono">No references listed.</div>     
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_reference_listed}}.</div>     
 
                 <!-- add reference button -->
                 <button class="flex justify-between w-full px-4 py-2 ">
@@ -497,7 +497,7 @@
                         class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="px-1">Add Reference</span>
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.add_reference}}</span>
                       </router-link>
                     </span>
                   </span>                  
@@ -616,7 +616,7 @@
         
         </tab>
 
-        <tab title="Recommendations" class="space-x-4 grid grid-cols-3">
+        <tab :title="activeLanguage.store.rde_self_profile.recommendations" class="space-x-4 grid grid-cols-3">
           <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
             <loading></loading>
           </span>
@@ -634,12 +634,12 @@
               </tbody>
             </table>
             <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
-              No recommendations yet.
+              {{activeLanguage.store.rde_self_profile.no_recommendations}}.
             </span>
           </span>         
         </tab>
         
-        <tab title="Deployments" class="space-x-4 grid grid-cols-4">
+        <tab :title="activeLanguage.store.rde_self_profile.deployments" class="space-x-4 grid grid-cols-4">
           <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
             <loading></loading>
           </span>
@@ -675,7 +675,7 @@
               </tbody>
             </table>            
             <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
-              No deployments yet.
+              {{activeLanguage.store.rde_self_profile.no_deployments}}.
             </span>
           </span>
           <span class="colspan-1 flex justify-end">
@@ -877,7 +877,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getErrorMessage']),
+    ...mapGetters(['getErrorMessage', 'allLanguages', 'activeLanguage']),
     age:function()
     {
         var today = new Date();
@@ -896,12 +896,18 @@ export default {
      $route(){
         this.fetchRDEData()
         this.displayUploadButton=false
+    },
+    selected_language: function (){
+      this.$store.dispatch('switchLanguage', this.selected_language)
+      // window.location.reload()
     }
   },
 
   mounted(){
     this.fetchRDEData()
     this.getProfileDetails()  
+    this.selected_language = this.activeLanguage.name
+
   }
 };
 </script>

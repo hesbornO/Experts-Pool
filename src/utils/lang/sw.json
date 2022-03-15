@@ -8,7 +8,9 @@
     "submit":"Wasilisha",
     "select_country":"chagua nchi",
     "click_to_select":"bofya ili kuchagua",
-    "log_in":"Ingia"
+    "log_in":"Ingia",
+    "log_out":"Toka nje"
+
   },
   "tables": {
     "home_table_headings": ["JINA", "UTAALAMU", "MKOA", "UTUMIZAJI WA SASA", "UWEZO", "HALI", "KITENDO"]
@@ -65,5 +67,40 @@
     "privacy_policy":"sera ya faragha",
     "already_have_an_account":"Tayari unayo akaunti",
     "log_in":"Ingia"
+  },
+  "rde_self_profile":{
+    "update_profile":"Sasisha Wasifu",
+    "welcome":"Karibu",
+    "click_below_to_register":"Bofya hapa chini kujiandikisha",
+    "create_profile":"Unda Wasifu",    
+    "status":"Hali",
+    "personal_details":"Maelezo ya Kibinafsi",
+    "location":"Mahali",
+    "full_name":"Jina kamili",
+    "years":"miaka",
+    "competencies":"Umahiri",
+    "qualifications":"Sifa",
+    "academic_qualifications":"Sifa za Kiakademia",
+    "no_qualifications_added":"Hakuna sifa zilizoongezwa",
+    "add_qualification":"Ongeza Sifa",
+    "no_experience_added":"Hakuna uzoefu ulioongezwa",
+    "add_experience":"Ongeza Uzoefu",
+    "no_reference_listed":"Hakuna marejeleo yaliyoongezwa",
+    "add_reference":"Ongeza Rejea",
+    "name":"Jina",
+    "type":"Aina",
+    "institution":"Taasisi",
+    "dates":"Tarehe",
+    "contact":"Wasiliana",
+    "description":"Maelezo",
+    "title":"Kichwa",
+    "actions":"Vitendo",
+    "professional_experience":"Uzoefu wa Kitaalam",
+    "references":"Marejeleo",
+    "recommendations":"Mapendekezo",
+    "no_recommendations":"Bado hakuna mapendekezo",
+    "no_deployments":"Bado hakuna usambazaji",
+    "deployments":"Usambazaji"
+
   }
 }

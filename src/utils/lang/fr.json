@@ -9,7 +9,9 @@
       "submit":"Nous faire parvenir",
       "select_country":"choisissez le pays",
       "click_to_select":"Cliquez pour sélectionner",
-      "log_in":"Connexion"
+      "log_in":"Connexion",
+      "log_out":"Se déconnecter"
+
 
 
     },
@@ -69,5 +71,41 @@
     "privacy_policy":"politique de confidentialité",
     "already_have_an_account":"Vous avez déjà un compte",
     "log_in":"Connexion"
+  },
+  "rde_self_profile":{
+    "update_profile":"Mettre à jour le profil",
+    "welcome":"Bienvenue",
+    "click_below_to_register":"Cliquez ci-dessous pour vous inscrire",
+    "create_profile":"Créer un profil",    
+    "status":"Statut",
+    "personal_details":"Détails personnels",
+    "location":"Lieu",
+    "full_name":"Nom et prénom",
+    "years":"ans",
+    "competencies":"Compétences",
+    "qualifications":"Qualifications",
+    "academic_qualifications":"Qualifications académiques",
+    "no_qualifications_added":"Aucune qualification ajoutée",
+    "add_qualification":"Ajouter une qualification",
+    "no_experience_added":"Aucune expérience ajoutée",
+    "add_experience":"Ajouter une expérience",
+    "no_reference_listed":"Aucune référence ajoutée",
+    "add_reference":"Ajouter une référence",
+    "name":"Nom",
+    "type":"Taper",
+    "institution":"Institution",
+    "dates":"Dates",
+    "contact":"Contact",
+    "description":"La description",
+    "title":"Titre",
+    "actions":"Actions",
+    "professional_experience":"Expérience professionnelle",
+    "references":"Les références",
+    "recommendations":"Recommandations",
+    "no_recommendations":"Pas encore de recommandations",
+    "no_deployments":"Pas encore de déploiements",
+    "deployments":"Déploiements"
+
+
   }
 }
