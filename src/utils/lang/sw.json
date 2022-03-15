@@ -65,5 +65,10 @@
     "privacy_policy":"sera ya faragha",
     "already_have_an_account":"Tayari unayo akaunti",
     "log_in":"Ingia"
+  },
+  "rde_self_profile":{
+    "welcome":"Karibu",
+    "click_below_to_register":"Bofya hapa chini kujiandikisha",
+    "create_profile":"Unda Wasifu"
   }
 }

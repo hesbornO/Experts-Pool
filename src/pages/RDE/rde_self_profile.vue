@@ -15,7 +15,7 @@
       <span>
           <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2 text-xl">
             <span class="py-5">
-              Welcome <span class="  text-gray-600 capitalize py-1">{{username}}</span>! Click below to register. <br>
+              {{activeLanguage.store.rde_self_profile.welcome}} <span class="  text-blue-600 capitalize py-1">{{username}}</span>! {{activeLanguage.store.rde_self_profile.click_below_to_register}}. <br>
             </span>
             <span class="flex justify-between">
               <span></span>
@@ -24,7 +24,7 @@
               class="btn btn-blue text-lg flex mb-5"            
               title="Click to register"
               >
-                <span class="px-1">Create Profile</span>
+                <span class="px-1">{{activeLanguage.store.rde_self_profile.create_profile}}</span>
               </router-link> 
                 <span></span>
             </span>
@@ -877,7 +877,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getErrorMessage']),
+    ...mapGetters(['getErrorMessage', 'allLanguages', 'activeLanguage']),
     age:function()
     {
         var today = new Date();
@@ -896,12 +896,18 @@ export default {
      $route(){
         this.fetchRDEData()
         this.displayUploadButton=false
+    },
+    selected_language: function (){
+      this.$store.dispatch('switchLanguage', this.selected_language)
+      // window.location.reload()
     }
   },
 
   mounted(){
     this.fetchRDEData()
     this.getProfileDetails()  
+    this.selected_language = this.activeLanguage.name
+
   }
 };
 </script>

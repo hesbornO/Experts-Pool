@@ -67,5 +67,10 @@
     "privacy_policy":"privacy policy",
     "already_have_an_account":"Already have an account",
     "log_in":"Log In"
+  },
+  "rde_self_profile":{
+    "welcome":"Welcome",
+    "click_below_to_register":"Click below to register",
+    "create_profile":"Create Profile"
   }
 }
