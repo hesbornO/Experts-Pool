@@ -67,7 +67,7 @@ const routes = [
         showInLeftBar: false
     },
     {
-      path:"/landing",
+      path:"/",
         name:"Landing",
         component: Landing,
         showInLeftBar: false
