@@ -53,7 +53,7 @@
       <ul class="flex items-center flex-shrink-0 space-x-6">
         
         <!-- Notifications menu -->
-        <select v-model="selected_language"  name="language" class="rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-full">
+        <select v-model="selected_language"  name="language" class="rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-28">
           <option v-for="(language, index) in allLanguages" :key="index" :value="language.name" class="px-2">{{language.name}}</option>
         </select>
       

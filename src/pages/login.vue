@@ -8,7 +8,7 @@
               <div class="">
                    <div class="flex justify-end">
                      <span class="">
-                       <select v-model="selected_language"  name="language" class="bg-blue-50 rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-full">
+                       <select v-model="selected_language"  name="language" class="bg-blue-50 rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-28">
                         <option v-for="(language, index) in allLanguages" :key="index" :value="language.name" class="px-2">{{language.name}}</option>
                       </select>
                      </span>
@@ -138,8 +138,8 @@ export default {
     ...mapGetters(['getCurrentToken','getErrorMessage', 'allLanguages', 'activeLanguage']),
   },
   mounted() {
+    this.$store.dispatch('switchLanguage', localStorage.getItem('active_language_name'))
     this.selected_language = this.activeLanguage.name
-
   },
   watch: {
     selected_language: function (){

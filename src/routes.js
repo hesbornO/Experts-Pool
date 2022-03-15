@@ -24,6 +24,7 @@ import SelfRegistrationForm from "./pages/RDE/rde-self-registration-form.vue";
 import ForgotPassword from "./pages/forgot-password.vue";
 import MyAccount from "./pages/my-account.vue";
 import PageNotFound from "./pages/404.vue";
+import Landing from "./pages/Landing"
 import modal_create_template from "./components/utilities/modal_create_template";
 import modal_update_template from "./components/utilities/modal_update_template";
 import modal_delete_template from "./components/utilities/modal_delete_template";
@@ -58,10 +59,17 @@ import outbreak_type from '@/schemas/outbreak_type.json'
 
 Vue.use(VueRouter);
 
-const routes = [{
-        path: "/",
+const routes = [
+    {
+        path: "/login",
         name: "Login",
         component: Login,
+        showInLeftBar: false
+    },
+    {
+      path:"/landing",
+        name:"Landing",
+        component: Landing,
         showInLeftBar: false
     },
     //home
