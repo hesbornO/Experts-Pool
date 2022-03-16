@@ -50,7 +50,9 @@
     "forgot_your_password":"Umesahau nenosiri yako",
     "dont_have_an_account":"Huna akaunti",
     "sign_up":"Jisajili",
-    "recover_password":"Rejesha nenosiri"
+    "recover_password":"Rejesha nenosiri",
+    "new_password":"Nenosiri mpya",
+    "confirm_new_password":"Thibitisha Nenosiri"
 
   },
   "sign_up_form":{

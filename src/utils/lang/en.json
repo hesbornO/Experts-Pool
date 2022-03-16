@@ -51,7 +51,9 @@
     "forgot_your_password":"Forgot your password",
     "dont_have_an_account":"Don't have an account",
     "sign_up":"Sign Up",
-    "recover_password":"Recover Password"
+    "recover_password":"Recover Password",
+    "new_password":"New Password",
+    "confirm_new_password":"Confirm New Password"
   },
   "sign_up_form":{
     "create_account":"Create Account",
