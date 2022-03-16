@@ -76,47 +76,13 @@
             </svg>
             <span class="px-1">{{activeLanguage.store.rde_self_profile.update_profile}}</span>
           </router-link>
-      
-          <!-- <router-link
-              :to="{name:'UpdateRDEStatus', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.last_name}}"
+          <router-link
+              :to="{name:'deactivateAccount', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.first_name?this.rdeSelfProfile.first_name.concat(' ').concat(this.rdeSelfProfile.last_name):''}}"
               class="btn btn-orange h-3/4 text-xs"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-            <span class="px-1">Update status</span>
-          </router-link> -->
-         
-          <button
-            :class="['flex rounded-md focus:outline-none focus:shadow-outline-purple',mode !== 'dark'?'':'']"
-            @click='changeStyle()'
-            aria-label="Toggle color mode" :title="`${mode==='dark'}`"
-          >
-            <template v-if="this.mode === 'dark'">
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                fill="dark"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                ></path>
-              </svg>
-            </template>
-            <template v-if="this.mode !== 'dark'">
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                fill="orange"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </template>
-          </button>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+            <span class="px-1">{{activeLanguage.store.rde_self_profile.deactivate_account}}</span>
+          </router-link>
 
         </span>      
       </span>
@@ -126,10 +92,12 @@
 
       <tabs :mode="mode" v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length > 0">      
         <!-- {{rdeSelfProfile}} -->
-        <tab :title="activeLanguage.store.rde_self_profile.personal_details" class="grid grid-cols-3 space-x-4">
+        <tab :title="activeLanguage.store.rde_self_profile.personal_details" >
           <span v-if="this.loading" class=" mt-5 flex justify-center">
             <loading></loading>
           </span>
+        <div class="md:grid md:grid-cols-3 space-x-4 ">
+
           <!-- name -->
           <span v-if="this.rdeSelfProfile.last_name" class="col-span-1 px-4 p-2">
             {{activeLanguage.store.rde_self_profile.full_name}}:
@@ -230,6 +198,7 @@
           <span>
             
           </span>
+        </div>
 
           <!-- next of kin details -->
           <!-- full name -->
@@ -573,8 +542,7 @@
 
               <!-- No CV -->
               <span v-if="!this.rdeSelfProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
-
-                No CV Uploaded. Please upload CV!
+                {{activeLanguage.store.rde_self_profile.no_cv}}
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach CV <span class="text-xs italic">(pdf and word docs)</span></span>
                     <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
@@ -623,8 +591,8 @@
           <span v-if="rdeSelfProfile.recommendations && !this.loading" class="col-span-2">
             <table class="w-full border border-black p-3" v-if="rdeSelfProfile.recommendations.length>0">
               <thead class="text-lg font-semibold font-mono border border-black p-2 ">
-                <th>Recommendation</th>
-                <th class="border border-black">Made By</th>
+                <th>{{activeLanguage.store.rde_self_profile.recommendations}}</th>
+                <th class="border border-black">{{activeLanguage.store.rde_self_profile.made_by}}</th>
               </thead>
               <tbody>
                 <tr v-for="(recommendation, index) in this.rdeSelfProfile.recommendations" :key="index" class="text-md border border-black">
@@ -639,59 +607,7 @@
           </span>         
         </tab>
         
-        <tab :title="activeLanguage.store.rde_self_profile.deployments" class="space-x-4 grid grid-cols-4">
-          <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
-            <loading></loading>
-          </span>
-          <span v-if="!this.loading && rdeDeployments" class="col-span-3">            
-            <table class="w-full col-span-3 border border-black p-3" v-if="rdeDeployments.length>0">
-              <thead class="text-lg font-semibold font-mono border border-black p-2 ">
-                <th class="border border-black">Outbreak</th>
-                <th class="border border-black">Description</th>
-                <th class="border border-black">Region</th>
-                <th class="border border-black">Start date</th>
-                <th class="border border-black">End date</th>
-              </thead>
-              <tbody>
-                <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
-                  <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
-                  <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
-                  <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
-                  <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
-                  <td class="border-l border-black p-2 text-xs">
-                    {{deployment.end_date?deployment.end_date:''}}
-                    <!-- <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date">
-                        <router-link
-                          :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
-                          class="btn btn-blue h-1/6 text-md"
-                        >
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
-
-                          <span class="px-1">End Deployment</span>
-                        </router-link>
-                    </span> -->
-                  </td>
-                </tr>
-              </tbody>
-            </table>            
-            <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
-              {{activeLanguage.store.rde_self_profile.no_deployments}}.
-            </span>
-          </span>
-          <span class="colspan-1 flex justify-end">
-            <!-- <router-link
-              :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.first_name?this.rdeSelfProfile.first_name.concat(' ').concat(this.rdeSelfProfile.last_name):''}}"
-              class="btn btn-blue h-1/6 text-md"
-              v-if="(this.rdeSelfProfile.application_status === 'approval_complete' || this.rdeSelfProfile.application_status === 'approved_by_partner_state') && !this.rdeSelfProfile.active_deployments>0"
-
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
-
-              <span class="px-1">Deploy</span>
-            </router-link> -->
-          </span>
-          
-        </tab>
+       
       </tabs>      
     </div> 
     <router-view></router-view>
@@ -738,8 +654,7 @@ export default {
       loading:false,
       username: '',
       displayUploadButton:false,
-      rdeQualifications:[]
-      
+      rdeQualifications:[]     
 
     }
   },
@@ -802,6 +717,7 @@ export default {
 
       //fetch academic RDE qualifications      
       this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
+        console.log('id:',this.rdeSelfProfile.id)
         if(resp.results.length > 0) {
           this.rdeQualifications = resp.results
         }

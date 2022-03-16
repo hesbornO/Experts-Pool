@@ -47,6 +47,22 @@ const actions = {
             })
         });
     },
+    requestPasswordChange( payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/request-password-change/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                console.log('url+payload:', relative_url)
+            }
+            api.post(relative_url, payload).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
     // logout({commit}, payload){
     //     return new Promise((resolve, reject)=>{
     //         api.post("/token/", payload).then(resp=>{

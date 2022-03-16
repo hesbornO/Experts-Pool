@@ -50,7 +50,8 @@
     "password":"Password",
     "forgot_your_password":"Forgot your password",
     "dont_have_an_account":"Don't have an account",
-    "sign_up":"Sign Up"
+    "sign_up":"Sign Up",
+    "recover_password":"Recover Password"
   },
   "sign_up_form":{
     "create_account":"Create Account",
@@ -71,6 +72,7 @@
   },
   "rde_self_profile":{
     "update_profile":"Update Profile",
+    "deactivate_account":"Deactivate Account",
     "welcome":"Welcome",
     "click_below_to_register":"Click below to register",
     "create_profile":"Create Profile",    
@@ -99,9 +101,13 @@
     "actions":"Actions",
     "references":"References",
     "recommendations":"Recommendations",
+    "made_by":"made by",
     "no_recommendations":"No recommendations yet",
     "no_deployments":"No deployments yet",
-    "deployments":"Deployments"
+    "no_cv":"No CV Uploaded. Please upload CV!",
+    "deployments":"Deployments",
+    "start_date":"Start date",
+    "end_date":"End date"
 
 
   }

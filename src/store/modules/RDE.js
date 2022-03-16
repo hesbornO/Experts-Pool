@@ -416,6 +416,7 @@ const actions = {
     },
     fetchQualificationsById({ commit }, payload) {
         return new Promise((resolve, reject) => {
+            console.log('payload:',payload)
             let relative_url = '/profile-academic-qualification/'
             if (payload === undefined) {
                 payload = ''

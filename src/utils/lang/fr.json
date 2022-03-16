@@ -53,7 +53,9 @@
     "password":"Mot de passe",
     "forgot_your_password":"Mot de passe oublié",
     "dont_have_an_account":"Je n'ai pas de compte",
-    "sign_up":"S'inscrire"
+    "sign_up":"S'inscrire",
+    "recover_password":"Récupérer mot de passe"
+
   },
   "sign_up_form":{
     "create_account":"Créer un Compte",
@@ -74,6 +76,7 @@
   },
   "rde_self_profile":{
     "update_profile":"Mettre à jour le profil",
+    "deactivate_account":"Désactiver le compte",
     "welcome":"Bienvenue",
     "click_below_to_register":"Cliquez ci-dessous pour vous inscrire",
     "create_profile":"Créer un profil",    
@@ -102,9 +105,13 @@
     "professional_experience":"Expérience professionnelle",
     "references":"Les références",
     "recommendations":"Recommandations",
+    "made_by":"faite par",
     "no_recommendations":"Pas encore de recommandations",
     "no_deployments":"Pas encore de déploiements",
-    "deployments":"Déploiements"
+    "no_cv":"Aucun CV téléchargé. Veuillez télécharger votre CV !",
+    "deployments":"Déploiements",
+    "start_date":"date de début",
+    "end_date":"date de fin"
 
 
   }

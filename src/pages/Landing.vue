@@ -63,9 +63,9 @@
             </div>
           </div>
 
-          <h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5">Sign Up</h2>
+          <h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5"><router-link :to="{name:'CreateAccount'}" >Sign Up</router-link></h2>
 
-          <p class="font-normal text-gray-400 text-sm md:text-lg">Click the signup button anc create your account</p>
+          <p class="font-normal text-gray-400 text-sm md:text-lg">Click on the <router-link :to="{name:'CreateAccount'}" class="text-blue-400">Sign Up</router-link> button to create your account</p>
         </div>
 
         <div class="text-center mb-10 md:mb-0">
@@ -79,7 +79,7 @@
 
           <h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5">Add details to your profile</h2>
 
-          <p class="font-normal text-gray-400 text-sm md:text-lg">We require your contact details, academic qualifications, work experience and availability information to add you to our database.</p>
+          <p class="font-normal text-gray-400 text-sm md:text-lg">We require your contact details, academic qualifications, work experience and availability information to add you to our pool of experts.</p>
         </div>
 
         <div class="text-center">
@@ -93,7 +93,7 @@
 
           <h2 class="font-semibold text-gray-700 text-xl md:text-3xl mb-5">Receive Deployment Requests</h2>
 
-          <p class="font-normal text-gray-400 text-sm md:text-lg">You will be notified in the event that a public health event occurs. Your deployment will be confirmed
+          <p class="font-normal text-gray-400 text-sm md:text-lg">You will be notified in the event that a <strong>public health event</strong>  occurs. Your deployment will be confirmed
           if you are available and meet the requirements</p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Home from "./pages/Home.vue";
 import admin_rde_profile from "./pages/admin_rde_profile.vue";
 import rde_profile_suggested from "./pages/outbreak/rde_profile_suggested.vue";
 import rde_self_profile from "./pages/RDE/rde_self_profile.vue";
+import rde_deployments from "./pages/RDE/rde_deployments.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
@@ -271,6 +272,24 @@ const routes = [
                         object_title: `' ${x.params.rdeName}'s ' details`,
                         object_id: x.params.rdeId,
                         optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
+                path: 'deactivate-account',
+                name: 'deactivateAccount',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: rde_schema,
+                        // vuex_fetch_action: 'fetchRDEById',
+                        // vuex_save_action: 'updateRDEById',
+                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_id: x.params.rdeId,
+                        // optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
                         size: 'w-3/4'
                     }
 
@@ -557,6 +576,60 @@ const routes = [
         roles: ['rde']
     },   
     
+    //rde deployments
+    {
+        path: '/rde-deployments',
+        name: 'RDEDeployments',
+        component: rde_deployments,
+        showInLeftBar: true,
+        icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+        verboseName: 'Deployments',
+        props: x => {
+            return {
+                vuex_data_action: 'fetchRDEById',
+                object_id: `?country=${x.params.countryId}`,
+                table_headings: ['NAME', 'Country', 'ACTION']
+            }
+        },
+        children: [            
+            {
+                path: 'accept-deployment/:rdeId/:rdeName',
+                name: 'acceptDeployment',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_experience_schema,
+                        // vuex_action: 'postRDEExperienceById',
+                        // moduleAction:"postRDEExperienceById",
+                        object_id: x.params.rdeId,
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName,
+                        size: 'max-w-5xl'
+                    }
+                }
+            },    
+            {
+                path: 'reject-deployment/:rdeId/:rdeName',
+                name: 'rejectDeployment',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_experience_schema,
+                        // vuex_action: 'postRDEExperienceById',
+                        // moduleAction:"postRDEExperienceById",
+                        object_id: x.params.rdeId,
+                        profile: x.params.rdeId,
+                        object_title: x.params.rdeName,
+                        size: 'max-w-5xl'
+                    }
+                }
+            },         
+        ],
+        roles: ['rde']
+    },   
+
     // self-registration
     {
         path: "/rde-self-registration-form",
