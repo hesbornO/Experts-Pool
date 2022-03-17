@@ -1,0 +1,20 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [
+        {
+            "component":"div",
+            "children":"Accept deployment request?"
+        },
+        {
+        "type": "text",
+        "label": "Accept deployment request?",
+        "name": "accepted_by_user",
+        "value":true,
+        "class":"hidden",
+        "readonly":true,
+        "validation": "required"
+    }
+]
+
+}]

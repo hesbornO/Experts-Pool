@@ -467,6 +467,34 @@ const actions = {
             })
         });
     },
+    // accept or reject deployment
+    // eslint-disable-next-line no-unused-vars
+    acceptOrRejectDeploymentById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            console.log("payload:",payload)
+            let relative_url = '/deployment/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment/" + payload.id + "/"
+                delete payload.id
+            }            
+            console.log(relative_url)
+            // 
+            api.patch(relative_url, 
+                payload
+              )
+              .then(function (response) {
+                resolve(response.data)
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+                reject(error.response.data)
+
+              });
+        });
+    },
 
 
 }

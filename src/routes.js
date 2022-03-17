@@ -48,6 +48,8 @@ import competence_schema from '@/schemas/competence_schema.json'
 import academic_qualification_type from '@/schemas/academic_qualification_type.json'
 import add_qualification_schema from '@/schemas/add_qualification_schema.json'
 import add_experience_schema from '@/schemas/add_experience_schema.json'
+import accept_deployment from '@/schemas/accept_deployment.json'
+import reject_deployment from '@/schemas/reject_deployment.json'
 import add_reference_schema from '@/schemas/add_reference_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import one_health_schema from '@/schemas/one_health.json'
@@ -582,7 +584,7 @@ const routes = [
         name: 'RDEDeployments',
         component: rde_deployments,
         showInLeftBar: true,
-        icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+        icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>',
         verboseName: 'Deployments',
         props: x => {
             return {
@@ -593,35 +595,33 @@ const routes = [
         },
         children: [            
             {
-                path: 'accept-deployment/:rdeId/:rdeName',
+                path: 'accept-deployment/:deploymentId/:outbreakName',
                 name: 'acceptDeployment',
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: add_experience_schema,
-                        // vuex_action: 'postRDEExperienceById',
-                        // moduleAction:"postRDEExperienceById",
-                        object_id: x.params.rdeId,
-                        profile: x.params.rdeId,
-                        object_title: x.params.rdeName,
+                        jsonSchema: accept_deployment,
+                        vuex_action: 'acceptOrRejectDeploymentById',
+                        moduleAction:"acceptDeployment",
+                        object_id: x.params.deploymentId,
+                        object_title: x.params.outbreakName,
                         size: 'max-w-5xl'
                     }
                 }
             },    
             {
-                path: 'reject-deployment/:rdeId/:rdeName',
+                path: 'reject-deployment/:deploymentId/:outbreakName',
                 name: 'rejectDeployment',
                 component: modal_create_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: add_experience_schema,
-                        // vuex_action: 'postRDEExperienceById',
-                        // moduleAction:"postRDEExperienceById",
-                        object_id: x.params.rdeId,
-                        profile: x.params.rdeId,
-                        object_title: x.params.rdeName,
+                        jsonSchema: reject_deployment,
+                        vuex_action: 'acceptOrRejectDeploymentById',
+                        moduleAction:"rejectDeployment",
+                        object_id: x.params.deploymentId,
+                        object_title: x.params.outbreakName,
                         size: 'max-w-5xl'
                     }
                 }

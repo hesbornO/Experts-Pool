@@ -24,34 +24,34 @@
               <th class="border border-black">{{activeLanguage.store.rde_self_profile.end_date}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_profile.actions}}</th>
             </thead>
-            <tbody>
-              <div v-if="rdeDeployments.length>0">
+            <tbody v-if="rdeDeployments.length>0">
                 <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
-                  <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
+                  <td class="border-l border-black p-2 uppercase font-mono text-blue-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
                   <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
                   <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
                   <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
-                  <td class="border-l border-black p-2 text-xs">
+                  <td class="border-l border-r border-black p-2 text-xs">
                     {{deployment.end_date?deployment.end_date:''}}                   
                   </td>
-                  <td class="border-l border-black p-2 text-xs flex">
+                  <td class=" border-black p-2 text-xs grid grid-cols-1 ">
                     <router-link
-                        :to="{name:'acceptDeployment', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.first_name?this.rdeSelfProfile.first_name.concat(' ').concat(this.rdeSelfProfile.last_name):''}}"
-                        class="btn btn-green h-3/4 text-xs"
+                        :to="{name:'acceptDeployment', params:{deploymentId:deployment.id,rdeId:rdeSelfProfile.id, outbreakName: deployment.outbreak.name?deployment.outbreak.name:''}}"
+                        class="btn btn-green h-3/4 text-xs text-white col-span-1 bg-green-500"
+                        v-if="!deployment.accepted_by_user && !deployment.rejected_by_user"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                      <span class="px-1">{{activeLanguage.store.rde_self_profile.update_profile}}</span>
+                      <span class="px-1">{{activeLanguage.store.rde_self_profile.accept_request}}</span>
                     </router-link>
                     <router-link
-                        :to="{name:'rejectDeployment', params:{rdeId:this.rdeSelfProfile.id, rdeName: this.rdeSelfProfile.first_name?this.rdeSelfProfile.first_name.concat(' ').concat(this.rdeSelfProfile.last_name):''}}"
-                        class="btn btn-green h-3/4 text-xs"
+                        :to="{name:'rejectDeployment', params:{deploymentId:deployment.id, rdeId:rdeSelfProfile.id, outbreakName: deployment.outbreak.name?deployment.outbreak.name:''}}"
+                        class="btn btn-red h-3/4 text-xs text-white col-span-1 bg-red-400"
+                        v-if="!deployment.accepted_by_user && !deployment.rejected_by_user"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                      <span class="px-1">{{activeLanguage.store.rde_self_profile.update_profile}}</span>
+                      <span class="px-1">{{activeLanguage.store.rde_self_profile.reject_request}}</span>
                     </router-link>
                   </td>
                 </tr>
-              </div>
             </tbody>
           </table>            
           <div v-if="rdeDeployments.length===0" class="col-span-4 border border-black">
