@@ -49,6 +49,8 @@ import academic_qualification_type from '@/schemas/academic_qualification_type.j
 import add_qualification_schema from '@/schemas/add_qualification_schema.json'
 import add_experience_schema from '@/schemas/add_experience_schema.json'
 import accept_deployment from '@/schemas/accept_deployment.json'
+import activate_account from '@/schemas/activate_account.json'
+import deactivate_account from '@/schemas/deactivate_account.json'
 import reject_deployment from '@/schemas/reject_deployment.json'
 import add_reference_schema from '@/schemas/add_reference_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
@@ -429,15 +431,32 @@ const routes = [
                 }
             },
             {
-                path: 'deactivate-profile',
-                name: 'DeactivateProfile',
-                component: modal_update_template,
+                path: 'activate-profile/:rdeId/:rdeName',
+                name: 'activateProfile',
+                component: modal_create_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        vuex_action: 'deactivateProfile',
-                        vuex_payload: x.params.rdeId,
-                        object_title: x.params.rdeName
+                        jsonSchema:activate_account,
+                        vuex_action: 'updateRDEById',
+                        moduleAction:'activateProfile',
+                        object_id: x.params.rdeId,
+                        object_title: x.params.rdeName,
+                    }
+                }
+            },
+            {
+                path: 'deactivate-profile/:rdeId/:rdeName',
+                name: 'deactivateProfile',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema:deactivate_account,
+                        vuex_action: 'updateRDEById',
+                        moduleAction:'deactivateProfile',
+                        object_id: x.params.rdeId,
+                        object_title: x.params.rdeName,
                     }
                 }
             },

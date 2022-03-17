@@ -43,7 +43,7 @@
                         type="button"
                         @click="executeAction">
                   <div class="flex flex-row justify-between gap-x-2">
-                    <p>{{moduleAction==='acceptDeployment'?'Accept':moduleAction==='rejectDeployment'?'Reject':'Save'}}</p> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <p>{{moduleAction==='acceptDeployment'?'Accept':moduleAction==='rejectDeployment'?'Reject':moduleAction==='deactivateProfile'?'Confirm':moduleAction==='activateProfile'?'Confirm':'Save'}}</p> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                   </div>
                 </button>
               </div>
@@ -125,7 +125,7 @@ export default {
         } 
       }else{
         payload = this.form
-        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById' || this.moduleAction==='acceptDeployment' || this.moduleAction==='rejectDeployment'){
+        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById' || this.moduleAction==='acceptDeployment' || this.moduleAction==='rejectDeployment' || this.moduleAction==='deactivateProfile' || this.moduleAction==='activateProfile'){
           if(this.form.profile) delete payload.profile
           
           if(this.moduleAction ==='postRDEExperienceById') payload={professional_experience:[payload]}
@@ -133,6 +133,7 @@ export default {
           if(this.moduleAction ==='postRDEReferenceById') payload={references:[payload]}
 
           payload.id=this.object_id
+          console.log('payload/form:',payload)
         } 
         
       }

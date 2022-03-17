@@ -78,6 +78,7 @@
   "rde_self_profile":{
     "update_profile":"Mettre à jour le profil",
     "deactivate_account":"Désactiver le compte",
+    "activate_account":"Activer le compte",
     "welcome":"Bienvenue",
     "click_below_to_register":"Cliquez ci-dessous pour vous inscrire",
     "create_profile":"Créer un profil",    
