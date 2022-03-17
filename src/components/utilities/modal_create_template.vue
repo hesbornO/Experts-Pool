@@ -139,7 +139,7 @@ export default {
       }
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(
-              ""+ this.object_title + " Created Successfully"
+              ""+ this.object_title + (this.moduleAction==='activateProfile'?' activated':this.moduleAction==='deactivateProfile'?' deactivated':'Created')+ "  Successfully"
           )
           this.hidden = true;
           this.back()
