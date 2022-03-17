@@ -495,7 +495,7 @@
               <th class="border border-black">{{activeLanguage.store.rde_self_registration_form.region}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_profile.start_date}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_profile.end_date}}</th>
-              <th class="border border-black">{{activeLanguage.store.rde_self_profile.actions}}</th>
+              <th class="border border-black">{{activeLanguage.store.rde_self_profile.status}}</th>
             </thead>
             <tbody v-if="rdeDeployments.length>0">
                 <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
@@ -516,7 +516,7 @@
                     </span>
                   </td>
                   <td class="border-l border-black p-2 text-xs">
-                    <span v-if="rdeProfile.active_deployments>0" :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?'Successfully deployed':'Request sent'}}</span>
+                    <span v-if="rdeProfile.active_deployments>0" :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?'Successfully deployed':deployment.rejected_by_user?'Request rejected':'Request sent'}}</span>
                   </td>
                 </tr>
             </tbody>

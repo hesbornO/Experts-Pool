@@ -9,7 +9,9 @@
     "select_country":"chagua nchi",
     "click_to_select":"bofya ili kuchagua",
     "log_in":"Ingia",
-    "log_out":"Toka nje"
+    "log_out":"Toka nje",
+    "upload_report":"Pakia Ripoti"
+
 
   },
   "tables": {

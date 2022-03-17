@@ -155,6 +155,7 @@ const actions = {
             })
         })
     },
+    // CV
     uploadCVById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile_cv/'
@@ -178,6 +179,36 @@ const actions = {
             }
             api.get(relative_url).then(resp => {
                 commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    // deployment report
+    // eslint-disable-next-line no-unused-vars
+    uploadReportById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment-report/'
+            
+            api.post(relative_url, payload, {headers:{'Content-Type':'multipart/form-data'}}).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    fetchReport({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment-report/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment-report/" + payload
+            }
+            api.get(relative_url).then(resp => {
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)

@@ -667,11 +667,11 @@ export default {
       formData.append('cv', document.getElementById(field_id).files[0])
       this.$store.dispatch('uploadCVById', formData).then(()=>{
         this.$toast.success("uploaded")
-        location.reload()
+        this.fetchRDEData()
+        this.getProfileDetails()  
       }).catch(err=>{
         console.log(err)
       })
-      // location.reload()
     },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
@@ -813,7 +813,6 @@ export default {
     },
     selected_language: function (){
       this.$store.dispatch('switchLanguage', this.selected_language)
-      // window.location.reload()
     }
   },
 

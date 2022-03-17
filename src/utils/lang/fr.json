@@ -10,9 +10,8 @@
       "select_country":"choisissez le pays",
       "click_to_select":"Cliquez pour sélectionner",
       "log_in":"Connexion",
-      "log_out":"Se déconnecter"
-
-
+      "log_out":"Se déconnecter",
+      "upload_report":"Télécharger le rapport"
 
     },
   "tables": {

@@ -50,6 +50,105 @@
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                       <span class="px-1">{{activeLanguage.store.rde_self_profile.reject_request}}</span>
                     </router-link>
+                    <!-- Report -->
+                    <div class="col-start-2 col-end-4  mt-5 ml-20" v-if="deployment.status='ended'">
+                      <span v-if="loading" class=" mt-5 flex justify-center">
+                        <loading></loading>
+                      </span>
+                      <div class="">          
+                        <!-- Report exists -->
+                        <span v-if="deployment.deployment_report && !loading" class="">  
+                          <span class="flex justify-between p-4">  
+                            <span></span>              
+                            <span class="text-yellow-700 font-semibold text-base">Report</span>      
+                            <span></span>              
+                          </span>  
+                          <span class="grid grid-cols-2 justify-between p-4">
+                            <span class="col-span-1">
+                              <button @click="togglePdfDisplay('fetchCV','viewPdf',deployment.deployment_report)" 
+                                class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+                                >
+                                <span>View</span>
+                              </button>
+                            </span>
+                            <span class="col-span-1">
+                              <span>
+                                <button
+                                    class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
+                                  {{displayUploadButton?'Close':'Update'}}
+                                </button>
+                              </span>
+                            </span>
+                          </span>
+                          <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2">
+                            <label class="block mt-4 text-sm">
+                              <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach Report <span class="text-xs italic">(pdf and word docs)</span></span>
+                              <div
+                                  class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+                              >
+                                <input  type="file"
+                                        id="newCV"
+                                        :name="form.deployment_report"
+                                        @change="displaySubmit('newCV')"
+                                        class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                        placeholder="john.doe@gmail.com"
+                                        validation="required"  
+                                        accept=".pdf" 
+                                />        
+                                  <!-- <span v-if="getErrorMessage['deployment_report']">
+                                  <span v-if="getErrorMessage['deployment_report'].length>0">
+                                    <span v-for="(error,index) in getErrorMessage['deployment_report']" :key="index">
+                                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                                    </span>
+                                  </span> 
+                                </span>   -->
+                              </div>
+                            </label>  
+
+                            <span class="flex justify-between p-2">
+                              <span></span>
+                              <span></span>
+                              <button :class="['hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue',loading?'cursor-not-allowed':'']"  @click="saveReport('newCV', deployment.id)" v-if="fileUploaded"> {{activeLanguage.store.actions.submit}}</button>
+                            </span>
+                          </span>
+                        </span>
+
+                        <!-- No Report -->
+                        <span v-if="!deployment.deployment_report && !loading" class="text-semibold text-orange-300 p-2">
+                          <label class="block mt-4 text-sm">
+                              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.actions.upload_report}} <span class="text-xs italic">('.pdf', '.word')</span></span>
+                              <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
+                                <input  
+                                  type="file"
+                                  id="noCVFile"
+                                  :name="form.deployment_report"
+                                  @change="displaySubmit('noCVFile')"
+                                  class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+                                  placeholder="john.doe@gmail.com"
+                                  validation="required"  
+                                  accept=".pdf" 
+                                />        
+                                  <span v-if="getErrorMessage['deployment_report']">
+                                  <span v-if="getErrorMessage['deployment_report'].length>0">
+                                    <span v-for="(error,index) in getErrorMessage['deployment_report']" :key="index">
+                                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                                    </span>
+                                  </span>
+                                </span>   
+                              </div>
+                            </label>
+                          
+
+                          <span class="flex justify-between p-2">
+                              <span></span>
+                              <span></span>
+                              <button :class="['hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue',loading?'cursor-not-allowed':'']"  @click="saveReport('noCVFile',deployment.id)" v-if="fileUploaded"> {{activeLanguage.store.actions.submit}}</button>
+                            </span>
+                          
+                        </span>
+                      </div>
+                    </div>  
+                    <!-- End of report -->
                   </td>
                 </tr>
             </tbody>
@@ -103,6 +202,7 @@ export default {
       viewPdf: false,
       viewPdfToUpload: false,
       RDEcv:'',
+      report:'',
       fileUploaded:0,
       loading:false,
       username: '',
@@ -112,21 +212,22 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
+    ...mapActions(['uploadReportById','fetchReport','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
     displaySubmit(field_id){
       if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
     },
-    saveCV(field_id){
+    saveReport(field_id,deployment_id){
+      this.loading=true
       let formData = new FormData()
-      formData.append('profile_id',this.rdeSelfProfile.id)
-      formData.append('cv', document.getElementById(field_id).files[0])
-      this.$store.dispatch('uploadCVById', formData).then(()=>{
+      formData.append('profile_deployment_id',deployment_id)
+      formData.append('deployment_report', document.getElementById(field_id).files[0])
+      this.$store.dispatch('uploadReportById', formData).then(()=>{
         this.$toast.success("uploaded")
-        location.reload()
+        this.fetchRDEData()
       }).catch(err=>{
         console.log(err)
       })
-      // location.reload()
+      this.loading=false
     },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
@@ -198,7 +299,7 @@ export default {
         this.mode = 'dark'
       }
     },
-     togglePdfDisplay(action, pdf_bool) {
+     togglePdfDisplay(action, pdf_bool,deployment_report) {
       if(pdf_bool==='viewPdf'){
         this.viewPdf = !this.viewPdf;
       }
@@ -208,16 +309,10 @@ export default {
       if(action==='fetchCV'){
         console.log('fetching cv')
         this.loading=true
-        this.$store.dispatch('fetchRDEcv', this.rdeSelfProfile.id).then(resp=>{
-          this.RDEcv = resp
-          console.log("response", resp)
-          let relative_url=resp.cv.replace('/media/media','media')
-          window.open(baseUrl+relative_url, '_blank')
-        }).catch(err=>{
-          this.$store.dispatch('setErrorMsg',err.data)
-        }).then(()=>{
+        
           this.loading=false
-        })
+          let relative_url=deployment_report.replace('/media/media','media')
+          window.open(baseUrl+relative_url, '_blank')
       }
 
     },
@@ -268,7 +363,6 @@ export default {
     },
     selected_language: function (){
       this.$store.dispatch('switchLanguage', this.selected_language)
-      // window.location.reload()
     }
   },
 
