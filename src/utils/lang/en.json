@@ -110,6 +110,7 @@
     "no_recommendations":"No recommendations yet",
     "no_deployments":"No deployments yet",
     "no_cv":"No CV Uploaded. Please upload CV!",
+    "attach_cv":"Attach CV!",
     "deployments":"Deployments",
     "deployment_request":"Deployment request",
     "accept_request":"Accept request",

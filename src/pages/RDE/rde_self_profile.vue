@@ -248,7 +248,7 @@
             </span>
           </span>
 
-          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-semibold text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span>
+          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-semibold text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
           <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
             <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
               <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
@@ -283,7 +283,6 @@
                       <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.dates}}</td>
                       <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>                    
                     </thead>
-
                     <tbody>
                       <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
                         <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
@@ -293,7 +292,7 @@
                         <td class="p-3  border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEQualification', params:{}}"
+                              :to="{name:'updateRDEQualification', params:{currentItemIndex:index,currentItem:qualification, allItems:rdeQualifications}}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -302,7 +301,7 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEQualification', params:{qualificationId:qualification.id,qualificationName:qualification.field_of_study}}"
+                              :to="{name:'deleteRDEQualification', params:{currentItemIndex:index, currentItem:qualification, allItems:rdeQualifications}}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -365,7 +364,7 @@
                         <td class="p-3  border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEExperience', params:{}}"
+                              :to="{name:'updateRDEExperience', params:{currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience}}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -374,7 +373,7 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEExperience', params:{}}"
+                              :to="{name:'deleteRDEExperience', params:{currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience}}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -388,7 +387,7 @@
                 </div>
                 <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_experience_added}}.</div>     
 
-                <!-- add qualification button -->
+                <!-- add experience button -->
                 <button class="flex justify-between w-full px-4 py-2 ">
                   <span></span>
                   <span class="">
@@ -440,7 +439,7 @@
                         <td class="p-3  border-l border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEReference', params:{}}"
+                              :to="{name:'updateRDEReference', params:{currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references}}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -449,7 +448,7 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEReference', params:{}}"
+                              :to="{name:'deleteRDEReference', params:{currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references}}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >

@@ -60,7 +60,7 @@
                         <span v-if="deployment.deployment_report && !loading" class="">  
                           <span class="flex justify-between p-4">  
                             <span></span>              
-                            <span class="text-yellow-700 font-semibold text-base">Report</span>      
+                            <span class="text-yellow-700 font-semibold text-base">Deployment Report</span>      
                             <span></span>              
                           </span>  
                           <span class="grid grid-cols-2 justify-between p-4">

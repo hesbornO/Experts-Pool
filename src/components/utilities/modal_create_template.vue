@@ -97,6 +97,9 @@ export default {
     profile:[String, Number],
     moduleName:[String, Number],
     moduleAction:[String],
+    currentItem:[String,Array,Object],
+    currentItemIndex:[String,Array,Object,Number],
+    allItems:[String,Array],
 
   },
   created(){
@@ -155,6 +158,14 @@ export default {
       this.$router.back()
     },
     tryOptions(){
+      if(this.moduleAction==='updateRDEQualification' || this.moduleAction==='deleteRDEQualification' || this.moduleAction==='updateRDEexperience' || this.moduleAction==='deleteRDEexperience' || this.moduleAction==='updateRDEReference' || this.moduleAction==='deleteRDEReference'){
+        this.form=this.currentItem
+        if(this.moduleAction==='updateRDEQualification' || this.moduleAction==='deleteRDEQualification'){
+          if(this.currentItem.qualification_type) this.form.qualification_type_id=this.currentItem.qualification_type.value
+        } 
+        this.$forceUpdate()
+        console.log('form',this.form)
+      }
       if (this.optionsList.length>0){
         this.fetchOptions()
       }else{
