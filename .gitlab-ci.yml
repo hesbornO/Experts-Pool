@@ -30,7 +30,7 @@ deploy-production-environemt:
     - cd dist
     - touch index.html; cd ..;
     - ls dist
-    - sshpass -p EAC@1234 ssh -o "StrictHostKeyChecking=no" -tt administrator@196.41.38.246 'rm -rf /var/www/eac_rde_frontend/*'
+    - sshpass -p EAC@1234 ssh -o "StrictHostKeyChecking=no" administrator@196.41.38.246 'rm -rf /var/www/eac_rde_frontend/*'
     #- sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" "mkdir /var/www/html/eac_rde_frontend"
     #- script -qc 'sshpass -p "EAC@1234" scp -r dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend' /dev/null
     #- script -qc 'sshpass -p "EAC@1234" scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend' >2 /dev/null
