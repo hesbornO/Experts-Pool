@@ -1,24 +1,21 @@
-
-
-
 stages:
-  # - build
+  - build
   - deploy
-# build:
-#   image: node:14
-#   stage: build
-#   allow_failure: false
-#   tags:
-#     - shared
-#   script:
-#     - echo "run install"
-#     - npm install --progress=false
-#     - echo "building UI"
-#     - npm run build
-#   artifacts:
-#     expire_in: 1 week
-#     paths:
-#       - dist
+build:
+  image: node:14
+  stage: build
+  allow_failure: false
+  tags:
+    - shared
+  script:
+    - echo "run install"
+    - npm install --progress=false
+    - echo "building UI"
+    - npm run build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - dist
 deploy-production-environemt:
   stage: deploy
   image: ubuntu:20.04
@@ -29,10 +26,10 @@ deploy-production-environemt:
   # when: on_success
   script:
     - apt-get update -qq && apt-get install -y -qq sshpass
-    # - ls dist
-    # - sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" rm -rf /var/www/html/eac_rde_frontend
-    # - sshpass -p 'EAC@1234' scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend
-    - script -qc "sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" service nginx restart" /dev/null
+    - ls dist
+    - script -qc "sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" rm -rf /var/www/html/eac_rde_frontend" /dev/null
+    - script -qc "sshpass -p 'EAC@1234' scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend" /dev/null
+    - script -qc "script -qc "sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" service nginx restart" /dev/null
     # - sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246"  . /root/fast_duka_dash/deploy.sh
     # - "echo Deploying the current release..."
     # - sshpass -p "${STAGING_SERVER_PASSWORD}" scp -P "${SERVER_SSH_PORT}" -r BloodBank.WebUI/* "${STAGING_SERVER_USERNAME}"@"${STAGING_SERVER}":/var/www/bloodbank.health.go.ke/
