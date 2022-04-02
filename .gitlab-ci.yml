@@ -31,8 +31,8 @@ deploy-production-environemt:
     - touch index.html; cd ..;
     - ls dist
     #- sshpass -p "${prod_user_password}" ssh "${prod_user_username}"@"${prod_user_url}" "rm -rf /var/www/html/eac_rde_frontend/*; mkdir /var/www/html/eac_rde_frontend; ls /var/www/html"
-    - script -qc 'sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" "rm -rf /var/www/html/eac_rde_frontend/"' /dev/null
-    - script -qc 'sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" "mkdir /var/www/html/eac_rde_frontend"' /dev/null
+    - sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" "rm -rf /var/www/html/eac_rde_frontend/"
+    - sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" "mkdir /var/www/html/eac_rde_frontend"
     - script -qc 'sshpass -p "EAC@1234" scp -r dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend' /dev/null
     - script -qc 'sshpass -p "EAC@1234" scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend' >2 /dev/null
     - script -qc 'sshpass -p "${prod_user_password}" ssh "${prod_user_username}"@"${prod_user_url}" "service nginx restart"'
