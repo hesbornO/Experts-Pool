@@ -1,0 +1,38 @@
+
+
+
+stages:
+  - build
+  - deploy
+build:
+  image: node:14
+  stage: build
+  allow_failure: false
+  tags:
+    - shared
+  script:
+    - echo "run install"
+    - npm install --progress=false
+    - echo "building UI"
+    - npm run build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - dist
+deploy-production-environemt:
+  stage: deploy
+  image: ubuntu:20.04
+  only:
+    - production
+  tags:
+    - shared
+  when: on_success
+  script:
+    - ls dist
+    - sshpass ssh -p "EAC@1234" "administrator"@"196.41.38.246" rm -rf /var/www/html/eac_rde_frontend
+    - sshpass -p 'EAC@1234' scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend
+    - sshpass ssh -p "EAC@1234" "administrator"@"196.41.38.246" service nginx restart
+    # - sshpass ssh -p "EAC@1234" "administrator"@"196.41.38.246"  . /root/fast_duka_dash/deploy.sh
+    # - "echo Deploying the current release..."
+    # - sshpass -p "${STAGING_SERVER_PASSWORD}" scp -P "${SERVER_SSH_PORT}" -r BloodBank.WebUI/* "${STAGING_SERVER_USERNAME}"@"${STAGING_SERVER}":/var/www/bloodbank.health.go.ke/
+    # - sshpass -p "${STAGING_SERVER_PASSWORD}" ssh "${STAGING_SERVER_USERNAME}"@"${STAGING_SERVER}" -p "${SERVER_SSH_PORT}" ". ~/scripts/reload-service.sh bloodbank-webui.service"
