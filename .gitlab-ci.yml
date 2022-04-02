@@ -28,6 +28,7 @@ deploy-production-environemt:
     - shared
   # when: on_success
   script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
     # - ls dist
     # - sshpass ssh -p "EAC@1234" "administrator"@"196.41.38.246" rm -rf /var/www/html/eac_rde_frontend
     # - sshpass -p 'EAC@1234' scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend
