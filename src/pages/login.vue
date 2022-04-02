@@ -20,7 +20,7 @@
                     </div>
                     <div class="text-2xl font-bold py-4 ">
                       <p class="flex items-center justify-center">EAC</p>  
-                      <p class="flex items-center justify-center"> Rapidly Deployable Experts</p>
+                      <p class="flex items-center justify-center"> Rapidly Deployable Experts Portal</p>
                     </div>
 
               </div>
