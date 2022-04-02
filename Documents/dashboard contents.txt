@@ -1,0 +1,6 @@
+RDE dashboard contents
+1) Total number of fully approved RDES
+2) Total number of pending RDES
+3) Total number of outbreaks
+4) Total number of active outbreaks
+5) Chart of total number of RDES per country
