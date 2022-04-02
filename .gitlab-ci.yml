@@ -26,7 +26,7 @@ deploy-production-environemt:
     - production
   tags:
     - shared
-  when: on_success
+  # when: on_success
   script:
     # - ls dist
     # - sshpass ssh -p "EAC@1234" "administrator"@"196.41.38.246" rm -rf /var/www/html/eac_rde_frontend
