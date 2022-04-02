@@ -32,12 +32,5 @@ deploy-production-environemt:
     - ls dist
     - sshpass -p "EAC@1234" ssh  -o "StrictHostKeyChecking=no" administrator@196.41.38.246 "rm -rf /var/www/html/eac_rde_frontend/*"
     - sshpass -p "EAC@1234" scp -r dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend
+    - sshpass -p "EAC@1234" ssh  -o "StrictHostKeyChecking=no" administrator@196.41.38.246 "service nginx restart"
 
-    #- sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246" "mkdir /var/www/html/eac_rde_frontend"
-    #- script -qc 'sshpass -p "EAC@1234" scp -r dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend' /dev/null
-    #- script -qc 'sshpass -p "EAC@1234" scp dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend' >2 /dev/null
-    #- script -qc 'sshpass -p "${prod_user_password}" ssh "${prod_user_username}"@"${prod_user_url}" "service nginx restart"'
-    # - sshpass -p "EAC@1234" ssh "administrator"@"196.41.38.246"  . /root/fast_duka_dash/deploy.sh
-    # - "echo Deploying the current release..."
-    # - sshpass -p "${STAGING_SERVER_PASSWORD}" scp -P "${SERVER_SSH_PORT}" -r BloodBank.WebUI/* "${STAGING_SERVER_USERNAME}"@"${STAGING_SERVER}":/var/www/bloodbank.health.go.ke/
-    # - sshpass -p "${STAGING_SERVER_PASSWORD}" ssh "${STAGING_SERVER_USERNAME}"@"${STAGING_SERVER}" -p "${SERVER_SSH_PORT}" ". ~/scripts/reload-service.sh bloodbank-webui.service"
