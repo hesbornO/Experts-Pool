@@ -9,7 +9,9 @@
     "select_country":"chagua nchi",
     "click_to_select":"bofya ili kuchagua",
     "log_in":"Ingia",
-    "log_out":"Toka nje"
+    "log_out":"Toka nje",
+    "upload_report":"Pakia Ripoti"
+
 
   },
   "tables": {
@@ -49,7 +51,11 @@
     "password":"Nenosiri",
     "forgot_your_password":"Umesahau nenosiri yako",
     "dont_have_an_account":"Huna akaunti",
-    "sign_up":"Jisajili"
+    "sign_up":"Jisajili",
+    "recover_password":"Rejesha nenosiri",
+    "new_password":"Nenosiri mpya",
+    "confirm_new_password":"Thibitisha Nenosiri"
+
   },
   "sign_up_form":{
     "create_account":"Tengeneza Akaunti",
@@ -70,6 +76,8 @@
   },
   "rde_self_profile":{
     "update_profile":"Sasisha Wasifu",
+    "deactivate_account":"Zima Akaunti",
+    "activate_account":"Washa Akaunti",
     "welcome":"Karibu",
     "click_below_to_register":"Bofya hapa chini kujiandikisha",
     "create_profile":"Unda Wasifu",    
@@ -98,9 +106,22 @@
     "professional_experience":"Uzoefu wa Kitaalam",
     "references":"Marejeleo",
     "recommendations":"Mapendekezo",
+    "make_recommendation":"Toa pendekezo",
+    "made_by":"Aliyependekeza",
     "no_recommendations":"Bado hakuna mapendekezo",
     "no_deployments":"Bado hakuna usambazaji",
-    "deployments":"Usambazaji"
+    "no_cv":"Hakuna CV Iliyopakiwa. Tafadhali pakia CV!",
+    "attach_cv":"Attach CV!",
+    "deployments":"Usambazaji",
+    "deployment_request":"Ombi la kusambazwa",
+    "accept_request":"Kubali ombi",
+    "reject_request":"Kataa ombi",
+    "disapprove":"Usiidhinishe",
+    "approve":"Idhinisha",
+    "deploy":"peleka",
+    "end_deployment":"Kamilisha",
+    "start_date":"tarehe ya kuanza",
+    "end_date":"tarehe ya mwisho"
 
   }
 }

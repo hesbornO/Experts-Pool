@@ -56,92 +56,10 @@
       <span class="col-span-2"></span>
       <!-- Pagination -->
       <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-          <nav aria-label="Table navigation">
-            <ul class="inline-flex items-center">
-              <li>
-                <button
-                    aria-label="Previous"
-                    class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                >
-                  <svg
-                      aria-hidden="true"
-                      class="w-4 h-4 fill-current"
-                      viewBox="0 0 20 20"
-                  >
-                    <path
-                        clip-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  1
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  2
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  3
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  4
-                </button>
-              </li>
-              <li>
-                <span class="px-3 py-1">...</span>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  8
-                </button>
-              </li>
-              <li>
-                <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-                >
-                  9
-                </button>
-              </li>
-              <li>
-                <button
-                    aria-label="Next"
-                    class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                >
-                  <svg
-                      aria-hidden="true"
-                      class="w-4 h-4 fill-current"
-                      viewBox="0 0 20 20"
-                  >
-                    <path
-                        clip-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </span>
+        <button :class="['text-gray-700 disabled:text-gray-400  disabled:cursor-not-allowed']" @click="changePage('previous')" :disabled="page===1?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+        <span class="bg-blue-400 text-white rounded-full px-2">{{page}}</span>  
+        <button :class="['text-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed']" @click="changePage('next')" :disabled="pageResult.length<1?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>  
+      </span>
     </div>
   </div>
 </template>
@@ -154,7 +72,8 @@ export default {
   data(){
     return {
       pageResult:[],
-      loading : false
+      loading : false,
+      page:1
     }
   },
   props: {
@@ -176,10 +95,23 @@ export default {
     goBack(){
       this.$router.back()
     },
+    changePage(where){
+      if(where==='previous'){
+        this.page-=1
+        this.pageResult=[] 
+        this.fetchData()
+      }
+      if(where==='next'){
+        this.page+=1
+        this.pageResult=[] 
+        this.fetchData()
+      } 
+      
+    },    
     fetchData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:'').then(resp => {
+       this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
          this.pageResult = resp
 
        }).catch(err=>{

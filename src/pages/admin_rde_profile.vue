@@ -8,7 +8,24 @@
         Back
       </button>
       <span>
-        <button class='flex justify-end p-1 px-2 rounded-md bg-blue-400 hover:bg-blue-600 hover:animate-pulse text-white' @click='changeStyle()'>Switch theme</button>
+        <router-link
+            :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+            class="btn btn-green h-3/4 text-xs mr-1"
+            v-if="this.rdeProfile.application_status === 'pending_approval'"
+            title="Click to approve"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span class="px-1">{{activeLanguage.store.rde_self_profile.approve}}</span>
+          </router-link>
+          <router-link
+              :to="{name:'EAC_DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
+              class="btn btn-orange h-3/4 text-xs mr-1"
+              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0"
+              title="Click to disapprove"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span class="px-1">{{activeLanguage.store.rde_self_profile.disapprove}}</span>
+          </router-link>
       </span>
     </span>
     <hr class="pt-2 pb-2">
@@ -23,51 +40,12 @@
               </span>
               <span v-if="this.rdeProfile.application_status==='approval_complete'" class="flex">
                 <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
-                <svg class="w-4 h-4 text-green-500 font-semibold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" ></path></svg>
               </span>
         </span>
         <span class="flex ">
-          <!-- Partner State -->
-          <router-link
-            :to="{name:'PSApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-            class="btn btn-green h-3/4 text-xs mr-1"
-            v-if="this.rdeProfile.application_status === 'pending_approval'"
-            title="Click to approve"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="px-1">PS Approval</span>
-          </router-link>
+         
 
-          <router-link
-              :to="{name:'PSDisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-              class="btn btn-orange h-3/4 text-xs mr-1"
-              v-if="rdeProfile.application_status === 'approved_by_partner_state' && rdeProfile.active_deployments===0"
-              title="Click to disapprove"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="px-1">PS Disapproval</span>
-          </router-link>
-
-          <!-- EAC  -->
-          <router-link
-            :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-            class="btn btn-green h-3/4 text-xs mr-1"
-            v-if="this.rdeProfile.application_status === 'approved_by_partner_state'"
-            title="Click to approve"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="px-1">EAC Approval</span>
-          </router-link>
-
-          <router-link
-              :to="{name:'EAC_DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
-              class="btn btn-orange h-3/4 text-xs mr-1"
-              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0"
-              title="Click to disapprove"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="px-1">EAC Disapproval</span>
-          </router-link>
+          
         </span>        
       </span>
       
@@ -95,7 +73,7 @@
 
     <tabs :mode="mode">      
       
-      <tab title="Personal details" class="grid grid-cols-3 space-x-4">
+      <tab :title="activeLanguage.store.rde_self_profile.personal_details" class="grid grid-cols-3 space-x-4">
         <span v-if="this.loading" class=" mt-5 flex justify-center">
           <loading></loading>
         </span>
@@ -252,69 +230,218 @@
 
       </tab>
 
-      <tab title="Qualifications" class="md:grid md:grid-cols-3 space-x-4">
-        <div class="col-span-2 rounded-md border-2 border-green-700">
-          <span class="flex justify-between p-4">  
-            <span></span>              
-            <span class="text-yellow-700 font-semibold text-base">Academic Qualifications</span>      
-            <span></span>              
-          </span> 
-          <div class="w-full px-4">
-            <div v-if="rdeQualifications.length>0">               
-              <table class="w-full p-4 border-black border-b border-t">
-                <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
-                  <td class="p-3 border-l border-black border-b">Name</td>
-                  <td class="p-3 border-l border-black border-b">Type</td>
-                  <td class="p-3 border-l border-black border-b">Institution</td>
-                  <td class="p-3 border-l border-r border-black border-b">Dates</td>
-                </thead>
-
-                <tbody>
-                  <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
-                    <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
-                    <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
-                    <td class="p-3 border-l border-black">{{qualification.institution}}</td>
-                    <td class="p-3 border-l border-black">{{qualification.start_date}} - {{qualification.end_date}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> 
-            <div v-else class="text-yellow-500 font-mono">No qualifications uploaded</div>      
-          </div>
-          
-        </div>
-
-        <div class="col-span-1 rounded-md border-2 border-green-700">
-          <span v-if="this.loading" class=" mt-5 flex justify-center">
-            <loading></loading>
-          </span>
-          <div class="">          
-            <!-- CV exists -->
-            <span v-if="this.rdeProfile.cv_upload_status && !this.loading" class="">  
-              <span class="flex justify-between p-4">  
-                <span></span>              
-                <span class="text-yellow-700 font-semibold text-base">Curriculum Vitae (CV)</span>      
-                <span></span>              
-              </span>  
-              <span class="flex justify-center p-4">
-                <span>
-                  <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
-                    class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
-                    >
-                    <span>View CV</span>
-                  </button>
-                </span>                
+      <tab :title="activeLanguage.store.rde_self_profile.qualifications" class="md:grid md:grid-cols-4 space-x-4">
+          <div class="col-span-4 rounded-md border-2 border-green-700">
+            <!-- academic qualifications -->
+            <div>
+              <span class="p-4">
+                <hr class=" text-green-500 bg-green-500"/>
+                <span class="flex justify-between">  
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.academic_qualifications}}</span>      
+                  <span></span>              
+                </span> 
               </span>
-              
-            </span>
-            <span v-if="!rdeProfile.cv_upload_status">No CV Uploaded. Please recommend CV upload!</span>
+              <div class="w-full px-4">
+                <div v-if="rdeQualifications.length>0">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.name}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.type}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.dates}}</td>
+                    </thead>
 
-         
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(qualification,index) in rdeQualifications" :key="index">
+                        <td class="p-3 border-l border-black">{{qualification.field_of_study}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.qualification_type.degree_level}}</td>
+                        <td class="p-3 border-l border-black">{{qualification.institution}}</td>
+                        <td class="p-3 border-l border-r border-black text-xs">From {{qualification.start_date}} to {{qualification.end_date}}</td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_qualifications_added}}.</div>     
+
+                <!-- add qualification button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>                 
+              </div>
+            </div>
+
+            <!-- professional experience -->
+            <div>
+              <span class="p-4"> 
+                <hr class="text-green-500 bg-green-500"/>
+                <span class="flex justify-between">                
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.professional_experience}}</span>      
+                  <span></span>              
+                </span> 
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeProfile.professional_experience">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.title}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.dates}}</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(experience,index) in rdeProfile.professional_experience" :key="index">
+                        <td class="p-3 border-l border-black">{{experience.title}}</td>
+                        <td class="p-3 border-l border-black">{{experience.description}}</td>
+                        <td class="p-3 border-l border-black">{{experience.institution}}</td>
+                        <td class="p-3 border-l border-r border-black text-xs">From {{experience.start_date}} to {{experience.end_date}}</td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_experience_added}}.</div>     
+
+                <!-- add qualification button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <!-- references -->
+            <div>
+              <span class=" p-4"> 
+                <hr class="text-green-500 bg-green-500"/>
+                <span class="flex justify-between">
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.references}}</span>      
+                  <span></span>              
+                </span> 
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeProfile.references">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.name}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.contact}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(reference,index) in rdeProfile.references" :key="index">
+                        <td class="p-3 border-l border-black">{{reference.name}}</td>
+                        <td class="p-3 border-l border-black flex justify-between">
+                          <span> <a :href="reference.phone_number">{{reference.phone_number}}</a>
+                            </span>  
+                          <span>{{reference.email}}</span> 
+                        </td>
+                        <td class="p-3 border-l border-black">{{reference.institution}}</td>                        
+                        <td class="p-3 border-l border-black">{{reference.description}}</td>  
+                        <td class="p-3  border-l border-black flex">
+                          <span>
+                            <router-link
+                              :to="{name:'updateRDEReference', params:{}}"
+                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
+                              title="Update"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </router-link>
+                          </span>
+                          <span>
+                            <router-link
+                              :to="{name:'deleteRDEReference', params:{}}"
+                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                              title="Delete"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </router-link>
+                          </span>
+                        </td>                      
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_reference_listed}}.</div>     
+
+                <!-- add reference button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                     
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>    
+
           </div>
-        </div>       
-      </tab>
 
-      <tab title="Recommendations" class="space-x-4 grid grid-cols-3">
+          <!-- CV -->
+          <div class="col-start-2 col-end-4 rounded-md border-2 border-green-700 mt-5 ml-20">
+            <span v-if="this.loading" class=" mt-5 flex justify-center">
+              <loading></loading>
+            </span>
+            <div class="">          
+              <!-- CV exists -->
+              <span v-if="this.rdeProfile.cv_upload_status && !this.loading" class="">  
+                <span class="flex justify-between p-4">  
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">Curriculum Vitae (CV)</span>      
+                  <span></span>              
+                </span>  
+                <span class="flex justify-between p-4">
+                  <span>
+                    <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
+                      class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+                      >
+                      <span>View CV</span>
+                    </button>
+                  </span>
+                  <span>
+                    <span>
+                      
+                    </span>
+                  </span>
+                </span>
+               
+              </span>
+
+              <!-- No CV -->
+              <span v-if="!this.rdeProfile.cv_upload_status && !this.loading" class="text-semibold text-orange-300 p-2">
+                {{activeLanguage.store.rde_self_profile.no_cv}}             
+
+                <span class="flex justify-between p-2">
+                    <span></span>
+                    <span></span>
+                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV('noCVFile')" v-if="fileUploaded"> Submit CV</button>
+                  </span>
+                
+              </span>
+            </div>
+          </div>         
+        
+        </tab>
+
+      <tab :title="activeLanguage.store.rde_self_profile.recommendations" class="space-x-4 grid grid-cols-3">
         <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
           <loading></loading>
         </span>
@@ -322,8 +449,8 @@
           <div v-if="rdeProfile.recommendations && !this.loading" >
             <table class="w-full border border-black p-3" v-if="rdeProfile.recommendations.length>0">
               <thead class="text-lg font-semibold font-mono border border-black p-2 ">
-                <th>Recommendation</th>
-                <th class="border border-black">Made By</th>
+                <th>{{activeLanguage.store.rde_self_profile.recommendations}}</th>
+                <th class="border border-black">{{activeLanguage.store.rde_self_profile.made_by}}</th>
               </thead>
               <tbody>
                 <tr v-for="(recommendation, index) in this.rdeProfile.recommendations" :key="index" class="text-md border border-black">
@@ -333,7 +460,7 @@
               </tbody>
             </table>
             <span v-else class="text-yellow-400 text-xl flex justify-center font-bold animate-pulse">
-              No recommendations yet.
+              {{activeLanguage.store.rde_self_profile.no_recommendations}}
             </span>
           </div>
           <button class="flex justify-between w-full px-4 py-2 ">
@@ -346,7 +473,7 @@
                   v-if="user_level==='country' || user_level==='eac'"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  <span class="px-1">Make recommendation</span>
+                  <span class="px-1">{{activeLanguage.store.rde_self_profile.make_recommendation}}</span>
                 </router-link>
               </span>
             </span>                  
@@ -355,58 +482,62 @@
         </div>      
       </tab>
       
-      <tab title="Deployments" class="space-x-4 grid grid-cols-4">
+      <tab :title="activeLanguage.store.rde_self_profile.deployments" class="space-x-4 grid grid-cols-4">
          <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
           <loading></loading>
         </span>
-        <span v-if="!this.loading && rdeDeployments" class="col-span-3">            
-          <table class="w-full col-span-3 border border-black p-3" v-if="rdeDeployments.length>0">
+        <!--  -->
+        <div v-if="!this.loading && rdeDeployments" class="col-span-4">
+          <table class="w-full border border-black p-3">
             <thead class="text-lg font-semibold font-mono border border-black p-2 ">
-              <th class="border border-black">Outbreak</th>
-              <th class="border border-black">Description</th>
-              <th class="border border-black">Region</th>
-              <th class="border border-black">Start date</th>
-              <th class="border border-black">End date</th>
+              <th class="border border-black">{{activeLanguage.store.titles.public_health_events}}</th>
+              <th class="border border-black">{{activeLanguage.store.rde_self_profile.description}}</th>
+              <th class="border border-black">{{activeLanguage.store.rde_self_registration_form.region}}</th>
+              <th class="border border-black">{{activeLanguage.store.rde_self_profile.start_date}}</th>
+              <th class="border border-black">{{activeLanguage.store.rde_self_profile.end_date}}</th>
+              <th class="border border-black">{{activeLanguage.store.rde_self_profile.status}}</th>
             </thead>
-            <tbody>
-              <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
-                <td class="border-l border-black p-2 uppercase font-mono text-orange-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
-                <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
-                <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
-                <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
-                <td class="border-l border-black p-2 text-xs">
-                  {{deployment.end_date?deployment.end_date:''}}
-                  <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date && user_level==='eac'">
-                      <router-link
-                        :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
-                        class="btn btn-blue h-1/6 text-md"
-                      >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
-
-                        <span class="px-1">End Deployment</span>
-                      </router-link>
-                  </span>
-                </td>
-              </tr>
+            <tbody v-if="rdeDeployments.length>0">
+                <tr v-for="(deployment, index) in rdeDeployments" :key="index" class="text-md border border-black">
+                  <td class="border-l border-black p-2 uppercase font-mono text-blue-500 font-semibold">{{deployment.outbreak.name?deployment.outbreak.name:''}}</td>
+                  <td class="border-l border-black p-2 capitalize">{{deployment.outbreak.description?deployment.outbreak.description:''}}</td>
+                  <td class="border-l border-black p-2 capitalize">{{deployment.region_object.name}}</td>
+                  <td class="border-l border-black p-2 text-xs">{{deployment.start_date?deployment.start_date:''}}</td>
+                  <td class="border-l border-black p-2 text-xs">
+                    {{deployment.end_date?deployment.end_date:''}}
+                    <span  class="colspan-1 flex justify-end" v-if="!deployment.end_date && user_level==='eac'">
+                        <router-link
+                          :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
+                          class="btn btn-blue h-1/6 text-md"
+                          v-if="deployment.accepted_by_user"
+                        >
+                          <span class="px-1">{{activeLanguage.store.rde_self_profile.end_deployment}}</span>
+                        </router-link>
+                    </span>
+                  </td>
+                  <td class="border-l border-black p-2 text-xs">
+                    <span v-if="rdeProfile.active_deployments>0" :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?'Successfully deployed':deployment.rejected_by_user?'Request rejected':'Request sent'}}</span>
+                  </td>
+                </tr>
             </tbody>
-          </table>            
-          <span v-else class="text-yellow-400 animate-pulse">
-            No deployments yet.
+          </table>
+          <span v-if="rdeDeployments.length===0" class="text-yellow-400 text-xl flex justify-center border border-black font-bold animate-pulse">
+            {{activeLanguage.store.rde_self_profile.no_deployments}}
           </span>
-        </span>
-        <span class="colspan-1 flex justify-end">
-          <router-link
-            :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
-            class="btn btn-blue h-1/6 text-md"
-            v-if="user_level==='eac' && this.rdeProfile.application_status === 'approval_complete' && !this.rdeProfile.active_deployments>0"
+          <span class="colspan-1 flex justify-end p-2">
+            <router-link
+              :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+              class="btn btn-blue h-1/6 text-md"
+              v-if="user_level==='eac' && this.rdeProfile.application_status === 'approval_complete' && !this.rdeProfile.active_deployments>0"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
 
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
-
-            <span class="px-1">Deploy</span>
-          </router-link>
-          <span v-if="rdeProfile.active_deployments>0" class="font-mono font-semibold italic text-orange-500">Deployed</span>
-        </span>
+              <span class="px-1">{{activeLanguage.store.rde_self_profile.deployment_request}}</span>
+            </router-link>
+          </span>
+        </div>         
+        <!--  -->
+        
         
       </tab>
     </tabs>
@@ -556,7 +687,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getErrorMessage']),
+    ...mapGetters(['getErrorMessage','activeLanguage']),
     ...mapActions(['fetchRDEById','getRDEprofileDeployment','fetchRDEcv','fetchQualificationsById']),
     age:function()
     {

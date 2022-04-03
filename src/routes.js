@@ -5,6 +5,7 @@ import Home from "./pages/Home.vue";
 import admin_rde_profile from "./pages/admin_rde_profile.vue";
 import rde_profile_suggested from "./pages/outbreak/rde_profile_suggested.vue";
 import rde_self_profile from "./pages/RDE/rde_self_profile.vue";
+import rde_deployments from "./pages/RDE/rde_deployments.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
@@ -47,6 +48,10 @@ import competence_schema from '@/schemas/competence_schema.json'
 import academic_qualification_type from '@/schemas/academic_qualification_type.json'
 import add_qualification_schema from '@/schemas/add_qualification_schema.json'
 import add_experience_schema from '@/schemas/add_experience_schema.json'
+import accept_deployment from '@/schemas/accept_deployment.json'
+import activate_account from '@/schemas/activate_account.json'
+import deactivate_account from '@/schemas/deactivate_account.json'
+import reject_deployment from '@/schemas/reject_deployment.json'
 import add_reference_schema from '@/schemas/add_reference_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import one_health_schema from '@/schemas/one_health.json'
@@ -77,9 +82,11 @@ const routes = [
         path: "/home",
         name: "home",
         component: Home,
-        props: {
+        props: () => {
+            return {
             vuex_data_action: 'fetchRDES',
             // table_headings: store.getters['activeLanguage'].store.tables.home_table_headings
+            }
         },
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -277,6 +284,24 @@ const routes = [
                 }
             },
             {
+                path: 'deactivate-account',
+                name: 'deactivateAccount',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: rde_schema,
+                        // vuex_fetch_action: 'fetchRDEById',
+                        // vuex_save_action: 'updateRDEById',
+                        object_title: `' ${x.params.rdeName}'s ' details`,
+                        object_id: x.params.rdeId,
+                        // optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
                 path: 'update-status',
                 name: 'UpdateRDEStatus',
                 component: modal_delete_template,
@@ -408,15 +433,32 @@ const routes = [
                 }
             },
             {
-                path: 'deactivate-profile',
-                name: 'DeactivateProfile',
-                component: modal_update_template,
+                path: 'activate-profile/:rdeId/:rdeName',
+                name: 'activateProfile',
+                component: modal_create_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        vuex_action: 'deactivateProfile',
-                        vuex_payload: x.params.rdeId,
-                        object_title: x.params.rdeName
+                        jsonSchema:activate_account,
+                        vuex_action: 'updateRDEById',
+                        moduleAction:'activateProfile',
+                        object_id: x.params.rdeId,
+                        object_title: x.params.rdeName,
+                    }
+                }
+            },
+            {
+                path: 'deactivate-profile/:rdeId/:rdeName',
+                name: 'deactivateProfile',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema:deactivate_account,
+                        vuex_action: 'updateRDEById',
+                        moduleAction:'deactivateProfile',
+                        object_id: x.params.rdeId,
+                        object_title: x.params.rdeName,
                     }
                 }
             },
@@ -466,6 +508,7 @@ const routes = [
 
                 }
             },
+            // qualification
             {
                 path: 'add-qualification/:rdeId/:rdeName',
                 name: 'addRDEQualification',
@@ -484,14 +527,16 @@ const routes = [
                 }
             },
             {
-                path: 'update-qualification/:qualificationId/:qualificationName',
+                path: 'update-qualification',
                 name: 'updateRDEQualification',
-                component: modal_update_template,
+                component: modal_create_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: add_qualification_schema,
-                        vuex_fetch_action: 'fetchRDEQualificationById',
+                        currentItem: x.params.currentItem,
+                        currentItemIndex: x.params.currentItemIndex,
+                        allItems:x.params.allItems,
                         vuex_save_action: 'updateRDEQualificationById',
                         object_title: `' ${x.params.qualificationName}'s ' details`,
                         object_id: x.params.qualificationId,
@@ -503,19 +548,27 @@ const routes = [
                 }
             },
             {
-                path: 'delete-qualification/:qualificationId/:qualificationName',
+                path: 'delete-qualification',
                 name: 'deleteRDEQualification',
-                component: modal_delete_template,
+                component: modal_create_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        object_title: `' ${x.params.qualificationName} ' qualification`,
-                        vuex_action: 'deleteRDEQualificationById',
-                        vuex_payload: x.params.qualificationId,
+                        jsonSchema: add_qualification_schema,
+                        currentItem: x.params.currentItem,
+                        currentItemIndex: x.params.currentItemIndex,
+                        allItems:x.params.allItems,
+                        vuex_save_action: 'deleteRDEQualificationById',
+                        object_title: `' ${x.params.qualificationName}'s ' details`,
+                        object_id: x.params.qualificationId,
+                        optionsList: ['fetchAllQualificationTypes'],
+                        moduleAction:"deleteRDEQualification",
+                        size: 'w-3/4'
                     }
 
                 }
             },
+            
             // experience
             {
                 path: 'add-experience/:rdeId/:rdeName',
@@ -532,6 +585,49 @@ const routes = [
                         object_title: x.params.rdeName + ' experience',
                         size: 'max-w-5xl'
                     }
+                }
+            },
+            {
+                path: 'update-experience',
+                name: 'updateRDEExperience',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_experience_schema,
+                        currentItem: x.params.currentItem,
+                        currentItemIndex: x.params.currentItemIndex,
+                        allItems:x.params.allItems,
+                        vuex_save_action: 'updateRDEExperienceById',
+                        object_title: `' ${x.params.experienceName}'s ' details`,
+                        object_id: x.params.experienceId,
+                        optionsList: ['fetchAllexperienceTypes'],
+                        moduleAction:"updateRDEexperience",
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-experience',
+                name: 'deleteRDEExperience',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_experience_schema,
+                        experience: x.params.experience,
+                        allExperiences:x.params.allExperiences,
+                        currentItem: x.params.currentItem,
+                        currentItemIndex: x.params.currentItemIndex,
+                        vuex_save_action: 'deleteRDEExperienceById',
+                        object_title: `' ${x.params.experienceName}'s ' details`,
+                        object_id: x.params.experienceId,
+                        optionsList: ['fetchAllexperienceTypes'],
+                        moduleAction:"deleteRDEexperience",
+                        size: 'w-3/4'
+                    }
+
                 }
             },
             // reference
@@ -552,11 +648,103 @@ const routes = [
                     }
                 }
             },
+            {
+                path: 'update-reference',
+                name: 'updateRDEReference',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_reference_schema,
+                        currentItem: x.params.currentItem,
+                        currentItemIndex: x.params.currentItemIndex,
+                        allItems:x.params.allItems,
+                        vuex_save_action: 'updateRDEReferenceById',
+                        object_title: `' ${x.params.referenceName}'s ' details`,
+                        object_id: x.params.referenceId,
+                        moduleAction:"updateRDEReference",
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
+            {
+                path: 'delete-reference',
+                name: 'deleteRDEReference',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_reference_schema,
+                        currentItem: x.params.currentItem,
+                        currentItemIndex: x.params.currentItemIndex,
+                        allItems:x.params.allItems,
+                        vuex_save_action: 'deleteRDEReferenceById',
+                        object_title: `' ${x.params.referenceName}'s ' details`,
+                        object_id: x.params.referenceId,
+                        moduleAction:"deleteRDEReference",
+                        size: 'w-3/4'
+                    }
+
+                }
+            },
 
         ],
         roles: ['rde']
     },   
     
+    //rde deployments
+    {
+        path: '/rde-deployments',
+        name: 'RDEDeployments',
+        component: rde_deployments,
+        showInLeftBar: true,
+        icon: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>',
+        verboseName: 'Deployments',
+        props: x => {
+            return {
+                vuex_data_action: 'fetchRDEById',
+                object_id: `?country=${x.params.countryId}`,
+                table_headings: ['NAME', 'Country', 'ACTION']
+            }
+        },
+        children: [            
+            {
+                path: 'accept-deployment/:deploymentId/:outbreakName',
+                name: 'acceptDeployment',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: accept_deployment,
+                        vuex_action: 'acceptOrRejectDeploymentById',
+                        moduleAction:"acceptDeployment",
+                        object_id: x.params.deploymentId,
+                        object_title: x.params.outbreakName,
+                        size: 'max-w-5xl'
+                    }
+                }
+            },    
+            {
+                path: 'reject-deployment/:deploymentId/:outbreakName',
+                name: 'rejectDeployment',
+                component: modal_create_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: reject_deployment,
+                        vuex_action: 'acceptOrRejectDeploymentById',
+                        moduleAction:"rejectDeployment",
+                        object_id: x.params.deploymentId,
+                        object_title: x.params.outbreakName,
+                        size: 'max-w-5xl'
+                    }
+                }
+            },         
+        ],
+        roles: ['rde']
+    },   
+
     // self-registration
     {
         path: "/rde-self-registration-form",

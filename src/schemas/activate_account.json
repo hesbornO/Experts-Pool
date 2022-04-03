@@ -1,0 +1,20 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [
+        {
+            "component":"div",
+            "children":"Activate account?"
+        },
+        {
+        "type": "text",
+        "label": "Activate account?",
+        "name": "active",
+        "value":true,
+        "class":"hidden",
+        "readonly":true,
+        "validation": "required"
+    }
+]
+
+}]

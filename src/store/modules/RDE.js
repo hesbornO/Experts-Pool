@@ -49,7 +49,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload
+                relative_url = "/profile/" + '?page='+payload
             }
             api.get(relative_url).then(resp => {
                 commit("setRDES", resp.data)
@@ -155,6 +155,7 @@ const actions = {
             })
         })
     },
+    // CV
     uploadCVById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile_cv/'
@@ -178,6 +179,36 @@ const actions = {
             }
             api.get(relative_url).then(resp => {
                 commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    // deployment report
+    // eslint-disable-next-line no-unused-vars
+    uploadReportById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment-report/'
+            
+            api.post(relative_url, payload, {headers:{'Content-Type':'multipart/form-data'}}).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    fetchReport({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment-report/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment-report/" + payload
+            }
+            api.get(relative_url).then(resp => {
                 resolve(resp.data)
             }).catch(err => {
                 reject(err)
@@ -377,6 +408,7 @@ const actions = {
             })
         })
     },
+    // eslint-disable-next-line no-unused-vars
     updateRDEQualificationById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile-academic-qualification/'
@@ -387,7 +419,6 @@ const actions = {
                 console.log('patchUrl', relative_url)
             }
             api.patch(relative_url, payload).then(resp => {
-                commit("setQualification", resp.data)
                 resolve(resp.data)
             }).catch(err => {
                 commit("setError", err.response.data)
@@ -395,6 +426,7 @@ const actions = {
             })
         });
     },
+    // eslint-disable-next-line no-unused-vars
     deleteRDEQualificationById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile-academic-qualification/'
@@ -414,8 +446,10 @@ const actions = {
             })
         })
     },
+    // eslint-disable-next-line no-unused-vars
     fetchQualificationsById({ commit }, payload) {
         return new Promise((resolve, reject) => {
+            console.log('payload:',payload)
             let relative_url = '/profile-academic-qualification/'
             if (payload === undefined) {
                 payload = ''
@@ -430,6 +464,9 @@ const actions = {
             })
         })
     },
+
+    // experience
+    // eslint-disable-next-line no-unused-vars
     postRDEExperienceById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -448,6 +485,46 @@ const actions = {
             })
         });
     },
+     // eslint-disable-next-line no-unused-vars
+     updateRDEExperienceById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    deleteRDEExperienceById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload
+            }
+            api.delete(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+                window.location.replace("/rde-self-profile")
+
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+
+    // reference
     postRDEReferenceById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
@@ -464,6 +541,72 @@ const actions = {
                 commit("setError", err.response.data)
                 reject(err.response.data)
             })
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    updateRDEReferenceById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    deleteRDEReferenceById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload
+            }
+            api.delete(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+                window.location.replace("/rde-self-profile")
+
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    // accept or reject deployment
+    // eslint-disable-next-line no-unused-vars
+    acceptOrRejectDeploymentById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            console.log("payload:",payload)
+            let relative_url = '/deployment/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment/" + payload.id + "/"
+                delete payload.id
+            }            
+            console.log(relative_url)
+            // 
+            api.patch(relative_url, 
+                payload
+              )
+              .then(function (response) {
+                resolve(response.data)
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+                reject(error.response.data)
+
+              });
         });
     },
 

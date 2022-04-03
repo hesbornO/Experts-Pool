@@ -1,4 +1,6 @@
 import api from "@/api";
+import axios from "axios";
+import {api_url} from "@/utils/constants";
 
 const state = {
     user: {},
@@ -47,18 +49,55 @@ const actions = {
             })
         });
     },
-    // logout({commit}, payload){
-    //     return new Promise((resolve, reject)=>{
-    //         api.post("/token/", payload).then(resp=>{
-    //             commit("removeToken", resp.data.access)
-    //             localStorage.removeItem('token', resp.data.access)
-    //             resolve(resp.data)
-    //         }).catch(err=>{
-    //             commit("setError", err.response.data)
-    //             reject(err.response.data)
-    //         })
-    //     });
-    // },
+    // eslint-disable-next-line no-unused-vars
+    requestPasswordChange({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = api_url+'request-password-change/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                // console.log('url+payload:', relative_url)
+            }            
+            console.log('payload:',payload)
+            axios.post(relative_url, 
+                payload
+              )
+              .then(function (response) {
+                resolve(response.data)
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+                reject(error.response.data)
+
+              });
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    completePasswordChange({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = api_url+'complete-password-change/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                // console.log('url+payload:', relative_url)
+            }            
+            console.log('payload:',payload)
+            axios.post(relative_url, 
+                payload
+              )
+              .then(function (response) {
+                resolve(response.data)
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+                reject(error.response.data)
+
+              });
+        });
+    },
+  
     setErrorMsg({commit}, payload) {
         commit('setError', payload)
     }
