@@ -1,0 +1,33 @@
+stages:
+  - build
+  - deploy
+build:
+  image: node:14
+  stage: build
+  allow_failure: false
+  tags:
+    - shared
+  script:
+    - echo "run install"
+    - npm install --progress=false
+    - echo "building UI"
+    - npm run build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - dist
+deploy-production-environemt:
+  stage: deploy
+  image: ubuntu:20.04
+  only:
+    - production
+  tags:
+    - shared
+  # when: on_success
+  script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
+    - ls dist
+    - sshpass -p "EAC@1234" ssh  -o "StrictHostKeyChecking=no" administrator@196.41.38.246 "rm -rf /var/www/html/eac_rde_frontend/*"
+    - sshpass -p "EAC@1234" scp -r dist/* "administrator"@"196.41.38.246":/var/www/html/eac_rde_frontend
+    - sshpass -p "EAC@1234" ssh  -o "StrictHostKeyChecking=no" administrator@196.41.38.246 "sudo /usr/sbin/service nginx restart"
+

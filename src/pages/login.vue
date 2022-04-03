@@ -17,8 +17,8 @@
                      <img class=" w-28" src="../assets/img/eac_logo.png" alt="EAC Logo"/>
                     </div>
                     <div class="text-2xl font-bold py-4 ">
-                      <p class="flex items-center justify-center md:text-xs">EAC</p>  
-                      <p class="flex items-center justify-center md:text-xs"> Rapidly Deployable Experts</p>
+                      <p class="flex items-center justify-center">EAC</p>  
+                      <p class="flex items-center justify-center"> Rapidly Deployable Experts Portal</p>
                     </div>
 
               </div>
