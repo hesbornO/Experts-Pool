@@ -143,9 +143,10 @@ const actions = {
             let relative_url = '/outbreak-type/'
             if (payload === undefined) {
                 payload = ''
-            } else {
-                relative_url = "/outbreak-type/" + payload
-            }
+            } 
+            // else {
+            //     relative_url = "/outbreak-type/" + payload
+            // }
             api.get(relative_url).then(resp => {
                 commit("setOutbreakTypes", resp.data)
                 resolve(resp.data)
