@@ -18,9 +18,10 @@ const actions = {
             let relative_url = '/academic-qualification-type/'
             if (payload === undefined) {
                 payload = ''
-            } else {
-                relative_url = "/academic-qualification-type/" + payload
-            }
+            } 
+            // else {
+            //     relative_url = "/academic-qualification-type/" + payload
+            // }
             api.get(relative_url).then(resp => {
                 commit("setQualificationTypes", resp.data)
                 resolve(resp.data)

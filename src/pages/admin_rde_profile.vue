@@ -450,7 +450,7 @@
             <table class="w-full border border-black p-3" v-if="rdeProfile.recommendations.length>0">
               <thead class="text-lg font-semibold font-mono border border-black p-2 ">
                 <th>{{activeLanguage.store.rde_self_profile.recommendations}}</th>
-                <th class="border border-black">{{activeLanguage.store.rde_self_profile.made_by}}</th>
+                <th class="border border-black capitalize">{{activeLanguage.store.rde_self_profile.made_by}}</th>
               </thead>
               <tbody>
                 <tr v-for="(recommendation, index) in this.rdeProfile.recommendations" :key="index" class="text-md border border-black">
