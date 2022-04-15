@@ -91,7 +91,7 @@
         <span class="col-span-1 flex gap-4" v-if="this.rdeProfile.gender">
           Gender:
           <span class="font-mono font-semibold text-lg">
-            {{this.rdeProfile.gender.toLowerCase()==='m'?'Male':this.rdeProfile.gender.toLowerCase()==='f'?'Female':this.rdeProfile.gender.toLowerCase()==='t'?'Transgender':'Undefined'}}
+            {{this.rdeProfile.gender.toLowerCase()==='m'?'Male':this.rdeProfile.gender.toLowerCase()==='f'?'Female':'Undefined'}}
           </span>
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>

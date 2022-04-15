@@ -910,7 +910,6 @@ export default {
       gender_types:{
         M:"Male",
         F:"Female",
-        T:"Transgender",
         O:"Prefer Not To Say"
       },
       id_types:[

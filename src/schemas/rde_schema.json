@@ -52,7 +52,6 @@
                     "options": {
                         "F": "Female",
                         "M": "Male",
-                        "T": "Transgender",
                         "O": "Prefer not to say"
                     },
                     "placeholder": "--select gender--",
