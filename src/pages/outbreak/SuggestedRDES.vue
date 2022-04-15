@@ -1,7 +1,81 @@
 <template>
   <dashboard_layout :page_title="`Suggested Rapidly Deployable Experts (RDES) for ${$route.params.outbreakName}`">
     <!-- Suggested rdes -->
-    {{activeLanguage.store.actions.create}}
+    <div >
+      <span class="md:flex">Filter: {{filterString}}</span>
+       <br>
+
+      <div class="grid grid-cols-6 border-l-4  h-60 overflow-auto bg-orange-50">
+        <table class=" ml-2  ">
+          <thead>
+            <th>Region</th>
+          </thead> 
+          <tbody class=" p-2">
+            <tr v-for="(region,index) in regions" :key="index" class="flex">
+              <td><FormulateInput type="checkbox" :label="region.name" :value="region.id"  class="flex w-1/4" :id="`region${index}`" @input="addToFilterString('region',index)"/></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class=" ">
+          <thead>
+            <th>Gender</th>
+          </thead> 
+          <tbody class=" p-2">
+            <tr v-for="(item,index) in gender" :key="index" class="flex">
+              <td><FormulateInput type="checkbox" :label="item.label" :value="item.value"  class="flex w-1/4" :id="`gender${index}`" @input="addToFilterString('gender',index)"/></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="">
+          <thead>
+            <th>Occupation</th>
+          </thead> 
+          <tbody class=" p-2">
+            <tr v-for="(occupation,index) in occupations" :key="index">
+              <td><FormulateInput type="checkbox" :label="occupation.label" :value="occupation.value"  class="flex w-1/4" :id="`occupation${index}`" @input="addToFilterString('occupation',index)"/></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="">
+          <thead>
+            <th>Application Status</th>
+          </thead> 
+          <tbody class=" p-2">
+            <tr v-for="(status,index) in application_status" :key="index">
+              <td><FormulateInput type="checkbox" :label="status.label" :value="status.value"  class="flex w-1/4" :id="`application_status${index}`" @input="addToFilterString('application_status',index)"/></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="">
+          <thead>
+            <th>Academic Degree</th>
+          </thead> 
+          <tbody class=" p-2">
+            <tr v-for="(degree,index) in academic_degree" :key="index">
+              <td><FormulateInput type="checkbox" :label="degree.label" :value="degree.value"  class="flex w-1/4" :id="`academic_degree${index}`" @input="addToFilterString('academic_degree',index)"/></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="">
+          <thead>
+            <th>Competency</th>
+          </thead> 
+          <tbody class=" p-2">
+            <tr v-for="(competency,index) in competencies" :key="index">
+              <td><FormulateInput type="checkbox" :label="competency.label" :value="competency.value"  class="flex w-1/4" :id="`competencies${index}`" @input="addToFilterString('competencies',index)"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-end">
+        
+        <button class="flex text-white bg-blue-400 rounded-sm py-2 px-4 m-5">
+          <svg class="w-5 h-5  mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+          Filter
+        </button>
+      </div>
+
+    </div>
     <data_table v-bind="$attrs" :show-back=true>
       <template v-slot="{item}">
         <td class="px-4 py-3 text-sm">
@@ -38,7 +112,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
@@ -53,6 +127,32 @@ export default {
   },
   data() {
     return {
+      filterString:'',
+      regions:[],
+      gender:[
+        {
+          label:'Male',
+          value:'M'
+        },
+        {
+          label:'Female',
+          value:'F'
+        }
+      ],
+      occupations:[],
+      application_status:[
+        {
+          label:'Complete',
+          value:'approval_complete'
+        },
+        {
+          label:'Done',
+          value:'done'
+        }
+      ],
+      academic_degree:[],
+      competencies:[],
+      religion:[],
       form: {
         name: '',
         country_id: ''
@@ -60,6 +160,49 @@ export default {
     }
   },
   methods:{
+    ...mapActions(['fetchRegions','fetchAllOccupations','fetchAllCompetencies','fetchAllQualificationTypes']),
+    getFilterOptions() {
+      // regions
+      this.$store.dispatch('fetchRegions').then(resp => {
+        this.regions = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+      // occupations
+      this.$store.dispatch('fetchAllOccupations').then(resp => {
+        this.occupations = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+      // competencies
+      this.$store.dispatch('fetchAllCompetencies').then(resp => {
+        this.competencies = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+      // academic_degree
+      this.$store.dispatch('fetchAllQualificationTypes').then(resp => {
+        this.academic_degree = resp;   
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    addToFilterString(label,index){
+      let region = document.getElementById(`${label}${index}`).value
+      if(document.getElementById(`${label}${index}`).checked){
+        if(!this.filterString)this.filterString = this.filterString.concat(`${label}=${region}`)
+        else{this.filterString = this.filterString.concat(`&${label}=${region}`)}
+        
+        console.log('filter string:',this.filterString)
+      }else{
+        if(this.filterString.includes(`&${label}=${region}`))this.filterString= this.filterString.replace(`&${label}=${region}`,'')
+        else{
+          if(this.filterString.includes(`${label}=${region}&`)) this.filterString= this.filterString.replace(`${label}=${region}&`,'')
+          else{this.filterString= this.filterString.replace(`${label}=${region}`,'')}
+        }
+        console.log('filter string:',this.filterString)
+      }
+    },
     createPrimary(item) {
       return {
         to: { name: "ViewProfileFromSuggestions", params: { rdeId:item.id,rdeName:item.last_name?item.last_name:''+item.first_name?item.first_name:''+item.middle_name?item.middle_name:'' } },
@@ -83,6 +226,7 @@ export default {
     },
   },
   mounted(){
+    this.getFilterOptions()
   },
   computed: {
     ...mapGetters(['getErrorMessage', 'activeLanguage'])
