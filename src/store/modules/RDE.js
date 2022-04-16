@@ -49,7 +49,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + '?page='+payload
+                // relative_url = "/profile/" + '?page='+payload
             }
             api.get(relative_url).then(resp => {
                 commit("setRDES", resp.data)

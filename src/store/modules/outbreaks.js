@@ -149,7 +149,7 @@ const actions = {
             // }
             api.get(relative_url).then(resp => {
                 commit("setOutbreakTypes", resp.data)
-                resolve(resp.data)
+                resolve(resp.data.results)
             }).catch(err => {
                 reject(err)
             })

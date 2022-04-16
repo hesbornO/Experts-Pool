@@ -1026,7 +1026,7 @@ const routes = [
     //end of deployments per outbreak 
     //suggested rdes per outbreak 
     {
-        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/',
+        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/:eligibility_criteria',
         name: 'SuggestedRDESPerOutbreak',
         component: SuggestedRDES,
         props: (x) => {

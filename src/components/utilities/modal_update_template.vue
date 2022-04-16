@@ -89,7 +89,7 @@ export default {
   components: {Loading},
   data() {
     return {
-      form: {},
+      form: {eligibility_criteria:''},
       inputErrors: {},
       formErrors: [],
       modal_hidden: true,
@@ -128,6 +128,18 @@ export default {
       this.loading = true
       if(this.moduleName==='UpdateOutbreakType'){
         if(this.form.value) this.form.id=this.form.value
+      }
+      if(this.moduleAction==='UpdateOutbreak'){
+        this.form.eligibility_criteria=''
+        if(this.form.competencies){
+          for(let competency of this.form.competencies) this.form.eligibility_criteria+= '&competencies='+competency
+        }
+        if(this.form.affected_regions){
+          for(let region of this.form.affected_regions) this.form.eligibility_criteria+= '&region='+region
+        }
+
+        this.form.eligibility_criteria += this.form.competencies?this.form.competencies:''
+        this.form.eligibility_criteria += this.form.affected_regions?this.form.affected_regions:''
       }
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(

@@ -3,69 +3,68 @@
     <!-- Suggested rdes -->
     <div >
       <span class="md:flex">Filter: {{filterString}}</span>
+    {{$route.params.eligibility_criteria}}
+
        <br>
 
-      <div class="grid grid-cols-6 border-l-4  h-60 overflow-auto bg-orange-50">
-        <table class=" ml-2  ">
-          <thead>
-            <th>Region</th>
-          </thead> 
-          <tbody class=" p-2">
-            <tr v-for="(region,index) in regions" :key="index" class="flex">
-              <td><FormulateInput type="checkbox" :label="region.name" :value="region.id"  class="flex w-1/4" :id="`region${index}`" @input="addToFilterString('region',index)"/></td>
-            </tr>
-          </tbody>
-        </table>
-        <table class=" ">
-          <thead>
-            <th>Gender</th>
-          </thead> 
-          <tbody class=" p-2">
-            <tr v-for="(item,index) in gender" :key="index" class="flex">
-              <td><FormulateInput type="checkbox" :label="item.label" :value="item.value"  class="flex w-1/4" :id="`gender${index}`" @input="addToFilterString('gender',index)"/></td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="">
-          <thead>
-            <th>Occupation</th>
-          </thead> 
-          <tbody class=" p-2">
-            <tr v-for="(occupation,index) in occupations" :key="index">
-              <td><FormulateInput type="checkbox" :label="occupation.label" :value="occupation.value"  class="flex w-1/4" :id="`occupation${index}`" @input="addToFilterString('occupation',index)"/></td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="">
-          <thead>
-            <th>Application Status</th>
-          </thead> 
-          <tbody class=" p-2">
-            <tr v-for="(status,index) in application_status" :key="index">
-              <td><FormulateInput type="checkbox" :label="status.label" :value="status.value"  class="flex w-1/4" :id="`application_status${index}`" @input="addToFilterString('application_status',index)"/></td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="">
-          <thead>
-            <th>Academic Degree</th>
-          </thead> 
-          <tbody class=" p-2">
-            <tr v-for="(degree,index) in academic_degree" :key="index">
-              <td><FormulateInput type="checkbox" :label="degree.label" :value="degree.value"  class="flex w-1/4" :id="`academic_degree${index}`" @input="addToFilterString('academic_degree',index)"/></td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="">
-          <thead>
-            <th>Competency</th>
-          </thead> 
-          <tbody class=" p-2">
-            <tr v-for="(competency,index) in competencies" :key="index">
-              <td><FormulateInput type="checkbox" :label="competency.label" :value="competency.value"  class="flex w-1/4" :id="`competencies${index}`" @input="addToFilterString('competencies',index)"/></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="grid grid-cols-8 border-l-4  h-48 overflow-auto bg-white">
+        <div class="flex justify-between col-span-8  w-full">
+
+          <div class="pl-2">
+            <span class="font-semibold">Region</span><br>
+            <span v-for="(region,index) in regions" :key="index" class="flex col-span-1">
+              <input type="checkbox" :value="region.id"   :id="`region${index}`" @input="addToFilterString('region',index)">
+              <label class="pl-1">{{region.name}}</label>
+            </span>
+          </div>
+          <div>
+            <span class="font-semibold">Gender</span><br>
+            <span v-for="(item,index) in gender" :key="index" class="flex col-span-1 "> 
+              <input type="checkbox" :value="item.value"  :id="`gender${index}`" @input="addToFilterString('gender',index)">
+              <label class="pl-1">{{item.label}}</label>
+            </span>
+          </div>
+          <div >
+            <span class="font-semibold">Occupation</span><br>
+            <span v-for="(occupation,index) in occupations" :key="index">
+                <input type="checkbox" :value="occupation.value"  :id="`occupation${index}`" @input="addToFilterString('occupation',index)">
+                <label class="pl-1">{{occupation.label}}</label>
+                <br>
+            </span>
+          </div>
+          <div >
+            <span class="font-semibold">Religion</span><br>
+            <span v-for="(religion,index) in religions" :key="index">
+                <input type="checkbox" :value="religion.value"  :id="`religion${index}`" @input="addToFilterString('religion',index)">
+                <label class="pl-1">{{religion.label}}</label>
+                <br>
+            </span>
+          </div>
+        
+          <div >
+            <span class="font-semibold">Application Status</span><br>
+            <div v-for="(status,index) in application_status" :key="index">
+              <input type="checkbox" :label="status.label" :value="status.value"  :id="`application_status${index}`" @input="addToFilterString('application_status',index)">
+              <label class="pl-1">{{status.label}}</label>
+            </div>
+          </div>
+         
+          <div>
+            <span class="font-semibold" >Academic Degree</span><br>
+            <div v-for="(degree,index) in academic_degree" :key="index" class="flex col-span-1">
+                <input type="checkbox" :value="degree.value"   :id="`academic_degree${index}`" @input="addToFilterString('academic_degree',index)">
+                <label class="pl-1">{{degree.label}}</label>
+            </div>
+          </div>
+        
+          <div class="pr-2">
+            <span class="font-semibold">Competency</span><br>
+            <div v-for="(competency,index) in competencies" :key="index">
+                <input type="checkbox" :value="competency.value"   :id="`competencies${index}`" @input="addToFilterString('competencies',index)">
+                <label class="pl-1">{{competency.label}}</label>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="flex justify-end">
         
@@ -125,6 +124,9 @@ export default {
     dashboard_layout,
     SplitButton,
   },
+  props:{
+    eligibility_criteria:[String]
+  },
   data() {
     return {
       filterString:'',
@@ -152,7 +154,24 @@ export default {
       ],
       academic_degree:[],
       competencies:[],
-      religion:[],
+      religions:[
+        {
+          label:'Christian',
+          value:'christian'
+        },
+        {
+          label:'Muslim',
+          value:'muslim'
+        },
+        {
+          label:'Buddhist',
+          value:'buddhist'
+        },
+        {
+          label:'Atheist',
+          value:'atheist'
+        },
+      ],
       form: {
         name: '',
         country_id: ''
