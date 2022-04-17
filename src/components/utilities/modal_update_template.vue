@@ -137,9 +137,8 @@ export default {
         if(this.form.affected_regions){
           for(let region of this.form.affected_regions) this.form.eligibility_criteria+= '&region='+region
         }
+        this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
 
-        this.form.eligibility_criteria += this.form.competencies?this.form.competencies:''
-        this.form.eligibility_criteria += this.form.affected_regions?this.form.affected_regions:''
       }
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(

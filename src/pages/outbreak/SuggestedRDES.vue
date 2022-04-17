@@ -2,8 +2,8 @@
   <dashboard_layout :page_title="`Suggested Rapidly Deployable Experts (RDES) for ${$route.params.outbreakName}`">
     <!-- Suggested rdes -->
     <div >
-      <span class="md:flex">Filter: {{filterString}}</span>
-    {{$route.params.eligibility_criteria}}
+      <!-- <span class="md:flex">Filter: {{filterString}}</span> -->
+    <!-- {{$route.params.eligibility_criteria}} -->
 
        <br>
 
@@ -13,6 +13,7 @@
           <div class="pl-2">
             <span class="font-semibold">Region</span><br>
             <span v-for="(region,index) in regions" :key="index" class="flex col-span-1">
+              <!-- <input type="checkbox" :value="region.id"   :id="`region${index}`" @input="addToFilterString('region',index)"> -->
               <input type="checkbox" :value="region.id"   :id="`region${index}`" @input="addToFilterString('region',index)">
               <label class="pl-1">{{region.name}}</label>
             </span>
@@ -40,7 +41,6 @@
                 <br>
             </span>
           </div>
-        
           <div >
             <span class="font-semibold">Application Status</span><br>
             <div v-for="(status,index) in application_status" :key="index">
@@ -48,7 +48,6 @@
               <label class="pl-1">{{status.label}}</label>
             </div>
           </div>
-         
           <div>
             <span class="font-semibold" >Academic Degree</span><br>
             <div v-for="(degree,index) in academic_degree" :key="index" class="flex col-span-1">
@@ -56,7 +55,6 @@
                 <label class="pl-1">{{degree.label}}</label>
             </div>
           </div>
-        
           <div class="pr-2">
             <span class="font-semibold">Competency</span><br>
             <div v-for="(competency,index) in competencies" :key="index">
@@ -68,14 +66,14 @@
       </div>
       <div class="flex justify-end">
         
-        <button class="flex text-white bg-blue-400 rounded-sm py-2 px-4 m-5">
+        <button class="flex text-white bg-blue-400 rounded-sm py-2 px-4 m-5" @click="filterRDES">
           <svg class="w-5 h-5  mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
           Filter
         </button>
       </div>
 
     </div>
-    <data_table v-bind="$attrs" :show-back=true>
+    <data_table v-bind="$attrs" :show-back=true v-if="!userHasSelectedFilterItem">
       <template v-slot="{item}">
         <td class="px-4 py-3 text-sm">
           {{ item.last_name?item.last_name +', ':''}}
@@ -105,6 +103,54 @@
         </td>
       </template>
     </data_table>
+
+    <div v-if="userHasSelectedFilterItem">
+      <table class="w-full whitespace-no-wrap">
+        <thead>
+          <tr  class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border border-b border-t border-r dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+              <th class="px-4 py-3 w-2/12">NAME</th>
+              <th class="px-4 py-3 w-2/12">RESIDENCE</th>
+              <th class="px-4 py-3 w-2/12">COMPETENCIES</th>
+              <th class="px-4 py-3 w-2/12">CONTACT</th>
+              <th class="px-4 py-3 w-2/12">STATUS</th>
+              <th class="px-4 py-3 w-2/12">ACTION</th>
+          </tr>
+        </thead>
+         <tbody v-if="filtered_rdes && filtered_rdes.results && filtered_rdes.results.length > 0" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <tr class="text-gray-700 dark:text-gray-400 border" v-for="(item,index) in filtered_rdes.results" :key="index">
+            <td class="px-4 py-3 text-sm">
+              {{ item.last_name?item.last_name +', ':''}}
+              {{item.first_name?item.first_name:''}} 
+              {{item.middle_name?item.middle_name:''}}
+            </td>
+            <td class="px-4 py-3 text-sm">{{item.region_of_residence.name}}, {{item.region_of_residence.country.name}}</td>
+            <td class="px-4 py-3 text-sm italic">
+              <div v-if="item.competencies_objects">
+                <span v-for="(competency,index) in item.competencies_objects" :key="index" class="capitalize flex-auto">
+                  {{competency.name?competency.name.replace('_',' '):''}}
+                  <span v-if="index+1<item.competencies_objects.length">, </span>
+                </span>
+              </div>
+            <td class="px-4 py-3 text-sm ">
+              <span class="flex flex-row space-x-1 text-blue-500">
+                <!-- <span v-if="item.phone"><a :href="`tel:${item.phone}`" title="Click to call">{{item.phone}}</a></span>  -->
+                <span v-if="item.email"><a :href="`mailto:${item.email}`" title="Click to mail">{{item.email}}</a></span> 
+              
+              </span>
+            </td>
+            <td class="px-4 py-3 text-sm  capitalize text-orange-400 italic font-mono font-semibold">
+              <span :class="['capitalize italic px-4 py-3 text-xs leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">{{item.application_status?item.application_status.replace(/[_-]/g, " "):''}}</span><br>
+            </td>
+            <td class="px-4 py-3 text-sm  capitalize text-orange-400 italic font-mono font-semibold">
+              <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                 
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <tr class="flex justify-center w-full"><td class="text-orange-500">No records found</td></tr>
+        </tbody>
+      </table>
+    </div>
     <!-- End of Suggested rdes -->
     <router-view></router-view>
   </dashboard_layout>
@@ -112,20 +158,21 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
+import api from "@/api";
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
 import SplitButton from "../../components/buttons/SplitButton.vue";
 
 export default {
-  name: "Regions",
+  name: "SuggestedRDES",
   components: {
     data_table,
     dashboard_layout,
     SplitButton,
   },
   props:{
-    eligibility_criteria:[String]
+    eligibility_criteria:[String],
   },
   data() {
     return {
@@ -176,14 +223,34 @@ export default {
         name: '',
         country_id: ''
       },
+      initial_competencies:[],
+      initial_regions:[],
+      filtered_rdes:[],
+      userHasSelectedFilterItem:false
     }
   },
   methods:{
     ...mapActions(['fetchRegions','fetchAllOccupations','fetchAllCompetencies','fetchAllQualificationTypes']),
     getFilterOptions() {
+      // populate initial filter
+      let initial_filter = this.$route.params.eligibility_criteria.replace('?','').split('&')
+      for(let item of initial_filter){
+        if(item.includes('competencies=')) this.initial_competencies.push(item.slice(-1))
+        else if(item.includes('region=')) this.initial_regions.push(item.slice(-1))
+        else{console.log('undefined initial filter item:', item)}
+      }
+
       // regions
       this.$store.dispatch('fetchRegions').then(resp => {
-        this.regions = resp;   
+        this.regions = resp;  
+        // for (let index = 0; index < this.regions.length; index++) {
+        //   if(this.initial_regions.includes(String(this.regions[index].id))){
+        //     console.log('region id',String(this.regions[index].id))
+        //     this.filterString+='region='+this.regions[index].id
+        //     this.addToFilterString('region',index)
+        //     document.getElementById(`region${String(index)}`).checked = true;
+        //   }
+        // }
       }).catch(err => {
         console.log(err);
       })
@@ -205,6 +272,7 @@ export default {
       }).catch(err => {
         console.log(err);
       })
+      
     },
     addToFilterString(label,index){
       let region = document.getElementById(`${label}${index}`).value
@@ -212,14 +280,14 @@ export default {
         if(!this.filterString)this.filterString = this.filterString.concat(`${label}=${region}`)
         else{this.filterString = this.filterString.concat(`&${label}=${region}`)}
         
-        console.log('filter string:',this.filterString)
+        // console.log('filter string:',this.filterString)
       }else{
         if(this.filterString.includes(`&${label}=${region}`))this.filterString= this.filterString.replace(`&${label}=${region}`,'')
         else{
           if(this.filterString.includes(`${label}=${region}&`)) this.filterString= this.filterString.replace(`${label}=${region}&`,'')
           else{this.filterString= this.filterString.replace(`${label}=${region}`,'')}
         }
-        console.log('filter string:',this.filterString)
+        // console.log('filter string:',this.filterString)
       }
     },
     createPrimary(item) {
@@ -242,6 +310,21 @@ export default {
       return options
         
       ;   
+    },
+    filterRDES() {
+      if(this.filterString){
+        this.userHasSelectedFilterItem = true
+        return new Promise((resolve, reject) => {
+            api.get('/filter-rdes/?'+this.filterString).then(resp => {
+                this.filtered_rdes=resp.data
+            }).catch(err => {
+                reject(err)
+            })
+        })
+      }else{
+        this.filtered_rdes=[]
+        this.userHasSelectedFilterItem=false
+      }
     },
   },
   mounted(){

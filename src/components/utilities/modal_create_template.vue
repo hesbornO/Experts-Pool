@@ -148,6 +148,7 @@ export default {
         if(payload.affected_regions){
           for(let region of payload.affected_regions) payload.eligibility_criteria+= '&region='+region
         }
+        payload.eligibility_criteria=payload.eligibility_criteria.replace('&','?')
       }
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(

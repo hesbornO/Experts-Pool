@@ -49,7 +49,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                // relative_url = "/profile/" + '?page='+payload
+                relative_url = "/profile/" + '?page='+payload
             }
             api.get(relative_url).then(resp => {
                 commit("setRDES", resp.data)
@@ -104,13 +104,15 @@ const actions = {
     },
     suggestRDES({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            let relative_url = '/suggest_rdes/'
+            // let relative_url = '/suggest_rdes/'
+            let relative_url = '/filter_rdes/'
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/suggest_rdes/" + payload
+                // relative_url = "/suggest_rdes/" + '?page='+payload
+                relative_url = "/filter-rdes/"+payload
             }
-            api.post(relative_url).then(resp => {
+            api.get(relative_url).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
