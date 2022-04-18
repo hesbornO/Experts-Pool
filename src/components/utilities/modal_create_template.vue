@@ -78,7 +78,7 @@ export default {
       type: String,
     },
     vuex_payload:{
-
+      
     },
     object_title: {
       type: String,
@@ -139,6 +139,16 @@ export default {
           console.log('payload/form:',payload)
         } 
         
+      }
+      payload.eligibility_criteria =''
+      if(this.moduleAction==='CreateOutbreak'){
+        if(payload.competencies){
+          for(let competency of payload.competencies) payload.eligibility_criteria+= '&competencies='+competency
+        }
+        if(payload.affected_regions){
+          for(let region of payload.affected_regions) payload.eligibility_criteria+= '&region='+region
+        }
+        payload.eligibility_criteria=payload.eligibility_criteria.replace('&','?')
       }
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(

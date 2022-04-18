@@ -29,7 +29,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/outbreak/" + payload
+                relative_url = "/outbreak/" + '?page='+payload
             }
             api.get(relative_url).then(resp => {
                 commit("setOutbreaks", resp.data)
@@ -136,6 +136,24 @@ const actions = {
             })
         });
     },
+    updateOutbreakItemById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setOutbreak", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
 
     // outbreak types
     fetchAllOutbreakTypes({ commit }, payload) {
@@ -144,12 +162,12 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } 
-            // else {
-            //     relative_url = "/outbreak-type/" + payload
-            // }
+            else {
+                relative_url = "/outbreak-type/" + '?page='+payload
+            }
             api.get(relative_url).then(resp => {
                 commit("setOutbreakTypes", resp.data)
-                resolve(resp.data)
+                resolve(resp.data.results)
             }).catch(err => {
                 reject(err)
             })

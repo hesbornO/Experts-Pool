@@ -18,9 +18,10 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             }
-            //  else {
-            //     relative_url = "/competence/" + payload
-            // }
+             else {
+                relative_url = "/competence/" + '?page='+payload
+                
+            }
             api.get(relative_url).then(resp => {
                 commit("setCompetencies", resp.data)
                 resolve(resp.data)

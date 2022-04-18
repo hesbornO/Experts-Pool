@@ -173,6 +173,8 @@
               </span>
               
               {{ item.last_name ? item.last_name : ''}}, {{item.first_name ? item.first_name : '' }}
+              <span class="text-xs">({{ item.gender==='M' ?'Male':item.gender==='F'?'Female':'Undefined' }})</span>
+
             </td>
             <td class="px-4 py-3 text-sm capitalize">{{ item.occupation ? item.occupation.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize">

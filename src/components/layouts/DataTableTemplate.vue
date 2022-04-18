@@ -111,7 +111,8 @@ export default {
     fetchData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+       this.$store.dispatch(this.vuex_data_action, (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+      //  this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
          this.pageResult = resp
 
        }).catch(err=>{

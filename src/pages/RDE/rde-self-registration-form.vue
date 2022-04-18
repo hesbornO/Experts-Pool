@@ -62,7 +62,7 @@
                 </span>       
             </label>
           </div>
-          <!-- location and gender section -->
+          <!-- location,religion and gender section -->
           <div class="md:grid md:grid-cols-3 gap-4">
             <label class="block mt-4 text-sm">
               <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.gender}}</span>
@@ -73,6 +73,32 @@
                   <option value="M">Male</option>
                   <option value="F">Female</option> 
                   <option value="O">Prefer Not To Say</option>
+                </select>
+                <span v-if="getErrorMessage['gender']">
+                  <span v-if="getErrorMessage['gender'].length>0">
+                    <span v-for="(error,index) in getErrorMessage['gender']" :key="index">
+                      <span class="text-red-500 animate-pulse">{{error}}</span>
+                    </span>
+                  </span>
+                </span> 
+                <div
+                    class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  </div>
+            </label>
+            <label class="block mt-4 text-sm">
+              <!-- <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.gender}}</span> -->
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">Religion</span>
+         
+                <select name="gender" class="p-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md" validation="required"
+                v-model="form.religion">
+                  <option value="" selected disabled>-- {{activeLanguage.store.actions.click_to_select}} --</option>
+                  <option value="christian">Christian</option>
+                  <option value="muslim">Muslim</option> 
+                  <option value="buddhist">Buddhist</option> 
+                  <option value="atheist">Atheist</option> 
+                  <option value="preferNotToSay">Prefer Not To Say</option>
                 </select>
                 <span v-if="getErrorMessage['gender']">
                   <span v-if="getErrorMessage['gender'].length>0">
@@ -910,12 +936,17 @@ export default {
       gender_types:{
         M:"Male",
         F:"Female",
-        T:"Transgender",
         O:"Prefer Not To Say"
       },
       id_types:[
         {value:"nationalID", label:"National ID"},
         {value:"passportNo", label:"Passport No"}        
+      ],
+      religion_types:[
+        {value:"christian", label:"Christian"},
+        {value:"muslim", label:"Muslim"},       
+        {value:"atheist", label:"Atheist"},
+        {value:"buddhist", label:"Buddhist"}
       ],
       viewPdf:false,
       fileUploaded:0,
