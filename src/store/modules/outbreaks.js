@@ -136,6 +136,24 @@ const actions = {
             })
         });
     },
+    updateOutbreakItemById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/outbreak/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
+                commit("setOutbreak", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
 
     // outbreak types
     fetchAllOutbreakTypes({ commit }, payload) {

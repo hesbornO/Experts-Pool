@@ -51,6 +51,7 @@ import add_experience_schema from '@/schemas/add_experience_schema.json'
 import accept_deployment from '@/schemas/accept_deployment.json'
 import activate_account from '@/schemas/activate_account.json'
 import deactivate_account from '@/schemas/deactivate_account.json'
+import save_filter from '@/schemas/save_filter.json'
 import reject_deployment from '@/schemas/reject_deployment.json'
 import add_reference_schema from '@/schemas/add_reference_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
@@ -442,6 +443,7 @@ const routes = [
                         jsonSchema:activate_account,
                         vuex_action: 'updateRDEById',
                         moduleAction:'activateProfile',
+                        vuex_fetch_action:'',
                         object_id: x.params.rdeId,
                         object_title: x.params.rdeName,
                     }
@@ -1037,7 +1039,23 @@ const routes = [
                 table_headings: ['Name', 'Residence', 'Competencies','Contact','Status', 'Action']
             }
         },    
-        children:[           
+        children:[  
+            {
+                path: 'save-filter',
+                name: 'saveFilter',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema:save_filter,
+                        vuex_save_action: 'updateOutbreakItemById',
+                        moduleAction:'saveFilter',
+                        vuex_payload: { eligibility_criteria:x.params.eligibility_criteria,id:x.params.outbreakId },
+                        object_id: x.params.outbreakId,
+                        object_title: x.params.outbreakName,
+                    }
+                }
+            },         
            
 
         ],    

@@ -74,6 +74,7 @@
     "log_in":"Log In"
   },
   "rde_self_profile":{
+    "save_filter":"Save Filter",
     "update_profile":"Update Profile",
     "deactivate_account":"Deactivate Account",
     "activate_account":"Activate Account",
