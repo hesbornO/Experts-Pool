@@ -529,18 +529,16 @@ const routes = [
                 }
             },
             {
-                path: 'update-qualification',
+                path: 'update-qualification/:qualificationId/:qualificationName',
                 name: 'updateRDEQualification',
-                component: modal_create_template,
+                component: modal_update_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: add_qualification_schema,
-                        currentItem: x.params.currentItem,
-                        currentItemIndex: x.params.currentItemIndex,
-                        allItems:x.params.allItems,
+                        vuex_fetch_action: 'fetchRDEQualificationById',
                         vuex_save_action: 'updateRDEQualificationById',
-                        object_title: `' ${x.params.qualificationName}'s ' details`,
+                        object_title: `' ${x.params.qualificationName}'s ' qualification`,
                         object_id: x.params.qualificationId,
                         optionsList: ['fetchAllQualificationTypes'],
                         moduleAction:"updateRDEQualification",
@@ -550,20 +548,16 @@ const routes = [
                 }
             },
             {
-                path: 'delete-qualification',
+                path: 'delete-qualification/:qualificationId/:qualificationName',
                 name: 'deleteRDEQualification',
-                component: modal_create_template,
+                component: modal_delete_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: add_qualification_schema,
-                        currentItem: x.params.currentItem,
-                        currentItemIndex: x.params.currentItemIndex,
-                        allItems:x.params.allItems,
-                        vuex_save_action: 'deleteRDEQualificationById',
-                        object_title: `' ${x.params.qualificationName}'s ' details`,
+                        vuex_action: 'deleteRDEQualificationById',
+                        vuex_payload: x.params.qualificationId,
+                        object_title: `' ${x.params.qualificationName}'`,
                         object_id: x.params.qualificationId,
-                        optionsList: ['fetchAllQualificationTypes'],
                         moduleAction:"deleteRDEQualification",
                         size: 'w-3/4'
                     }
@@ -582,6 +576,7 @@ const routes = [
                         jsonSchema: add_experience_schema,
                         vuex_action: 'postRDEExperienceById',
                         moduleAction:"postRDEExperienceById",
+                        allItems:x.params.allItems,
                         object_id: x.params.rdeId,
                         profile: x.params.rdeId,
                         object_title: x.params.rdeName + ' experience',
@@ -590,7 +585,7 @@ const routes = [
                 }
             },
             {
-                path: 'update-experience',
+                path: 'update-experience/:rdeId/:rdeName/:experienceName/:currentItem',
                 name: 'updateRDEExperience',
                 component: modal_create_template,
                 showInLeftBar: false,
@@ -600,32 +595,31 @@ const routes = [
                         currentItem: x.params.currentItem,
                         currentItemIndex: x.params.currentItemIndex,
                         allItems:x.params.allItems,
-                        vuex_save_action: 'updateRDEExperienceById',
-                        object_title: `' ${x.params.experienceName}'s ' details`,
-                        object_id: x.params.experienceId,
-                        optionsList: ['fetchAllexperienceTypes'],
+                        vuex_action: 'postRDEExperienceById',
+                        object_title: `' ${x.params.experienceName} update'`,
+                        object_id: x.params.rdeId,
                         moduleAction:"updateRDEexperience",
-                        size: 'w-3/4'
+                        size: '1/2'
                     }
 
                 }
             },
             {
-                path: 'delete-experience',
+                path: 'delete-experience/:rdeId/:rdeName/:experienceName',
                 name: 'deleteRDEExperience',
-                component: modal_create_template,
+                component: modal_delete_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: add_experience_schema,
-                        experience: x.params.experience,
-                        allExperiences:x.params.allExperiences,
+                       
+                        experienceName: x.params.experienceName,
+                        allItems:x.params.allItems,
                         currentItem: x.params.currentItem,
                         currentItemIndex: x.params.currentItemIndex,
-                        vuex_save_action: 'deleteRDEExperienceById',
-                        object_title: `' ${x.params.experienceName}'s ' details`,
-                        object_id: x.params.experienceId,
-                        optionsList: ['fetchAllexperienceTypes'],
+                        vuex_action: 'postRDEExperienceById',
+                        object_title: `' ${x.params.experienceName} '`,
+                        object_id: x.params.rdeId,
+                        vuex_payload:x.params.rdeId,
                         moduleAction:"deleteRDEexperience",
                         size: 'w-3/4'
                     }
@@ -641,17 +635,18 @@ const routes = [
                 props: x => {
                     return {
                         jsonSchema: add_reference_schema,
-                        vuex_action: 'postRDEReferenceById',
-                        moduleAction:"postRDEReferenceById",
+                        vuex_action: 'postRDEExperienceById',
+                        moduleAction:"addRDEReference",
+                        allItems:x.params.allItems,
                         object_id: x.params.rdeId,
                         profile: x.params.rdeId,
                         object_title: x.params.rdeName + ' reference',
-                        size: 'max-w-5xl'
+                        size: '1/2'
                     }
                 }
             },
             {
-                path: 'update-reference',
+                path: 'update-reference/:rdeId/:rdeName/:referenceName/:currentItem',
                 name: 'updateRDEReference',
                 component: modal_create_template,
                 showInLeftBar: false,
@@ -661,29 +656,30 @@ const routes = [
                         currentItem: x.params.currentItem,
                         currentItemIndex: x.params.currentItemIndex,
                         allItems:x.params.allItems,
-                        vuex_save_action: 'updateRDEReferenceById',
-                        object_title: `' ${x.params.referenceName}'s ' details`,
-                        object_id: x.params.referenceId,
+                        vuex_action: 'postRDEExperienceById',
+                        object_title: `' ${x.params.referenceName} update'`,
+                        object_id: x.params.rdeId,
                         moduleAction:"updateRDEReference",
-                        size: 'w-3/4'
+                        size: '1/2'
                     }
 
                 }
             },
             {
-                path: 'delete-reference',
+                path: 'delete-reference/:rdeId/:rdeName/:referenceName',
                 name: 'deleteRDEReference',
-                component: modal_create_template,
+                component: modal_delete_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: add_reference_schema,
+                        referenceName: x.params.referenceName,
+                        allItems:x.params.allItems,
                         currentItem: x.params.currentItem,
                         currentItemIndex: x.params.currentItemIndex,
-                        allItems:x.params.allItems,
-                        vuex_save_action: 'deleteRDEReferenceById',
-                        object_title: `' ${x.params.referenceName}'s ' details`,
-                        object_id: x.params.referenceId,
+                        vuex_action: 'postRDEExperienceById',
+                        object_title: `' ${x.params.referenceName} '`,
+                        object_id: x.params.rdeId,
+                        vuex_payload:x.params.rdeId,
                         moduleAction:"deleteRDEReference",
                         size: 'w-3/4'
                     }

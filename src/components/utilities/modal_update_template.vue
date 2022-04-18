@@ -143,8 +143,8 @@ export default {
           for(let region of this.form.affected_regions) this.form.eligibility_criteria+= '&region='+region
         }
         this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
-
       }
+      
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
             "" + this.object_title + " Updated Successfully"
@@ -165,6 +165,7 @@ export default {
         this.loading = true
         this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
           this.form = resp
+          console.log('fetching',this.form)
           if(this.moduleName==='occupation'){
             this.form.occupation_category_id=resp.occupation_category.id
           }

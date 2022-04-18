@@ -42,6 +42,7 @@
     "full_name":"Nom et prénom",
     "dob":"Date de naissance",
     "occupation":"Occupation",
+    "religion":"La religion",
     "id_number":"Numéro d'identification",
     "id_type":"Type d'identification",
     "region":"Région",
@@ -73,7 +74,12 @@
     "agree_to":"je suis d'accord avec le",
     "privacy_policy":"politique de confidentialité",
     "already_have_an_account":"Vous avez déjà un compte",
-    "log_in":"Connexion"
+    "log_in":"Connexion",
+    "login_check_mail":"Veuillez confirmer votre email avant de tenter de vous connecter.",
+    "check_mail":"Vous vous êtes inscrit avec succès !! Merci de consulter vos emails",
+    "instructions":"pour plus d'instructions."
+
+
   },
   "rde_self_profile":{
     "save_filter":"Enregistrer le filtre",

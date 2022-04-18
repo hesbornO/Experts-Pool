@@ -202,9 +202,16 @@
               </span>
             </span>
           </span>
-          <span>
-            
+          <!-- Religion -->
+          <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.religion">
+              {{activeLanguage.store.rde_self_registration_form.religion}}:
+            <span class="flex px-2" >
+              <span class="font-semibold font-mono text-lg px-3">
+                {{this.rdeSelfProfile.religion?this.rdeSelfProfile.religion:''}}
+              </span>
+            </span>
           </span>
+          
         </div>
 
           <!-- next of kin details -->
@@ -248,7 +255,7 @@
             </span>
           </span>
 
-          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-semibold text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
+          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-mono text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
           <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
             <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
               <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
@@ -292,7 +299,7 @@
                         <td class="p-3  border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEQualification', params:{currentItemIndex:index,currentItem:qualification, allItems:rdeQualifications}}"
+                              :to="{name:'updateRDEQualification', params:{qualificationId:qualification.id, qualificationName:qualification.field_of_study}}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -301,7 +308,7 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEQualification', params:{currentItemIndex:index, currentItem:qualification, allItems:rdeQualifications}}"
+                              :to="{name:'deleteRDEQualification', params:{qualificationId:qualification.id, qualificationName:qualification.field_of_study}}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -364,7 +371,7 @@
                         <td class="p-3  border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEExperience', params:{currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience}}"
+                              :to="{name:'updateRDEExperience', params:{experienceName:experience.title?experience.title:'experienceName',currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -373,7 +380,7 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEExperience', params:{currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience}}"
+                              :to="{name:'deleteRDEExperience', params:{experienceName:experience.title?experience.title:'experienceName',currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -393,7 +400,7 @@
                   <span class="">
                     <span class="flex ">                 
                       <router-link
-                        :to="{name:'addRDEExperience', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        :to="{name:'addRDEExperience', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:''),allItems:rdeSelfProfile.professional_experience}}"
                         class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -439,7 +446,7 @@
                         <td class="p-3  border-l border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEReference', params:{currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references}}"
+                              :to="{name:'updateRDEReference', params:{referenceName:reference.name?reference.name:'referenceName', currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -448,7 +455,7 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEReference', params:{currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references}}"
+                              :to="{name:'deleteRDEReference', params:{referenceName:reference.name?reference.name:'referenceName',currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'') }}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -468,7 +475,7 @@
                   <span class="">
                     <span class="flex ">                 
                       <router-link
-                        :to="{name:'addRDEReference', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                        :to="{name:'addRDEReference', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:''),allItems:rdeSelfProfile.references}}"
                         class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -528,8 +535,8 @@
                               validation="required"  
                               accept=".pdf" 
                       />        
-                        <span v-if="getErrorMessage['cv']">
-                        <span v-if="getErrorMessage['cv'].length>0">
+                        <span v-if="rdeSelfProfile.cv && getErrorMessage['cv']">
+                        <span v-if="rdeSelfProfile.cv && getErrorMessage['cv'].length>0">
                           <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
                             <span class="text-red-500 animate-pulse">{{error}}</span>
                           </span>
@@ -562,8 +569,8 @@
                         validation="required"  
                         accept=".pdf" 
                       />        
-                        <span v-if="getErrorMessage['cv']">
-                        <span v-if="getErrorMessage['cv'].length>0">
+                        <span v-if="rdeSelfProfile.cv && getErrorMessage['cv']">
+                        <span v-if="rdeSelfProfile.cv && getErrorMessage['cv'].length>0">
                           <span v-for="(error,index) in getErrorMessage['cv']" :key="index">
                             <span class="text-red-500 animate-pulse">{{error}}</span>
                           </span>
@@ -659,7 +666,8 @@ export default {
       loading:false,
       username: '',
       displayUploadButton:false,
-      rdeQualifications:[]     
+      rdeQualifications:[],
+      rde_id:''    
 
     }
   },
@@ -710,20 +718,21 @@ export default {
     fetchRDEData(){
       this.loading = true
       this.$store.dispatch('fetchRDES',1).then(resp => {
-        console.log('fetching')
         if(resp.results.length > 0) {
           this.rdeSelfProfile = resp.results[0]
+          this.rde_id=''
+          this.rde_id+=this.rdeSelfProfile.id
           this.fetchRDEdeployments(this.rdeSelfProfile.id)
         }
         }).catch(err=>{
           this.$store.dispatch('setErrorMsg', err.data)
         }).then(()=>{
           this.loading = false
-      })
-
-      //fetch academic RDE qualifications      
-      this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
-        console.log('id:',this.rdeSelfProfile.id)
+          const qs = require('qs');
+          const query = qs.stringify({
+              profile:  this.rde_id,
+            })
+          this.$store.dispatch('fetchQualificationsById',this.rde_id?query:'id').then(resp => {
         if(resp.results.length > 0) {
           this.rdeQualifications = resp.results
         }
@@ -732,6 +741,11 @@ export default {
         }).then(()=>{
           this.loading = false
       })
+
+      })
+
+      //fetch academic RDE qualifications      
+      
 
     },
     fetchRDEdeployments(rde_id){

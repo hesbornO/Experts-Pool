@@ -115,28 +115,41 @@ export default {
       this.form.country_id = this.country_id
       if (this.vuex_payload){
         payload = this.vuex_payload
-        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById'){
+        if(this.moduleAction==='addRDEReference' || this.moduleAction==='postRDEExperienceById'){
           if(this.form.profile) delete this.form.profile
           
           payload={professional_experience:payload}
           
-          if(this.moduleAction ==='postRDEExperienceById') payload=[{professional_experience:[payload]}]
+          if(this.moduleAction ==='postRDEExperienceById'){
+            
+            payload=[{professional_experience:[payload]}]
+          } 
           
-          if(this.moduleAction ==='postRDEReferenceById') payload=[{references:[payload]}]
+          if(this.moduleAction ==='addRDEReference'){
+            payload=[{references:[payload]}]
+          } 
 
           payload.id=this.object_id        
         } 
       }else{
         payload = this.form
-        if(this.moduleAction==='postRDEReferenceById' || this.moduleAction==='postRDEExperienceById' || this.moduleAction==='acceptDeployment' || this.moduleAction==='rejectDeployment' || this.moduleAction==='deactivateProfile' || this.moduleAction==='activateProfile'){
+        if(this.moduleAction==='addRDEReference' || this.moduleAction==='postRDEExperienceById' || this.moduleAction==='acceptDeployment' || this.moduleAction==='rejectDeployment' || this.moduleAction==='deactivateProfile' || this.moduleAction==='activateProfile'){
           if(this.form.profile) delete payload.profile
           
-          if(this.moduleAction ==='postRDEExperienceById') payload={professional_experience:[payload]}
+          if(this.moduleAction ==='postRDEExperienceById'){
+            payload=[payload]
+            payload=[...payload,...this.allItems]
+            payload={professional_experience:payload}
+          } 
           
-          if(this.moduleAction ==='postRDEReferenceById') payload={references:[payload]}
+          
+          if(this.moduleAction ==='addRDEReference'){
+            payload=[payload]
+            payload=[...payload,...this.allItems]
+            payload={references:payload}
+          } 
 
           payload.id=this.object_id
-          console.log('payload/form:',payload)
         } 
         
       }
@@ -150,6 +163,14 @@ export default {
         }
         payload.eligibility_criteria=payload.eligibility_criteria.replace('&','?')
       }
+      if(this.moduleAction==='updateRDEexperience' || this.moduleAction==='updateRDEReference'){
+        payload={}
+        payload.id=this.object_id
+        this.allItems[this.currentItemIndex]=this.form
+        if(this.moduleAction==='updateRDEexperience') payload.professional_experience=this.allItems
+        else if(this.moduleAction==='updateRDEReference') payload.references=this.allItems
+      }
+      console.log('vuex_action',this.vuex_action)
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(
               ""+ this.object_title + (this.moduleAction==='activateProfile'?' activated':this.moduleAction==='deactivateProfile'?' deactivated':'Created')+ "  Successfully"
@@ -184,7 +205,10 @@ export default {
        if(this.moduleAction=='addRDEQualification'){        
         this.form.profile_id=this.$route.params.rdeId      
       } 
-      // this.setMaxDate()
+
+      // prefill form if reference or experience
+      
+
     },
     async fetchOptions() {
       

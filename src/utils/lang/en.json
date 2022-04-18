@@ -41,6 +41,7 @@
     "full_name":"Full Name",
     "dob":"Date of Birth",
     "occupation":"Occupation",
+    "religion":"Religion",
     "id_number":"ID Number",
     "id_type":"ID Type",
     "region":"Region",
@@ -71,7 +72,10 @@
     "agree_to":"I agree to the",
     "privacy_policy":"privacy policy",
     "already_have_an_account":"Already have an account",
-    "log_in":"Log In"
+    "log_in":"Log In",
+    "login_check_mail":"Kindly confirm your email before attempting to log in.",
+    "check_mail":"You have signed up successfully!! Please check your email",
+    "instructions":"for further instructions."
   },
   "rde_self_profile":{
     "save_filter":"Save Filter",

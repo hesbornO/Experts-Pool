@@ -9,7 +9,7 @@
     "select_country":"chagua nchi",
     "click_to_select":"bofya ili kuchagua",
     "log_in":"Ingia",
-    "log_out":"Toka nje",
+    "log_out":"Ondoka",
     "upload_report":"Pakia Ripoti"
 
 
@@ -41,6 +41,7 @@
     "full_name":"Jina kamili",
     "dob":"Tarehe ya kuzaliwa",
     "occupation":"Kazi",
+    "religion":"Dini",
     "id_number":"Nambari ya kitambulisho",
     "id_type":"Aina ya kitambulisho",
     "region":"Mkoa",
@@ -72,7 +73,12 @@
     "agree_to":"Nakubaliana na",
     "privacy_policy":"sera ya faragha",
     "already_have_an_account":"Tayari unayo akaunti",
-    "log_in":"Ingia"
+    "log_in":"Ingia",
+    "login_check_mail":"Tafadhali thibitisha barua pepe yako kabla ya kujaribu kuingia.",
+    "check_mail":"Umefanikiwa kujisajili!! Tafadhali angalia barua pepe yako",
+    "instructions":"kwa maelekezo zaidi."
+
+
   },
   "rde_self_profile":{
     "save_filter":"Hifadhi kichujio",
