@@ -89,7 +89,7 @@ export default {
   components: {Loading},
   data() {
     return {
-      form: {},
+      form: {eligibility_criteria:''},
       inputErrors: {},
       formErrors: [],
       modal_hidden: true,
@@ -121,13 +121,29 @@ export default {
     },
     optionsList: { type: Array, default: () => [] },
     moduleName:[String, Number],
-    moduleAction:[String, Number]
+    moduleAction:[String, Number],
+    vuex_payload:[String, Number,Object]
   },
   methods: {
     performUpdateAction() {
       this.loading = true
+      if(this.moduleAction==='saveFilter'){
+        if(this.form) this.form=this.vuex_payload
+        console.log(this.form)
+      }
       if(this.moduleName==='UpdateOutbreakType'){
         if(this.form.value) this.form.id=this.form.value
+      }
+      if(this.moduleAction==='UpdateOutbreak'){
+        this.form.eligibility_criteria=''
+        if(this.form.competencies){
+          for(let competency of this.form.competencies) this.form.eligibility_criteria+= '&competencies='+competency
+        }
+        if(this.form.affected_regions){
+          for(let region of this.form.affected_regions) this.form.eligibility_criteria+= '&region='+region
+        }
+        this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
+
       }
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
@@ -143,25 +159,28 @@ export default {
         this.loading = false
       });
     },
-    fetchObject() {      
-      this.loading = true
-      this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
-        this.form = resp
-        if(this.moduleName==='occupation'){
-          this.form.occupation_category_id=resp.occupation_category.id
-        }
-        if(this.moduleAction==='updateRDEQualification'){
-          if(resp.qualification_type) this.form.qualification_type_id = resp.qualification_type.value
-        }
-        this.$forceUpdate()
-      }).catch(err => {
-        displayServerErrMessage(err)
-      }).then(()=>{
-        if(this.optionsList.length ===0){
-          this.loading = false
-        }
-        //
-      })
+    fetchObject() {   
+      if(this.moduleAction!=='saveFilter'){
+
+        this.loading = true
+        this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
+          this.form = resp
+          if(this.moduleName==='occupation'){
+            this.form.occupation_category_id=resp.occupation_category.id
+          }
+          if(this.moduleAction==='updateRDEQualification'){
+            if(resp.qualification_type) this.form.qualification_type_id = resp.qualification_type.value
+          }
+          this.$forceUpdate()
+        }).catch(err => {
+          displayServerErrMessage(err)
+        }).then(()=>{
+          if(this.optionsList.length ===0){
+            this.loading = false
+          }
+          //
+        })
+      }   
     },
     fetchOptions() {
       // let schema =[]

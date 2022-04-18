@@ -86,8 +86,59 @@
           </tr>
          </tbody>
       </template>
-    </accordion-data-template>
+    </accordion-data-template> 
     <!-- End Outbreaks List-->
+
+    <!-- data table List -->
+    <!-- <data_table v-bind="$attrs">
+      <template v-slot="{item}">
+        {{item}}
+        <td class="px-4 py-3 text-sm">
+          <span class="uppercase text-md font-mono text-orange-400 font-semibold">{{item.name?item.name:'' }} </span>
+          <span class="text-black font-normal italic text-xs">{{item.severity?'(SEVERITY:'+item.severity+')':''}}</span>
+        </td>
+        <td class="px-4 py-3 text-sm">
+           <span class="">{{item.description?item.description:''}}</span>
+          <br>
+          <span class=" flex" v-if="item.competencies">
+          <h5 class="text-pink-400 italic  transition rounded-md font-mono focus:outline-none transform hover:-translate-y-px hover:scale-110">Requires:</h5>
+          <span v-for="(competency,index) in item.competencies_objects" :key="index" class="italic px-1 font-extralight">
+            <span v-if="competency.name" class="capitalize">
+              {{competency.name}}<span v-if="index+1<item.competencies.length">,</span>
+            </span>
+          </span>
+          </span>
+        </td>
+        <td class="px-4 py-3 text-sm">
+          <span class="flex">
+            <span class="">
+              <span v-if="item.start_date">
+                From 
+                <span class="text-red-400"> {{item.start_date?' '+item.start_date:''}}</span>
+              </span> <br>                   
+              <span v-if="item.end_date" class="px-2 lowercase">to 
+                <span class="text-blue-400"> {{item.end_date?' '+item.end_date:''}}</span>
+              </span>
+              <span v-if="!item.end_date" class="px-2">
+                <router-link
+                  :to="{name:'OutbreakEndDate', params:{outbreakId:item.id, outbreakName: item.name}}"
+                    class="btn btn-blue h-1/3 text-xs"
+                    title="Click to add end date"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <span class="px-1">Add End Date</span>
+                </router-link>  
+              </span>
+            </span>                  
+          </span>
+        </td>
+        <td class="px-4 py-3 text-sm flex flex-row space-x-1">
+          <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                   
+
+        </td>
+      </template>
+    </data_table> -->
+    <!-- End data table List-->
     <router-view></router-view>
 
   </dashboard_layout>
@@ -97,6 +148,8 @@
 import AccordionDataTemplate from '../../components/layouts/AccordionDataTemplate.vue';
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
+// import data_table from "../../components/layouts/DataTableTemplate";
+
 
 import SplitButton from "../../components/buttons/SplitButton.vue";
 import {mapActions} from 'vuex';
@@ -133,7 +186,7 @@ export default {
     createOptional(item,index) {
       return [
         {
-          to:{name:'SuggestedRDESPerOutbreak', params:{outbreakId:item.id, outbreakName: item.name, competencies:this.competencies[index]}},
+          to:{name:'SuggestedRDESPerOutbreak', params:{outbreakId:item.id, outbreakName: item.name, competencies:this.competencies[index], eligibility_criteria:item.eligibility_criteria?item.eligibility_criteria:item.name}},
           label:'Suggested RDES',
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>'
         },

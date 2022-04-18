@@ -19,8 +19,10 @@ const actions = {
             let relative_url = '/occupation/'
             if (payload === undefined) {
                 payload = ''
-            } else {
-                relative_url = "/occupation/" + payload
+            } 
+            else {
+                relative_url = "/occupation/" + '?page='+payload
+
             }
             api.get(relative_url).then(resp => {
                 commit("setOccupations", resp.data)
@@ -104,8 +106,9 @@ const actions = {
             let relative_url = '/occupation-category/'
             if (payload === undefined) {
                 payload = ''
-            } else {
-                relative_url = "/occupation-category/" + payload
+            } 
+            else {
+                relative_url = "/occupation-category/" + '?page='+payload
             }
             api.get(relative_url).then(resp => {
                 commit("setSectors", resp.data)

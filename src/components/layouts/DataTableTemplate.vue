@@ -58,7 +58,7 @@
       <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
         <button :class="['text-gray-700 disabled:text-gray-400  disabled:cursor-not-allowed']" @click="changePage('previous')" :disabled="page===1?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
         <span class="bg-blue-400 text-white rounded-full px-2">{{page}}</span>  
-        <button :class="['text-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed']" @click="changePage('next')" :disabled="pageResult.length<1?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>  
+        <button :class="['text-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed']" @click="changePage('next')" :disabled="(pageResult.length<1)?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>  
       </span>
     </div>
   </div>
@@ -111,7 +111,8 @@ export default {
     fetchData(){
       this.loading = true
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+       this.$store.dispatch(this.vuex_data_action, (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+      //  this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
          this.pageResult = resp
 
        }).catch(err=>{

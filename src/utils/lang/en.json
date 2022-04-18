@@ -74,6 +74,7 @@
     "log_in":"Log In"
   },
   "rde_self_profile":{
+    "save_filter":"Save Filter",
     "update_profile":"Update Profile",
     "deactivate_account":"Deactivate Account",
     "activate_account":"Activate Account",
@@ -109,7 +110,7 @@
     "made_by":"made by",
     "no_recommendations":"No recommendations yet",
     "no_deployments":"No deployments yet",
-    "no_cv":"No CV Uploaded. Please upload CV!",
+    "no_cv":"No CV Uploaded!",
     "attach_cv":"Attach CV!",
     "deployments":"Deployments",
     "deployment_request":"Deployment request",

@@ -51,6 +51,7 @@ import add_experience_schema from '@/schemas/add_experience_schema.json'
 import accept_deployment from '@/schemas/accept_deployment.json'
 import activate_account from '@/schemas/activate_account.json'
 import deactivate_account from '@/schemas/deactivate_account.json'
+import save_filter from '@/schemas/save_filter.json'
 import reject_deployment from '@/schemas/reject_deployment.json'
 import add_reference_schema from '@/schemas/add_reference_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
@@ -442,6 +443,7 @@ const routes = [
                         jsonSchema:activate_account,
                         vuex_action: 'updateRDEById',
                         moduleAction:'activateProfile',
+                        vuex_fetch_action:'',
                         object_id: x.params.rdeId,
                         object_title: x.params.rdeName,
                     }
@@ -800,7 +802,7 @@ const routes = [
         component: Outbreak,
         props: {
             vuex_data_action: 'fetchAllOutbreaks',
-            table_headings: ['NAME', 'DESCRIPTION', 'DURATION', 'ACTION']
+            table_headings: ['NAME', 'DESCRIPTION', 'DURATION', 'ACTIONS']
         },
         icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
         children: [{
@@ -1026,17 +1028,34 @@ const routes = [
     //end of deployments per outbreak 
     //suggested rdes per outbreak 
     {
-        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/',
+        path: '/outbreaks/:outbreakId/:outbreakName/suggested-rdes/:eligibility_criteria',
         name: 'SuggestedRDESPerOutbreak',
         component: SuggestedRDES,
         props: (x) => {
             return {
                 vuex_data_action: 'suggestRDES',
-                object_id: `?competencies=[${x.params.competencies}]`,
+                object_id: `${x.params.eligibility_criteria}`,
+                // object_id: `?competencies=[${x.params.competencies}]`,
                 table_headings: ['Name', 'Residence', 'Competencies','Contact','Status', 'Action']
             }
         },    
-        children:[           
+        children:[  
+            {
+                path: 'save-filter',
+                name: 'saveFilter',
+                component: modal_update_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema:save_filter,
+                        vuex_save_action: 'updateOutbreakItemById',
+                        moduleAction:'saveFilter',
+                        vuex_payload: { eligibility_criteria:x.params.eligibility_criteria,id:x.params.outbreakId },
+                        object_id: x.params.outbreakId,
+                        object_title: x.params.outbreakName,
+                    }
+                }
+            },         
            
 
         ],    

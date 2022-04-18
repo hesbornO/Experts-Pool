@@ -9,7 +9,7 @@
       </span>
     </span>    
 
-    <div v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length > 0">
+    <div>
       <div :title="activeLanguage.store.rde_self_profile.deployments" class="space-x-4 md:grid md:grid-cols-4">
         <span v-if="this.loading" class=" mt-5 flex justify-center col-span-3">
           <loading></loading>
@@ -152,6 +152,7 @@
                   </td>
                 </tr>
             </tbody>
+            <div class="flex justify-center text-orange-500 font-mono col-span-3" v-else> No deployments yet</div>
           </table>            
           <div v-if="rdeDeployments.length===0" class="col-span-4 border border-black">
             <span class="text-yellow-400 text-xl flex justify-center  font-bold animate-pulse">
@@ -159,9 +160,6 @@
             </span>
           </div>
           
-        </span>
-        <span class="colspan-1 flex justify-end">
-        
         </span>
         
       </div>
@@ -256,32 +254,32 @@ export default {
        })
       //  this.fetchRDEdeployments(this.$route.params.rdeId)
     },
-    fetchRDEData(){
-      this.loading = true
-      this.$store.dispatch('fetchRDES','').then(resp => {
-        if(resp.results.length > 0) {
-          this.rdeSelfProfile = resp.results[0]
-          this.fetchRDEdeployments(this.rdeSelfProfile.id)
-        }
-        }).catch(err=>{
-          this.$store.dispatch('setErrorMsg', err.data)
-        }).then(()=>{
-          this.loading = false
-      })
+    // fetchRDEData(){
+    //   this.loading = true
+    //   this.$store.dispatch('fetchRDES',1).then(resp => {
+    //     if(resp.results.length > 0) {
+    //       this.rdeSelfProfile = resp.results[0]
+    //       this.fetchRDEdeployments(this.rdeSelfProfile.id)
+    //     }
+    //     }).catch(err=>{
+    //       this.$store.dispatch('setErrorMsg', err.data)
+    //     }).then(()=>{
+    //       this.loading = false
+    //   })
 
-      //fetch academic RDE qualifications      
-      this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
-        console.log('id:',this.rdeSelfProfile.id)
-        if(resp.results.length > 0) {
-          this.rdeQualifications = resp.results
-        }
-        }).catch(err=>{
-          this.$store.dispatch('setErrorMsg', err.data)
-        }).then(()=>{
-          this.loading = false
-      })
+    //   //fetch academic RDE qualifications      
+    //   this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
+    //     console.log('id:',this.rdeSelfProfile.id)
+    //     if(resp.results.length > 0) {
+    //       this.rdeQualifications = resp.results
+    //     }
+    //     }).catch(err=>{
+    //       this.$store.dispatch('setErrorMsg', err.data)
+    //     }).then(()=>{
+    //       this.loading = false
+    //   })
 
-    },
+    // },
     fetchRDEdeployments(rde_id){
       this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
         console.log()
@@ -358,7 +356,7 @@ export default {
   },
   watch:{
      $route(){
-        this.fetchRDEData()
+        // this.fetchRDEData()
         this.displayUploadButton=false
     },
     selected_language: function (){
@@ -367,7 +365,7 @@ export default {
   },
 
   mounted(){
-    this.fetchRDEData()
+    // this.fetchRDEData()
     this.getProfileDetails()  
     this.selected_language = this.activeLanguage.name
 

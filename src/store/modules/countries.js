@@ -23,8 +23,10 @@ const actions = {
             let relative_url = '/country/'
             if (payload === undefined) {
                 payload = ''
-            } else {
-                relative_url = "/country/" + payload
+            }
+             else {
+                relative_url = "/country/" + '?page='+payload
+
             }
             api.get(relative_url).then(resp => {
                 commit("setCountries", resp.data)
