@@ -77,7 +77,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/outbreak/" + payload+'/get_rdes'
+                relative_url = "/outbreak/" + payload[0]+'/get_rdes'
             }
             api.get(relative_url).then(resp => {
                 commit("deployments", resp.data)
