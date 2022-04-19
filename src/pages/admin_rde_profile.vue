@@ -178,23 +178,23 @@
 
         <!-- next of kin details -->
          <!-- full name -->
-        <span class="text-green-500  font-semibold text-md capitalize col-span-3" v-if="this.rdeProfile.next_of_kin_name || this.rdeProfile.next_of_kin_email">Next of kin details</span>
-        <span v-if="this.rdeProfile.next_of_kin_name" class="col-span-1 p-2">
+        <span class="text-green-500  font-semibold text-md capitalize col-span-3" v-if="(this.rdeProfile.next_of_kin && this.rdeProfile.next_of_kin.next_of_kin_name) || (this.rdeProfile.next_of_kin && this.rdeProfile.next_of_kin.next_of_kin_email)">Next of kin details</span>
+        <span v-if="(this.rdeProfile.next_of_kin && this.rdeProfile.next_of_kin.next_of_kin_name)" class="col-span-1 p-2">
           Full Name:
           <span class="font-mono font-semibold text-lg">
-            {{this.rdeProfile.next_of_kin_name?this.rdeProfile.next_of_kin_name:'Undefined'}}             
+            {{this.rdeProfile.next_of_kin.next_of_kin_name?this.rdeProfile.next_of_kin.next_of_kin_name:'Undefined'}}             
           </span>
         </span>
 
 
         <!-- next of kin tel -->
-        <span class="col-span-1 flex capitalize" v-if="this.rdeProfile.next_of_kin_phone">
+        <span class="col-span-1 flex capitalize" v-if="(this.rdeProfile.next_of_kin && this.rdeProfile.next_of_kin.next_of_kin_phone)">
           Tel:
           <span class="flex px-2" >
-            <span class=" font-mono text-md px-1" v-if="this.rdeProfile.next_of_kin_phone">
-              <a class="flex text-blue-400  " :href="`tel:`+this.rdeProfile.next_of_kin_phone" target="_blank" title="Click to call">
+            <span class=" font-mono text-md px-1" v-if="this.rdeProfile.next_of_kin.next_of_kin_phone">
+              <a class="flex text-blue-400  " :href="`tel:`+this.rdeProfile.next_of_kin.next_of_kin_phone" target="_blank" title="Click to call">
                 <span class="px-3">
-                  {{this.rdeProfile.next_of_kin_phone?this.rdeProfile.next_of_kin_phone:'Undefined'}}
+                  {{this.rdeProfile.next_of_kin.next_of_kin_phone?this.rdeProfile.next_of_kin.next_of_kin_phone:'Undefined'}}
                 </span>
                 <span >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
@@ -205,11 +205,11 @@
         </span>
 
         <!-- next of kin email -->
-        <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeProfile.next_of_kin_email">
+        <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="(this.rdeProfile.next_of_kin && this.rdeProfile.next_of_kin.next_of_kin_email)">
             Email :
           <span class="flex px-2" >
-              <a :href="mailto.concat(this.rdeProfile.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
-								<span class="pr-2">{{this.rdeProfile.next_of_kin_email?this.rdeProfile.next_of_kin_email:'Undefined'}}</span>
+              <a :href="mailto.concat(this.rdeProfile.next_of_kin.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
+								<span class="pr-2">{{this.rdeProfile.next_of_kin.next_of_kin_email?this.rdeProfile.next_of_kin.next_of_kin_email:'Undefined'}}</span>
 								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 								</svg>
@@ -341,7 +341,6 @@
                       <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.contact}}</td>
                       <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.institution}}</td>
                       <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
-                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>
                     </thead>
 
                     <tbody>
@@ -353,27 +352,7 @@
                           <span>{{reference.email}}</span> 
                         </td>
                         <td class="p-3 border-l border-black">{{reference.institution}}</td>                        
-                        <td class="p-3 border-l border-black">{{reference.description}}</td>  
-                        <td class="p-3  border-l border-black flex">
-                          <span>
-                            <router-link
-                              :to="{name:'updateRDEReference', params:{}}"
-                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
-                              title="Update"
-                            >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                            </router-link>
-                          </span>
-                          <span>
-                            <router-link
-                              :to="{name:'deleteRDEReference', params:{}}"
-                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
-                              title="Delete"
-                            >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </router-link>
-                          </span>
-                        </td>                      
+                        <td class="p-3 border-l border-black">{{reference.description}}</td> 
                       </tr>
                     </tbody>
                   </table>
@@ -517,6 +496,14 @@
                   </td>
                   <td class="border-l border-black p-2 text-xs">
                     <span v-if="rdeProfile.active_deployments>0" :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?'Successfully deployed':deployment.rejected_by_user?'Request rejected':'Request sent'}}</span>
+                    <br>
+                    <span class="col-span-1" v-if="deployment.deployment_report">
+                      <button @click="togglePdfDisplay('fetchCV','viewPdf',deployment.deployment_report)" 
+                        class="hover-animation px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
+                        >
+                        <span>View Report</span>
+                      </button>
+                    </span>
                   </td>
                 </tr>
             </tbody>
@@ -584,7 +571,8 @@ export default {
       loading:false,
       displayUploadButton:false,
       user_level:'',
-      rdeQualifications:[]
+      rdeQualifications:[],
+      
     }
   },
   methods:{
@@ -605,23 +593,34 @@ export default {
       this.loading = true
        this.$store.dispatch('fetchRDEById',this.$route.params.rdeId).then(resp => {
          this.rdeProfile = resp
+         if(this.rdeProfile.id) {
+          this.rde_id=''
+          this.rde_id+=this.rdeProfile.id
+        }
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
          this.loading = false
+         const qs = require('qs');
+          const query = qs.stringify({
+              profile:  this.rde_id,
+            })
+          //fetch academic RDE qualifications     
+            console.log('rdeid',this.rde_id)
+
+          this.$store.dispatch('fetchQualificationsById',this.rde_id?query:'id').then(resp => {
+            if(resp.results.length > 0) {
+              this.rdeQualifications = resp.results
+            }
+            }).catch(err=>{
+              this.$store.dispatch('setErrorMsg', err.data)
+            }).then(()=>{
+              this.loading = false
+          })
        })
        this.fetchRDEdeployments(this.$route.params.rdeId)
 
-       //fetch academic RDE qualifications      
-      this.$store.dispatch('fetchQualificationsById',this.rdeProfile.id).then(resp => {
-        if(resp.results.length > 0) {
-          this.rdeQualifications = resp.results
-        }
-        }).catch(err=>{
-          this.$store.dispatch('setErrorMsg', err.data)
-        }).then(()=>{
-          this.loading = false
-      })
+       
     },
     fetchRDEdeployments(rde_id){
       this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {

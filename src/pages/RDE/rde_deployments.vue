@@ -34,22 +34,24 @@
                     {{deployment.end_date?deployment.end_date:''}}                   
                   </td>
                   <td class=" border-black p-2 text-xs grid grid-cols-1 ">
-                    <router-link
-                        :to="{name:'acceptDeployment', params:{deploymentId:deployment.id,rdeId:rdeSelfProfile.id, outbreakName: deployment.outbreak.name?deployment.outbreak.name:''}}"
-                        class="btn btn-green h-3/4 text-xs text-white col-span-1 bg-green-500"
-                        v-if="!deployment.accepted_by_user && !deployment.rejected_by_user"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                      <span class="px-1">{{activeLanguage.store.rde_self_profile.accept_request}}</span>
-                    </router-link>
-                    <router-link
-                        :to="{name:'rejectDeployment', params:{deploymentId:deployment.id, rdeId:rdeSelfProfile.id, outbreakName: deployment.outbreak.name?deployment.outbreak.name:''}}"
-                        class="btn btn-red h-3/4 text-xs text-white col-span-1 bg-red-400"
-                        v-if="!deployment.accepted_by_user && !deployment.rejected_by_user"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                      <span class="px-1">{{activeLanguage.store.rde_self_profile.reject_request}}</span>
-                    </router-link>
+                    <span class="flex justify-between" v-if="!deployment.accepted_by_user">
+                      <router-link
+                          :to="{name:'acceptDeployment', params:{deploymentId:deployment.id,rdeId:rdeSelfProfile.id, outbreakName: deployment.outbreak.name?deployment.outbreak.name:''}}"
+                          class="btn btn-green text-xs text-white col-span-1 bg-green-500"
+                          v-if="!deployment.accepted_by_user && !deployment.rejected_by_user"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.accept_request}}</span>
+                      </router-link>
+                      <router-link
+                          :to="{name:'rejectDeployment', params:{deploymentId:deployment.id, rdeId:rdeSelfProfile.id, outbreakName: deployment.outbreak.name?deployment.outbreak.name:''}}"
+                          class="btn btn-red text-xs text-white col-span-1 bg-red-400"
+                          v-if="!deployment.accepted_by_user && !deployment.rejected_by_user"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.reject_request}}</span>
+                      </router-link>
+                    </span>
                     <!-- Report -->
                     <div class="col-start-2 col-end-4  mt-5 ml-20" v-if="deployment.status='ended'">
                       <span v-if="loading" class=" mt-5 flex justify-center">
@@ -108,13 +110,17 @@
                             <span class="flex justify-between p-2">
                               <span></span>
                               <span></span>
-                              <button :class="['hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue',loading?'cursor-not-allowed':'']"  @click="saveReport('newCV', deployment.id)" v-if="fileUploaded"> {{activeLanguage.store.actions.submit}}</button>
+                              <button :class="['hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue',loading?'cursor-not-allowed':'']"  @click="saveReport('newCV', deployment.id)" v-if="fileUploaded"> 
+                                <span v-if="loading"> <Loading /> </span>
+                                <span v-else>{{activeLanguage.store.actions.submit}}</span>  
+                                
+                              </button>
                             </span>
                           </span>
                         </span>
 
                         <!-- No Report -->
-                        <span v-if="!deployment.deployment_report && !loading" class="text-semibold text-orange-300 p-2">
+                        <span v-if="!deployment.deployment_report && deployment.accepted_by_user && !loading" class="text-semibold text-orange-300 p-2">
                           <label class="block mt-4 text-sm">
                               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.actions.upload_report}} <span class="text-xs italic">('.pdf', '.word')</span></span>
                               <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
@@ -142,7 +148,10 @@
                           <span class="flex justify-between p-2">
                               <span></span>
                               <span></span>
-                              <button :class="['hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue',loading?'cursor-not-allowed':'']"  @click="saveReport('noCVFile',deployment.id)" v-if="fileUploaded"> {{activeLanguage.store.actions.submit}}</button>
+                              <button :class="['hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue',loading?'cursor-not-allowed':'']"  @click="saveReport('noCVFile',deployment.id)" v-if="fileUploaded"> 
+                                <span v-if="loading"> <Loading /> </span>
+                                <span v-else>{{activeLanguage.store.actions.submit}}</span>
+                              </button>
                             </span>
                           
                         </span>
@@ -164,6 +173,7 @@
         
       </div>
     </div>  
+        
     <router-view></router-view>
   </dashboard_layout>
 </template>
@@ -177,6 +187,7 @@ import Loading from "../../components/utilities/loading";
 // import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
 import {  baseUrl } from '../../utils/constants';
+// import Loading from '../../components/utilities/loading.vue';
 
 export default {
   name: "Regions",
@@ -184,7 +195,7 @@ export default {
     // data_table,
     dashboard_layout,
     // VuePdfApp,
-    Loading
+    Loading,
   },
   data() {
     return {
@@ -213,6 +224,7 @@ export default {
     ...mapActions(['uploadReportById','fetchReport','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
     displaySubmit(field_id){
       if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
+      this.displaySubmit=false
     },
     saveReport(field_id,deployment_id){
       this.loading=true
@@ -222,10 +234,11 @@ export default {
       this.$store.dispatch('uploadReportById', formData).then(()=>{
         this.$toast.success("uploaded")
         this.fetchRDEData()
+        this.loading=false
+        this.displayUploadButton=false
       }).catch(err=>{
         console.log(err)
       })
-      this.loading=false
     },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
@@ -251,35 +264,36 @@ export default {
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
          this.loading = false
+          // this.fetchRDEdeployments(localStorage.getItem('rdeId'))
+          // this.fetchRDEData()
        })
-      //  this.fetchRDEdeployments(this.$route.params.rdeId)
     },
-    // fetchRDEData(){
-    //   this.loading = true
-    //   this.$store.dispatch('fetchRDES',1).then(resp => {
-    //     if(resp.results.length > 0) {
-    //       this.rdeSelfProfile = resp.results[0]
-    //       this.fetchRDEdeployments(this.rdeSelfProfile.id)
-    //     }
-    //     }).catch(err=>{
-    //       this.$store.dispatch('setErrorMsg', err.data)
-    //     }).then(()=>{
-    //       this.loading = false
-    //   })
+    fetchRDEData(){
+      this.loading = true
+      this.$store.dispatch('fetchRDES',1).then(resp => {
+        if(resp.results.length > 0) {
+          this.rdeSelfProfile = resp.results[0]
+          this.fetchRDEdeployments(this.rdeSelfProfile.id)
+        }
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg', err.data)
+        }).then(()=>{
+          this.loading = false
+      })
 
-    //   //fetch academic RDE qualifications      
-    //   this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
-    //     console.log('id:',this.rdeSelfProfile.id)
-    //     if(resp.results.length > 0) {
-    //       this.rdeQualifications = resp.results
-    //     }
-    //     }).catch(err=>{
-    //       this.$store.dispatch('setErrorMsg', err.data)
-    //     }).then(()=>{
-    //       this.loading = false
-    //   })
+      //fetch academic RDE qualifications      
+      this.$store.dispatch('fetchQualificationsById',this.rdeSelfProfile.id).then(resp => {
+        console.log('id:',this.rdeSelfProfile.id)
+        if(resp.results.length > 0) {
+          this.rdeQualifications = resp.results
+        }
+        }).catch(err=>{
+          this.$store.dispatch('setErrorMsg', err.data)
+        }).then(()=>{
+          this.loading = false
+      })
 
-    // },
+    },
     fetchRDEdeployments(rde_id){
       this.$store.dispatch('getRDEprofileDeployment',rde_id).then(resp => {
         console.log()
@@ -356,7 +370,7 @@ export default {
   },
   watch:{
      $route(){
-        // this.fetchRDEData()
+        this.fetchRDEData()
         this.displayUploadButton=false
     },
     selected_language: function (){
@@ -365,7 +379,7 @@ export default {
   },
 
   mounted(){
-    // this.fetchRDEData()
+    this.fetchRDEData()
     this.getProfileDetails()  
     this.selected_language = this.activeLanguage.name
 

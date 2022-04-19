@@ -143,8 +143,18 @@ export default {
           for(let region of this.form.affected_regions) this.form.eligibility_criteria+= '&region='+region
         }
         this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
+      }
+      if(this.moduleAction==='updateRDEQualification'){
+        this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
+        this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
+        this.form.region_of_residence.value=this.form.region_of_residence_id
+
+        delete this.form.next_of_kin_name
+        delete this.form.next_of_kin_phone
+        delete this.form.region_of_residence_id
 
       }
+      
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
             "" + this.object_title + " Updated Successfully"
@@ -165,6 +175,10 @@ export default {
         this.loading = true
         this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
           this.form = resp
+          this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
+          this.form.next_of_kin_phone=this.form.next_of_kin.next_of_kin_phone
+          this.form.region_of_residence_id=this.form.region_of_residence.value
+          console.log('fetching',this.form)
           if(this.moduleName==='occupation'){
             this.form.occupation_category_id=resp.occupation_category.id
           }

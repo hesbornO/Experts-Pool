@@ -25,7 +25,6 @@ const getters = {
 const actions = {
     // stats
     fetchStats({ commit }, payload) {
-        console.log('payload',payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/fetch_stats/'
             if (payload === undefined) {
@@ -43,7 +42,6 @@ const actions = {
     },
     // rde CRUD
     fetchRDES({ commit }, payload) {
-        console.log('payload',payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
             if (payload === undefined) {
@@ -129,7 +127,7 @@ const actions = {
                 relative_url = "/profile/" + payload.id + "/"
                 console.log('patchUrl', relative_url)
             }
-            api.patch(relative_url, payload).then(resp => {
+            api.put(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
@@ -395,6 +393,7 @@ const actions = {
         });
     },
     fetchRDEQualificationById({ commit }, payload) {
+        console.log('payload',payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/profile-academic-qualification/'
             if (payload === undefined) {
@@ -430,6 +429,7 @@ const actions = {
     },
     // eslint-disable-next-line no-unused-vars
     deleteRDEQualificationById({ commit }, payload) {
+        console.log('payload',payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/profile-academic-qualification/'
 
@@ -451,12 +451,11 @@ const actions = {
     // eslint-disable-next-line no-unused-vars
     fetchQualificationsById({ commit }, payload) {
         return new Promise((resolve, reject) => {
-            console.log('payload:',payload)
             let relative_url = '/profile-academic-qualification/'
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile-academic-qualification/?profile=" + payload
+                relative_url = '/profile-academic-qualification/?'+payload 
             }
             api.get(relative_url).then(resp => {
                 commit("setRDE", resp.data)
