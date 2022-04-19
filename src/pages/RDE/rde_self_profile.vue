@@ -213,26 +213,39 @@
           </span>
           
         </div>
+        <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-mono text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
+          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
+            <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
+              <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
+                <span>
+                  <button class="pill_button">{{competency.name?competency.name.replace('_',' '):''}}</button>              
+                </span>
+              </span>            
+            </span>
+          </span>
 
-          <!-- next of kin details -->
+          <br>
+          <br>
+        <!-- next of kin details -->
+        <div class="md:grid md:grid-cols-3 space-x-4 ">
+          <span class="text-green-500 font-mono text-lg capitalize col-span-3" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_name || this.rdeSelfProfile.next_of_kin.next_of_kin_email">Next of kin details</span>
           <!-- full name -->
-          <span class="text-green-500  font-semibold text-md capitalize col-span-3" v-if="this.rdeSelfProfile.next_of_kin_name || this.rdeSelfProfile.next_of_kin_email">Next of kin details</span>
-          <span v-if="this.rdeSelfProfile.next_of_kin_name" class="col-span-1 p-2">
+          <span v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_name" class="col-span-1 p-2">
             {{activeLanguage.store.rde_self_profile.full_name}}:
             <span class="font-mono font-semibold text-lg">
-              {{this.rdeSelfProfile.next_of_kin_name?this.rdeSelfProfile.next_of_kin_name:'Undefined'}}             
+              {{this.rdeSelfProfile.next_of_kin.next_of_kin_name?this.rdeSelfProfile.next_of_kin.next_of_kin_name:'Undefined'}}             
             </span>
           </span>
 
 
           <!-- next of kin tel -->
-          <span class="col-span-1 flex capitalize" v-if="this.rdeSelfProfile.next_of_kin_phone">
+          <span class="col-span-1 flex capitalize" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_phone">
             {{activeLanguage.store.rde_self_registration_form.phone}}:
             <span class="flex px-2" >
-              <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.next_of_kin_phone">
-                <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.next_of_kin_phone" target="_blank" title="Click to call">
+              <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_phone">
+                <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.next_of_kin.next_of_kin_phone" target="_blank" title="Click to call">
                   <span class="px-3">
-                    {{this.rdeSelfProfile.next_of_kin_phone?this.rdeSelfProfile.next_of_kin_phone:'Undefined'}}
+                    {{this.rdeSelfProfile.next_of_kin.next_of_kin_phone?this.rdeSelfProfile.next_of_kin.next_of_kin_phone:'Undefined'}}
                   </span>
                   <span >
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
@@ -243,28 +256,21 @@
           </span>
 
           <!-- next of kin email -->
-          <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeSelfProfile.next_of_kin_email">
-              {{activeLanguage.store.rde_self_registration_form.email}}Email :
+          <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_email">
+              {{activeLanguage.store.rde_self_registration_form.email}}
             <span class="flex px-2" >
-                <a :href="mailto.concat(this.rdeSelfProfile.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
-                  <span class="pr-2">{{this.rdeSelfProfile.next_of_kin_email?this.rdeSelfProfile.next_of_kin_email:'Undefined'}}</span>
+                <a :href="mailto.concat(this.rdeSelfProfile.next_of_kin.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
+                  <span class="pr-2">{{this.rdeSelfProfile.next_of_kin.next_of_kin_email?this.rdeSelfProfile.next_of_kin.next_of_kin_email:'Undefined'}}</span>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                   </svg>
                 </a>
             </span>
           </span>
+        </div>
+        <!-- end of next of kin section -->
 
-          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-mono text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
-          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
-            <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
-              <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
-                <span>
-                  <button class="pill_button">{{competency.name?competency.name.replace('_',' '):''}}</button>              
-                </span>
-              </span>            
-            </span>
-          </span>
+          
 
         </tab>
 
@@ -683,10 +689,12 @@ export default {
       this.$store.dispatch('uploadCVById', formData).then(()=>{
         this.$toast.success("uploaded")
         this.fetchRDEData()
-        this.getProfileDetails()  
+        this.getProfileDetails()
+        this.displayUploadButton=false  
       }).catch(err=>{
         console.log(err)
       })
+      
     },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')
@@ -723,6 +731,8 @@ export default {
           this.rde_id=''
           this.rde_id+=this.rdeSelfProfile.id
           this.fetchRDEdeployments(this.rdeSelfProfile.id)
+         localStorage.setItem('rdeId', this.rdeSelfProfile.id)
+
         }
         }).catch(err=>{
           this.$store.dispatch('setErrorMsg', err.data)

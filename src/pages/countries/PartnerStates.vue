@@ -32,10 +32,11 @@
     <!-- Countries List -->
     <data_table v-bind="$attrs">
       <template v-slot="{item}">
-        <td class="px-4 py-3 text-sm">{{ item.name }}</td>
-        <td class="px-4 py-3 text-sm">+{{ item.phone_code }}</td>
-        <td class="px-4 py-3 text-sm">10</td>
-        <td class="px-4 py-3 text-sm">10</td>
+        <td class="px-4 py-3 text-sm">{{item.name?item.name:'None' }}</td>
+        <td class="px-4 py-3 text-sm">+{{item.phone_code?item.phone_code:'None' }}</td>
+        <td class="px-4 py-3 text-sm">{{item.rde_count?item.rde_count:'None'}}</td>
+        <td class="px-4 py-3 text-sm">{{item.pending_approval?item.pending_approval:'None'}}</td>
+        <td class="px-4 py-3 text-sm">{{item.deployed_count?item.deployed_count:'None'}}</td>
         <td class="px-4 py-3 text-sm flex flex-row space-x-1">
           <split-button :optional="createOptional(item)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                   
 

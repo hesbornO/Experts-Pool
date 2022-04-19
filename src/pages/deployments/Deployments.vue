@@ -4,8 +4,8 @@
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
-          <div class="flex flex-row space-x-8 w-10/12">
-            <div class="flex-auto flex-col space-y-2">
+          <!-- <div class="flex flex-row space-x-8 w-10/12">
+             <div class="flex-auto flex-col space-y-2">
               <p class="text-gray-600 leading-relaxed text-capitalize">Outbreaks</p>
               <select
                  v-model="fetched_outbreaks"
@@ -50,7 +50,7 @@
                 <span class="px-1">Filter</span>
               </button>
             </div>
-          </div>
+          </div> -->
           
           <router-view></router-view>
 
@@ -72,7 +72,7 @@
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.active_deployments>0 ? 'Yes' : 'No' }}
+            <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.current_deployment?item.current_deployment : 'Unavailable' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
               <span v-if="item.competencies_objects">

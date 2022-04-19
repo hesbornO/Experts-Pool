@@ -154,6 +154,19 @@ const actions = {
             })
         });
     },
+    uploadOutbreakReportById({ commit }, payload) {
+        console.log('payload',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak-report/'
+            
+            api.post(relative_url, payload, {headers:{'Content-Type':'multipart/form-data'}}).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
 
     // outbreak types
     fetchAllOutbreakTypes({ commit }, payload) {

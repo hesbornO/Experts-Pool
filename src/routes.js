@@ -13,6 +13,7 @@ import Outbreak from "./pages/outbreak/Outbreaks.vue";
 import DeploymentsPerOutbreak from "./pages/outbreak/DeploymentsPerOutbreak.vue";
 import SuggestedRDES from "./pages/outbreak/SuggestedRDES.vue";
 import AffectedRegions from "./pages/outbreak/AffectedRegions.vue";
+import OutbreakReport from "./pages/outbreak/OutbreakReport.vue";
 import Competence from "./pages/competence/Competence.vue";
 import QualificationTypes from "./pages/AcademicQualificationTypes/Types.vue";
 import OutbreakTypes from "./pages/outbreak/Types.vue";
@@ -267,7 +268,7 @@ const routes = [
                 }
             },
             {
-                path: 'update-rde',
+                path: 'update-rde/:rdeId',
                 name: 'UpdateRDEfromProfile',
                 component: modal_update_template,
                 showInLeftBar: false,
@@ -276,6 +277,7 @@ const routes = [
                         jsonSchema: rde_schema,
                         vuex_fetch_action: 'fetchRDEById',
                         vuex_save_action: 'updateRDEById',
+                        moduleName:'UpdateRDEfromProfile',
                         object_title: `' ${x.params.rdeName}'s ' details`,
                         object_id: x.params.rdeId,
                         optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],
@@ -769,7 +771,7 @@ const routes = [
         props: {
             // vuex_data_action: 'fetchRDEDeployments',
             vuex_data_action: 'fetchRDES',
-            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'DEPLOYED?', 'COMPETENCE', 'STATUS']
+            table_headings: ['NAME', 'SPECIALIZATION', 'REGION', 'current deployment', 'COMPETENCE', 'STATUS']
 
         },
         icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
@@ -835,6 +837,7 @@ const routes = [
 
                 }
             },
+           
             {
                 path: 'event-end-date/:outbreakName/:outbreakId',
                 name: 'OutbreakEndDate',
@@ -869,6 +872,7 @@ const routes = [
         ],
         roles: ['admin', 'eac_admin']
     },
+
     // end of outbreaks
     // partner-states
     {
@@ -877,7 +881,7 @@ const routes = [
         component: PartnerStates,
         props: {
             vuex_data_action: 'fetchCountries',
-            table_headings: ['NAME', 'PHONE CODE', 'REGISTERED RDES', 'PENDING RDES', 'ACTION']
+            table_headings: ['NAME', 'PHONE CODE', 'TOTAL RDES', 'PENDING APPROVAL','CURRENTLY DEPLOYED', 'ACTION']
         },
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -990,13 +994,30 @@ const routes = [
     
     // affected regions
     {
-        path: '/outbreaks/:outbreakName/affected-regions',
+        path: '/events/:outbreakId/:outbreakName/affected-regions',
         name: 'AffectedRegionsPerOutbreak',
         component: AffectedRegions,
         props: (x) => {
             return {
                 affectedRegions:x.params.affectedRegions,
                 table_headings: ['NAME', 'Country', 'Outbreak']
+            }
+        },
+        showInLeftBar: false,
+        children: [
+        ],
+        roles: ['admin', 'eac_admin']
+    },
+    // end of affected regions
+    // outbreak report
+    {
+        path: '/events/:outbreakId/:outbreakName/report',
+        name: 'OutbreakReport',
+        component: OutbreakReport,
+        props: (x) => {
+            return {
+                outbreakId:x.params.outbreakId,
+                outbreakName:x.params.outbreakName,
             }
         },
         showInLeftBar: false,

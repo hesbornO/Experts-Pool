@@ -127,7 +127,7 @@ const actions = {
                 relative_url = "/profile/" + payload.id + "/"
                 console.log('patchUrl', relative_url)
             }
-            api.patch(relative_url, payload).then(resp => {
+            api.put(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
