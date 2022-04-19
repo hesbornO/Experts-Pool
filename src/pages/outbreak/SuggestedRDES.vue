@@ -413,12 +413,16 @@ export default {
       occupations: [],
       application_status: [
         {
-          label: "Complete",
+          label: "Pending Approval",
+          value: "pending_approval",
+        },
+        {
+          label: "Approved",
           value: "approval_complete",
         },
         {
-          label: "Done",
-          value: "done",
+          label: "Rejected",
+          value: "rejected",
         },
       ],
       academic_degree: [],

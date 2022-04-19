@@ -67,19 +67,21 @@
               </td>
               
               <td class="px-4 py-3 text-sm flex flex-row space-x-1 w-1/6">      
-                <split-button :optional="createOptional(item,index)" :primary="createPrimary(item)" class="w-32 md:w-48 " />                 
+                <split-button  :optional="createOptional(item,index)" :primary="createPrimary(item)" class="w-32 md:w-48 " />  
+                
+                
               </td>
           </tr>
           <tr>
-              <td colspan="4" v-if="showData">
-                    <div class="px-4 py-3 text-sm w-1/6" v-if="item.affected_regions">
-                    <span v-for="(region,index) in item.affected_regions_objects" :key="index">
-                      <span v-if="region.name" class="capitalize">
-                        {{region.name}} <span v-if="index+1 < item.affected_regions.length">, </span>
-                      </span>
-                    </span>
-                  </div>
-              </td>
+            <td colspan="4" v-if="showData">
+              <div class="px-4 py-3 text-sm w-1/6" v-if="item.affected_regions">
+                <span v-for="(region,index) in item.affected_regions_objects" :key="index">
+                  <span v-if="region.name" class="capitalize">
+                    {{region.name}} <span v-if="index+1 < item.affected_regions.length">, </span>
+                  </span>
+                </span>
+              </div>
+            </td>
           </tr>
           <tr>
 
@@ -170,11 +172,15 @@ export default {
       Outbreaks:{},
       showData:false,
       competencies:[],
-      affectedRegions:[]
+      affectedRegions:[],
+      fileUploaded:0,
+      showSubmit:false
+
     }
   },
   methods: {
     ...mapActions(['fetchAllOutbreaks']),
+       
 
     createPrimary(item) {
       return {
@@ -184,26 +190,31 @@ export default {
       };
     },
     createOptional(item,index) {
-      return [
+      const options=[
         {
           to:{name:'SuggestedRDESPerOutbreak', params:{outbreakId:item.id, outbreakName: item.name, competencies:this.competencies[index], eligibility_criteria:item.eligibility_criteria?item.eligibility_criteria:item.name}},
           label:'Suggested RDES',
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>'
         },
         {
-          to:{name:'AffectedRegionsPerOutbreak', params:{outbreakName:item.name, affectedRegions:item.affected_regions_objects}},
+          to:{name:'AffectedRegionsPerOutbreak', params:{outbreakName:item.name, affectedRegions:item.affected_regions_objects,outbreakId:item.id}},
           label:'Affected Regions',
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>'
+        },
+        {
+          to:{name:'OutbreakReport', params:{outbreakName:item.name, outbreakId:item.id}},
+          label:'Report',
+          icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>'
         },
         {divider:true},
         {
           to:{name:'UpdateOutbreak', params:{outbreakId:item.id, outbreakName: item.name}},
           label:'Update',
           icon:'<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>'
-        },
-        
-             
-      ];   
+        }               
+      ]
+      
+      return options;   
     },
     fetchOutbreaks() {
       this.$store.dispatch('fetchAllOutbreaks').then(resp => {
@@ -216,7 +227,7 @@ export default {
       }).catch(err => {
         console.log(err);
       })
-    },
+    },    
   },
   mounted() {
     this.fetchOutbreaks()

@@ -23,7 +23,7 @@
                   </select>
                 </span>
               </div>
-              <FormulateForm v-model="form" @submit="createUserAccount">               
+              <FormulateForm v-model="form" @submit="createUserAccount" v-if="!showSignUpMsg">               
                 <div class="md:grid md:grid-cols-3 gap-2">
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.first_name}}</span>
@@ -418,8 +418,13 @@
                 </button>
               </FormulateForm>
 
-              <hr class="my-8" />        
-              <p class="mt-4">              
+              <hr class="my-8" /> 
+              <p class="p-2 bg-green-500 text-white border-green-200 rounded-md" v-if="showSignUpMsg">{{activeLanguage.store.sign_up_form.check_mail}} <span class="text-blue-900 font-semibold"><a :href="`mailto:${email}`">{{email?email:'no email'}}</a></span>  {{activeLanguage.store.sign_up_form.instructions}}</p>
+                     
+              <p class="mt-4 flex justify-center" v-if="showSignUpMsg">              
+                <router-link class="w-full" to="/login"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"> {{activeLanguage.store.sign_up_form.log_in}}</span></router-link>
+              </p>
+              <p class="mt-4" v-if="!showSignUpMsg">              
                 <router-link class="w-full" to="/login"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">{{activeLanguage.store.sign_up_form.already_have_an_account}}? {{activeLanguage.store.sign_up_form.log_in}}</span></router-link>
               </p>
             </div>
@@ -445,14 +450,16 @@ export default {
       form:{
         countryCode:'',
         groups:[],
-        attached_region_id:''
+        attached_region_id:'',
       },
+      email:'',
       password:'',
       passwordFieldType:'password',
       passwordConfirmFieldType:'password',
       showSidebar: false,
       regions: [],
-      selected_language:''
+      selected_language:'',
+      showSignUpMsg:false
     }
   },
   methods: {
@@ -468,34 +475,37 @@ export default {
     
       // eslint-disable-next-line no-unused-vars
       this.signUp(this.form).then(resp => {
+        this.showSignUpMsg=true
+        this.email = this.form.email
         // window.location.replace("/rde-self-registration-form")     
-        let login_payload = {
-          username: this.form.username,
-          password: this.form.password
-        }
+        // let login_payload = {
+        //   username: this.form.username,
+        //   password: this.form.password
+        // }
         // eslint-disable-next-line no-unused-vars
-        this.login(login_payload).then(resp => {
-          let user_assigned_roles_string = localStorage.getItem('roles')
-          let user_assigned_roles = []
-          if (user_assigned_roles_string === ''){
-          //if the route has no specified roles, default to rde
-            user_assigned_roles.push('rde')
-          }else{
-            // console.log('assigned roles:', user_assigned_roles_string)
-            user_assigned_roles = user_assigned_roles_string.split(',')
-          }
+        // this.login(login_payload).then(resp => {
+        //   let user_assigned_roles_string = localStorage.getItem('roles')
+        //   let user_assigned_roles = []
+        //   if (user_assigned_roles_string === ''){
+        //   //if the route has no specified roles, default to rde
+        //     user_assigned_roles.push('rde')
+        //   }else{
+        //     // console.log('assigned roles:', user_assigned_roles_string)
+        //     user_assigned_roles = user_assigned_roles_string.split(',')
+        //   }
         
-          if(user_assigned_roles.includes('rde')&& user_assigned_roles.length==1){
-            window.location.replace("/rde-self-profile")
-          }else{
-            window.location.replace("/home")
-          }
-        }).catch(err => {
-          console.log(err)
-        })
+        //   if(user_assigned_roles.includes('rde')&& user_assigned_roles.length==1){
+        //     window.location.replace("/rde-self-profile")
+        //   }else{
+        //     window.location.replace("/home")
+        //   }
+        // }).catch(err => {
+        //   console.log(err)
+        // })
 
       }).catch(err => {
         console.log(err)
+        this.showSignUpMsg=false
       })
 
     },

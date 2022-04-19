@@ -3,71 +3,7 @@
 
     <div class="w-full overflow-hidden shadow-xs">
       <div class="w-full overflow-x-auto ">
-        <!-- filters -->
-        <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
-          <div class="flex flex-row space-x-8 w-10/12">
-            <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.occupation}}</p>
-              <select
-                  v-model="selected_occupation"
-                  :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2  form-select w-full']"
-                  name="occupation" @change="addQueryParams('occupation', selected_occupation)">
-                <option selected value="">All</option>
-                <option v-for="(occupation,index) in allOccupations" :value="occupation.id" :key="index">
-                  {{ occupation.label }}
-                </option>
-              </select>
-            </div>
-            <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.partner_state}}</p>
-              <select v-model="selected_country"
-                      :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
-                      name="country" placeholder="--select country--" @change="addQueryParams('country', selected_country)"> 
-                <option selected value="">All</option>
-                <option v-for="(country,index) in allCountries" :key="index" :value="country.value">
-                  {{ country.label }}
-                </option>
-              </select>
-            </div>
-            <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">{{activeLanguage.store.titles.status}}</p>
-              <select v-model="selected_status"
-                      :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
-                      name="status" placeholder="select status" @change="addQueryParams('status', selected_status)">
-                <option class="bg-white" selected value="">All</option>
-                <option v-for="(status,index) in approvalStatuses" :key="index" :value="status.value">
-                  {{ status.label }}
-                </option>
-              </select>
-            </div>
-            <div class="flex flex-col justify-end ">
-              <button
-                  class="btn btn-blue "
-                  @click="filter()">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                </svg>
-                <span class="px-1">{{activeLanguage.store.actions.filter}}</span>
-              </button>
-            </div>
-          </div>
-          <div class="flex flex-col w-2/12 justify-end ">
-            <!-- <router-link
-                :to="{name: 'CreateRDE'}"
-                class="btn btn-blue">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"></path>
-              </svg>
-              <span class="px-1">Add RDE</span>
-            </router-link> -->
-          </div>
-          <router-view></router-view>
-        </div>
-        <!-- end of filters -->
+        
         <!-- Cards -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
           <!-- Card -->
@@ -160,9 +96,159 @@
           </div>
         </div>
         <!-- End of cards -->
+        <!-- filters -->
+        <br />
+        <!-- <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4"> -->
+          <div>
+            <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white">
+              <div class="flex justify-between col-span-12 w-full">
+                <div class="pl-2">
+                  <span class="font-semibold">Region</span><br />
+                  <span
+                    v-for="(region, index) in regions"
+                    :key="index"
+                    class="flex col-span-1"
+                  >
+                    <input
+                      type="checkbox"
+                      :value="region.id"
+                      :ref="`region${region.id}`"
+                      :id="`region${region.id}`"
+                      @input="addToFilterString('region', region.id)"
+                    />
+                    <label class="pl-1">{{ region.name }}</label>
+                  </span>
+                </div>
+                <div>
+                  <span class="font-semibold">Gender</span><br />
+                  <span
+                    v-for="(item, index) in gender"
+                    :key="index"
+                    class="flex col-span-1"
+                  >
+                    <input
+                      type="checkbox"
+                      :value="item.value"
+                      :ref="`gender${item.value}`"
+                      :id="`gender${item.value}`"
+                      @input="addToFilterString('gender', item.value)"
+                    />
+                    <label class="pl-1">{{ item.label }}</label>
+                  </span>
+                </div>
+                <div>
+                  <span class="font-semibold">Occupation</span><br />
+                  <span v-for="(occupation, index) in occupations" :key="index">
+                    <input
+                      type="checkbox"
+                      :value="occupation.value"
+                      :ref="`occupation${occupation.value}`"
+                      :id="`occupation${occupation.value}`"
+                      @input="addToFilterString('occupation', occupation.value)"
+                    />
+                    <label class="pl-1">{{ occupation.label }}</label>
+                    <br />
+                  </span>
+                </div>
+                <div>
+                  <span class="font-semibold">Religion</span><br />
+                  <span v-for="(religion, index) in religions" :key="index">
+                    <input
+                      type="checkbox"
+                      :value="religion.value"
+                      :ref="`religion${religion.value}`"
+                      :id="`religion${religion.value}`"
+                      @input="addToFilterString('religion', religion.value)"
+                    />
+                    <label class="pl-1">{{ religion.label }}</label>
+                    <br />
+                  </span>
+                </div>
+                <div>
+                  <span class="font-semibold">Application Status</span><br />
+                  <div v-for="(status, index) in application_status" :key="index">
+                    <input
+                      type="checkbox"
+                      :label="status.label"
+                      :value="status.value"
+                      :ref="`application_status${status.value}`"
+                      :id="`application_status${status.value}`"
+                      @input="addToFilterString('application_status', status.value)"
+                    />
+                    <label class="pl-1">{{ status.label }}</label>
+                  </div>
+                </div>
+                <div>
+                  <span class="font-semibold">Academic Degree</span><br />
+                  <div
+                    v-for="(degree, index) in academic_degree"
+                    :key="index"
+                    class="flex col-span-1"
+                  >
+                    <input
+                      type="checkbox"
+                      :value="degree.value"
+                      :id="`academic_degree${degree.value}`"
+                      @input="addToFilterString('academic_degree', degree.value)"
+                    />
+                    <label class="pl-1">{{ degree.label }}</label>
+                  </div>
+                </div>
+                <div class="pr-2">
+                  <span class="font-semibold">Competency</span><br />
+                  <div v-for="(competency, index) in competencies" :key="index">
+                    <input
+                      type="checkbox"
+                      :value="competency.value"
+                      :ref="`competencies${competency.value}`"
+                      :id="`competencies${competency.value}`"
+                      @input="addToFilterString('competencies', competency.value)"
+                    />
+                    <label class="pl-1">{{ competency.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <div class="flex justify-between">  
+                <!-- <router-link
+                    :to="{name:'saveFilter', params:{outbreakId:$route.params.outbreakId?$route.params.outbreakId:'id',outbreakName:$route.params.outbreakName?$route.params.outbreakName:'name',eligibility_criteria:filterString}}"
+                    class="btn btn-blue h-1/2 text-xs m-5"
+                    v-if="userHasSelectedFilterItem"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                  <span class="px-1">{{activeLanguage.store.rde_self_profile.save_filter}}</span>
+                </router-link>        -->
+                <button
+                  class="flex text-white bg-blue-400 py-2 px-4 m-5 rounded-md"
+                  @click="filterRDES"
+                >
+                  <svg
+                    class="w-5 h-5 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                    ></path>
+                  </svg>
+
+                  Filter
+                </button>          
+              </div>
+            </div>
+          </div>          
+          <router-view></router-view>
+        <!-- </div> -->
+        <!-- end of filters -->
 
         <!-- RDE List -->
-        <data_table v-bind="$attrs" :table_headings="activeLanguage.store.tables.home_table_headings">
+        <data_table v-bind="$attrs" :table_headings="activeLanguage.store.tables.home_table_headings"  v-if="!userHasSelectedFilterItem">
           <template v-slot="{item}">
             <td class="px-4 py-3 text-sm capitalize">
               <span v-if="item.application_status==='approved_by_partner_state'" class="flex">
@@ -233,8 +319,144 @@
             </td>
           
           </template>
-        </data_table>
-        <!-- end of list -->     
+        </data_table>        
+        <!-- end of list -->    
+
+         <!--filtered list  -->
+         <span class="text-blue-500 italic font-mono font-semibold ">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
+         <div v-if="userHasSelectedFilterItem">
+          <table class="w-full whitespace-no-wrap">
+            <thead>
+              <tr
+                class="
+                  text-xs
+                  font-semibold
+                  tracking-wide
+                  text-left text-gray-500
+                  uppercase
+                  border border-b border-t border-r
+                  dark:border-gray-700
+                  bg-gray-50
+                  dark:text-gray-400 dark:bg-gray-800
+                "
+              >
+                <th class="px-4 py-3 w-2/12">NAME</th>
+                <th class="px-4 py-3 w-2/12">RESIDENCE</th>
+                <th class="px-4 py-3 w-2/12">COMPETENCIES</th>
+                <th class="px-4 py-3 w-2/12">CONTACT</th>
+                <th class="px-4 py-3 w-2/12">STATUS</th>
+                <th class="px-4 py-3 w-2/12">ACTION</th>
+              </tr>
+            </thead>
+            <tbody
+              v-if="
+                filtered_rdes &&
+                filtered_rdes.results &&
+                filtered_rdes.results.length > 0
+              "
+              class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+            >
+              <tr
+                class="text-gray-700 dark:text-gray-400 border"
+                v-for="(item, index) in filtered_rdes.results"
+                :key="index"
+              >
+                <td class="px-4 py-3 text-sm">
+                  {{ item.last_name ? item.last_name + ", " : "" }}
+                  {{ item.first_name ? item.first_name : "" }}
+                  {{ item.middle_name ? item.middle_name : "" }}
+                  <span class="text-xs italic">({{item.gender==='M'?'Male':item.gender==='F'?'Female':'Undefined'}})</span>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  {{ item.region_of_residence.name }},
+                  {{ item.region_of_residence.country.name }}
+                </td>
+                <td class="px-4 py-3 text-sm italic">
+                  <div v-if="item.competencies_objects">
+                    <span
+                      v-for="(competency, index) in item.competencies_objects"
+                      :key="index"
+                      class="capitalize flex-auto"
+                    >
+                      {{ competency.name ? competency.name.replace("_", " ") : "" }}
+                      <span v-if="index + 1 < item.competencies_objects.length"
+                        >,
+                      </span>
+                    </span>
+                  </div>
+                </td>
+
+                <td class="px-4 py-3 text-sm">
+                  <span class="flex flex-row space-x-1 text-blue-500">
+                    <!-- <span v-if="item.phone"><a :href="`tel:${item.phone}`" title="Click to call">{{item.phone}}</a></span>  -->
+                    <span v-if="item.email"
+                      ><a :href="`mailto:${item.email}`" title="Click to mail">{{
+                        item.email
+                      }}</a></span
+                    >
+                  </span>
+                </td>
+                <td
+                  class="
+                    px-4
+                    py-3
+                    text-sm
+                    capitalize
+                    text-orange-400
+                    italic
+                    font-mono font-semibold
+                  "
+                >
+                  <span
+                    :class="[
+                      'capitalize italic px-4 py-3 text-xs leading-tight font-mono rounded-md  font-semibold',
+                      item.application_status == 'pending_approval'
+                        ? 'text-yellow-700  dark:text-yellow-100'
+                        : item.application_status == 'approved_by_partner_state'
+                        ? 'text-purple-700  dark:text-purple-100'
+                        : item.application_status == 'approval_complete'
+                        ? 'text-green-700  dark:text-green-100'
+                        : item.application_status == 'deployed'
+                        ? 'text-purple-700 dark:text-purple-100'
+                        : '',
+                    ]"
+                    >{{
+                      item.application_status
+                        ? item.application_status.replace(/[_-]/g, " ")
+                        : ""
+                    }}</span
+                  ><br />
+                </td>
+                <td
+                  class="
+                    px-4
+                    py-3
+                    text-sm
+                    capitalize
+                    text-orange-400
+                    italic
+                    font-mono font-semibold
+                  "
+                >
+                  <split-button
+                    :optional="createOptional(item)"
+                    :primary="createPrimary(item)"
+                    class="w-32 md:w-48"
+                  />
+                </td>
+              </tr>
+            </tbody>
+            <tbody
+              v-else
+              class="bg-white divide-y w-full dark:divide-gray-700 dark:bg-gray-800"
+            >
+              <tr class="flex justify-center ">
+                <td class="text-orange-500">No records found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+         <!--end of filtered list  -->
 
       </div>
 
@@ -247,7 +469,7 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
-
+import api from "@/api";
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
 import SplitButton from "../components/buttons/SplitButton.vue";
@@ -295,12 +517,66 @@ export default {
       fileUploaded: 0,
       query:{my_key:''},
       user_level:'',
-
-
-
+      eligibility_criteria: '',
+      religions: [
+        {
+          label: "Christian",
+          value: "christian",
+        },
+        {
+          label: "Muslim",
+          value: "muslim",
+        },
+        {
+          label: "Buddhist",
+          value: "buddhist",
+        },
+        {
+          label: "Atheist",
+          value: "atheist",
+        },
+      ],
+      application_status: [
+        {
+          label: "Pending Approval",
+          value: "pending_approval",
+        },
+        {
+          label: "Approved",
+          value: "approval_complete",
+        },
+        {
+          label: "Rejected",
+          value: "rejected",
+        },
+      ],
+      gender: [
+        {
+          label: "Male",
+          value: "M",
+        },
+        {
+          label: "Female",
+          value: "F",
+        },
+      ],
+      regions: [],
+      userHasSelectedFilterItem: false,
+      
+      initial_competencies: [],
+      initial_regions: [],
+      filtered_rdes: [],
+      academic_degree: [],
+      competencies: [],
+      occupations: [],
+      filterString:''
     }
   },
   methods: {
+    ...mapActions["fetchRegions",
+      "fetchAllOccupations",
+      "fetchAllCompetencies",
+      "fetchAllQualificationTypes"],
     createPrimary(item) {      
       return {
           to:{name:'adminRdeProfile', params:{rdeId:item.id, rdeName: item.last_name}},
@@ -411,11 +687,123 @@ export default {
     this.user_level= localStorage.getItem('level')
     },
 
+  // filter
+    getFilterOptions() {
+      // regions
+      this.$store
+        .dispatch("fetchRegions")
+        .then((resp) => {
+          this.regions = resp;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {
+          // occupations
+          this.$store
+            .dispatch("fetchAllOccupations")
+            .then((resp) => {
+              this.occupations = resp;
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+            .then(() => {
+              // competencies
+              this.$store
+                .dispatch("fetchAllCompetencies")
+                .then((resp) => {
+                  this.competencies = resp;
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+                .then(() => {
+                  // academic_degree
+                  this.$store
+                    .dispatch("fetchAllQualificationTypes")
+                    .then((resp) => {
+                      this.academic_degree = resp;
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    })
+                    .then(() => {
+                      let initial_filter ='';
+                      console.log('filterString',this.filterString)  
+                      console.log(initial_filter);
+                      for (let id of initial_filter) {
+                        // this.$refs.id.checked=true
+                        console.log("id", id);
+                        document.getElementById(id).checked = true;
+                      }
+                    });
+                });
+            });
+        });
+    },
+    addToFilterString(label, value) {
+      let region = document.getElementById(`${label}${value}`).value;
+      if (document.getElementById(`${label}${value}`).checked) {
+        if (!this.filterString)
+          this.filterString = this.filterString.concat(`${label}=${region}`);
+        else {
+          if(this.filterString.length===1) this.filterString = this.filterString.concat(`${label}=${region}`);
+          else{
+            this.filterString = this.filterString.concat(`&${label}=${region}`);
+          }
+        }
+
+        // console.log('filter string:',this.filterString)
+      } else {
+        if (this.filterString.includes(`&${label}=${region}`))
+          this.filterString = this.filterString.replace(
+            `&${label}=${region}`,
+            ""
+          );
+        else {
+          if (this.filterString.includes(`${label}=${region}&`))
+            this.filterString = this.filterString.replace(
+              `${label}=${region}&`,
+              ""
+            );
+          else {
+            this.filterString = this.filterString.replace(
+              `${label}=${region}`,
+              ""
+            );
+          }
+        }
+        // console.log('filter string:',this.filterString)
+      }
+    },
+    filterRDES() {
+      if (this.filterString) {
+        console.log('fs',this.filterString)        
+        this.userHasSelectedFilterItem = true;
+        return new Promise((resolve, reject) => {
+          api
+            .get("/profile/?" + this.filterString)
+            .then((resp) => {
+              this.filtered_rdes = resp.data;
+            })
+            .catch((err) => {
+              reject(err);
+            });
+        });
+      } else {
+        this.filtered_rdes = [];
+        this.userHasSelectedFilterItem = false;
+      }
+    },
+
     
   },
   mounted() {
     this.fetch_stats()
     this.getAllOccupations()
+    this.getFilterOptions();
+
 
   },
   computed: {

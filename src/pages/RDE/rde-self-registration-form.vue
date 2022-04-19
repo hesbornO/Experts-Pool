@@ -924,6 +924,7 @@ export default {
         gender:'',
         id_type:'',
         occupation:'',
+        next_of_kin:{},
         competencies:[],
         next_of_kin_phone:''
        },
@@ -973,6 +974,15 @@ export default {
     registerRDE(){   
       this.isLoading=true   
       let payload = this.form
+      payload.next_of_kin.next_of_kin_name=payload.next_of_kin_name
+      payload.next_of_kin.next_of_kin_phone=payload.next_of_kin_phone
+      payload.next_of_kin.next_of_kin_email=payload.next_of_kin_email
+
+      delete payload.next_of_kin_name
+      delete payload.next_of_kin_phone
+      delete payload.next_of_kin_email
+
+      
       this.postRDE(payload).then(resp=>{
         this.$store.dispatch('setError',{})
         this.isLoading=false

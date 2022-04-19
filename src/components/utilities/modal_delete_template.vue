@@ -85,15 +85,28 @@ export default {
     object_title: {
       type:String,
       default: ''
-    }
+    },
+    moduleAction:[String],
+    currentItem:[String,Array,Object],
+    currentItemIndex:[String,Array,Object,Number],
+    allItems:[String,Array],
   },
   data(){
     return {
-      delete_modal_hidden: true
+      delete_modal_hidden: true,
+      rde_id:''
     }
   },
   methods:{
     executeAction(){      
+      if(this.moduleAction==='deleteRDEexperience' || this.moduleAction==='deleteRDEReference'){
+        this.rde_id=''
+        this.rde_id+=this.vuex_payload
+        let payload = {id:this.rde_id}
+        if(this.moduleAction==='deleteRDEexperience') payload.professional_experience=this.allItems.splice(this.currentItem,1)
+        else if (this.moduleAction==='deleteRDEReference') payload.references=this.allItems.splice(this.currentItem,1)
+        this.vuex_payload=payload
+      }
       this.$store.dispatch(this.vuex_action, this.vuex_payload).then(()=>{
 
           this.$toast.success(

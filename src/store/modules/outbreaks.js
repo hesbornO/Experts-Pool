@@ -77,7 +77,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/outbreak/" + payload+'/get_rdes'
+                relative_url = "/outbreak/" + payload[0]+'/get_rdes'
             }
             api.get(relative_url).then(resp => {
                 commit("deployments", resp.data)
@@ -147,6 +147,19 @@ const actions = {
             }
             api.patch(relative_url, payload).then(resp => {
                 commit("setOutbreak", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    uploadOutbreakReportById({ commit }, payload) {
+        console.log('payload',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/outbreak-report/'
+            
+            api.post(relative_url, payload, {headers:{'Content-Type':'multipart/form-data'}}).then(resp => {
                 resolve(resp.data)
             }).catch(err => {
                 commit("setError", err.response.data)
