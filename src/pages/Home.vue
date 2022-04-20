@@ -323,7 +323,7 @@
         <!-- end of list -->    
 
          <!--filtered list  -->
-         <span class="text-blue-500 italic font-mono font-semibold ">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
+         <span class="text-blue-500 italic font-mono font-semibold " v-if="userHasSelectedFilterItem">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
          <div v-if="userHasSelectedFilterItem">
           <table class="w-full whitespace-no-wrap">
             <thead>
