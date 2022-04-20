@@ -36,7 +36,7 @@
     <div v-if="rdeSelfProfile">
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length >0">
         <span class="flex">
-          <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+          <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status==='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status==='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status==='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status==='deployed'?'text-purple-700 dark:text-purple-100':'']">
                 {{activeLanguage.store.rde_self_profile.status}}: {{ this.rdeSelfProfile.application_status ? this.rdeSelfProfile.application_status.replace(/[_-]/g, " ") : '' }}
                 
                 <span v-if="this.rdeSelfProfile.application_status==='approved_by_partner_state'" class="flex">
@@ -122,10 +122,10 @@
               {{this.rdeSelfProfile.gender.toLowerCase()==='m'?'Male':this.rdeSelfProfile.gender.toLowerCase()==='f'?'Female':'Undefined'}}
             </span>
             <span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeSelfProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
               
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeSelfProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeSelfProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
             </span>        
           </span>
 
@@ -278,14 +278,14 @@
           <div class="col-span-4 rounded-md border-2 border-green-700">
             <!-- academic qualifications -->
             <div>
-              <span class="p-4">
-                <hr class=" text-green-500 bg-green-500"/>
+              <div class="p-4">
+                <div class=" text-green-500 bg-green-500"/>
                 <span class="flex justify-between">  
                   <span></span>              
                   <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.academic_qualifications}}</span>      
                   <span></span>              
                 </span> 
-              </span>
+              </div>
               <div class="w-full px-4">
                 <div v-if="rdeQualifications.length>0">               
                   <table class="w-full p-4 border-black border-b border-t">
@@ -642,7 +642,7 @@ import Loading from "../../components/utilities/loading";
 
 // import VuePdfApp from "vue-pdf-app";
 import "vue-pdf-app/dist/icons/main.css";
-import {  baseUrl } from '../../utils/constants';
+import {  baseUrl } from '@/utils/constants';
 
 export default {
   name: "Regions",
@@ -725,7 +725,7 @@ export default {
     },
     fetchRDEData(){
       this.loading = true
-      this.$store.dispatch('fetchRDES',1).then(resp => {
+      this.$store.dispatch('fetchRDES',`?page=1`).then(resp => {
         if(resp.results.length > 0) {
           this.rdeSelfProfile = resp.results[0]
           this.rde_id=''
@@ -862,21 +862,6 @@ export default {
     padding: 0;
     font-family: 'Karla', sans-serif;
   }
-  .wrapper {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 20px;
-  }
-
-  .change__style {
-    background-color: #eee;
-    font-size: 1em;
-    margin-bottom: 10px;
-    padding: 5px;
-  }
-  /* spinner */
 
   .pill_button {
   background-color: rgba(179, 162, 11, 0.596);
