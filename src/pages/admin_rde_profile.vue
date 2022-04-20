@@ -174,6 +174,15 @@
             </span>
           </span>
         </span>
+        <!-- Occupation -->
+        <span class="col-span-1 flex capitalize " v-if="this.rdeProfile.religion">
+            Religion:
+          <span class="flex px-2" >
+            <span class="font-semibold font-mono text-lg px-3">
+              {{this.rdeProfile.religion?this.rdeProfile.religion:''}}
+            </span>
+          </span>
+        </span>
         <span></span>
 
         <!-- next of kin details -->
