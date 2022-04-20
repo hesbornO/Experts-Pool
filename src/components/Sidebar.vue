@@ -7,7 +7,7 @@
         <div class=" py-3  text-center flex flex-row justify-between border-b bg-havelock-blue" >
           <router-link
               class="ml-6 text-lg font-semibold text-white dark:text-gray-200 flex flex-row justify-items-end"
-              :to="{name:'home'}">
+              :to="{name:'#'}">
             <p>EAC RDE</p>
             <img alt="EAC Logo" class=" w-7 ml-3"
                  src="../assets/img/eac_logo.png"
