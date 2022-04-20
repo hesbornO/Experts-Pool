@@ -49,26 +49,26 @@
               <button class="btn btn-red flex flex-col justify-center filter opacity-60"
                       type="button"
                       @click="back">
-                <div class="flex flex-row justify-between gap-x-2">
-                  <p>Cancel</p>
+                <span class="flex flex-row justify-between gap-x-2">
+                  <span>Cancel</span>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                </div>
+                </span>
               </button>
               <button class="btn btn-blue flex flex-col justify-center  "
                       type="button"
                       @click="performUpdateAction">
-                <div class="flex flex-row justify-between gap-x-2">
-                  <p>Save</p>
+                <span class="flex flex-row justify-between gap-x-2">
+                  <span>Save</span>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                </div>
+                </span>
               </button>
             </div>
           </div>
@@ -81,7 +81,7 @@
 <script>
 
 import {mapGetters} from "vuex";
-import displayServerErrMessage from '@/utils/functions'
+import {displayServerErrMessage} from '@/utils/functions'
 import Loading from "./loading";
 
 export default {
@@ -144,6 +144,7 @@ export default {
         }
         this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
       }
+      console.log("action is ", this.moduleAction)
       if(this.moduleAction==='updateRDEQualification'){
         this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
         this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
@@ -171,7 +172,7 @@ export default {
     },
     fetchObject() {   
       if(this.moduleAction!=='saveFilter'){
-
+        console.log("action ", this.vuex_fetch_action)
         this.loading = true
         this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
           this.form = resp
@@ -187,6 +188,7 @@ export default {
           }
           this.$forceUpdate()
         }).catch(err => {
+          console.log("her is it", err)
           displayServerErrMessage(err)
         }).then(()=>{
           if(this.optionsList.length ===0){

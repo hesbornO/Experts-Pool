@@ -53,7 +53,10 @@
               aria-label="Search"
           />
           <div v-if="show_search_results" class="bg-white flex flex-col absolute w-full text-black z-40 shadow-md rounded-md p-2 gap-y-2">
-            <router-link :to="{name:'adminRdeProfile', params:{rdeId:result.id ,rdeName: result.first_name}}" v-for="(result, index) in search_results" :key="index" class="cursor-pointer">{{result.first_name}}</router-link>
+            <router-link :to="{name:'adminRdeProfile', params:{rdeId:result.id ,rdeName: result.first_name}}" v-for="(result, index) in search_results" :key="index"
+                         class="cursor-pointer">
+              {{result.first_name}} {{result.middle_name}} {{result.last_name}} from {{result.region_of_residence.name}}
+            </router-link>
           </div>
         </div>
       </div>
