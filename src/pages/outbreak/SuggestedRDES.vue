@@ -6,8 +6,8 @@
     <div>
       <br />
 
-      <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white">
-        <div class="flex justify-between col-span-8 w-full">
+      <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2">
+        <div class="flex justify-between col-span-8 w-full gap-4">
           <div class="pl-2">
             <span class="font-semibold">Region</span><br />
             <span
@@ -75,7 +75,6 @@
             <div v-for="(status, index) in application_status" :key="index">
               <input
                 type="checkbox"
-                :label="status.label"
                 :value="status.value"
                 :ref="`application_status${status.value}`"
                 :id="`application_status${status.value}`"
@@ -205,13 +204,13 @@
           <span
             :class="[
               'capitalize italic px-4 py-3 text-xs leading-tight font-mono rounded-md  font-semibold',
-              item.application_status == 'pending_approval'
+              item.application_status === 'pending_approval'
                 ? 'text-yellow-700  dark:text-yellow-100'
-                : item.application_status == 'approved_by_partner_state'
+                : item.application_status === 'approved_by_partner_state'
                 ? 'text-purple-700  dark:text-purple-100'
-                : item.application_status == 'approval_complete'
+                : item.application_status === 'approval_complete'
                 ? 'text-green-700  dark:text-green-100'
-                : item.application_status == 'deployed'
+                : item.application_status === 'deployed'
                 ? 'text-purple-700 dark:text-purple-100'
                 : '',
             ]"
@@ -327,13 +326,13 @@
               <span
                 :class="[
                   'capitalize italic px-4 py-3 text-xs leading-tight font-mono rounded-md  font-semibold',
-                  item.application_status == 'pending_approval'
+                  item.application_status === 'pending_approval'
                     ? 'text-yellow-700  dark:text-yellow-100'
-                    : item.application_status == 'approved_by_partner_state'
+                    : item.application_status === 'approved_by_partner_state'
                     ? 'text-purple-700  dark:text-purple-100'
-                    : item.application_status == 'approval_complete'
+                    : item.application_status === 'approval_complete'
                     ? 'text-green-700  dark:text-green-100'
-                    : item.application_status == 'deployed'
+                    : item.application_status === 'deployed'
                     ? 'text-purple-700 dark:text-purple-100'
                     : '',
                 ]"
@@ -577,7 +576,7 @@ export default {
     },
     createOptional(item) {
       const options = [];
-      if (item.active_deployments != 1) {
+      if (item.active_deployments !== 1) {
         options.push({
           to: {
             name: "DeployFromSuggestions",

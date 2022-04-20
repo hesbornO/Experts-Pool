@@ -100,7 +100,7 @@
         <br />
         <!-- <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4"> -->
           <div>
-            <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white">
+            <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2">
               <div class="flex justify-between col-span-12 w-full">
                 <div class="pl-2">
                   <span class="font-semibold">Region</span><br />
@@ -278,7 +278,7 @@
                 </span>
               </span><br>
             </td>
-            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status=='approval_complete'?'text-green-700  dark:text-green-100':item.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+            <td :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md  font-semibold',item.application_status==='pending_approval'?'text-yellow-700  dark:text-yellow-100':item.application_status==='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':item.application_status==='approval_complete'?'text-green-700  dark:text-green-100':item.application_status==='deployed'?'text-purple-700 dark:text-purple-100':'']">
               {{ item.application_status? item.application_status.replace(/[_-]/g, " ") : '' }}
             </td>
             <td class="px-4 py-3 text-sm flex flex-row space-x-1 text-orange-400 italic font-mono font-semibold">   
@@ -410,13 +410,13 @@
                   <span
                     :class="[
                       'capitalize italic px-4 py-3 text-xs leading-tight font-mono rounded-md  font-semibold',
-                      item.application_status == 'pending_approval'
+                      item.application_status === 'pending_approval'
                         ? 'text-yellow-700  dark:text-yellow-100'
-                        : item.application_status == 'approved_by_partner_state'
+                        : item.application_status === 'approved_by_partner_state'
                         ? 'text-purple-700  dark:text-purple-100'
-                        : item.application_status == 'approval_complete'
+                        : item.application_status === 'approval_complete'
                         ? 'text-green-700  dark:text-green-100'
-                        : item.application_status == 'deployed'
+                        : item.application_status === 'deployed'
                         ? 'text-purple-700 dark:text-purple-100'
                         : '',
                     ]"
@@ -574,9 +574,7 @@ export default {
   },
   methods: {
     ...mapActions["fetchRegions",
-      "fetchAllOccupations",
-      "fetchAllCompetencies",
-      "fetchAllQualificationTypes"],
+      "fetchAllOccupations", "fetchAllCompetencies", "fetchAllQualificationTypes"],
     createPrimary(item) {      
       return {
           to:{name:'adminRdeProfile', params:{rdeId:item.id, rdeName: item.last_name}},

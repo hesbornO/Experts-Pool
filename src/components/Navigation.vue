@@ -1,5 +1,5 @@
-<template>
-  <header class="z-10 py-2  shadow-sm border-b dark:bg-gray-800 bg-havelock-blue" >
+<template xmlns:x-transition="http://www.w3.org/1999/xhtml">
+  <header class="z-10 py-1.5 shadow-sm border-b dark:bg-gray-800 bg-havelock-blue " >
     <div
       class="container flex items-center justify-between h-full px-6 mx-auto text-white dark:text-purple-300"
     >
@@ -26,7 +26,7 @@
       <p class="capitalize">{{region}} <span class="uppercase">({{ user_level }})</span></p>
       <!--end of level info-->
       <!-- Search input -->
-      <!-- <div class="flex justify-center flex-1 lg:mr-32">
+      <div class="flex justify-center flex-1 lg:mr-32 md:ml-4">
         <div class="relative w-full max-w-xl mr-6 focus-within:text-white">
           <div class="absolute inset-y-0 flex items-center p-2 ">
             <svg
@@ -43,17 +43,25 @@
             </svg>
           </div>
           <input
-            class="w-full pl-8 pr-2 py-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-            type="text"
-            placeholder="Type to search for RDE..."
-            aria-label="Search"
+              v-click-outside="hideSearchResults"
+              @focus="toggleSearchResults"
+              @keyup="searchRdes"
+              class="w-full pl-8 pr-2 py-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+              type="text"
+              v-model="search_term"
+              placeholder="Type to search for RDE..."
+              aria-label="Search"
           />
+          <div v-if="show_search_results" class="bg-white flex flex-col absolute w-full text-black z-40 shadow-md rounded-md p-2 gap-y-2">
+            <router-link :to="{name:'adminRdeProfile', params:{rdeId:result.id ,rdeName: result.first_name}}" v-for="(result, index) in search_results" :key="index" class="cursor-pointer">{{result.first_name}}</router-link>
+          </div>
         </div>
-      </div> -->
+      </div>
+
       <ul class="flex items-center flex-shrink-0 space-x-6">
         
         <!-- Notifications menu -->
-        <select v-model="selected_language"  name="language" class="rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-28">
+        <select v-model="selected_language"  class="rounded-sm border border-gray-300 text-gray-600 px-4 focus:border-blue-100 form-select w-28">
           <option v-for="(language, index) in allLanguages" :key="index" :value="language.name" class="px-2">{{language.name}}</option>
         </select>
       
@@ -157,6 +165,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import ClickOutside from 'vue-click-outside'
 
 export default {
   name: 'Navigation',
@@ -171,7 +180,10 @@ export default {
       user_level:'',
       region: '',
       fullname: '',
-      selected_language:''
+      selected_language:'',
+      search_term:'',
+      search_results:[],
+      show_search_results:false
     }
   },
   computed:{
@@ -184,33 +196,31 @@ export default {
     }
   },
   methods: {
+    hideSearchResults(){
+      this.show_search_results = false
+    },
+    toggleSearchResults(){
+      this.show_search_results = !this.show_search_results
+    },
+    searchRdes(){
+      this.$store.dispatch('fetchRDES', `?search=${this.search_term}&no_page`).then(resp=>{
+        this.search_results = resp
+      }).catch(err=>{
+        this.$store.dispatch('setErrorMsg', err.response)
+      })
+
+    },
     toggleTheme() {
-      if (this.dark) {
-        this.dark = false
-      } else {
-        this.dark = true
-      }
+      this.dark = !this.dark;
     },
     toggleSideMenu() {
-      if (this.isSideMenuOpen) {
-        this.isSideMenuOpen = false
-      } else {
-        this.isSideMenuOpen = true
-      }
+      this.isSideMenuOpen = !this.isSideMenuOpen;
     },
     toggleProfileMenu() {
-      if (this.isProfileMenuOpen) {
-        this.isProfileMenuOpen = false
-      } else {
-        this.isProfileMenuOpen = true
-      }
+      this.isProfileMenuOpen = !this.isProfileMenuOpen;
     },
     toggleNotificationsMenu() {
-      if (this.isNotificationsMenuOpen) {
-        this.isNotificationsMenuOpen = false
-      } else {
-        this.isNotificationsMenuOpen = true
-      }
+      this.isNotificationsMenuOpen = !this.isNotificationsMenuOpen;
     },
     closeNotificationsMenu() {
       this.isNotificationsMenuOpen = false
@@ -239,6 +249,9 @@ export default {
      this.username= localStorage.getItem('username')
     }
 },
+  directives: {
+    ClickOutside
+  },
   mounted() {
     this.getProfileDetails()
     this.$store.dispatch('switchLanguage', localStorage.getItem('active_language_name'))

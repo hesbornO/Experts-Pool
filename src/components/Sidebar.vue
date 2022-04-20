@@ -61,11 +61,7 @@ export default {
   },
   methods: {
     togglePagesMenu() {
-      if (this.isPagesMenuOpen) {
-        this.isPagesMenuOpen = false;
-      } else {
-        this.isPagesMenuOpen = true;
-      }
+      this.isPagesMenuOpen = !this.isPagesMenuOpen;
     },
     closeSideMenu() {
       this.isSideMenuOpen = false;
