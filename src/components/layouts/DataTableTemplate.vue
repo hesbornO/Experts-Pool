@@ -90,6 +90,7 @@ export default {
       type: String,
       default : ''
     },
+    moduleAction:[String]
   },
   methods:{
     goBack(){
@@ -110,9 +111,15 @@ export default {
     },    
     fetchData(){
       this.loading = true
+      let payload = '' 
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch(this.vuex_data_action, (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:'').then(resp => {
-      //  this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+      //  this.$store.dispatch(this.vuex_data_action, (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+      //  this.$store.dispatch(this.vuex_data_action,  this.page?'?page='+this.page:'').then(resp => {
+        if(this.moduleAction==='home' || this.moduleAction==='ActiveDeployments') payload=''
+        else payload= (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:''
+
+        console.log('pay',payload)
+        this.$store.dispatch(this.vuex_data_action, payload ).then(resp => {
          this.pageResult = resp
 
        }).catch(err=>{

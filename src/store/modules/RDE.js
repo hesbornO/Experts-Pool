@@ -42,6 +42,7 @@ const actions = {
     },
     // rde CRUD
     fetchRDES({ commit }, payload) {
+        console.log('homepayload',payload)
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'
             if (payload === undefined) {
