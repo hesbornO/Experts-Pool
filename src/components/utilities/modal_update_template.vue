@@ -91,6 +91,7 @@ export default {
     return {
       form: {eligibility_criteria:''},
       inputErrors: {},
+      errors:{},
       formErrors: [],
       modal_hidden: true,
       loading: false,
@@ -154,6 +155,10 @@ export default {
         delete this.form.region_of_residence_id
 
       }
+      if(this.moduleAction==='UpdateRDE'){   
+        console.log('occupation',this.form.occupation)         
+        // this.form.occupation=this.form.occupation.value
+      }
       
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(
@@ -174,11 +179,12 @@ export default {
         this.loading = true
         this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
           this.form = resp
-          if(this.moduleAction==='UpdateRDE'){
-            
+          if(this.moduleAction==='UpdateRDE'){   
             this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
-          this.form.next_of_kin_phone=this.form.next_of_kin.next_of_kin_phone
-          this.form.region_of_residence_id=this.form.region_of_residence.value
+            this.form.next_of_kin_phone=this.form.next_of_kin.next_of_kin_phone
+            this.form.region_of_residence_id=this.form.region_of_residence.value
+            this.form.occupation_id=this.form.occupation.value
+            console.log('occupation',this.form.occupation)         
           }
           console.log('fetching',this.form)
           if(this.moduleName==='occupation'){
