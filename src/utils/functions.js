@@ -1,5 +1,9 @@
 
 function displayServerErrMessage(err){
+    if (err.response !== undefined){
+        err = err.response
+    }
+    console.log("error", err)
     let full_error_message = ''
     Object.keys(err).map(msg_instance => {
         full_error_message += msg_instance.toString() + ':' + err[msg_instance] + "\n";
