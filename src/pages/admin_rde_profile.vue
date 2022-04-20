@@ -11,7 +11,7 @@
         <router-link
             :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
             class="btn btn-green h-3/4 text-xs mr-1"
-            v-if="this.rdeProfile.application_status === 'pending_approval'"
+            v-if="this.rdeProfile.application_status === 'pending_approval' && user_level==='eac'"
             title="Click to approve"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -20,7 +20,7 @@
           <router-link
               :to="{name:'EAC_DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
               class="btn btn-orange h-3/4 text-xs mr-1"
-              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0"
+              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0 && user_level==='eac'"
               title="Click to disapprove"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

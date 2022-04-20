@@ -171,13 +171,15 @@ export default {
     },
     fetchObject() {   
       if(this.moduleAction!=='saveFilter'){
-
         this.loading = true
         this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
           this.form = resp
-          this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
+          if(this.moduleAction==='UpdateRDE'){
+            
+            this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
           this.form.next_of_kin_phone=this.form.next_of_kin.next_of_kin_phone
           this.form.region_of_residence_id=this.form.region_of_residence.value
+          }
           console.log('fetching',this.form)
           if(this.moduleName==='occupation'){
             this.form.occupation_category_id=resp.occupation_category.id
