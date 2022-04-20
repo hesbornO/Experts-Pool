@@ -39,6 +39,22 @@ const actions = {
             })
         })
     },
+    fetchAbstractReports({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/abstract-report/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/abstract-report/" + '?page='+payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOutbreaks", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     fetchOutbreakOptions({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/outbreak_options/'
@@ -62,6 +78,22 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/outbreak/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOutbreak", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchAbstractReportById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/abstract-report/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/abstract-report/" + payload
             }
             api.get(relative_url).then(resp => {
                 commit("setOutbreak", resp.data)
@@ -167,6 +199,19 @@ const actions = {
             })
         });
     },
+    uploadAdminReport({ commit }, payload) {
+        console.log('payload',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/abstract-report/'
+            
+            api.post(relative_url, payload, {headers:{'Content-Type':'multipart/form-data'}}).then(resp => {
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
 
     // outbreak types
     fetchAllOutbreakTypes({ commit }, payload) {
@@ -193,6 +238,22 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/outbreak-type/" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOutbreakType", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchAdminReportById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/abstract-report/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/abstract-report/" + payload
             }
             api.get(relative_url).then(resp => {
                 commit("setOutbreakType", resp.data)
@@ -240,6 +301,24 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/outbreak-type/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.put(relative_url, payload).then(resp => {
+                commit("setOutbreakType", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    updateAdminReportById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/abstract-report/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/abstract-report/" + payload.id + "/"
                 console.log('patchUrl', relative_url)
             }
             api.put(relative_url, payload).then(resp => {

@@ -1,0 +1,13 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+        "type": "textarea",
+        "rows":5,
+        "label": "Description",
+        "name": "name",
+        "validation": "required"
+    }
+]
+
+}]
