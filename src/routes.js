@@ -116,6 +116,7 @@ const routes = [
                         jsonSchema: rde_schema,
                         vuex_fetch_action: 'fetchRDEById',
                         vuex_save_action: 'updateRDEById',
+                        moduleAction:'UpdateRDE',
                         object_title: `' ${x.params.rdeName}'s ' details`,
                         object_id: x.params.rdeId,
                         optionsList: ['fetchAllOccupations', 'fetchRegions', 'fetchAllCompetencies'],

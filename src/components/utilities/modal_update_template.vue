@@ -49,26 +49,26 @@
               <button class="btn btn-red flex flex-col justify-center filter opacity-60"
                       type="button"
                       @click="back">
-                <span class="flex flex-row justify-between gap-x-2">
-                  <span>Cancel</span>
+                <div class="flex flex-row justify-between gap-x-2">
+                  <p>Cancel</p>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                </span>
+                </div>
               </button>
               <button class="btn btn-blue flex flex-col justify-center  "
                       type="button"
                       @click="performUpdateAction">
-                <span class="flex flex-row justify-between gap-x-2">
-                  <span>Save</span>
+                <div class="flex flex-row justify-between gap-x-2">
+                  <p>Save</p>
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                        xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                </span>
+                </div>
               </button>
             </div>
           </div>
@@ -144,7 +144,6 @@ export default {
         }
         this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
       }
-      console.log("action is ", this.moduleAction)
       if(this.moduleAction==='updateRDEQualification'){
         this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
         this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
@@ -172,13 +171,15 @@ export default {
     },
     fetchObject() {   
       if(this.moduleAction!=='saveFilter'){
-        console.log("action ", this.vuex_fetch_action)
         this.loading = true
         this.$store.dispatch(this.vuex_fetch_action, this.object_id).then(resp => {
           this.form = resp
-          this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
+          if(this.moduleAction==='UpdateRDE'){
+
+            this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
           this.form.next_of_kin_phone=this.form.next_of_kin.next_of_kin_phone
           this.form.region_of_residence_id=this.form.region_of_residence.value
+          }
           console.log('fetching',this.form)
           if(this.moduleName==='occupation'){
             this.form.occupation_category_id=resp.occupation_category.id
@@ -188,7 +189,6 @@ export default {
           }
           this.$forceUpdate()
         }).catch(err => {
-          console.log("her is it", err)
           displayServerErrMessage(err)
         }).then(()=>{
           if(this.optionsList.length ===0){
