@@ -5,9 +5,26 @@
     <!-- Suggested rdes -->
     <div>
       <br />
-
+      <!-- filter -->
       <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2">
         <div class="flex justify-between col-span-8 w-full gap-4">
+          <div class="pl-2">
+            <span class="font-semibold">Partner State</span><br />
+            <span
+              v-for="(country, index) in countries"
+              :key="index"
+              class="flex col-span-1"
+            >
+              <input
+                type="checkbox"
+                :value="country.id"
+                :ref="`country${country.id}`"
+                :id="`country${country.id}`"
+                @input="addToFilterString('country', country.id)"
+              />
+              <label class="pl-1">{{ country.label }}</label>
+            </span>
+          </div>
           <div class="pl-2">
             <span class="font-semibold">Region</span><br />
             <span
@@ -25,6 +42,7 @@
               <label class="pl-1">{{ region.name }}</label>
             </span>
           </div>
+          
           <div>
             <span class="font-semibold">Gender</span><br />
             <span
@@ -114,6 +132,7 @@
           </div>
         </div>
       </div>
+      <!-- end of filter -->
       <div class="flex justify-end">
         <div class="flex justify-between">  
           <router-link
@@ -240,6 +259,8 @@
         </td>
       </template>
     </data_table>
+
+    <span class="text-blue-500 italic font-mono font-semibold " v-if="userHasSelectedFilterItem">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
 
     <div v-if="userHasSelectedFilterItem">
       <table class="w-full whitespace-no-wrap">
@@ -399,6 +420,7 @@ export default {
     return {
       filterString: "",
       regions: [],
+      countries: [],
       gender: [
         {
           label: "Male",
@@ -457,6 +479,7 @@ export default {
   methods: {
     ...mapActions([
       "fetchRegions",
+      "fetchCountries",
       "fetchAllOccupations",
       "fetchAllCompetencies",
       "fetchAllQualificationTypes",
@@ -471,6 +494,16 @@ export default {
         .catch((err) => {
           console.log(err);
         })
+        .then(() => {
+          // countries
+          this.$store
+            .dispatch("fetchCountries")
+            .then((resp) => {
+              this.countries = resp;
+            })
+            .catch((err) => {
+              console.log(err);
+            })
         .then(() => {
           // occupations
           this.$store
@@ -518,6 +551,7 @@ export default {
                     });
                 });
             });
+        });
         });
     },
     addToFilterString(label, value) {
