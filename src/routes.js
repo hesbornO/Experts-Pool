@@ -7,6 +7,7 @@ import rde_profile_suggested from "./pages/outbreak/rde_profile_suggested.vue";
 import rde_self_profile from "./pages/RDE/rde_self_profile.vue";
 import rde_deployments from "./pages/RDE/rde_deployments.vue";
 import Deployments from "./pages/deployments/Deployments.vue";
+import AdminReports from "./pages/outbreak/AdminReports.vue";
 import PartnerStates from "./pages/countries/PartnerStates.vue";
 import Regions from "./pages/countries/Regions.vue";
 import Outbreak from "./pages/outbreak/Outbreaks.vue";
@@ -39,6 +40,7 @@ import modal_upload_cv_template from "./components/utilities/modal_upload_cv_tem
 
 //schemas
 import country_schema from '@/schemas/country_schema.json'
+import update_admin_description_schema from '@/schemas/update_admin_description_schema.json'
 import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
 import deploy_rde_from_suggest_schema from '@/schemas/deploy_rde_from_suggest_schema.json'
 import end_rde_deployment_schema from '@/schemas/end_rde_deployment_schema.json'
@@ -798,6 +800,7 @@ const routes = [
         }],
         roles: ['admin', 'eac_admin', 'country_admin', 'approver']
     },
+    
     // outbreaks
     {
         path: "/events/",
@@ -877,8 +880,44 @@ const routes = [
         ],
         roles: ['admin', 'eac_admin']
     },
-
     // end of outbreaks
+
+    //adminreports
+    {
+        path: "/admin-reports",
+        name: "AdminReports",
+        component: AdminReports,
+        props: {
+            vuex_data_action: 'fetchAbstractReports',
+            table_headings: ['description', 'Report','Action'],
+            moduleAction:'AdminReports'
+
+        },
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>`,
+        children: [
+            
+            {
+            path: 'update-description/:reportId/:reportName',
+            name: 'updateDescription',
+            component: modal_update_template,
+            showInLeftBar: false,
+            props: x => {
+                return {
+                    jsonSchema: update_admin_description_schema,
+                    vuex_save_action: 'updateAdminReportById',
+                    vuex_fetch_action:'fetchAdminReportById',
+                    moduleAction:'updateDescription',
+                    object_title: `' ${x.params.reportName}' `,
+                    object_id: x.params.reportId,
+                    size: 'w-1/2'
+                }
+
+            }
+        }],
+        roles: ['admin', 'eac_admin', 'country_admin', 'approver']
+    },
+    // end of adminreports
+
     // partner-states
     {
         path: "/partner-states/",

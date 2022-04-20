@@ -586,14 +586,23 @@ export default {
   },
   methods:{
     saveCV(){
-      let formData = new FormData()
-      formData.append('profile_id',this.rdeProfile.id)
-      formData.append('cv', document.getElementById('cvFile').files[0])
-      this.$store.dispatch('uploadCVById', formData).then(()=>{
-        this.$toast.success("uploaded")
-      }).catch(err=>{
-        console.log(err)
-      })
+      if(document.getElementById('cvFile').files[0]){
+        var fileInput = document.getElementById('cvFile');   
+        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
+        const myRenamedFile = new File([fileInput], newFileName);
+        let formData = new FormData()
+        formData.append('profile_id',this.rdeProfile.id)
+        formData.append('cv', myRenamedFile)
+        this.$store.dispatch('uploadCVById', formData).then(()=>{
+          this.$toast.success("uploaded")
+          this.fetchRDEData()
+
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
+
+      
       // location.reload()
     },
     fetchRDEData(){
