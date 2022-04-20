@@ -270,7 +270,7 @@ export default {
     },
     fetchRDEData(){
       this.loading = true
-      this.$store.dispatch('fetchRDES',1).then(resp => {
+      this.$store.dispatch('fetchRDES',`?page=1`).then(resp => {
         if(resp.results.length > 0) {
           this.rdeSelfProfile = resp.results[0]
           this.fetchRDEdeployments(this.rdeSelfProfile.id)

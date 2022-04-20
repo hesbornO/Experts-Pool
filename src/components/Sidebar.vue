@@ -4,7 +4,7 @@
         class="z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block h-full"
     >
       <div class="text-gray-500 dark:text-gray-400">
-        <div class=" py-3  text-center flex flex-row justify-between border-b bg-havelock-blue" >
+        <div class=" py-2.5  text-center flex flex-row justify-between border-b bg-havelock-blue" >
           <router-link
               class="ml-6 text-lg font-semibold text-white dark:text-gray-200 flex flex-row justify-items-end"
               :to="{name:'#'}">
@@ -61,11 +61,7 @@ export default {
   },
   methods: {
     togglePagesMenu() {
-      if (this.isPagesMenuOpen) {
-        this.isPagesMenuOpen = false;
-      } else {
-        this.isPagesMenuOpen = true;
-      }
+      this.isPagesMenuOpen = !this.isPagesMenuOpen;
     },
     closeSideMenu() {
       this.isSideMenuOpen = false;
