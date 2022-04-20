@@ -414,17 +414,17 @@ export default {
       this.$router.back()
     },
 
-    saveCV(){
-      let formData = new FormData()
-      formData.append('profile_id',this.rdeProfile.id)
-      formData.append('cv', this.$refs.cvFile.files[0])
-      this.$store.dispatch('uploadCVById', formData).then(()=>{
-        this.$toast.success("uploaded")
-      }).catch(err=>{
-        console.log(err)
-      })
-      // location.reload()
-    },
+    // saveCV(){
+    //   let formData = new FormData()
+    //   formData.append('profile_id',this.rdeProfile.id)
+    //   formData.append('cv', this.$refs.cvFile.files[0])
+    //   this.$store.dispatch('uploadCVById', formData).then(()=>{
+    //     this.$toast.success("uploaded")
+    //   }).catch(err=>{
+    //     console.log(err)
+    //   })
+    //   // location.reload()
+    // },
     processFile(e) {
         const files = e.target.files || e.dataTransfer.files;
         if (!files.length) {

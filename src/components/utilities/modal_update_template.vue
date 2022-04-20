@@ -160,6 +160,13 @@ export default {
         console.log('occupation',this.form.occupation)         
         // this.form.occupation=this.form.occupation.value
       }
+      if(this.moduleAction==='updateDescription'){
+        delete this.form.created_at   
+        delete this.form.updated_at   
+        delete this.form.document   
+        console.log('occupation',this.form.occupation)         
+        // this.form.occupation=this.form.occupation.value
+      }
       
       this.$store.dispatch(this.vuex_save_action, this.form).then(() => {
         this.$toast.success(

@@ -170,19 +170,23 @@ export default {
       this.$router.back()
     },
     saveReport(field_id,outbreak_id){
-      this.loading=true
-      let formData = new FormData()
-      formData.append('outbreak_id',outbreak_id)
-      formData.append('report', document.getElementById(field_id).files[0])
-
-      this.$store.dispatch('uploadOutbreakReportById', formData).then(()=>{
-        this.$toast.success("uploaded")
-        this.fetchOutbreak()
-        this.loading=false
-        this.displayUploadButton=false
-      }).catch(err=>{
-        console.log(err)
-      })
+      if(document.getElementById(field_id).files[0]){
+        this.loading=true
+        var fileInput = document.getElementById(field_id);   
+        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
+        const myRenamedFile = new File([fileInput], newFileName);
+        let formData = new FormData()
+        formData.append('outbreak_id',outbreak_id)
+        formData.append('report', myRenamedFile)
+        this.$store.dispatch('uploadOutbreakReportById', formData).then(()=>{
+          this.$toast.success("uploaded")
+          this.fetchOutbreak()
+          this.loading=false
+          this.displayUploadButton=false
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
     },
     displaySubmitButton(field_id){
       if(document.getElementById(field_id).files[0]){

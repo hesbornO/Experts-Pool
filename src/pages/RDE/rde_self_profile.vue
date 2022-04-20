@@ -594,7 +594,8 @@
                 <span class="flex justify-between p-2">
                     <span></span>
                     <span></span>
-                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  @click="saveCV('noCVFile')" v-if="fileUploaded"> Submit CV</button>
+                    <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  
+                    @click="saveCV('noCVFile')" v-if="fileUploaded"> Submit CV</button>
                   </span>
                 
               </span>
@@ -683,17 +684,22 @@ export default {
       if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
     },
     saveCV(field_id){
-      let formData = new FormData()
-      formData.append('profile_id',this.rdeSelfProfile.id)
-      formData.append('cv', document.getElementById(field_id).files[0])
-      this.$store.dispatch('uploadCVById', formData).then(()=>{
-        this.$toast.success("uploaded")
-        this.fetchRDEData()
-        this.getProfileDetails()
-        this.displayUploadButton=false  
-      }).catch(err=>{
-        console.log(err)
-      })
+      if(document.getElementById(field_id).files[0]){
+        var fileInput = document.getElementById(field_id);   
+        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
+        const myRenamedFile = new File([fileInput], newFileName);
+        let formData = new FormData()
+        formData.append('profile_id',this.rdeSelfProfile.id)
+        formData.append('cv', myRenamedFile)
+        this.$store.dispatch('uploadCVById', formData).then(()=>{
+          this.$toast.success("uploaded")
+          this.fetchRDEData()
+          this.getProfileDetails()
+          this.displayUploadButton=false  
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
       
     },
     getProfileDetails(){
