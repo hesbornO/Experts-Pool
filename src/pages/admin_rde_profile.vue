@@ -11,7 +11,7 @@
         <router-link
             :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
             class="btn btn-green h-3/4 text-xs mr-1"
-            v-if="this.rdeProfile.application_status === 'pending_approval'"
+            v-if="this.rdeProfile.application_status === 'pending_approval' && user_level==='eac'"
             title="Click to approve"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -20,7 +20,7 @@
           <router-link
               :to="{name:'EAC_DisapproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"
               class="btn btn-orange h-3/4 text-xs mr-1"
-              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0"
+              v-if="rdeProfile.application_status === 'approval_complete' && rdeProfile.active_deployments===0 && user_level==='eac'"
               title="Click to disapprove"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -32,7 +32,7 @@
     
     <span class="flex justify-between">
       <span class="flex">
-        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status=='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status=='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeProfile.application_status=='approval_complete'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status=='deployed'?'text-purple-700 dark:text-purple-100':'']">
+        <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeProfile.application_status==='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeProfile.application_status==='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeProfile.application_status==='approval_complete'?'text-green-700  dark:text-green-100':this.rdeProfile.application_status==='deployed'?'text-purple-700 dark:text-purple-100':'']">
               Status: {{ this.rdeProfile.application_status ? this.rdeProfile.application_status.replace(/[_-]/g, " ") : '' }}
               
               <span v-if="this.rdeProfile.application_status==='approved_by_partner_state'" class="flex">
@@ -94,10 +94,10 @@
             {{this.rdeProfile.gender.toLowerCase()==='m'?'Male':this.rdeProfile.gender.toLowerCase()==='f'?'Female':'Undefined'}}
           </span>
           <span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1)" v-if="this.rdeProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
             
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" v-if="this.rdeProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="" v-if="this.rdeProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="" v-if="this.rdeProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
           </span>        
         </span>
 
@@ -548,7 +548,7 @@ import Tabs from './tabs/Tabs.vue'
 
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import Loading from "../components/utilities/loading";
-import {  baseUrl } from '../utils/constants';
+import {  baseUrl } from '@/utils/constants';
 
 
 // import VuePdfApp from "vue-pdf-app";
@@ -586,14 +586,21 @@ export default {
   },
   methods:{
     saveCV(){
-      let formData = new FormData()
-      formData.append('profile_id',this.rdeProfile.id)
-      formData.append('cv', document.getElementById('cvFile').files[0])
-      this.$store.dispatch('uploadCVById', formData).then(()=>{
-        this.$toast.success("uploaded")
-      }).catch(err=>{
-        console.log(err)
-      })
+      if(document.getElementById('cvFile').files[0]){
+        let fileInput = document.getElementById('cvFile').files[0];
+        let formData = new FormData()
+        formData.append('profile_id',this.rdeProfile.id)
+        formData.append('cv', fileInput)
+        this.$store.dispatch('uploadCVById', formData).then(()=>{
+          this.$toast.success("uploaded")
+          this.fetchRDEData()
+
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
+
+      
       // location.reload()
     },
     fetchRDEData(){

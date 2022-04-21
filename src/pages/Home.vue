@@ -103,6 +103,23 @@
             <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2">
               <div class="flex justify-between col-span-12 w-full">
                 <div class="pl-2">
+                  <span class="font-semibold">Partner State</span><br />
+                  <span
+                    v-for="(country, index) in countries"
+                    :key="index"
+                    class="flex col-span-1"
+                  >
+                    <input
+                      type="checkbox"
+                      :value="country.id"
+                      :ref="`country${country.id}`"
+                      :id="`country${country.id}`"
+                      @input="addToFilterString('country', country.id)"
+                    />
+                    <label class="pl-1">{{ country.label }}</label>
+                  </span>
+                </div>
+                <div class="pl-2">                  
                   <span class="font-semibold">Region</span><br />
                   <span
                     v-for="(region, index) in regions"
@@ -119,6 +136,7 @@
                     <label class="pl-1">{{ region.name }}</label>
                   </span>
                 </div>
+                
                 <div>
                   <span class="font-semibold">Gender</span><br />
                   <span
@@ -561,8 +579,8 @@ export default {
         },
       ],
       regions: [],
-      userHasSelectedFilterItem: false,
-      
+      countries: [],
+      userHasSelectedFilterItem: false,      
       initial_competencies: [],
       initial_regions: [],
       filtered_rdes: [],
@@ -697,6 +715,16 @@ export default {
           console.log(err);
         })
         .then(() => {
+          // countries
+          this.$store
+            .dispatch("fetchCountries")
+            .then((resp) => {
+              this.countries = resp;
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        .then(() => {
           // occupations
           this.$store
             .dispatch("fetchAllOccupations")
@@ -738,6 +766,7 @@ export default {
                     });
                 });
             });
+        });
         });
     },
     addToFilterString(label, value) {

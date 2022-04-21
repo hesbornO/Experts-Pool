@@ -227,18 +227,22 @@ export default {
       this.displaySubmit=false
     },
     saveReport(field_id,deployment_id){
-      this.loading=true
-      let formData = new FormData()
-      formData.append('profile_deployment_id',deployment_id)
-      formData.append('deployment_report', document.getElementById(field_id).files[0])
-      this.$store.dispatch('uploadReportById', formData).then(()=>{
-        this.$toast.success("uploaded")
-        this.fetchRDEData()
-        this.loading=false
-        this.displayUploadButton=false
-      }).catch(err=>{
-        console.log(err)
-      })
+      if(document.getElementById(field_id).files[0]){
+        let fileInput = document.getElementById(field_id).files[0];
+        this.loading=true
+        let formData = new FormData()
+        formData.append('profile_deployment_id',deployment_id)
+        formData.append('deployment_report', fileInput)
+        this.$store.dispatch('uploadReportById', formData).then(()=>{
+          this.$toast.success("uploaded")
+          this.fetchRDEData()
+          this.loading=false
+          this.displayUploadButton=false
+          
+        }).catch(err=>{
+          console.log(err)
+        })
+      }
     },
     getProfileDetails(){
      this.user_level= localStorage.getItem('level')

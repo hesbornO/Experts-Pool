@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full overflow-hidden rounded-lg shadow-xs" :showBack="showBack" :table_headings="table_headings" :vuex_data_action="vuex_data_action">
+  <div class="w-full overflow-hidden rounded-lg shadow-xs" >
     <button v-if="showBack" @click="goBack()" class="btn btn-blue mb-2 flex flex-row justify-between w-24" >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
@@ -56,9 +56,9 @@
       <span class="col-span-2"></span>
       <!-- Pagination -->
       <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-        <button :class="['text-gray-700 disabled:text-gray-400  disabled:cursor-not-allowed']" @click="changePage('previous')" :disabled="page===1?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+        <button :class="['text-gray-700 disabled:text-gray-400  disabled:cursor-not-allowed']" @click="changePage('previous')" :disabled="page===1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
         <span class="bg-blue-400 text-white rounded-full px-2">{{page}}</span>  
-        <button :class="['text-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed']" @click="changePage('next')" :disabled="(pageResult.length<1)?true:false"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>  
+        <button :class="['text-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed']" @click="changePage('next')" :disabled="(pageResult.length<1)"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
       </span>
     </div>
   </div>
@@ -90,6 +90,7 @@ export default {
       type: String,
       default : ''
     },
+    moduleAction:[String]
   },
   methods:{
     goBack(){
@@ -110,9 +111,15 @@ export default {
     },    
     fetchData(){
       this.loading = true
+      let payload = ''
       // eslint-disable-next-line no-unused-vars
-       this.$store.dispatch(this.vuex_data_action, (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:'').then(resp => {
-      //  this.$store.dispatch(this.vuex_data_action, this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+      //  this.$store.dispatch(this.vuex_data_action, (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:'').then(resp => {
+      //  this.$store.dispatch(this.vuex_data_action,  this.page?'?page='+this.page:'').then(resp => {
+        if(this.moduleAction==='home' || this.moduleAction==='ActiveDeployments') payload=''
+        else payload= (this.object_id && this.page)?this.object_id + '&page='+this.page:this.object_id?this.object_id:this.page?this.page:''
+
+        console.log('pay',payload)
+        this.$store.dispatch(this.vuex_data_action, payload ).then(resp => {
          this.pageResult = resp
 
        }).catch(err=>{
