@@ -58,6 +58,7 @@
                 </button>
               </FormulateForm>
 
+              <span :class="[emailSent?'block text-orange-500':'hidden']">{{activeLanguage.store.login_form.otp_msg}}</span>
               <!-- Password update form -->
               <FormulateForm  v-model="form" @submit="passwordChange" :class="[emailSent?'block':'hidden']">
                 <div class="">                
@@ -110,6 +111,8 @@
                   </label>            
                                     
                 </div>
+                
+                <span v-if="Object.keys(getErrorMessage).length>0">
 
                 <span class="text-xs text-red-400 mt-6" v-for="(key, index) in Object.keys(getErrorMessage)" :key="index">
                   <span v-if="key!=='detail'">
@@ -117,10 +120,12 @@
                       <span class="capitalize">{{key}}</span> : {{getErrorMessage[key][detail_key]}}
                     </span>
                   </span>
-                  <span v-else>
-                    {{getErrorMessage.detail}}
-                  </span>
                 </span>
+                </span>
+                <span v-else>                  
+                  {{getErrorMessage.detail}}
+                </span>
+                <span v-if="Object.keys(serverError).length>0" class="text-xs text-red-400 mt-6">{{serverError.detail}}</span>
 
                 <!-- You should use a button here, as the anchor is only used for the example  -->
                 <p class="text-green-300">{{password_updated}}</p>
@@ -157,6 +162,7 @@ export default {
       selected_language:'',
       check_email:'',
       password_updated:'',
+      serverError:{},
       emailSent:false
     }
   },
@@ -205,6 +211,7 @@ export default {
           console.log(err)
         })
       }).catch(err => {
+        this.serverError=err
         console.log(err)
       })
       this.submitting = false

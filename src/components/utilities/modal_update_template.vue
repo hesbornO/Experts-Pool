@@ -147,18 +147,25 @@ export default {
       }
       console.log("action is ", this.moduleAction)
       if(this.moduleAction==='updateRDEQualification'){
-        this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
-        this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
-        this.form.region_of_residence.value=this.form.region_of_residence_id
+        console.log('form',this.form)
+        // this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
+        // this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
+        // this.form.region_of_residence.value=this.form.region_of_residence_id
 
-        delete this.form.next_of_kin_name
-        delete this.form.next_of_kin_phone
-        delete this.form.region_of_residence_id
+        // delete this.form.next_of_kin_name
+        // delete this.form.next_of_kin_phone
+        // delete this.form.region_of_residence_id
 
       }
       if(this.moduleAction==='UpdateRDE'){
         console.log('occupation',this.form.occupation)
         // this.form.occupation=this.form.occupation.value
+        this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
+        this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
+        this.form.region_of_residence_id=this.form.region_of_residence.value
+
+        delete this.form.next_of_kin_name
+        delete this.form.next_of_kin_phone
       }
       if(this.moduleAction==='updateDescription'){
         delete this.form.created_at

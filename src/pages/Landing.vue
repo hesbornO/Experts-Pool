@@ -165,6 +165,71 @@
     </div> <!-- container.// -->
 
   </section>
+  <section class="py-8 md:py-16">
+
+    <div class="container max-w-screen-xl mx-auto px-4">
+
+      <h1 class="font-semibold text-gray-700 text-3xl md:text-4xl text-center mb-5">Background</h1>
+
+      <p class="font-normal text-gray-500 text-md md:text-lg text-center mb-20 ">
+        The East African Community (EAC) is prone to public health emergencies such as outbreaks of contagious and life-threatening diseases (SARS, Ebola, COVID-19, etc), natural disasters (droughts, floods and chemical contamination of the environment), among others. In such emergencies, large numbers of people may require medical attention, overwhelming the health system. Considering the frequency and occurrence of disease outbreaks in the EAC region, there is a need to build the regional capacity to respond to outbreaks in line with the International Health Regulations (IHR 2005). It is against this background that the EAC Secretariat decided to establish an EAC Regional Pool of rapidly deployable Experts to respond to public health emergencies. This system has been developed to manage this pool of the rapidly deployable experts. 
+The purpose of this system is to support an expert through the process of application, recruitment, deployment and Post-Deployment Phase. The experts may be sought from within the country of the emergency, the region or the continent. They will be deployed according to their competencies for emergencies at hand. The selected experts will reflect the multisectoral and multidisciplinary “One Health” approach that promotes the attainment optimal health for people, animals and the environment.
+      </p>
+
+<!--      <div class="flex flex-col xl:flex-row items-center justify-between mb-20 md:mb-40">-->
+<!--        <div class="mx-auto xl:mx-0 mb-20 xl:mb-0">-->
+<!--          <img src="assets/image/image-1.svg" alt="Image">-->
+<!--        </div>-->
+
+<!--&lt;!&ndash;        <div class="mx-auto xl:mx-0 text-center xl:text-left">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h1 class="font-bold text-gray-700 text-3xl md:text-4xl mb-10">Design is our most intense <br> process</h1>&ndash;&gt;-->
+
+<!--&lt;!&ndash;          <p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum <br> dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat <br> non proident, sunt in culpa qui officia deserunt mollit anim id est <br> laborum.</p>&ndash;&gt;-->
+
+<!--&lt;!&ndash;          <a href="#" class="flex items-center justify-center xl:justify-start font-semibold text-brandblue text-lg gap-3 hover:text-brandblue-700 transition ease-in-out duration-300">&ndash;&gt;-->
+<!--&lt;!&ndash;            See more&ndash;&gt;-->
+<!--&lt;!&ndash;            <i data-feather="chevron-right"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;          </a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
+
+<!--      <div class="flex flex-col xl:flex-row items-center justify-between mb-20 md:mb-40">-->
+<!--        <div class="mx-auto xl:mx-0 text-center xl:text-left mb-20 xl:mb-0">-->
+<!--          <h1 class="font-bold text-gray-700 text-3xl md:text-4xl mb-10">Don’t worry about the investment, <br> it will come back.</h1>-->
+
+<!--          <p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum <br> dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat <br> non proident, sunt in culpa qui officia deserunt mollit anim id est <br> laborum.</p>-->
+
+<!--          <a href="#" class="flex items-center justify-center xl:justify-start font-semibold text-brandblue text-lg gap-3 hover:text-brandblue-700 transition ease-in-out duration-300">-->
+<!--            See more-->
+<!--            <i data-feather="chevron-right"></i>-->
+<!--          </a>-->
+<!--        </div>-->
+
+<!--        <div class="mx-auto xl:mx-0">-->
+<!--          <img src="assets/image/image-2.svg" alt="Image">-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="flex flex-col xl:flex-row items-center justify-between">-->
+<!--        <div class="mx-auto xl:mx-0 mb-20 xl:mb-0">-->
+<!--          <img src="assets/image/image-3.svg" alt="Image">-->
+<!--        </div>-->
+
+<!--        <div class="mx-auto xl:mx-0 text-center xl:text-left">-->
+<!--          <h1 class="font-bold text-gray-700 text-3xl md:text-4xl mb-10">Instantly understandable content <br> is important</h1>-->
+
+<!--          <p class="font-normal text-gray-400 text-sm md:text-lg mb-5">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum <br> dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat <br> non proident, sunt in culpa qui officia deserunt mollit anim id est <br> laborum.</p>-->
+
+<!--          <a href="#" class="flex items-center justify-center xl:justify-start font-semibold text-brandblue text-lg gap-3 hover:text-brandblue-700 transition ease-in-out duration-300">-->
+<!--            See more-->
+<!--            <i data-feather="chevron-right"></i>-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+
+    </div> <!-- container.// -->
+
+  </section>
 
 <!--  <section class="py-8 md:py-16">-->
 

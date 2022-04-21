@@ -55,6 +55,8 @@
     "sign_up":"Jisajili",
     "recover_password":"Rejesha nenosiri",
     "new_password":"Nenosiri mpya",
+    "otp_msg":"OTP imetumwa kwa barua pepe yako. Tafadhali angalia na uiweke hapa chini",
+
     "confirm_new_password":"Thibitisha Nenosiri"
 
   },

@@ -953,12 +953,12 @@ export default {
       
       this.postRDE(payload).then(resp=>{
         this.$store.dispatch('setError',{})
-        this.isLoading=false
+        
         // window.location.replace('/rde-self-profile')
         // window.location.replace('/home')
         this.$router.back()
         console.log(resp)
-      })      
+      }).then(this.isLoading=false)    
     }, 
     getOccupations() {
       this.$store.dispatch('fetchAllOccupations').then(resp => {
