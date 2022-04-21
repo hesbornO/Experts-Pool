@@ -4,15 +4,15 @@
         class="z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block h-full"
     >
       <div class="text-gray-500 dark:text-gray-400">
-        <div class=" py-3  text-center flex flex-row justify-between border-b bg-havelock-blue" >
-          <span
+        <div class="py-2.5  text-center flex flex-row justify-between border-b bg-havelock-blue" >
+          <div
               class="ml-6 text-lg font-semibold text-white dark:text-gray-200 flex flex-row justify-items-end"
               >
             <p>EAC RDE</p>
             <img alt="EAC Logo" class=" w-7 ml-3"
                  src="../assets/img/eac_logo.png"
             />
-          </span>
+          </div>
         </div>
 
         <ul class="mt-6"></ul>

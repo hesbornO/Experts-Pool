@@ -37,7 +37,7 @@
                       required
                     />
                   </label>
-                  <label class="block  text-sm col-span-1 -mt-2">
+                  <div class="block  text-sm col-span-1 -mt-2">
                     <!-- Report -->
                     <div class="col-start-2 col-end-4  ml-20">
                       <span v-if="loading" class=" mt-5 flex justify-center">
@@ -101,8 +101,8 @@
                         </span> -->
 
                         <!-- No Report -->
-                        <span v-if=" !loading" class="text-semibold text-orange-300 ">
-                          <label class="block text-sm">
+                        <div v-if=" !loading" class="text-semibold text-orange-300 ">
+                          <div class="block text-sm">
                               <span class="text-gray-700 font font-mono dark:text-gray-400">Add Report <span class="text-xs italic">('.pdf', '.word')</span></span>
                               <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
                                 <FormulateInput  
@@ -123,13 +123,13 @@
                                   </span>
                                 </span>   
                               </div>
-                            </label>
+                            </div>
                           
-                        </span>
+                        </div>
                       </div>
                     </div>  
                 <!-- End of report -->
-                  </label>
+                  </div>
                 </div>
 
                 <span class="text-xs text-red-400 mt-6" v-for="(key, index) in Object.keys(getErrorMessage)" :key="index">
@@ -194,8 +194,8 @@
                       </span>
                     </span> -->
                   </span>
-                  <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2 ">
-                    <label class="block mt-4 text-sm ">
+                  <div v-if="displayUploadButton" class="text-semibold text-orange-300 p-2 ">
+                    <div class="block mt-4 text-sm ">
                       <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach Report <span class="text-xs italic">(pdf and word docs)</span></span>
                       <div
                           class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
@@ -205,12 +205,12 @@
                                 :name="form.document"
                                 @change="displaySubmitButton('newReport')"
                                 class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                                validation="required"  
+                                required="required"
                                 accept=".pdf" 
                         />    
                       </div>
-                    </label>
-                  </span>  
+                    </div>
+                  </div>
               </span>  
             </td>           
             <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.name">    
@@ -233,12 +233,14 @@ import data_table from "../../components/layouts/DataTableTemplate";
 // pdf
 import "vue-pdf-app/dist/icons/main.css";
 import SplitButton from "../../components/buttons/SplitButton.vue";
+import Loading from "@/components/utilities/loading";
 
 
 
 export default {
   name: "AdminReports",
   components: {
+    Loading,
 
     dashboard_layout,
     data_table,
@@ -277,14 +279,12 @@ export default {
       }   
     },
     saveReport(field_id){
-      if(document.getElementById(field_id).files[0]){
+      let fileInput = document.getElementById(field_id).files[0];
+      if(fileInput){
         this.loading=true
-        var fileInput = document.getElementById(field_id);   
-        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
-        const myRenamedFile = new File([fileInput], newFileName);
         let formData = new FormData()
         formData.append('name',this.form.name)
-        formData.append('document', myRenamedFile)
+        formData.append('document', fileInput)
         this.$store.dispatch('uploadAdminReport', formData).then(()=>{
           this.$toast.success("uploaded")
           this.getReports()

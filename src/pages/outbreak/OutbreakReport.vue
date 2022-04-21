@@ -37,9 +37,9 @@
                 </span>
               </span>
             </span>
-            <span v-if="displayUploadButton" class="text-semibold text-orange-300 p-2  ">
-              <label class="block mt-4 text-sm ">
-                <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach Report <span class="text-xs italic">(pdf and word docs)</span></span>
+            <div v-if="displayUploadButton" class="text-semibold text-orange-300 p-2  ">
+              <div class="block mt-4 text-sm ">
+                <div class="text-gray-700 font font-semibold dark:text-gray-400">Attach Report <span class="text-xs italic">(pdf and word docs)</span></div>
                 <div
                     class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                 >
@@ -48,18 +48,11 @@
                           :name="form.report"
                           @change="displaySubmitButton('newReport')"
                           class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
-                          validation="required"  
+                          required="required"
                           accept=".pdf" 
-                  />        
-                    <!-- <span v-if="getErrorMessage['report']">
-                    <span v-if="getErrorMessage['report'].length>0">
-                      <span v-for="(error,index) in getErrorMessage['report']" :key="index">
-                        <span class="text-red-500 animate-pulse">{{error}}</span>
-                      </span>
-                    </span> 
-                  </span>   -->
+                  />
                 </div>
-              </label>  
+              </div>
 
               <span class="flex justify-between p-2">
                 <span></span>
@@ -73,13 +66,13 @@
                   
                 </button>
               </span>
-            </span>
+            </div>
           </span>
 
           <!-- No Report -->
-          <span v-if="!outbreak.report && !loading" class="text-semibold text-orange-300 p-2">
+          <div v-if="!outbreak.report && !loading" class="text-semibold text-orange-300 p-2">
             <span>No report uploaded. Kindly upload.</span>
-            <label class="block mt-4 text-sm">
+            <div class="block mt-4 text-sm">
                 <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.actions.upload_report}} <span class="text-xs italic">('.pdf', '.word')</span></span>
                 <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
                   <input  
@@ -89,7 +82,7 @@
                     @change="displaySubmitButton('noReport')"
                     class=" w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:b  order-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
                     placeholder="john.doe@gmail.com"
-                    validation="required"  
+                    required="required"
                     accept=".pdf" 
                   />        
                     <span v-if="getErrorMessage['report']">
@@ -100,7 +93,7 @@
                     </span>
                   </span>   
                 </div>
-              </label>
+              </div>
             
 
             <span class="flex justify-between p-2">
@@ -114,7 +107,7 @@
                 </button>
               </span>
             
-          </span>
+          </div>
         </div>
       </div>  
       <!-- End of report -->
@@ -170,14 +163,13 @@ export default {
       this.$router.back()
     },
     saveReport(field_id,outbreak_id){
-      if(document.getElementById(field_id).files[0]){
+      let fileInput = document.getElementById(field_id).files[0];
+
+      if(fileInput){
         this.loading=true
-        var fileInput = document.getElementById(field_id);   
-        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
-        const myRenamedFile = new File([fileInput], newFileName);
         let formData = new FormData()
         formData.append('outbreak_id',outbreak_id)
-        formData.append('report', myRenamedFile)
+        formData.append('report', fileInput)
         this.$store.dispatch('uploadOutbreakReportById', formData).then(()=>{
           this.$toast.success("uploaded")
           this.fetchOutbreak()

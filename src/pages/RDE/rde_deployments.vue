@@ -228,13 +228,11 @@ export default {
     },
     saveReport(field_id,deployment_id){
       if(document.getElementById(field_id).files[0]){
-        var fileInput = document.getElementById(field_id);   
-        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
-        const myRenamedFile = new File([fileInput], newFileName);
+        let fileInput = document.getElementById(field_id).files[0];
         this.loading=true
         let formData = new FormData()
         formData.append('profile_deployment_id',deployment_id)
-        formData.append('deployment_report', myRenamedFile)
+        formData.append('deployment_report', fileInput)
         this.$store.dispatch('uploadReportById', formData).then(()=>{
           this.$toast.success("uploaded")
           this.fetchRDEData()

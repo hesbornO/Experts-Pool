@@ -685,12 +685,10 @@ export default {
     },
     saveCV(field_id){
       if(document.getElementById(field_id).files[0]){
-        var fileInput = document.getElementById(field_id);   
-        var newFileName = fileInput.files[0].name.replaceAll(/ |_/g,'');
-        const myRenamedFile = new File([fileInput], newFileName);
+        let fileInput = document.getElementById(field_id).files[0];
         let formData = new FormData()
         formData.append('profile_id',this.rdeSelfProfile.id)
-        formData.append('cv', myRenamedFile)
+        formData.append('cv', fileInput)
         this.$store.dispatch('uploadCVById', formData).then(()=>{
           this.$toast.success("uploaded")
           this.fetchRDEData()
