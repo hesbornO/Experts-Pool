@@ -126,15 +126,30 @@
                 :ref="`competencies${competency.value}`"
                 :id="`competencies${competency.value}`"
                 @input="addToFilterString('competencies', competency.value)"
+                v-if="competency.type!=='language'"
               />
-              <label class="pl-1">{{ competency.label }}</label>
+              <label class="pl-1" v-if="competency.type!=='language'">{{ competency.label }}</label>
+            </div>
+          </div>
+          <div class="pr-2">
+            <span class="font-semibold">Language</span><br />
+            <div v-for="(competency, index) in competencies" :key="index">
+              <input
+                type="checkbox"
+                :value="competency.value"
+                :ref="`competencies${competency.value}`"
+                :id="`competencies${competency.value}`"
+                @input="addToFilterString('competencies', competency.value)"
+                v-if="competency.type==='language'"
+              />
+              <label class="pl-1" v-if="competency.type==='language'">{{ competency.label }}</label>
             </div>
           </div>
         </div>
       </div>
       <!-- end of filter -->
       <div class="flex justify-end">
-        <div class="flex justify-between">  
+        <div class="flex justify-between -mt-16">  
           <router-link
               :to="{name:'saveFilter', params:{outbreakId:$route.params.outbreakId?$route.params.outbreakId:'id',outbreakName:$route.params.outbreakName?$route.params.outbreakName:'name',eligibility_criteria:filterString}}"
               class="btn btn-blue h-1/2 text-xs m-5"
@@ -163,7 +178,8 @@
             </svg>
 
             Filter
-          </button>          
+          </button> 
+                   
         </div>
       </div>
     </div>
@@ -171,6 +187,7 @@
       v-bind="$attrs"
       :show-back="true"
       v-if="!userHasSelectedFilterItem"
+      class="mt-10"
     >
       <template v-slot="{ item }">
         <td class="px-4 py-3 text-sm">
@@ -260,7 +277,7 @@
       </template>
     </data_table>
 
-    <span class="text-blue-500 italic font-mono font-semibold " v-if="userHasSelectedFilterItem">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
+    <span class="text-blue-500 italic font-mono font-semibold mt-10" v-if="userHasSelectedFilterItem">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
 
     <div v-if="userHasSelectedFilterItem">
       <table class="w-full whitespace-no-wrap">

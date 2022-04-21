@@ -507,6 +507,83 @@
                 </button>
               </div>
             </div>    
+            <!-- Previous Deployment Experience -->
+            <div>
+              <span class=" p-4"> 
+                <hr class="text-green-500 bg-green-500"/>
+                <span class="flex justify-between">
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.previous_deployment}}</span>      
+                  <span></span>              
+                </span> 
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeSelfProfile.previous_deployment_experience">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.name}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.sign_up_form.country}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.sign_up_form.country}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.rde_self_profile.actions}}</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(reference,index) in rdeSelfProfile.previous_deployment_experience" :key="index">
+                        <td class="p-3 border-l border-black">{{reference.name}}</td>                        
+                        <td class="p-3 border-l border-black">{{reference.country}}</td>                        
+                        <td class="p-3 border-l border-black">{{reference.description}}</td>  
+                        <td class="p-3 border-l border-black">From {{reference.start_date}} to {{reference.end_date}}</td>                        
+                        <td class="p-3  border-l border-black flex">
+                          <span>
+                            <router-link
+                                :to="{name:'updatePreviousDeployment', params:{rdeName:rdeSelfProfile.first_name?rdeSelfProfile.first_name:'RDE',
+                              objectId: rdeSelfProfile.id,itemIndex: index
+                              }}"
+                              class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
+                              title="Update"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </router-link>
+                          </span>
+                          <span>
+                            <router-link
+                                :to="{name:'deletePreviousDeployment', params:{rdeName:rdeSelfProfile.first_name?rdeSelfProfile.first_name:'RDE',
+                              objectId: rdeSelfProfile.id,itemIndex: index
+                              }}"
+                              class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
+                              title="Delete"
+                            >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </router-link>
+                          </span>
+                        </td>                      
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_previous_deployment_listed}}.</div>     
+
+                <!-- add deployment button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                      <router-link
+                        :to="{name:'addPreviousDeployment', params:{rdeName:rdeSelfProfile.first_name?rdeSelfProfile.first_name:'RDE',
+                              objectId: rdeSelfProfile.id,
+                              }}"
+                        class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.previous_deployment}}</span>
+                      </router-link>
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>    
 
           </div>
 

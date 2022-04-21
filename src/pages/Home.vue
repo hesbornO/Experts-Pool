@@ -227,11 +227,27 @@
                           :ref="`competencies${competency.value}`"
                           :id="`competencies${competency.value}`"
                           @input="addToFilterString('competencies', competency.value)"
+                          v-if="competency.type!=='language'"
                       />
-                      <label class="pl-1">{{ competency.label }}</label>
+                      <label class="pl-1" v-if="competency.type!=='language'">{{ competency.label }}</label>
                     </div>
                   </div>
-
+                </div>
+                <div class="pr-2">
+                  <span class="font-semibold">Language</span>
+                  <div class="flex flex-col space-y-2">
+                    <div v-for="(competency, index) in competencies" :key="index">
+                      <input
+                          type="checkbox"
+                          :value="competency.value"
+                          :ref="`competencies${competency.value}`"
+                          :id="`competencies${competency.value}`"
+                          @input="addToFilterString('competencies', competency.value)"
+                          v-if="competency.type==='language'"
+                      />
+                      <label class="pl-1" v-if="competency.type==='language'">{{ competency.label }}</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
