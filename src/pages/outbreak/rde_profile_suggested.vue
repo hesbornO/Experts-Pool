@@ -329,7 +329,7 @@ import Tabs from '../tabs/Tabs.vue'
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import Loading from "../../components/utilities/loading";
 
-import "vue-pdf-app/dist/icons/main.css";
+// import "vue-pdf-app/dist/icons/main.css";
 
 export default {
   name: "Regions",

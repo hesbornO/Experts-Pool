@@ -596,7 +596,7 @@ import {  baseUrl } from '@/utils/constants';
 
 
 // import VuePdfApp from "vue-pdf-app";
-import "vue-pdf-app/dist/icons/main.css";
+// import "vue-pdf-app/dist/icons/main.css";
 
 export default {
   name: "Regions",

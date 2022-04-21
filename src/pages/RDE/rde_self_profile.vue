@@ -733,7 +733,7 @@ import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import Loading from "../../components/utilities/loading";
 
 // import VuePdfApp from "vue-pdf-app";
-import "vue-pdf-app/dist/icons/main.css";
+// import "vue-pdf-app/dist/icons/main.css";
 import {  baseUrl } from '@/utils/constants';
 
 export default {
