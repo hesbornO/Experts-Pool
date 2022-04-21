@@ -78,6 +78,9 @@
     "email":"Barua pepe",
     "phone_number":"Nambari ya simu",
     "select_country":"Chagua nchi",
+    "country":"Nchi",
+    "duration":"Muda",
+
     "select_region":"Chagua eneo",
     "region_of_residence":"Mkoa wa Makazi",
     "password":"Nenosiri",
@@ -124,6 +127,9 @@
     "actions":"Vitendo",
     "professional_experience":"Uzoefu wa Kitaalam",
     "references":"Marejeleo",
+    "previous_deployment":"Usambazaji Uliopita",
+    "no_previous_deployment_listed":"Hakuna utumaji uliopita ulioongezwa",
+
     "recommendations":"Mapendekezo",
     "make_recommendation":"Toa pendekezo",
     "made_by":"Aliyependekeza",

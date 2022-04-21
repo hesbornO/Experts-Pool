@@ -57,6 +57,7 @@ import deactivate_account from '@/schemas/deactivate_account.json'
 import save_filter from '@/schemas/save_filter.json'
 import reject_deployment from '@/schemas/reject_deployment.json'
 import add_reference_schema from '@/schemas/add_reference_schema.json'
+import add_previous_deployment_schema from '@/schemas/add_previous_deployment_schema.json'
 import occupation_schema from '@/schemas/occupation_schema.json'
 import one_health_schema from '@/schemas/one_health.json'
 // import user_group_schema from '@/schemas/user_group_schema.json'
@@ -690,6 +691,66 @@ const routes = [
                         vuex_fetch_key: 'references',
                         object_id: parseInt(x.params.objectId),
                         object_title: x.params.rdeName + ' references',
+                        size: 'max-w-5xl'
+                    }
+                }
+            },
+            // previous deployment experience
+            {
+                path: 'add-previous-deployment/:objectId/:rdeName',
+                name: 'addPreviousDeployment',
+                component: CreateNewJsonItem,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_previous_deployment_schema,
+                        vuex_action: 'postRDEPreviousDeploymentById',
+                        moduleAction:"addPreviousDeployment",
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'previous_deployment_experience',
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' deployment experience',
+                        size: 'max-w-5xl'
+                    }
+                }
+            },
+            {
+                path: 'update-previous-deployment/:objectId/:rdeName:/itemIndex',
+                name: 'updatePreviousDeployment',
+                component: UpdateJsonItem,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: add_previous_deployment_schema,
+                        vuex_action: 'postRDEPreviousDeploymentById',
+                        moduleAction:"updatePreviousDeployment",
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'previous_deployment_experience',
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' deployment experience',
+                        size: 'max-w-5xl'
+                    }
+                }
+            },
+            {
+                path: 'delete-previous-deployment/:objectId/:rdeName:/itemIndex',
+                name: 'deletePreviousDeployment',
+                component: DeleteJsonItem,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        vuex_action: 'postRDEPreviousDeploymentById',
+                        moduleAction:"addRDEReference",
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'previous_deployment_experience',
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' deployment',
                         size: 'max-w-5xl'
                     }
                 }
