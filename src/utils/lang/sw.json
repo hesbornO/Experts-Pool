@@ -9,7 +9,9 @@
     "Occupations": "Kazi",
     "OneHealth": "Afya Umoja",
     "QualificationTypes": "Aina za Sifa",
-    "PublicHealthEventTypes": "Aina Ya Mikurupuko"
+    "PublicHealthEventTypes": "Aina Ya Mikurupuko",
+    "Profile":"Wasifu",
+    "MyDeployments":"Kupelekwa"
   },
   "actions": {
     "create": "Unda",
@@ -58,6 +60,7 @@
     "id_type":"Aina ya kitambulisho",
     "region":"Mkoa",
     "gender":"Jinsia"
+
   },
   "login_form":{
     "username":"Jina la mtumiaji",

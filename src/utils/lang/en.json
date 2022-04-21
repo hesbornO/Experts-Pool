@@ -9,7 +9,9 @@
     "Occupations": "Occupations",
     "OneHealth": "One Health",
     "QualificationTypes": "Qualification Types",
-    "PublicHealthEventTypes": "Public Health Event Types"
+    "PublicHealthEventTypes": "Public Health Event Types",
+    "Profile":"Profile",
+    "MyDeployments":"MyDeployments"
   },
   "actions": {
     "create": "Create",
