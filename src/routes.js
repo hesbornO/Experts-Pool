@@ -978,7 +978,7 @@ const routes = [
 
             }
         }],
-        roles: ['admin', 'eac_admin', 'country_admin', 'approver']
+        roles: ['admin', 'eac_admin']
     },
     // end of adminreports
 

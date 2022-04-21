@@ -68,6 +68,8 @@
     "sign_up":"S'inscrire",
     "recover_password":"Récupérer mot de passe",
     "new_password":"Nouveau mot de passe",
+    "otp_msg":"Un OTP a été envoyé à votre adresse e-mail. Veuillez le vérifier et le saisir ci-dessous",
+
     "confirm_new_password":"Confirmez le mot de passe"
 
   },
