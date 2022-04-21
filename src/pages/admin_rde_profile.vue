@@ -380,6 +380,50 @@
                 </button>
               </div>
             </div>    
+            <!-- previous deployment -->
+            <div>
+              <span class=" p-4"> 
+                <hr class="text-green-500 bg-green-500"/>
+                <span class="flex justify-between">
+                  <span></span>              
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.previous_deployment}}</span>      
+                  <span></span>              
+                </span> 
+              </span> 
+              <div class="w-full px-4">
+                <div v-if="rdeProfile.previous_deployment_experience">               
+                  <table class="w-full p-4 border-black border-b border-t">
+                    <thead class="text-sm  font-semibold pb-2 pt-2 border-l   bg-gray-100">
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.name}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.sign_up_form.country}}</td>
+                      <td class="p-3 border-l border-black border-b">{{activeLanguage.store.rde_self_profile.description}}</td>
+                      <td class="p-3 border-l border-r border-black border-b">{{activeLanguage.store.sign_up_form.country}}</td>
+                    </thead>
+
+                    <tbody>
+                      <tr class=" text-sm border-b border-r border-l border-black" v-for="(reference,index) in rdeProfile.previous_deployment_experience" :key="index">
+                        <td class="p-3 border-l border-black">{{reference.name}}</td>                        
+                        <td class="p-3 border-l border-black">{{reference.country}}</td>                        
+                        <td class="p-3 border-l border-black">{{reference.description}}</td>  
+                        <td class="p-3 border-l border-black">From {{reference.start_date}} to {{reference.end_date}}</td>   
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-else class="text-yellow-500 font-mono">{{activeLanguage.store.rde_self_profile.no_previous_deployment_listed}}.</div>     
+
+                <!-- add reference button -->
+                <button class="flex justify-between w-full px-4 py-2 ">
+                  <span></span>
+                  <span class="">
+                    <span class="flex ">                 
+                     
+                    </span>
+                  </span>                  
+                  <span></span>
+                </button>
+              </div>
+            </div>    
 
           </div>
 
@@ -552,7 +596,7 @@ import {  baseUrl } from '@/utils/constants';
 
 
 // import VuePdfApp from "vue-pdf-app";
-import "vue-pdf-app/dist/icons/main.css";
+// import "vue-pdf-app/dist/icons/main.css";
 
 export default {
   name: "Regions",

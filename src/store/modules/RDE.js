@@ -546,6 +546,25 @@ const actions = {
             })
         });
     },
+    postRDEPreviousDeploymentById({ commit }, payload) {
+        console.log('deployment',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, {'previous_deployment_experience':payload.data}).then(resp => {
+                commit("setReference", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
     // eslint-disable-next-line no-unused-vars
     updateRDEReferenceById({ commit }, payload) {
         return new Promise((resolve, reject) => {

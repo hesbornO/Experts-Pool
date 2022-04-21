@@ -67,6 +67,9 @@
     "email":"E-mail",
     "phone_number":"Numéro de téléphone",
     "select_country":"Choisissez le pays",
+    "country":"Pays",
+    "duration":"Durée",
+
     "select_region":"Choisissez une région",
     "region_of_residence":"Région de résidence",
     "password":"Mot de passe",
@@ -113,6 +116,9 @@
     "actions":"Actions",
     "professional_experience":"Expérience professionnelle",
     "references":"Les références",
+    "previous_deployment":"Déploiement précédent",
+    "no_previous_deployment_listed":"Aucun déploiement précédent ajouté",
+
     "recommendations":"Recommandations",
     "make_recommendation":"Faire une recommandation",
     "made_by":"faite par",

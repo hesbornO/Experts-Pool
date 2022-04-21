@@ -231,7 +231,7 @@ import data_table from "../../components/layouts/DataTableTemplate";
 
 
 // pdf
-import "vue-pdf-app/dist/icons/main.css";
+// import "vue-pdf-app/dist/icons/main.css";
 import SplitButton from "../../components/buttons/SplitButton.vue";
 import Loading from "@/components/utilities/loading";
 

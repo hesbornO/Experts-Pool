@@ -143,6 +143,7 @@ export default {
           for(let region of this.form.affected_regions) this.form.eligibility_criteria+= '&region='+region
         }
         this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
+        delete this.form.report
       }
       console.log("action is ", this.moduleAction)
       if(this.moduleAction==='updateRDEQualification'){
