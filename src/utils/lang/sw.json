@@ -1,4 +1,16 @@
 {
+  "routes": {
+    "home": "Nyumbani",
+    "ActiveDeployments": "Usambazaji Amilifu",
+    "PublicHealthEvents": "Mikurupuko ",
+    "AdminReports": "Ripoti za Msimamizi",
+    "PartnerStates": "Nchi Wanachama",
+    "Competence": "Umahiri",
+    "Occupations": "Kazi",
+    "OneHealth": "Afya Umoja",
+    "QualificationTypes": "Aina za Sifa",
+    "PublicHealthEventTypes": "Aina Ya Mikurupuko"
+  },
   "actions": {
     "create": "Unda",
     "delete": "Futa",

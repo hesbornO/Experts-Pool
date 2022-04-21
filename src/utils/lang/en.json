@@ -1,4 +1,16 @@
 {
+  "routes": {
+    "home": "Home",
+    "ActiveDeployments": "Active Deployments",
+    "PublicHealthEvents": "Public Health Events",
+    "AdminReports": "Admin Reports",
+    "PartnerStates": "Partner States",
+    "Competence": "Competence",
+    "Occupations": "Occupations",
+    "OneHealth": "One Health",
+    "QualificationTypes": "Qualification Types",
+    "PublicHealthEventTypes": "Public Health Event Types"
+  },
   "actions": {
     "create": "Create",
     "delete": "Delete",
@@ -11,8 +23,6 @@
     "log_in":"Log In",
     "log_out":"Log Out",
     "upload_report":"Upload Report"
-
-
   },
   "tables": {
     "home_table_headings": ["NAME", "SPECIALIZATION", "REGION", "CURRENT DEPLOYMENT", "COMPETENCE", "STATUS", "ACTION"]
