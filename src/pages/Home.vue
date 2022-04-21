@@ -97,17 +97,17 @@
         </div>
         <!-- End of cards -->
         <!-- filters -->
-        <br />
+        
         <!-- <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4"> -->
           <div>
-            <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2">
-              <div class="flex justify-between col-span-12 w-full">
-                <div class="pl-2">
-                  <span class="font-semibold">Partner State</span><br />
+            <div class="h-full bg-white rounded-md p-2 text-gray-800">
+              <div class="grid grid-cols-8 w-full">
+                <div class="">
+                  <span class="font-semibold">Partner State</span>
                   <span
                     v-for="(country, index) in countries"
                     :key="index"
-                    class="flex col-span-1"
+                    class="flex col-span-1 items-center"
                   >
                     <input
                       type="checkbox"
@@ -119,12 +119,12 @@
                     <label class="pl-1">{{ country.label }}</label>
                   </span>
                 </div>
-                <div class="pl-2">                  
-                  <span class="font-semibold">Region</span><br />
+                <div class="">
+                  <span class="font-semibold">Region</span>
                   <span
                     v-for="(region, index) in regions"
                     :key="index"
-                    class="flex col-span-1"
+                    class="flex col-span-1 items-center"
                   >
                     <input
                       type="checkbox"
@@ -136,13 +136,12 @@
                     <label class="pl-1">{{ region.name }}</label>
                   </span>
                 </div>
-                
                 <div>
-                  <span class="font-semibold">Gender</span><br />
+                  <span class="font-semibold">Gender</span>
                   <span
                     v-for="(item, index) in gender"
                     :key="index"
-                    class="flex col-span-1"
+                    class="flex col-span-1 items-center"
                   >
                     <input
                       type="checkbox"
@@ -155,53 +154,59 @@
                   </span>
                 </div>
                 <div>
-                  <span class="font-semibold">Occupation</span><br />
-                  <span v-for="(occupation, index) in occupations" :key="index">
-                    <input
-                      type="checkbox"
-                      :value="occupation.value"
-                      :ref="`occupation${occupation.value}`"
-                      :id="`occupation${occupation.value}`"
-                      @input="addToFilterString('occupation', occupation.value)"
-                    />
-                    <label class="pl-1">{{ occupation.label }}</label>
-                    <br />
-                  </span>
+                  <span class="font-semibold">Occupation</span>
+                  <div class="flex flex-col space-y-2">
+                    <div v-for="(occupation, index) in occupations" :key="index">
+                      <input
+                          type="checkbox"
+                          :value="occupation.value"
+                          :ref="`occupation${occupation.value}`"
+                          :id="`occupation${occupation.value}`"
+                          @input="addToFilterString('occupation', occupation.value)"
+                      />
+                      <label class="pl-1">{{ occupation.label }}</label>
+                    </div>
+                  </div>
+
                 </div>
                 <div>
-                  <span class="font-semibold">Religion</span><br />
-                  <span v-for="(religion, index) in religions" :key="index">
-                    <input
-                      type="checkbox"
-                      :value="religion.value"
-                      :ref="`religion${religion.value}`"
-                      :id="`religion${religion.value}`"
-                      @input="addToFilterString('religion', religion.value)"
-                    />
-                    <label class="pl-1">{{ religion.label }}</label>
-                    <br />
-                  </span>
+                  <span class="font-semibold">Religion</span>
+                  <div class="flex flex-col space-y-2">
+                    <div v-for="(religion, index) in religions" :key="index">
+                      <input
+                          type="checkbox"
+                          :value="religion.value"
+                          :ref="`religion${religion.value}`"
+                          :id="`religion${religion.value}`"
+                          @input="addToFilterString('religion', religion.value)"
+                      />
+                      <label class="pl-1">{{ religion.label }}</label>
+                    </div>
+                  </div>
+
                 </div>
                 <div>
-                  <span class="font-semibold">Application Status</span><br />
-                  <div v-for="(status, index) in application_status" :key="index">
-                    <input
-                      type="checkbox"
-                      :label="status.label"
-                      :value="status.value"
-                      :ref="`application_status${status.value}`"
-                      :id="`application_status${status.value}`"
-                      @input="addToFilterString('application_status', status.value)"
-                    />
-                    <label class="pl-1">{{ status.label }}</label>
+                  <span class="font-semibold">Application Status</span>
+                  <div class="flex flex-col space-y-2">
+                    <div v-for="(status, index) in application_status" :key="index">
+                      <input
+                          type="checkbox"
+                          :label="status.label"
+                          :value="status.value"
+                          :ref="`application_status${status.value}`"
+                          :id="`application_status${status.value}`"
+                          @input="addToFilterString('application_status', status.value)"
+                      />
+                      <label class="pl-1">{{ status.label }}</label>
+                    </div>
                   </div>
                 </div>
                 <div>
-                  <span class="font-semibold">Academic Degree</span><br />
+                  <span class="font-semibold">Academic Degree</span>
                   <div
                     v-for="(degree, index) in academic_degree"
                     :key="index"
-                    class="flex col-span-1"
+                    class="flex col-span-1 items-center"
                   >
                     <input
                       type="checkbox"
@@ -213,17 +218,20 @@
                   </div>
                 </div>
                 <div class="pr-2">
-                  <span class="font-semibold">Competency</span><br />
-                  <div v-for="(competency, index) in competencies" :key="index">
-                    <input
-                      type="checkbox"
-                      :value="competency.value"
-                      :ref="`competencies${competency.value}`"
-                      :id="`competencies${competency.value}`"
-                      @input="addToFilterString('competencies', competency.value)"
-                    />
-                    <label class="pl-1">{{ competency.label }}</label>
+                  <span class="font-semibold">Competency</span>
+                  <div class="flex flex-col space-y-2">
+                    <div v-for="(competency, index) in competencies" :key="index">
+                      <input
+                          type="checkbox"
+                          :value="competency.value"
+                          :ref="`competencies${competency.value}`"
+                          :id="`competencies${competency.value}`"
+                          @input="addToFilterString('competencies', competency.value)"
+                      />
+                      <label class="pl-1">{{ competency.label }}</label>
+                    </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -443,7 +451,7 @@
                         ? item.application_status.replace(/[_-]/g, " ")
                         : ""
                     }}</span
-                  ><br />
+                  >
                 </td>
                 <td
                   class="

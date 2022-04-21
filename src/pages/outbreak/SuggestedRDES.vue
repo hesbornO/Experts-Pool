@@ -6,7 +6,7 @@
     <div>
       <br />
       <!-- filter -->
-      <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2">
+      <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2 h-full">
         <div class="flex justify-between col-span-8 w-full gap-4">
           <div class="pl-2">
             <span class="font-semibold">Partner State</span><br />

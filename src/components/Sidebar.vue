@@ -1,7 +1,7 @@
 <template>
   <div>
     <aside
-        class="z-20 flex-shrink-0 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block h-full"
+        class="z-20 flex-shrink-0 hidden w-64 bg-white dark:bg-gray-800 md:block h-full"
     >
       <div class="text-gray-500 dark:text-gray-400">
         <div class="py-2.5  text-center flex flex-row justify-between border-b bg-havelock-blue" >
