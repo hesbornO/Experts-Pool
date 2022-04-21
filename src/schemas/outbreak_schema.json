@@ -63,6 +63,7 @@
                 {
                     "type": "select",
                     "label": "Event Type",
+                    "validation": "required",
                     "placeholder":"--Select event type--",
                     "name": "outbreak_type_id",
                     "options":[2]

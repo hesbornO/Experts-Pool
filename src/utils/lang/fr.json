@@ -1,4 +1,16 @@
 {
+  "routes": {
+    "home": "domicile",
+    "ActiveDeployments": "Déploiements actifs",
+    "PublicHealthEvents": "épidémie",
+    "AdminReports": "Rapports d'administration",
+    "PartnerStates": "États partenaires",
+    "Competence": "Compétence",
+    "Occupations": "Professions",
+    "OneHealth": "Une Santé",
+    "QualificationTypes": "Types de qualification",
+    "PublicHealthEventTypes": "Types d'épidémies"
+  },
   "actions":
     {
       "create": "créer",

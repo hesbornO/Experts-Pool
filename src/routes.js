@@ -68,8 +68,6 @@ import outbreak_type from '@/schemas/outbreak_type.json'
 import CreateNewJsonItem from "@/components/utilities/CreateNewJsonItem";
 import UpdateJsonItem from "@/components/utilities/UpdateJsonItem";
 import DeleteJsonItem from "@/components/utilities/DeleteJsonItem";
-
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -90,6 +88,7 @@ const routes = [
         path: "/home",
         name: "home",
         component: Home,
+        verboseName:'home',
         props: () => {
             return {
             vuex_data_action: 'fetchRDES',
@@ -836,6 +835,7 @@ const routes = [
         path: "/deployments",
         name: "Active Deployments",
         component: Deployments,
+        verboseName:'ActiveDeployments',
         props: {
             // vuex_data_action: 'fetchRDEDeployments',
             vuex_data_action: 'fetchRDES',
@@ -868,6 +868,7 @@ const routes = [
         path: "/events/",
         name: "Public Health Events",
         component: Outbreak,
+        verboseName:'PublicHealthEvents',
         props: {
             vuex_data_action: 'fetchAllOutbreaks',
             table_headings: ['NAME', 'DESCRIPTION', 'DURATION', 'ACTIONS']
@@ -948,6 +949,7 @@ const routes = [
     {
         path: "/admin-reports",
         name: "AdminReports",
+        verboseName:'AdminReports',
         component: AdminReports,
         props: {
             vuex_data_action: 'fetchAbstractReports',
@@ -984,6 +986,7 @@ const routes = [
     {
         path: "/partner-states/",
         name: "PartnerStates",
+        verboseName:'PartnerStates',
         component: PartnerStates,
         props: {
             vuex_data_action: 'fetchCountries',
@@ -1224,6 +1227,7 @@ const routes = [
         path: "/competence/",
         name: "Competence",
         component: Competence,
+        verboseName:'Competence',
         props: {
             vuex_data_action: 'fetchAllCompetencies',
             table_headings: ['NAME', 'TYPE', 'CREATED', 'ACTIONS']
@@ -1281,6 +1285,7 @@ const routes = [
         path: "/occupation/",
         name: "Occupation",
         component: Occupation,
+        verboseName:'Occupations',
         props: {
             vuex_data_action: 'fetchAllOccupations',
             table_headings: ['NAME', 'one health sector', 'description']
@@ -1343,6 +1348,7 @@ const routes = [
         path: "/one-health-sectors/",
         name: "OneHealth",
         component: OneHealth,
+        verboseName:'OneHealth',
         props: {
             vuex_data_action: 'fetchAllOneHealthSectors',
             table_headings: ['NAME', 'ACTIONS']
@@ -1400,6 +1406,7 @@ const routes = [
     {
         path: "/qualification-types/",
         name: "QualificationTypes",
+        verboseName:'QualificationTypes',
         component: QualificationTypes,
         props: {
             vuex_data_action: 'fetchAllQualificationTypes',
@@ -1458,6 +1465,7 @@ const routes = [
         path: "/outbreak-types/",
         name: "OutbreakTypes",
         component: OutbreakTypes,
+        verboseName:'PublicHealthEventTypes',
         props: {
             vuex_data_action: 'fetchAllOutbreakTypes',
             table_headings: ['NAME',  'ACTIONS']
@@ -1649,7 +1657,6 @@ const routes = [
         showInLeftBar: false
     },
 ];
-
 const router = new VueRouter({
     routes,
     mode: "history",

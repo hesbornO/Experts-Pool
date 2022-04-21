@@ -240,6 +240,7 @@ export default {
       })
       let schema = JSON.stringify(this.jsonSchema)
       this.fetchedOptions.map((option, index)=>{
+        console.log("option", option)
         schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
       })
       this.optionsPopulatedSchema = JSON.parse(schema)

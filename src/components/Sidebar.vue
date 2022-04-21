@@ -14,7 +14,7 @@
             />
           </div>
         </div>
-
+<!--        {{ activeLanguage }}-->
         <ul class="mt-6"></ul>
         <ul v-for="(fetched_route, index) in fetched_routes" :key="index" class="mt-2">
           <router-link v-slot="{href, route, navigate, isActive }"
@@ -32,9 +32,11 @@
                       d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
                 <span v-html="fetched_route.icon"></span>
-                <span :class="['ml-2']">{{
-                    fetched_route.verboseName ? fetched_route.verboseName : (route.name).replace(/([A-Z])/g, " $1")
-                  }}</span>
+                <span :class="['ml-2 capitalize']">
+                  {{
+                    fetched_route.verboseName ? activeLanguage.store.routes[fetched_route.verboseName] : (fetched_route.name).replace(/([A-Z])/g, " $1")
+                  }}
+                </span>
               </a>
             </li>
           </router-link>
@@ -46,6 +48,8 @@
 
 <script>
 // import {app_name} from "@/utils/constants";
+
+import {mapGetters} from "vuex";
 
 export default {
   name: "Sidebar",
@@ -102,6 +106,9 @@ export default {
 
       }
     })
+  },
+  computed: {
+    ...mapGetters(['activeLanguage',]),
   }
 };
 </script>
