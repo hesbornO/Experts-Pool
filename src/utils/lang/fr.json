@@ -9,7 +9,10 @@
     "Occupations": "Professions",
     "OneHealth": "Une Santé",
     "QualificationTypes": "Types de qualification",
-    "PublicHealthEventTypes": "Types d'épidémies"
+    "PublicHealthEventTypes": "Types d'épidémies",    
+    "Profile":"Profil",
+    "MyDeployments":"Déploiement"
+
   },
   "actions":
     {
@@ -59,6 +62,7 @@
     "id_type":"Type d'identification",
     "region":"Région",
     "gender":"Le sexe"
+
   },
   "login_form":{
     "username":"Nom d'utilisateur",

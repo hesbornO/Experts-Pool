@@ -171,6 +171,12 @@ export default {
         if(this.moduleAction==='updateRDEexperience') payload.professional_experience=this.allItems
         else if(this.moduleAction==='updateRDEReference') payload.references=this.allItems
       }
+      if(this.moduleAction==='acceptDeployment' || this.moduleAction==='rejectDeployment'){
+        
+          delete payload.eligibility_criteria
+        
+          console.log('payloddad',payload)
+      }
       console.log('vuex_action',this.vuex_action)
       this.$store.dispatch(this.vuex_action, payload).then(()=>{
           this.$toast.success(
