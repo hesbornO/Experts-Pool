@@ -377,7 +377,11 @@
                         <td class="p-3  border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEExperience', params:{experienceName:experience.title?experience.title:'experienceName',currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                              :to="{name:'updateRDEExperience', params:{experienceName:experience.title?experience.title:'experienceName',
+                              rdeName: rdeSelfProfile.first_name,
+                              itemIndex: index,
+                              objectId: rdeSelfProfile.id
+                              }}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -386,7 +390,11 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEExperience', params:{experienceName:experience.title?experience.title:'experienceName',currentItemIndex:index, currentItem:experience, allItems:rdeSelfProfile.professional_experience,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                              :to="{name:'deleteRDEExperience', params:{experienceName:experience.title?experience.title:'experienceName',
+                              rdeName: rdeSelfProfile.first_name,
+                              itemIndex: index,
+                              objectId: rdeSelfProfile.id
+                              }}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -452,7 +460,9 @@
                         <td class="p-3  border-l border-black flex">
                           <span>
                             <router-link
-                              :to="{name:'updateRDEReference', params:{referenceName:reference.name?reference.name:'referenceName', currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'')}}"
+                                :to="{name:'updateRDEReference', params:{rdeName:rdeSelfProfile.first_name?rdeSelfProfile.first_name:'RDE',
+                              objectId: rdeSelfProfile.id,itemIndex: index
+                              }}"
                               class="btn btn-green bg-green-400 hover:bg-green-500 h-full text-md text-white mr-1"
                               title="Update"
                             >
@@ -461,7 +471,9 @@
                           </span>
                           <span>
                             <router-link
-                              :to="{name:'deleteRDEReference', params:{referenceName:reference.name?reference.name:'referenceName',currentItemIndex:index, currentItem:reference, allItems:rdeSelfProfile.references,rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:'') }}"
+                                :to="{name:'deleteRDEReference', params:{rdeName:rdeSelfProfile.first_name?rdeSelfProfile.first_name:'RDE',
+                              objectId: rdeSelfProfile.id,itemIndex: index
+                              }}"
                               class="btn btn-red bg-red-400 hover:bg-red-500 h-full text-md text-white"
                               title="Delete"
                             >
@@ -481,7 +493,9 @@
                   <span class="">
                     <span class="flex ">                 
                       <router-link
-                        :to="{name:'addRDEReference', params:{rdeId:rdeSelfProfile.id,rdeName:(rdeSelfProfile.first_name?rdeSelfProfile.first_name:'')+ (rdeSelfProfile.last_name?' '+rdeSelfProfile.last_name:''),allItems:rdeSelfProfile.references}}"
+                        :to="{name:'addRDEReference', params:{rdeName:rdeSelfProfile.first_name?rdeSelfProfile.first_name:'RDE',
+                              objectId: rdeSelfProfile.id,
+                              }}"
                         class="btn btn-blue bg-blue-400 hover:bg-blue-500 h-1/6 text-md text-white"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

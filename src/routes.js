@@ -64,6 +64,9 @@ import one_health_schema from '@/schemas/one_health.json'
 import rde_schema from '@/schemas/rde_schema.json'
 import recommend_schema from '@/schemas/recommend_schema.json'
 import outbreak_type from '@/schemas/outbreak_type.json'
+import CreateNewJsonItem from "@/components/utilities/CreateNewJsonItem";
+import UpdateJsonItem from "@/components/utilities/UpdateJsonItem";
+import DeleteJsonItem from "@/components/utilities/DeleteJsonItem";
 
 
 Vue.use(VueRouter);
@@ -577,121 +580,119 @@ const routes = [
             {
                 path: 'add-experience/:rdeId/:rdeName',
                 name: 'addRDEExperience',
-                component: modal_create_template,
+                component: CreateNewJsonItem,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: add_experience_schema,
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'professional_experience',
                         vuex_action: 'postRDEExperienceById',
                         moduleAction:"postRDEExperienceById",
-                        allItems:x.params.allItems,
-                        object_id: x.params.rdeId,
-                        profile: x.params.rdeId,
+                        object_id: parseInt(x.params.rdeId),
                         object_title: x.params.rdeName + ' experience',
                         size: 'max-w-5xl'
                     }
                 }
             },
             {
-                path: 'update-experience/:rdeId/:rdeName/:experienceName/:currentItem',
+                path: 'update-experience/:rdeName/:experienceName/:objectId/:itemIndex',
                 name: 'updateRDEExperience',
-                component: modal_create_template,
+                component: UpdateJsonItem,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: add_experience_schema,
-                        currentItem: x.params.currentItem,
-                        currentItemIndex: x.params.currentItemIndex,
-                        allItems:x.params.allItems,
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'professional_experience',
                         vuex_action: 'postRDEExperienceById',
-                        object_title: `' ${x.params.experienceName} update'`,
-                        object_id: x.params.rdeId,
-                        moduleAction:"updateRDEexperience",
-                        size: '1/2'
+                        moduleAction:"postRDEExperienceById",
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' experience',
+                        size: 'max-w-5xl'
                     }
 
                 }
             },
             {
-                path: 'delete-experience/:rdeId/:rdeName/:experienceName',
+                path: 'delete-experience/:rdeName/:experienceName/:objectId/:itemIndex',
                 name: 'deleteRDEExperience',
-                component: modal_delete_template,
+                component: DeleteJsonItem,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                       
-                        experienceName: x.params.experienceName,
-                        allItems:x.params.allItems,
-                        currentItem: x.params.currentItem,
-                        currentItemIndex: x.params.currentItemIndex,
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'professional_experience',
                         vuex_action: 'postRDEExperienceById',
-                        object_title: `' ${x.params.experienceName} '`,
-                        object_id: x.params.rdeId,
-                        vuex_payload:x.params.rdeId,
-                        moduleAction:"deleteRDEexperience",
-                        size: 'w-3/4'
+                        moduleAction:"postRDEExperienceById",
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' experience',
+                        size: 'max-w-5xl'
                     }
-
                 }
             },
             // reference
             {
-                path: 'add-reference/:rdeId/:rdeName',
+                path: 'add-reference/:objectId/:rdeName',
                 name: 'addRDEReference',
-                component: modal_create_template,
+                component: CreateNewJsonItem,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: add_reference_schema,
-                        vuex_action: 'postRDEExperienceById',
+                        vuex_action: 'postRDEReferenceById',
                         moduleAction:"addRDEReference",
-                        allItems:x.params.allItems,
-                        object_id: x.params.rdeId,
-                        profile: x.params.rdeId,
-                        object_title: x.params.rdeName + ' reference',
-                        size: '1/2'
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'references',
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' references',
+                        size: 'max-w-5xl'
                     }
                 }
             },
             {
-                path: 'update-reference/:rdeId/:rdeName/:referenceName/:currentItem',
+                path: 'update-reference/:objectId/:rdeName:/itemIndex',
                 name: 'updateRDEReference',
-                component: modal_create_template,
+                component: UpdateJsonItem,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: add_reference_schema,
-                        currentItem: x.params.currentItem,
-                        currentItemIndex: x.params.currentItemIndex,
-                        allItems:x.params.allItems,
-                        vuex_action: 'postRDEExperienceById',
-                        object_title: `' ${x.params.referenceName} update'`,
-                        object_id: x.params.rdeId,
-                        moduleAction:"updateRDEReference",
-                        size: '1/2'
+                        vuex_action: 'postRDEReferenceById',
+                        moduleAction:"addRDEReference",
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'references',
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' references',
+                        size: 'max-w-5xl'
                     }
-
                 }
             },
             {
-                path: 'delete-reference/:rdeId/:rdeName/:referenceName',
+                path: 'delete-reference/:objectId/:rdeName:/itemIndex',
                 name: 'deleteRDEReference',
-                component: modal_delete_template,
+                component: DeleteJsonItem,
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        referenceName: x.params.referenceName,
-                        allItems:x.params.allItems,
-                        currentItem: x.params.currentItem,
-                        currentItemIndex: x.params.currentItemIndex,
-                        vuex_action: 'postRDEExperienceById',
-                        object_title: `' ${x.params.referenceName} '`,
-                        object_id: x.params.rdeId,
-                        vuex_payload:x.params.rdeId,
-                        moduleAction:"deleteRDEReference",
-                        size: 'w-3/4'
+                        vuex_action: 'postRDEReferenceById',
+                        moduleAction:"addRDEReference",
+                        // this will be used to fetch the already existing data
+                        vuex_fetch_action:'fetchRDEById',
+                        // will be used to access the data fetched from api to populate form
+                        vuex_fetch_key: 'references',
+                        object_id: parseInt(x.params.objectId),
+                        object_title: x.params.rdeName + ' references',
+                        size: 'max-w-5xl'
                     }
-
                 }
             },
 

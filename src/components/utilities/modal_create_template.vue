@@ -113,13 +113,14 @@ export default {
         this.form.profile=this.profile
       }
       this.form.country_id = this.country_id
+      console.log("reached", this.vuex_payload, this.moduleAction, this.form)
       if (this.vuex_payload){
         payload = this.vuex_payload
         if(this.moduleAction==='addRDEReference' || this.moduleAction==='postRDEExperienceById'){
           if(this.form.profile) delete this.form.profile
-          
+          delete this.country_id
           payload={professional_experience:payload}
-          
+
           if(this.moduleAction ==='postRDEExperienceById'){
             
             payload=[{professional_experience:[payload]}]
@@ -211,7 +212,6 @@ export default {
 
     },
     async fetchOptions() {
-      
       // let schema =[]
       this.optionsList.map((option,index)=>{
         this.$store.dispatch(option).then((resp)=>{

@@ -471,6 +471,7 @@ const actions = {
     // eslint-disable-next-line no-unused-vars
     postRDEExperienceById({ commit }, payload) {
         return new Promise((resolve, reject) => {
+            console.log("reached")
             let relative_url = '/profile/'
             if (payload === undefined) {
                 payload = ''
@@ -478,7 +479,7 @@ const actions = {
                 relative_url = "/profile/" + payload.id + "/"
                 delete payload.id
             }
-            api.patch(relative_url, payload).then(resp => {
+            api.patch(relative_url, {'professional_experience':payload.data}).then(resp => {
                 commit("setExperience", resp.data)
                 resolve(resp.data)
             }).catch(err => {
@@ -536,7 +537,7 @@ const actions = {
                 relative_url = "/profile/" + payload.id + "/"
                 console.log('patchUrl', relative_url)
             }
-            api.patch(relative_url, payload).then(resp => {
+            api.patch(relative_url, {'references':payload.data}).then(resp => {
                 commit("setReference", resp.data)
                 resolve(resp.data)
             }).catch(err => {
