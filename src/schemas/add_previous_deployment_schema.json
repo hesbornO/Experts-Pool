@@ -1,0 +1,62 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [
+        {
+            "component":"div",
+            "class":"px-2 py-3 md:grid md:grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "text",
+                    "label": "Public Health Event Name",
+                    "name": "name",
+                    "validation": "required"
+                },
+                {
+                    "type": "text",
+                    "label": "Country",
+                    "name": "country",
+                    "validation": "required"
+                }
+            ]
+            
+        },        
+        {
+            "component":"div",
+            "class":"px-2 py-3 md:grid md:grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "date",
+                    "label": "Start Date",
+                    "name": "start_date",
+                    "validation": "required"
+                },
+                {
+                    "type": "date",
+                    "label": "End Date",
+                    "name": "end_date",
+                    "validation": "required"
+                }
+            ]
+            
+        },
+        {
+            "component":"div",
+            "class":"px-2 py-3 md:grid md:grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "textarea",
+                    "class":"col-span-2",
+                    "label": "Description",
+                    "name": "description",
+                    "rows":5,
+                    "validation": "required"
+                }
+            ]
+            
+        }
+
+        
+    ]
+        
+}]
