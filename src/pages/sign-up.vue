@@ -291,6 +291,7 @@
                           <option data-countryCode="YE" value="969">Yemen (North)(+969)</option>
                           <option data-countryCode="YE" value="967">Yemen (South)(+967)</option>
                           <option data-countryCode="ZM" value="260">Zambia (+260)</option>
+                          <option data-countryCode="ZB" value="255">Zanzibar (+255)</option>
                           <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                         </optgroup>
                       </select>

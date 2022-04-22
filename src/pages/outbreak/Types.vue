@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Outbreak Types">
+  <dashboard_layout page_title="Public Health Event Types">
 
     <div class="mb-3 flex flex-row justify-end">      
       <router-link
