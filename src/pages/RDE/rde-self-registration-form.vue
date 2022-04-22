@@ -369,7 +369,7 @@
                     <option data-countryCode="SB" value="677">Solomon Islands (+677)</option>
                     <option data-countryCode="SO" value="252">Somalia (+252)</option>
                     <option data-countryCode="ZA" value="27">South Africa (+27)</option>
-                    <option data-countryCode="ZA" value="27">South Sudan (+211)</option>
+                    <option data-countryCode="SS" value="211">South Sudan (+211)</option>
                     <option data-countryCode="ES" value="34">Spain (+34)</option>
                     <option data-countryCode="LK" value="94">Sri Lanka (+94)</option>
                     <option data-countryCode="SH" value="290">St. Helena (+290)</option>
@@ -703,7 +703,7 @@
                     <option data-countryCode="SB" value="677">Solomon Islands (+677)</option>
                     <option data-countryCode="SO" value="252">Somalia (+252)</option>
                     <option data-countryCode="ZA" value="27">South Africa (+27)</option>
-                    <option data-countryCode="ZA" value="27">South Sudan (+211)</option>
+                    <option data-countryCode="SS" value="211">South Sudan (+211)</option>
                     <option data-countryCode="ES" value="34">Spain (+34)</option>
                     <option data-countryCode="LK" value="94">Sri Lanka (+94)</option>
                     <option data-countryCode="SH" value="290">St. Helena (+290)</option>
