@@ -264,6 +264,7 @@
                           <option data-countryCode="TW" value="886">Taiwan (+886)</option>
                           <option data-countryCode="TJ" value="7">Tajikstan (+7)</option>
                           <option data-countryCode="TZ" value="255">Tanzania (+255)</option>
+                          <option data-countryCode="ZB" value="255">Tanzania-Zanzibar (+255)</option>
                           <option data-countryCode="TH" value="66">Thailand (+66)</option>
                           <option data-countryCode="TG" value="228">Togo (+228)</option>
                           <option data-countryCode="TO" value="676">Tonga (+676)</option>
@@ -291,7 +292,6 @@
                           <option data-countryCode="YE" value="969">Yemen (North)(+969)</option>
                           <option data-countryCode="YE" value="967">Yemen (South)(+967)</option>
                           <option data-countryCode="ZM" value="260">Zambia (+260)</option>
-                          <option data-countryCode="ZB" value="255">Zanzibar (+255)</option>
                           <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                         </optgroup>
                       </select>
