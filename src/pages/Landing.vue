@@ -27,7 +27,10 @@
       <header class="flex-col xl:flex-row flex justify-between px-4">
 
         <div class="mx-auto text-center xl:text-left xl:mx-0 mb-14 xl:mb-0">
-          <h1 class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-5">Get deployed <br> by the EAC <br> during emergency events</h1>
+          <h1 class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-5">
+            Register to be deployed <br> by the EAC <br> as a rapid responder for Public Health Emergency/Event
+            <!-- Get deployed <br> by the EAC <br> during emergency events -->
+            </h1>
 
           <p class="font-normal text-gray-500 text-sm md:text-lg mb-10">We keep your profile and notify you in the event of a public health event</p>
 
