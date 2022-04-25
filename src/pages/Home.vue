@@ -310,7 +310,7 @@
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize">{{ item.active_deployments>0?'Yes' : 'No' }}
+            <td :class="['px-4 py-3 text-sm capitalize',item.current_deployment!=='No Active Deployment'?'font-mono text-orange-500':'']">{{ item.current_deployment?item.current_deployment : 'None' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">
               <span v-if="item.competencies_objects">

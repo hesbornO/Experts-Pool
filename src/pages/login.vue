@@ -18,7 +18,7 @@
                     </div>
                     <div class="text-2xl font-bold py-4 ">
                       <p class="flex items-center justify-center">EAC</p>  
-                      <p class="flex items-center justify-center"> Rapidly Deployable Experts Portal</p>
+                      <p class="flex items-center justify-center"> Rapidly Deployable Experts (RDE) Portal</p>
                       <p class=" text-orange-500 text-xs rounded-md flex justify-center" >{{activeLanguage.store.sign_up_form.login_check_mail}} </p>
 
                     </div>
