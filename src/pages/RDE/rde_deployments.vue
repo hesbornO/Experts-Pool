@@ -190,7 +190,7 @@ import {  baseUrl } from '../../utils/constants';
 // import Loading from '../../components/utilities/loading.vue';
 
 export default {
-  name: "Regions",
+  name: "RDEDeployments",
   components: {
     // data_table,
     dashboard_layout,
