@@ -6,8 +6,8 @@
             {
                 "type": "select",
                 "options": [0],
-                "label": "Outbreak",
-                "placeholder":"--select outbreak--",
+                "label": "Public Health Event",
+                "placeholder":"--select public health event--",
                 "name": "outbreak_id",
                 "validation": "required"
             },

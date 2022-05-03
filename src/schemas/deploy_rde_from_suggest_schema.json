@@ -6,7 +6,7 @@
             {
                 "type": "select",
                 "options": [0],
-                "label": "Outbreak",
+                "label": "Public Health Event",
                 "disabled":true,
                 "placeholder":"--select outbreak--",
                 "name": "outbreak_id",
