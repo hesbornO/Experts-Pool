@@ -41,6 +41,7 @@ import modal_upload_cv_template from "./components/utilities/modal_upload_cv_tem
 //schemas
 import country_schema from '@/schemas/country_schema.json'
 import update_admin_description_schema from '@/schemas/update_admin_description_schema.json'
+import deployment_request_schema from '@/schemas/deployment_request_schema.json'
 import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
 import deploy_rde_from_suggest_schema from '@/schemas/deploy_rde_from_suggest_schema.json'
 import end_rde_deployment_schema from '@/schemas/end_rde_deployment_schema.json'
@@ -178,7 +179,7 @@ const routes = [
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: deploy_rde_schema,
+                        jsonSchema: deployment_request_schema,
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
@@ -355,17 +356,34 @@ const routes = [
                 }
             },
             {
-                path: 'deploy-rde',
-                name: 'deployRDEfromProfile',
+                path: 'deployment-request',
+                name: 'sendDeploymentRequest',
+                component: modal_deploy_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: deployment_request_schema,
+                        vuex_save_action: 'deployRDE',
+                        object_title: `' ${x.params.rdeName}' ?`,                        
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'deploy-rde/:deploymentId',
+                name: 'deployRDE',
                 component: modal_deploy_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: deploy_rde_schema,
-                        vuex_save_action: 'deployRDE',
+                        vuex_save_action: 'deployRDEAfterPreProcessing',
                         object_title: `' ${x.params.rdeName}' ?`,                        
-                        object_id: x.params.rdeId,
-                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
+                        object_id: x.params.deploymentId,
+                        // optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
                         size: 'w-1/2'
                     }
 

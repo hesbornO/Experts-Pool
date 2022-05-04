@@ -14,7 +14,15 @@
         "class":"hidden",
         "readonly":true,
         "validation": "required"
-    }
+        },
+        {
+        "type": "text",
+        "name": "status",
+        "value":"pre_deployment",
+        "class":"hidden",
+        "readonly":true,
+        "validation": "required"
+        }
 ]
 
 }]

@@ -229,6 +229,26 @@ const actions = {
             })
         });
     },
+    deployRDEAfterPreProcessing({ commit }, payload) {
+        console.log('payload:',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/get_profile_deployments/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/get_profile_deployments/" + payload.deploymentId
+            }
+            delete payload.outbreak_id
+            delete payload.profile_id
+            api.patch(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
     endRDEdeployment({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/deployment/'

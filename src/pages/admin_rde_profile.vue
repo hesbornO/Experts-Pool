@@ -541,14 +541,33 @@
                         <router-link
                           :to="{name:'EndRDEDeploymentFromProfile', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
                           class="btn btn-blue h-1/6 text-md"
-                          v-if="deployment.accepted_by_user"
+                          v-if="deployment.accepted_by_user &&  deployment.status!=='pre_deployment'"
                         >
                           <span class="px-1">{{activeLanguage.store.rde_self_profile.end_deployment}}</span>
                         </router-link>
                     </span>
                   </td>
                   <td class="border-l border-black p-2 text-xs">
-                    <span v-if="rdeProfile.active_deployments>0" :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?'Successfully deployed':deployment.rejected_by_user?'Request rejected':'Request sent'}}</span>
+                    <!-- v-if="rdeProfile.active_deployments>0" -->
+                    <span  :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?activeLanguage.store.rde_self_profile.request_accepted:deployment.rejected_by_user?activeLanguage.store.rde_self_profile.request_rejected:activeLanguage.store.rde_self_profile.request_sent}}. {{deployment.status==='pre_deployment'?activeLanguage.store.rde_self_profile.conduct_predeployment:''}}</span>
+                      <hr class="m-1"> 
+                    <div class="flex justify-between">
+                      <span v-if="rdeProfile">
+                        <label for="pre_deployment_complete">Is predeployment procedure complete?</label><br>
+                        <input type="checkbox" @click="toggleDeployButton" id='preDeploymentCheck' name="preDeploymentCheck" class="pt-2">
+                      </span>                   
+
+                      <router-link
+                        :to="{name:'deployRDE', params:{deploymentId:deployment.id, outbreakName:deployment.outbreak.name}}"
+                        class="btn btn-blue h-1/6 text-md"
+                        v-if="deployment.accepted_by_user &&  deployment.status==='pre_deployment' && preDeploymentComplete"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+
+                        <span class="px-1">{{activeLanguage.store.rde_self_profile.deploy}}</span>
+                      </router-link>
+
+                    </div>
                     <br>
                     <span class="col-span-1" v-if="deployment.deployment_report">
                       <button @click="togglePdfDisplay('fetchCV','viewPdf',deployment.deployment_report)" 
@@ -566,7 +585,7 @@
           </span>
           <span class="colspan-1 flex justify-end p-2">
             <router-link
-              :to="{name:'deployRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
+              :to="{name:'sendDeploymentRequest', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.first_name?this.rdeProfile.first_name.concat(' ').concat(this.rdeProfile.last_name):''}}"
               class="btn btn-blue h-1/6 text-md"
               v-if="user_level==='eac' && this.rdeProfile.application_status === 'approval_complete' && !this.rdeProfile.active_deployments>0"
             >
@@ -599,7 +618,7 @@ import {  baseUrl } from '@/utils/constants';
 // import "vue-pdf-app/dist/icons/main.css";
 
 export default {
-  name: "Regions",
+  name: "AdminRDEProfile",
   components: {
     // data_table,
     dashboard_layout,
@@ -625,10 +644,16 @@ export default {
       displayUploadButton:false,
       user_level:'',
       rdeQualifications:[],
+      preDeploymentComplete:false
       
     }
   },
   methods:{
+    toggleDeployButton(){
+      if(document.getElementById('preDeploymentCheck').checked){
+        this.preDeploymentComplete=true
+      }else{this.preDeploymentComplete=false}
+    },
     saveCV(){
       if(document.getElementById('cvFile').files[0]){
         let fileInput = document.getElementById('cvFile').files[0];
@@ -766,6 +791,7 @@ export default {
      $route(){
         this.fetchRDEData()
         this.displayUploadButton=false
+        this.preDeploymentCompletea=false
     }
   },
 

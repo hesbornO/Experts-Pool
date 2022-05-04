@@ -16,7 +16,7 @@
         </span>
         <span v-if="!this.loading && rdeDeployments" class="col-span-4">            
           <table class="w-full col-span-3 border border-black p-3" >
-            <thead class="text-lg font-semibold font-mono border border-black p-2 ">
+            <thead class="text-lg font-semibold font-mono border border-black p-2">
               <th class="border border-black">{{activeLanguage.store.titles.public_health_events}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_profile.description}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_registration_form.region}}</th>
@@ -53,7 +53,7 @@
                       </router-link>
                     </span>
                     <!-- Report -->
-                    <div class="col-start-2 col-end-4  mt-5 ml-20" v-if="deployment.status='ended'">
+                    <div class="col-start-2 col-end-4  mt-5 ml-20" v-if="deployment.status==='ended'">
                       <span v-if="loading" class=" mt-5 flex justify-center">
                         <loading></loading>
                       </span>
@@ -118,7 +118,6 @@
                             </span>
                           </span>
                         </span>
-
                         <!-- No Report -->
                         <span v-if="!deployment.deployment_report && deployment.accepted_by_user && !loading" class="text-semibold text-orange-300 p-2">
                           <label class="block mt-4 text-sm">
@@ -156,19 +155,24 @@
                           
                         </span>
                       </div>
-                    </div>  
+                    </div>                      
                     <!-- End of report -->
+
+                    <div class="col-start-2 col-end-4  mt-5" v-if="deployment.status==='pre_deployment'">
+                      <span class="text-green-500 font-mono font-semibold">{{activeLanguage.store.rde_self_profile.accepted_request}}</span>
+                    </div>
                   </td>
                 </tr>
             </tbody>
-            <div class="flex justify-center text-orange-500 font-mono col-span-3" v-else> No deployments yet</div>
-          </table>            
-          <div v-if="rdeDeployments.length===0" class="col-span-4 border border-black">
-            <span class="text-yellow-400 text-xl flex justify-center  font-bold animate-pulse">
-              {{activeLanguage.store.rde_self_profile.no_deployments}}.
-            </span>
-          </div>
-          
+            <tbody v-else>              
+              
+            <tr class=" text-orange-500 font-mono text-lg font-semibold" > 
+              <td></td>
+              <td></td>
+              <td>{{activeLanguage.store.rde_self_profile.no_deployments}}.</td>
+            </tr>
+            </tbody>
+          </table> 
         </span>
         
       </div>

@@ -49,9 +49,11 @@
                     <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.username}}</span>
                     <FormulateInput
                       name="username"
-                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                      placeholder="e.g. John"
+                      class="block w-full mt-1 lowercase text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="lowercase e.g. john"
+                      @input="toLower"
                       type="text"
+                      :help="activeLanguage.store.sign_up_form.username_help"
                       required
                     />
                   </label>
@@ -306,14 +308,17 @@
                         :value="`${countryCode}`"
                         :validation-rules="{
                           validateLength: ({ value }) => value.length > 5 && value.length<16,
-                          validateString:({value})=> value.startsWith('+') 
+                          validateString:({value})=> value.startsWith('+') ,
+                          noLetter:({value})=> !(/[a-zA-Z]/g.test(value)) 
                         }"
                         :validation-messages="{
                           validateLength: 'Phone number length must be between 5 and 10 digits long.',
                           validateString: `'Phone number must start with '+''`,
+                          noLetter: `Letters are not allowed`,
                         }"
-                        validation="required|validateLength|validateString"
+                        validation="required|validateLength|validateString|noLetter"
                         :show-optional="false"
+                        error-behavior="value"
                         type="tel"
                         required
                         disabled
@@ -325,7 +330,7 @@
                   <div
                       class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                   >
-                    <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" placeholder="select"
+                    <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" required placeholder="select"
                     v-model="form.attached_region_id" id="region"> 
                       <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.select_region}}--</option>     
                       <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.label}}</option>
@@ -356,6 +361,7 @@
                         placeholder="***************"
                         :type="passwordFieldType"
                         validation='between:5,20,length|required'
+                        onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off
                       />
                       <button type="password" @click="switchVisibility('password')" class="h-2/3 rounded-md bg-blue-100 pt-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" v-if="passwordFieldType==='password'"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -376,6 +382,7 @@
                         validation="required|confirm|between:5,20,length"
                         validation-name="Confirmation"
                         error-behavior="value"
+                        onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off
                       />
                       <button type="password" @click="switchVisibility('password_confirm')" class="h-2/3 rounded-md bg-blue-100 pt-2">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" v-if="passwordConfirmFieldType==='password'"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -413,10 +420,13 @@
                 </div>
 
                 <button
-                  class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                  :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']"
                   type="submit"
-                >
-                  {{activeLanguage.store.sign_up_form.create_account}}
+                  v-bind:disabled="isLoading"
+                >                  
+                  <span v-if="!isLoading">{{activeLanguage.store.sign_up_form.create_account}}</span>
+                  <span v-if="isLoading" class="flex justify-center"><loading></loading></span>
+                  
                 </button>
               </FormulateForm>
 
@@ -438,13 +448,15 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import {api_url} from "../utils/constants"
+import Loading from "../components/utilities/loading";
+
 
 const axios = require('axios').default;
 
 export default {
   name:'SignUpForm',
   components:{
-    
+    Loading
   },
   data() {
     return {
@@ -461,11 +473,15 @@ export default {
       showSidebar: false,
       regions: [],
       selected_language:'',
-      showSignUpMsg:false
+      showSignUpMsg:false,
+      isLoading:false
     }
   },
   methods: {
-    ...mapActions(['signUp','login','fetchRegions']),
+    ...mapActions(['signUp','login','fetchRegions']),   
+    toLower(){
+      this.form.username = this.form.username.toLowerCase()
+    },
     onSelect({name, iso2, dialCode}) {
        console.log(name, iso2, dialCode);
      },
@@ -474,10 +490,11 @@ export default {
       this.form.countryCode='+'+this.countryCode
     },
     createUserAccount() {
-    
+      this.isLoading=true
       // eslint-disable-next-line no-unused-vars
       this.signUp(this.form).then(resp => {
         this.showSignUpMsg=true
+        
         this.email = this.form.email
         // window.location.replace("/rde-self-registration-form")     
         // let login_payload = {
@@ -508,7 +525,8 @@ export default {
       }).catch(err => {
         console.log(err)
         this.showSignUpMsg=false
-      })
+        // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
 
     },
     switchVisibility(field_name){

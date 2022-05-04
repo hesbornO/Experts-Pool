@@ -72,7 +72,7 @@
     "new_password":"Nenosiri mpya",
     "otp_msg":"OTP imetumwa kwa barua pepe yako. Tafadhali angalia na uiweke hapa chini",
 
-    "confirm_new_password":"Thibitisha Nenosiri"
+    "confirm_new_password":"Thibitisha Nenosiri Mpya"
 
   },
   "sign_up_form":{
@@ -80,7 +80,10 @@
     "first_name":"Jina la kwanza",
     "last_name":"Jina la familia",
     "username":"Jina la mtumiaji",
+    "username_help":"Tafadhali toa jina la mtumiaji lenye herufi ndogo",
     "email":"Barua pepe",
+    "verify_email":"Tafadhali thibitisha barua pepe yako",
+    "to_proceed":"kuendelea",
     "phone_number":"Nambari ya simu",
     "select_country":"Chagua nchi",
     "country":"Nchi",
@@ -144,8 +147,13 @@
     "attach_cv":"Attach CV!",
     "deployments":"Usambazaji",
     "deployment_request":"Ombi la kusambazwa",
+    "request_sent":"Ombi limetumwa",
     "accept_request":"Kubali ombi",
     "reject_request":"Kataa ombi",
+    "request_accepted":"Ombi limekubaliwa",
+    "request_rejected":"Ombi limekataliwa",
+    "conduct_predeployment":"Tafadhali fanya taratibu za kabla ya kusambaza.",    
+    "accepted_request":"Umekubali ombi la kupeleka. Tafadhali anza utaratibu wa kabla ya kusambazwa.",
     "disapprove":"Usiidhinishe",
     "approve":"Idhinisha",
     "deploy":"peleka",
