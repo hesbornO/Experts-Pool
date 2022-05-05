@@ -24,42 +24,11 @@
                 }
                 
             ]
-        },      
-       
-        {
-            "component": "div",
-            "class": "md:grid md:grid-cols-2 gap-3",
-            "children": [
-                {
-                    "type": "select",
-                    "label": "Competencies",
-                    "name": "competencies",
-                    "multiple":"multiple",  
-                    "options":[0]
-                },
-                {
-                    "type": "select",
-                    "label": "Affected Regions",
-                    "name": "affected_regions",
-                    "options":[1],
-                    "multiple":"multiple"
-                    
-                }
-
-            ]
-        },
+        },   
         {
             "component":"div",
             "class":"md:grid md:grid-cols-2 gap-3",
             "children":[
-                {
-                    "type": "date",
-                    "label": "Start Date",
-                    "name": "start_date",
-                    "id":"start_date_field",
-                    "max":"",
-                    "validation": "required"
-                },
                 {
                     "type": "select",
                     "label": "Event Type",
@@ -67,9 +36,45 @@
                     "placeholder":"--Select event type--",
                     "name": "outbreak_type_id",
                     "options":[2]
+                },
+                {
+                    "type": "date",
+                    "label": "Start Date",
+                    "name": "start_date",
+                    "id":"start_date_field",
+                    "max":"",
+                    "validation": "required"
                 }
+                
+            ]
+        },   
+       
+        {
+            "component": "div",
+            "class": "md:grid md:grid-cols-2 gap-3",
+            "children": [
+                {
+                    "type": "select",
+                    "label": "Affected Regions",
+                    "name": "affected_regions",
+                    "class":"col-span-2",
+                    "options":[1],
+                    "multiple":"multiple"
+                    
+                },
+                {
+                    "type": "select",
+                    "class":"col-span-2",
+                    "label": "Required Competencies",
+                    "name": "competencies",
+                    "multiple":"multiple",  
+                    "options":[0]
+                }
+                
+
             ]
         },
+        
         
         {
             "type": "textarea",

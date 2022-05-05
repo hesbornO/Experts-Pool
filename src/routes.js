@@ -277,7 +277,7 @@ const routes = [
                 }
             },
             {
-                path: 'update-rde/:rdeId',
+                path: 'update-rde',
                 name: 'UpdateRDEfromProfile',
                 component: modal_update_template,
                 showInLeftBar: false,
@@ -850,7 +850,7 @@ const routes = [
     },
     //deployments
     {
-        path: "/deployments",
+        path: "/active-deployments",
         name: "Active Deployments",
         component: Deployments,
         verboseName:'ActiveDeployments',
@@ -919,7 +919,7 @@ const routes = [
                         object_title: x.params.outbreakName,
                         object_id: x.params.outbreakId,
                         size: 'w-1/2',
-                        optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes'],
+                        optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes','fetchAllCompetencies'],
                         moduleAction:'UpdateOutbreak'
 
                     }

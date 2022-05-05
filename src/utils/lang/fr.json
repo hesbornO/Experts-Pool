@@ -26,7 +26,13 @@
       "click_to_select":"Cliquez pour sélectionner",
       "log_in":"Connexion",
       "log_out":"Se déconnecter",
-      "upload_report":"Télécharger le rapport"
+      "upload_report":"Télécharger le rapport",
+      "view":"Voir",
+      "view_report":"Voir le rapport",
+      "update":"Mise à jour",
+      "close":"proche"
+
+
 
     },
   "tables": {
@@ -41,7 +47,9 @@
     "occupation":"Occupation",
     "partner_state":"État partenaire",
     "status":"statut",
-    "complete_registration":"Enregistrement complet"
+    "complete_registration":"Enregistrement complet",
+    "cv":"Curriculum vitae (CV)"
+
 
   },
   "rde_self_registration_form":{
@@ -92,7 +100,7 @@
     "duration":"Durée",
 
     "select_region":"Choisissez une région",
-    "region_of_residence":"Région de résidence",
+    "region_of_residence":"Comté/District",
     "password":"Mot de passe",
     "confirm_password":"Confirmez le mot de passe",
     "agree_to":"je suis d'accord avec le",
@@ -154,13 +162,21 @@
     "request_accepted":"Requête acceptée",
     "request_rejected":"Demande rejetée",
     "conduct_predeployment":"Veuillez effectuer les procédures de pré-déploiement.",
+    "predeployment_complete":"La procédure de prédéploiement est-elle terminée",
     "accepted_request":"Vous avez accepté la demande de déploiement. Veuillez commencer la procédure de pré-déploiement.",
     "disapprove":"Désapprouver",
     "approve":"Approuver",
     "deploy":"déployer",
+    "deployed":"Déployée",
+    "successfully_deployed":"Déployé avec succès",
     "end_deployment":"finir",
+    "deployment_ended":"Déploiement terminé",
     "start_date":"date de début",
-    "end_date":"date de fin"
+    "end_date":"date de fin",
+    "search":"Tapez pour rechercher RDE...",
+    "deployment_report":"Rapport de déploiement"
+
+
 
 
   }

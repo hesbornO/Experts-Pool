@@ -201,7 +201,6 @@ export default {
             this.form.occupation_id=this.form.occupation.value
             console.log('occupation',this.form.occupation)
           }
-          console.log('fetching',this.form)
           if(this.moduleName==='occupation'){
             this.form.occupation_category_id=resp.occupation_category.id
           }
@@ -240,7 +239,6 @@ export default {
       })
       let schema = JSON.stringify(this.jsonSchema)
       this.fetchedOptions.map((option, index)=>{
-        console.log("option", option)
         schema= schema.replace(`"options":[${index}]`, `"options":${JSON.stringify(option)}`)
       })
       this.optionsPopulatedSchema = JSON.parse(schema)

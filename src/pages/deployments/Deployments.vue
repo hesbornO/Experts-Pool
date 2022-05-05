@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Active Deployments">
+  <dashboard_layout :page_title="activeLanguage.store.titles.active_deployments">
 
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-// import {mapActions, mapGetters} from 'vuex'
+import { mapGetters} from 'vuex'
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
@@ -164,8 +164,9 @@ export default {
     this.getOutbreaks()
 
   },
-  computed: {
-  }
+  computed:{
+    ...mapGetters(['allLanguages', 'activeLanguage']),
+  },
 };
 </script>
 

@@ -35,8 +35,7 @@
           <p class="font-normal text-gray-500 text-sm md:text-lg mb-10">We keep your profile and notify you in the event of a public health event</p>
 
           <div class="flex items-center justify-center lg:justify-start">
-            <a href="#" class="px-8 py-3 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">How to use this platform</a>
-
+            <a href="RDE-End-User-Manual-RDE-copy.html" target="_blank" class="px-8 py-3 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">How to use this platform</a>
           </div>
         </div>
 

@@ -232,13 +232,14 @@ const actions = {
     deployRDEAfterPreProcessing({ commit }, payload) {
         console.log('payload:',payload)
         return new Promise((resolve, reject) => {
-            let relative_url = '/get_profile_deployments/'
+            let relative_url = '/deployment/'
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/get_profile_deployments/" + payload.deploymentId
+                relative_url = "/deployment/" + payload.deploymentId+'/'
             }
             delete payload.outbreak_id
+            delete payload.deploymentId
             delete payload.profile_id
             api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)

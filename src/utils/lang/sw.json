@@ -24,7 +24,14 @@
     "click_to_select":"bofya ili kuchagua",
     "log_in":"Ingia",
     "log_out":"Ondoka",
-    "upload_report":"Pakia Ripoti"
+    "upload_report":"Pakia Ripoti",
+    "view":"Tazama",    
+    "view_report":"Tazama ripoti",
+    "update":"Sasisha",
+    "close":"Funga"
+
+
+
 
 
   },
@@ -40,7 +47,9 @@
     "occupation":"Kazi",
     "partner_state":"Nchi Mshirika",
     "status":"Hali",
-    "complete_registration":"Kamilisha Usajili"
+    "complete_registration":"Kamilisha Usajili",
+    "cv":"Mtaala"
+
   },
   "rde_self_registration_form":{
     "personal_details":"Maelezo ya Kibinafsi",
@@ -90,7 +99,7 @@
     "duration":"Muda",
 
     "select_region":"Chagua eneo",
-    "region_of_residence":"Mkoa wa Makazi",
+    "region_of_residence":"Mkoa/Wilaya",
     "password":"Nenosiri",
     "confirm_password":"Thibitisha Nenosiri",
     "agree_to":"Nakubaliana na",
@@ -152,14 +161,22 @@
     "reject_request":"Kataa ombi",
     "request_accepted":"Ombi limekubaliwa",
     "request_rejected":"Ombi limekataliwa",
-    "conduct_predeployment":"Tafadhali fanya taratibu za kabla ya kusambaza.",    
-    "accepted_request":"Umekubali ombi la kupeleka. Tafadhali anza utaratibu wa kabla ya kusambazwa.",
+    "conduct_predeployment":"Tafadhali fanya taratibu za kabla ya kusambaza.",
+    "predeployment_complete":"Je, utaratibu wa kabla ya kusambaza umekamilika",
+    "accepted_request":"Umekubali ombi la kusambazwa. Tafadhali anza utaratibu wa kabla ya kusambazwa.",
     "disapprove":"Usiidhinishe",
     "approve":"Idhinisha",
     "deploy":"peleka",
+    "deployed":"Umesambazwa",
+    "successfully_deployed":"Usambazaji umefaulu",
     "end_deployment":"Kamilisha",
-    "start_date":"tarehe ya kuanza",
-    "end_date":"tarehe ya mwisho"
+    "deployment_ended":"Usambazaji umekwisha",
+    "start_date":"Tarehe ya kuanza",
+    "end_date":"Tarehe ya mwisho",
+    "search":"Andika ili kutafuta RDE...",
+    "deployment_report":"Ripoti ya upelekaji"
+
+
 
   }
 }

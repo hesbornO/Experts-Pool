@@ -52,7 +52,7 @@
         </span>
         <span class="flex items-center col-span-3" v-else-if="pageResult">
           Showing {{ pageResult.length }} of {{ pageResult.length }}
-        </span>
+        </span>        
       <span class="col-span-2"></span>
       <!-- Pagination -->
       <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
@@ -120,7 +120,9 @@ export default {
 
         console.log('pay',payload)
         this.$store.dispatch(this.vuex_data_action, payload ).then(resp => {
-         this.pageResult = resp
+        this.pageResult = resp
+        console.log(this.pageResult)
+        if(this.$route.path.includes('active-deployments')) this.pageResult = this.pageResult.results.filter(profile => profile.active_deployments > 0)
 
        }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)

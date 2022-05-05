@@ -114,14 +114,14 @@
                   </div>
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.region}}</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.region_of_residence}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
               <div
                   class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
               >
                 <select name="region_of_residence_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md p-2" validation="required" placeholder="select"
                 v-model="form.region_of_residence_id" id="region"> 
-                  <option value="" disabled selected>--Select region--</option>     
+                  <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.region_of_residence}}--</option>     
                   <option v-for="(region,index) in regions" :key="index" :value="region.value">{{region.label?region.label:''}}</option>
                 </select>
                 <span v-if="getErrorMessage['region_of_residence_id']">

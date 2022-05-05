@@ -437,7 +437,7 @@
               <span v-if="this.rdeProfile.cv_upload_status && !this.loading" class="">  
                 <span class="flex justify-between p-4">  
                   <span></span>              
-                  <span class="text-yellow-700 font-semibold text-base">Curriculum Vitae (CV)</span>      
+                  <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.titles.cv}}</span>      
                   <span></span>              
                 </span>  
                 <span class="flex justify-between p-4">
@@ -445,7 +445,7 @@
                     <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
                       class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                       >
-                      <span>View CV</span>
+                      <span>{{activeLanguage.store.actions.view}}</span>
                     </button>
                   </span>
                   <span>
@@ -549,11 +549,12 @@
                   </td>
                   <td class="border-l border-black p-2 text-xs">
                     <!-- v-if="rdeProfile.active_deployments>0" -->
-                    <span  :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']">{{deployment.accepted_by_user?activeLanguage.store.rde_self_profile.request_accepted:deployment.rejected_by_user?activeLanguage.store.rde_self_profile.request_rejected:activeLanguage.store.rde_self_profile.request_sent}}. {{deployment.status==='pre_deployment'?activeLanguage.store.rde_self_profile.conduct_predeployment:''}}</span>
-                      <hr class="m-1"> 
-                    <div class="flex justify-between">
+                    <span  :class="['font-mono font-semibold italic ',deployment.accepted_by_user?'text-green-500':'text-orange-500']" v-if="deployment.status!=='deployed' && deployment.status!=='ended'">{{deployment.accepted_by_user?activeLanguage.store.rde_self_profile.request_accepted:deployment.rejected_by_user?activeLanguage.store.rde_self_profile.request_rejected:activeLanguage.store.rde_self_profile.request_sent}}. {{deployment.status==='pre_deployment'?activeLanguage.store.rde_self_profile.conduct_predeployment:''}}</span>
+                    <span class="text-orange-500 font-mono font-semibold italic" v-if="deployment.status==='deployed'">{{activeLanguage.store.rde_self_profile.successfully_deployed}}</span>
+                    <hr class="m-1"> 
+                    <div class="flex justify-between" v-if="deployment.status!=='deployed' && deployment.accepted_by_user && deployment.status!=='ended'">
                       <span v-if="rdeProfile">
-                        <label for="pre_deployment_complete">Is predeployment procedure complete?</label><br>
+                        <label for="pre_deployment_complete">{{activeLanguage.store.rde_self_profile.predeployment_complete}}?</label><br>
                         <input type="checkbox" @click="toggleDeployButton" id='preDeploymentCheck' name="preDeploymentCheck" class="pt-2">
                       </span>                   
 
@@ -568,12 +569,13 @@
                       </router-link>
 
                     </div>
+                    <div v-if="deployment.status==='ended'" class="text-orange-500 font-mono italic font-semibold">{{activeLanguage.store.rde_self_profile.deployment_ended}} </div>
                     <br>
                     <span class="col-span-1" v-if="deployment.deployment_report">
-                      <button @click="togglePdfDisplay('fetchCV','viewPdf',deployment.deployment_report)" 
+                      <button @click="togglePdfDisplay('view report','viewPdf',deployment.deployment_report)" 
                         class="hover-animation px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                         >
-                        <span>View Report</span>
+                        <span>{{activeLanguage.store.actions.view_report}}</span>
                       </button>
                     </span>
                   </td>
@@ -723,15 +725,22 @@ export default {
         this.mode = 'dark'
       }
     },
-    togglePdfDisplay(action, pdf_bool) {
+    togglePdfDisplay(action, pdf_bool,deployment_report) {
       if(pdf_bool==='viewPdf'){
         this.viewPdf = !this.viewPdf;
       }
       if(pdf_bool==='viewPdfToUpload'){
         this.viewPdfToUpload = !this.viewPdfToUpload;
       }
+      if(action==='view report'){
+       this.loading=true
+        
+          this.loading=false
+          let relative_url=deployment_report.replace('/media/media','media')
+          window.open(baseUrl+relative_url, '_blank')
+      }
       if(action==='fetchCV'){
-        console.log('fetching cv')
+       console.log('fetching cv')
         this.loading=true
         this.$store.dispatch('fetchRDEcv', this.rdeProfile.id).then(resp=>{
           this.RDEcv = resp
