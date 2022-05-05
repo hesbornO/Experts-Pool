@@ -163,6 +163,11 @@ export default {
           for(let region of payload.affected_regions) payload.eligibility_criteria+= '&region='+region
         }
         payload.eligibility_criteria=payload.eligibility_criteria.replace('&','?')
+        if(payload.workCompetencies || payload.languageCompetencies){
+          payload.competencies=[...payload.workCompetencies,...payload.languageCompetencies]
+          delete payload.workCompetencies
+          delete payload.languageCompetencies
+        }
       }
       if(this.moduleAction==='updateRDEexperience' || this.moduleAction==='updateRDEReference'){
         payload={}

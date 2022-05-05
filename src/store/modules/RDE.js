@@ -126,9 +126,27 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/profile/" + payload.id + "/"
-                console.log('patchUrl', relative_url)
+                console.log('putURL', relative_url)
             }
             api.put(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    activateORdeactivateRDEById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {

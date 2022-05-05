@@ -144,6 +144,12 @@ export default {
         }
         this.form.eligibility_criteria=this.form.eligibility_criteria.replace('&','?')
         delete this.form.report
+        
+        if(this.form.workCompetencies || this.form.languageCompetencies){
+          this.form.competencies=[...this.form.workCompetencies,...this.form.languageCompetencies]
+          delete this.form.workCompetencies
+          delete this.form.languageCompetencies
+        }
       }
       console.log("action is ", this.moduleAction)
       if(this.moduleAction==='updateRDEQualification'){
@@ -206,6 +212,10 @@ export default {
           }
           if(this.moduleAction==='updateRDEQualification'){
             if(resp.qualification_type) this.form.qualification_type_id = resp.qualification_type.value
+          }
+          if(this.moduleAction==='UpdateOutbreak'){
+            this.form.workCompetencies=resp.competencies
+            this.form.languageCompetencies=resp.competencies
           }
           this.$forceUpdate()
         }).catch(err => {

@@ -470,7 +470,7 @@ const routes = [
                 props: x => {
                     return {
                         jsonSchema:activate_account,
-                        vuex_action: 'updateRDEById',
+                        vuex_action: 'activateORdeactivateRDEById',
                         moduleAction:'activateProfile',
                         vuex_fetch_action:'',
                         object_id: x.params.rdeId,
@@ -486,7 +486,7 @@ const routes = [
                 props: x => {
                     return {
                         jsonSchema:deactivate_account,
-                        vuex_action: 'updateRDEById',
+                        vuex_action: 'activateORdeactivateRDEById',
                         moduleAction:'deactivateProfile',
                         object_id: x.params.rdeId,
                         object_title: x.params.rdeName,
@@ -902,7 +902,7 @@ const routes = [
                     vuex_action: 'postOutbreak',
                     object_title: 'Outbreak',
                     size: 'w-1/2',
-                    optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes'],
+                    optionsList: ['fetchAllOutbreakTypes','fetchRegions','fetchWorkCompetencies','fetchLanguageCompetencies'],
                     moduleAction:'CreateOutbreak'
                 }
             },
@@ -919,7 +919,7 @@ const routes = [
                         object_title: x.params.outbreakName,
                         object_id: x.params.outbreakId,
                         size: 'w-1/2',
-                        optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes','fetchAllCompetencies'],
+                        optionsList: ['fetchAllOutbreakTypes','fetchRegions','fetchWorkCompetencies','fetchLanguageCompetencies'],
                         moduleAction:'UpdateOutbreak'
 
                     }
