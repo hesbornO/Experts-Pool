@@ -22,7 +22,10 @@
     <!-- Outbreaks List -->
     <data_table v-bind="$attrs">
       <template v-slot="{item}">        
-        <td class="px-4 py-3 text-sm capitalize">{{item.name?item.name:'' }}</td>
+        <td class="px-4 py-3 text-sm capitalize">
+          {{item.name?item.name:'' }} <br>
+          <span class="text-xs italic">{{item.description?item.description:''}}</span>
+        </td>
         <td class="px-4 py-3 text-sm capitalize">{{item.type?item.type:'' }}</td>
         <td class="px-4 py-3 text-sm capitalize">{{ new Date(item.created_at).toLocaleDateString() +' at '+ new Date(item.created_at).toLocaleTimeString() }}</td>
         <!-- <td class="px-4 py-3 text-sm capitalize">{{ new Date(item.updated_at).toLocaleDateString() +' at '+ new Date(item.updated_at).toLocaleTimeString() }}</td> -->
