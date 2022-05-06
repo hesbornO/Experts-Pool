@@ -1,0 +1,37 @@
+[
+    {
+        "component":"div",
+        "class":"md:grid md:grid-cols-2 gap-2",
+        "children":[
+            {
+                "type": "select",
+                "options": [0],
+                "label": "Public Health Event",
+                "placeholder":"--select public health event--",
+                "name": "outbreak_id",
+                "validation": "required"
+            },
+            {
+                "type": "select",
+                "options": [1],
+                "label": "Region",
+                "name": "region",
+                "validation": "required"
+            }
+        ]
+    },
+    
+    {
+        "component": "div",
+        "class": "md:grid md:grid-cols-2 gap-2",
+        "children": [{
+                "type": "date",
+                "label": "Start Date",
+                "name": "start_date",
+                "validation": "required"
+            }
+        ]
+
+    }
+    
+]

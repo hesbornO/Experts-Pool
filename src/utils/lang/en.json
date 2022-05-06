@@ -18,13 +18,21 @@
     "delete": "Delete",
     "edit": "Edit",
     "filter": "Filter",
+    "filter_params":"Filter parameters",
     "back":"Back",
     "submit":"Submit",
     "select_country":"Select country",
     "click_to_select":"Click to select",
     "log_in":"Log In",
     "log_out":"Log Out",
-    "upload_report":"Upload Report"
+    "upload_report":"Upload Report",
+    "view":"View",
+    "view_report":"View report",
+    "update":"Update",
+    "close":"Close",
+    "download_csv":"Download CSV"
+
+
   },
   "tables": {
     "home_table_headings": ["NAME", "SPECIALIZATION", "REGION", "CURRENT DEPLOYMENT", "COMPETENCE", "STATUS", "ACTION"]
@@ -37,7 +45,8 @@
     "occupation":"Occupation",
     "partner_states":"Partner States",
     "status":"Status",
-    "complete_registration":"Complete Registration"
+    "complete_registration":"Complete Registration",
+    "cv":"Curriculum Vitae (CV)"
     
   },
   "rde_self_registration_form":{
@@ -75,13 +84,16 @@
     "first_name":"First Name",
     "last_name":"Last Name",
     "username":"Username",
+    "username_help":"Please provide lowercase username",
     "email":"Email",
+    "verify_email":"Please verify your email",
+    "to_proceed":"to proceed",
     "phone_number":"Phone Number",
     "select_country":"Select country",
     "country":"Country",
     "duration":"Duration",
     "select_region":"Select region",
-    "region_of_residence":"Region of Residence",
+    "region_of_residence":"County/District",
     "password":"Password",
     "confirm_password":"Confirm Password",
     "agree_to":"I agree to the",
@@ -135,14 +147,25 @@
     "attach_cv":"Attach CV!",
     "deployments":"Deployments",
     "deployment_request":"Deployment request",
+    "request_sent":"Request sent",
     "accept_request":"Accept request",
     "reject_request":"Reject request",
+    "request_accepted":"Request accepted",
+    "request_rejected":"Request rejected",
+    "conduct_predeployment":"Please conduct pre-deployment procedures.",
+    "predeployment_complete":"Is predeployment procedure complete",
+    "accepted_request":"You have accepted the deployment request. Please begin the pre-deployment procedure.",
     "disapprove":"Disapprove",
     "approve":"Approve",
     "deploy":"Deploy",
+    "deployed":"Deployed",
+    "successfully_deployed":"Successfully deployed",
     "end_deployment":"End",
+    "deployment_ended":"Deployment ended",
     "start_date":"Start date",
-    "end_date":"End date"
+    "end_date":"End date",
+    "search":"Type to search for RDE...",
+    "deployment_report":"Deployment report"
 
 
   }

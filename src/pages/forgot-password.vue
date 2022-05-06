@@ -52,9 +52,14 @@
                 </span>
 
                 <!-- You should use a button here, as the anchor is only used for the example  -->
-                <p class="text-orange-300">{{check_email}}</p>
+                <!-- <p class="text-orange-300">{{check_email}}</p>
                 <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple ',submitting?'opacity-75 cursor-not-allowed':'']" type="submit" v-bind:disabled="submitting" title="Click to recover password">
                   {{activeLanguage.store.login_form.recover_password}}
+                </button> -->
+                <button
+                  :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading" type="submit">
+                  <span v-if="!isLoading">{{activeLanguage.store.login_form.recover_password}}</span>
+                    <span v-if="isLoading" class="flex justify-center"><loading></loading></span>
                 </button>
               </FormulateForm>
 
@@ -84,6 +89,7 @@
                         validation='between:5,20,length|required'
                         error-behavior="live"
                         :type="passwordFieldType"
+                        onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off
 
                       />
                       <button type="password" @click="switchVisibility('password')" class="h-2/3 rounded-md bg-blue-100 pt-2">
@@ -99,8 +105,9 @@
                           placeholder="" :class="['mt-1 block w-full rounded-md border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50',]"
                           validation="required|confirm|between:5,20,length"
                           validation-name="Confirmation"
-                          error-behavior="live"
+                          error-behavior="value"
                           :type="passwordConfirmFieldType"
+                          onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off
 
                           />
                         <button type="password" @click="switchVisibility('password_confirm')" class="h-2/3 rounded-md bg-blue-100 pt-2">
@@ -129,9 +136,15 @@
 
                 <!-- You should use a button here, as the anchor is only used for the example  -->
                 <p class="text-green-300">{{password_updated}}</p>
-                <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple ',submitting?'opacity-75 cursor-not-allowed':'']" type="submit" v-bind:disabled="submitting" title="Click to recover password">
+                <!-- <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple ',submitting?'opacity-75 cursor-not-allowed':'']" type="submit" v-bind:disabled="submitting" title="Click to recover password">
                   {{activeLanguage.store.login_form.confirm_new_password}}
-                </button>
+                </button>   -->
+
+                 <button
+                  :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading" type="submit">
+                  <span v-if="!isLoading">{{activeLanguage.store.login_form.confirm_new_password}}</span>
+                    <span v-if="isLoading" class="flex justify-center"><loading></loading></span>
+                </button>              
               </FormulateForm>
               <hr class="my-8"/>
               <p class="mt-4">
@@ -146,9 +159,12 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import Loading from "@/components/utilities/loading"
+
 
 export default {
   name:"ForgotPassword",
+  components:{Loading},
   data() {
     return {
       form:{
@@ -163,24 +179,28 @@ export default {
       check_email:'',
       password_updated:'',
       serverError:{},
-      emailSent:false
+      emailSent:false,
+      isLoading:false
     }
   },
   methods: {
     ...mapActions(['requestPasswordChange','completePasswordChange','login']),
     recoverPassword() {
       this.submitting = true  
+      this.isLoading=true
       // eslint-disable-next-line no-unused-vars
       this.requestPasswordChange(this.form).then(resp => {
         this.check_email=`Please check the registered email for '${this.form.username}' for further instructions`
         this.emailSent=true
       }).catch(err => {
         console.log(err)
-      })
+      // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
       this.submitting = false
     },
     passwordChange() {
       this.submitting = true  
+      this.isLoading=true
       // eslint-disable-next-line no-unused-vars
       this.completePasswordChange(this.form).then(resp => {
         this.password_updated=`Password for '${this.form.username}' changed successfully`
@@ -213,7 +233,8 @@ export default {
       }).catch(err => {
         this.serverError=err
         console.log(err)
-      })
+        // eslint-disable-next-line no-unused-vars
+      }).then(resp=>this.isLoading=false)
       this.submitting = false
     },
     switchVisibility(field_name){

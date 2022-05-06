@@ -18,7 +18,7 @@
                     </div>
                     <div class="text-2xl font-bold py-4 ">
                       <p class="flex items-center justify-center">EAC</p>  
-                      <p class="flex items-center justify-center"> Rapidly Deployable Experts Portal</p>
+                      <p class="flex items-center justify-center"> Rapidly Deployable Experts (RDE) Portal</p>
                       <p class=" text-orange-500 text-xs rounded-md flex justify-center" >{{activeLanguage.store.sign_up_form.login_check_mail}} </p>
 
                     </div>
@@ -32,8 +32,20 @@
                   <label class="block text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.login_form.username}}</span>
                     <FormulateInput name="username" type="text"
-                          placeholder="Jane Doe" class="mt-1 block w-full rounded-md border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                          required
+                          placeholder="johndoe" 
+                          class="mt-1 block w-full rounded-md border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                          @input="toLower"
+                          :validation-rules="{
+                          lowerCase:({value})=> value.toLowerCase() 
+                        }"
+                        :validation-messages="{
+                          lowerCase: `Username should be lowercase`,
+                        }"
+                        validation="required|lowerCase"
+                        :show-optional="false"
+                        error-behavior="value"
+                        :help="activeLanguage.store.sign_up_form.username_help"
+                        required
                           />
                   </label>
                   <label class="block mt-4 text-sm col-span-1">
@@ -44,6 +56,7 @@
                             placeholder="**************"
                             :type="passwordFieldType"
                             validation="required|between:5,20,length"
+                            onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete=off
                             />
                       <button type="password" @click="switchVisibility" class="h-2/3 rounded-md bg-purple-300 pt-2" title="View/Hide password">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" v-if="passwordFieldType==='password'" ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -65,8 +78,10 @@
                 </span>
 
                 <!-- You should use a button here, as the anchor is only used for the example  -->
-                <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple ',submitting?'opacity-75 cursor-not-allowed':'']" type="submit" v-bind:disabled="submitting" title="Click to login">
-                  {{submitting? activeLanguage.store.actions.log_in.replace(' ','ing ')+'...':activeLanguage.store.actions.log_in}}
+                <button :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" type="submit" v-bind:disabled="isLoading" title="Click to login">
+                  <span v-if="!isLoading">{{activeLanguage.store.actions.log_in}}</span>
+                  <span v-if="isLoading" class="flex justify-center"><loading></loading></span>
+                  <!-- {{submitting? activeLanguage.store.actions.log_in.replace(' ','ing ')+'...':activeLanguage.store.actions.log_in}} -->
                 </button>
               </FormulateForm>
               <hr class="my-8"/>
@@ -89,8 +104,13 @@
 </template>
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import Loading from "../components/utilities/loading";
+
 
 export default {
+  components:{
+    Loading
+  },
   data() {
     return {
       form:{
@@ -100,12 +120,18 @@ export default {
       passwordFieldType:'password',
       showSidebar: false,
       submitting: false,
-      selected_language:''
+      selected_language:'',
+      isLoading:false
+
     }
   },
   methods: {
     ...mapActions(['login']),
+    toLower(){
+      this.form.username = this.form.username.toLowerCase()
+    },
     userLogin() {
+      this.isLoading=true
       this.submitting = true  
       // eslint-disable-next-line no-unused-vars
       this.login(this.form).then(resp => {
@@ -126,8 +152,8 @@ export default {
         }
       }).catch(err => {
         console.log(err)
-      })
-      this.submitting = false
+      // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
     },
     switchVisibility(e){
       e.preventDefault();     

@@ -114,14 +114,14 @@
                   </div>
             </label>
             <label class="block mt-4 text-sm">
-              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.region}}</span>
+              <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.region_of_residence}}</span>
               <!-- focus-within sets the color for the icon when input is focused -->
               <div
                   class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
               >
                 <select name="region_of_residence_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md p-2" validation="required" placeholder="select"
                 v-model="form.region_of_residence_id" id="region"> 
-                  <option value="" disabled selected>--Select region--</option>     
+                  <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.region_of_residence}}--</option>     
                   <option v-for="(region,index) in regions" :key="index" :value="region.value">{{region.label?region.label:''}}</option>
                 </select>
                 <span v-if="getErrorMessage['region_of_residence_id']">
@@ -422,14 +422,16 @@
                       name="phone"
                       :validation-rules="{
                         validateLength: ({ value }) => value.length > 5 && value.length<16,
-                        validateString:({value})=> value.startsWith('+') 
+                        validateString:({value})=> value.startsWith('+') ,
+                        noLetter:({value})=> !(/[a-zA-Z]/g.test(value)) 
                       }"
                       :validation-messages="{
                         validateLength: 'Phone number must be between 5 and 16 digits long.',
                         validateString: `'Phone number must start with '+''`,
+                        noLetter: `Letters are not allowed`,
                       }"
                       error-behavior="live"
-                      validation="required|validateLength|validateString"
+                      validation="required|validateLength|validateString|noLetter"
                       :show-optional="false"
                 />
                 <span v-if="getErrorMessage['phone']">
@@ -757,17 +759,19 @@
                       name="next_of_kin_phone"
                        :validation-rules="{
                         validateLength: ({ value }) => value.length > 5 && value.length<16,
-                        validateString:({value})=> value.startsWith('+') 
+                        validateString:({value})=> value.startsWith('+') ,
+                        noLetter:({value})=> !(/[a-zA-Z]/g.test(value)) 
                       }"
                       :validation-messages="{
                         validateLength: 'Phone number length must be between 5 and 16 digits long.',
                         validateString: `'Phone number must start with '+''`,
+                        noLetter: `Letters are not allowed`,
                       }"
-                      validation="required|validateLength|validateString"
+                      validation="required|validateLength|validateString|noLetter"
                       placeholder="Please select country"
                       :show-optional="false"
                       disabled
-                      error-behavior="live"
+                      error-behavior="value"
                       
                 />
                 <span v-if="getErrorMessage['next_of_kin_phone']">
@@ -829,8 +833,9 @@
                 <span v-if="viewPdf">Close preview</span>
               </button>
               <button
-                  :class="['uppercase px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-400 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue', isLoading?'disabled:opacity-75 cursor-not-allowed':'']" v-bind:disabled="isLoading" type="submit">
-                {{isLoading?activeLanguage.store.actions.submit+'...':activeLanguage.store.actions.submit}}
+                  :class="['block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading" type="submit">
+                <span v-if="!isLoading">{{activeLanguage.store.actions.submit}}</span>
+                  <span v-if="isLoading" class="flex justify-center"><loading></loading></span>
               </button>
             </div>
         </div>  
@@ -856,20 +861,15 @@ import {mapActions, mapGetters} from 'vuex';
 import {app_name} from "@/utils/constants";
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
-// import Datepicker from 'vuejs-datepicker';
 
 // formulate
 import Vue from 'vue'
-
-// pdf
-// import VuePdfApp from "vue-pdf-app";
-// import "vue-pdf-app/dist/icons/main.css";
+import Loading from "@/components/utilities/loading"
 // modal
 import VueTailwind from 'vue-tailwind'
 const components = {
   //...
 }
-
 Vue.use(VueTailwind, components)
 
 
@@ -878,7 +878,7 @@ export default {
   components: {
     // VuePdfApp,
     dashboard_layout,
-    // Datepicker
+    Loading
   },
   props:{
     // signUpData:[Object]
@@ -944,7 +944,9 @@ export default {
     },
 
     registerRDE(){   
+      console.log('loading',this.isLoading)
       this.isLoading=true   
+      console.log('loading',this.isLoading)
       let payload = this.form
       payload.next_of_kin.next_of_kin_name=payload.next_of_kin_name
       payload.next_of_kin.next_of_kin_phone=payload.next_of_kin_phone
@@ -956,13 +958,19 @@ export default {
 
       
       this.postRDE(payload).then(resp=>{
-        this.$store.dispatch('setError',{})
+        // this.$store.dispatch('setError',{})
         
-        // window.location.replace('/rde-self-profile')
-        // window.location.replace('/home')
+        
         this.$router.back()
         console.log(resp)
-      }).then(this.isLoading=false)    
+      // eslint-disable-next-line no-unused-vars
+      }).catch(err => {
+        console.log(err)
+      // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
+       
+      // this.isLoading=false 
+      console.log('loading',this.isLoading)
     }, 
     getOccupations() {
       this.$store.dispatch('fetchAllOccupations').then(resp => {

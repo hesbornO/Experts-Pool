@@ -169,32 +169,30 @@
             
             <td class="px-4 py-3 text-sm capitalize" v-if="item.name">{{ item.name ? item.name : '' }}</td>
             <td class="px-4 py-3 text-sm capitalize" v-if="item.document">
-              <span v-if="item.document && !loading" class="">  
+              <div v-if="item.document && !loading" class="bg-gray-100 border-2 rounded-md">  
                   <span class="flex justify-between p-4">  
                     <span></span>              
                     <span class="text-yellow-700 font-semibold text-base"> Report</span>      
                     <span></span>              
                   </span>  
-                  <span class="grid grid-cols-1 justify-between p-4">
-                    <span class="col-span-1">
+                  <span class="flex justify-between p-4">
+                    <span >
                       <button @click="togglePdfDisplay('fetchReport','viewPdf',item.document)" 
                         class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                         >
-                        <span>View</span>
+                        <span>{{activeLanguage.store.actions.view}}</span>
                       </button>
                     </span>
-                    <!-- <span class="col-span-1">
-                      <span>
-                        <button
-                            class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue " 
-                            :id="`report${item.id}`"
-                            @click="toggleUploadField(`report${item.id}`)">
-                          {{displayUploadButton?'Close':'Update'}}
-                        </button>
-                      </span>
-                    </span> -->
+                    <span>
+                      <button
+                          class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" 
+                          @click="toggleUploadField(item.id)"
+                      >
+                        {{displayUploadButton?activeLanguage.store.actions.close:activeLanguage.store.actions.update}}
+                      </button>
+                    </span>
                   </span>
-                  <div v-if="displayUploadButton" class="text-semibold text-orange-300 p-2 ">
+                  <div  class="text-semibold text-orange-300 p-2 hidden" :id="item.id">
                     <div class="block mt-4 text-sm ">
                       <span class="text-gray-700 font font-semibold dark:text-gray-400">Attach Report <span class="text-xs italic">(pdf and word docs)</span></span>
                       <div
@@ -211,7 +209,7 @@
                       </div>
                     </div>
                   </div>
-              </span>  
+              </div>  
             </td>           
             <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.name">    
               <split-button  :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                   

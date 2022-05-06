@@ -85,6 +85,22 @@ const actions = {
             })
         })
     },
+    downloadCSV({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload+'?output=csv'
+            }
+            api.get(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     fetchSignUpDataById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/users/'
@@ -126,9 +142,27 @@ const actions = {
                 payload = ''
             } else {
                 relative_url = "/profile/" + payload.id + "/"
-                console.log('patchUrl', relative_url)
+                console.log('putURL', relative_url)
             }
             api.put(relative_url, payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    activateORdeactivateRDEById({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload.id + "/"
+                console.log('patchUrl', relative_url)
+            }
+            api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {
@@ -221,6 +255,27 @@ const actions = {
     deployRDE({ commit }, payload) {
         return new Promise((resolve, reject) => {
             api.post("/deployment/", payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    deployRDEAfterPreProcessing({ commit }, payload) {
+        console.log('payload:',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/deployment/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/deployment/" + payload.deploymentId+'/'
+            }
+            delete payload.outbreak_id
+            delete payload.deploymentId
+            delete payload.profile_id
+            api.patch(relative_url, payload).then(resp => {
                 commit("setRDE", resp.data)
                 resolve(resp.data)
             }).catch(err => {

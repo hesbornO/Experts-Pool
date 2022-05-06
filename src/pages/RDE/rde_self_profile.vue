@@ -1,16 +1,19 @@
 <template>
   <dashboard_layout :page_title="``" :show-back="false" >
-    <span v-if="rdeSelfProfile">
-      <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length > 0">
+    <span>
+      <span class="flex justify-between">
         <span></span>
-        <span>
-          
+        <span v-if="loading"> 
+          <!-- <loading></loading>   -->
         </span>
       </span>
     </span>
     <hr class="pt-2 pb-2">
+    <span v-if="loading" class=" mt-5 flex justify-center col-span-3">
+      <loading></loading>
+    </span>
 
-    <span class="flex justify-between" >
+    <span class="flex justify-between" v-if="!loading">
       <span></span>
       <span>
           <span v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length === 0" class="pb-2 text-xl">
@@ -24,16 +27,19 @@
               class="btn btn-blue text-lg flex mb-5"            
               title="Click to register"
               >
+              <!-- v-if="signUpData.email_confirmed" -->
                 <span class="px-1">{{activeLanguage.store.rde_self_profile.create_profile}}</span>
               </router-link> 
+              <span v-if="!signUpData.email_confirmed" class="text-orange-500 font-mono text-xs">{{activeLanguage.store.sign_up_form.verify_email}} <a :href="`mailto:`+signUpData.email" class="text-blue-500">'{{signUpData.email?signUpData.email:''}}'</a> {{activeLanguage.store.sign_up_form.to_proceed}}</span>
                 <span></span>
             </span>
+
           </span>        
       </span>
       <span></span>
     </span>
 
-    <div v-if="rdeSelfProfile">
+    <div v-if="rdeSelfProfile && !loading">
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length >0">
         <span class="flex">
           <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status==='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status==='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status==='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status==='deployed'?'text-purple-700 dark:text-purple-100':'']">
@@ -605,14 +611,15 @@
                     <button @click="togglePdfDisplay('fetchCV','viewPdf')" 
                       class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                       >
-                      <span>View CV</span>
+                      <span>{{activeLanguage.store.actions.view}}</span>
                     </button>
                   </span>
                   <span>
                     <span>
                       <button
-                          class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
-                        Update CV
+                          class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" 
+                          @click="toggleUploadField">
+                        {{displayUploadButton?activeLanguage.store.actions.close:activeLanguage.store.actions.update}}
                       </button>
                     </span>
                   </span>
@@ -686,7 +693,7 @@
                     <span></span>
                     <span></span>
                     <button class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue"  
-                    @click="saveCV('noCVFile')" v-if="fileUploaded"> Submit CV</button>
+                    @click="saveCV('noCVFile')" v-if="fileUploaded"> {{activeLanguage.store.actions.submit}}</button>
                   </span>
                 
               </span>
@@ -737,7 +744,7 @@ import Loading from "../../components/utilities/loading";
 import {  baseUrl } from '@/utils/constants';
 
 export default {
-  name: "Regions",
+  name: "RDESelfProfile",
   components: {
     // data_table,
     dashboard_layout,
@@ -792,6 +799,7 @@ export default {
       
     },
     getProfileDetails(){
+      this.loading=true
      this.user_level= localStorage.getItem('level')
      this.region= localStorage.getItem('region')
      this.fullname= localStorage.getItem('fullname')
@@ -800,6 +808,8 @@ export default {
      if(this.rdeSelfProfile && Object.keys(this.rdeSelfProfile).length === 0){
        this.fetchSignUpData(this.signUpId)
      }
+     this.loading=false
+     this.fetchRDEData()
     },
     fetchSignUpData(sign_up_id){
       this.loading = true
@@ -835,11 +845,11 @@ export default {
           this.loading = false
           const qs = require('qs');
           const query = qs.stringify({
-              profile:  this.rde_id,
+            profile:  this.rde_id,
             })
           this.$store.dispatch('fetchQualificationsById',this.rde_id?query:'id').then(resp => {
-        if(resp.results.length > 0) {
-          this.rdeQualifications = resp.results
+            if(resp.results.length > 0) {
+              this.rdeQualifications = resp.results
         }
         }).catch(err=>{
           this.$store.dispatch('setErrorMsg', err.data)
@@ -944,8 +954,8 @@ export default {
   },
 
   mounted(){
-    this.fetchRDEData()
-    this.getProfileDetails()  
+    // this.fetchRDEData()
+    this.getProfileDetails()
     this.selected_language = this.activeLanguage.name
 
   }

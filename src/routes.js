@@ -41,6 +41,7 @@ import modal_upload_cv_template from "./components/utilities/modal_upload_cv_tem
 //schemas
 import country_schema from '@/schemas/country_schema.json'
 import update_admin_description_schema from '@/schemas/update_admin_description_schema.json'
+import deployment_request_schema from '@/schemas/deployment_request_schema.json'
 import deploy_rde_schema from '@/schemas/deploy_rde_schema.json'
 import deploy_rde_from_suggest_schema from '@/schemas/deploy_rde_from_suggest_schema.json'
 import end_rde_deployment_schema from '@/schemas/end_rde_deployment_schema.json'
@@ -100,7 +101,8 @@ const routes = [
         icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>`,
-        children: [{
+        children: [
+            {
                 path: 'create-rde',
                 name: 'CreateRDE',
                 component: modal_create_template,
@@ -178,7 +180,7 @@ const routes = [
                 showInLeftBar: false,
                 props: x => {
                     return {
-                        jsonSchema: deploy_rde_schema,
+                        jsonSchema: deployment_request_schema,
                         vuex_save_action: 'deployRDE',
                         object_title: `' ${x.params.rdeName}' ?`,
                         object_id: x.params.rdeId,
@@ -276,7 +278,7 @@ const routes = [
                 }
             },
             {
-                path: 'update-rde/:rdeId',
+                path: 'update-rde',
                 name: 'UpdateRDEfromProfile',
                 component: modal_update_template,
                 showInLeftBar: false,
@@ -355,17 +357,34 @@ const routes = [
                 }
             },
             {
-                path: 'deploy-rde',
-                name: 'deployRDEfromProfile',
+                path: 'deployment-request',
+                name: 'sendDeploymentRequest',
+                component: modal_deploy_template,
+                showInLeftBar: false,
+                props: x => {
+                    return {
+                        jsonSchema: deployment_request_schema,
+                        vuex_save_action: 'deployRDE',
+                        object_title: `' ${x.params.rdeName}' ?`,                        
+                        object_id: x.params.rdeId,
+                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
+                        size: 'w-1/2'
+                    }
+
+                }
+            },
+            {
+                path: 'deploy-rde/:deploymentId',
+                name: 'deployRDE',
                 component: modal_deploy_template,
                 showInLeftBar: false,
                 props: x => {
                     return {
                         jsonSchema: deploy_rde_schema,
-                        vuex_save_action: 'deployRDE',
+                        vuex_save_action: 'deployRDEAfterPreProcessing',
                         object_title: `' ${x.params.rdeName}' ?`,                        
-                        object_id: x.params.rdeId,
-                        optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
+                        object_id: x.params.deploymentId,
+                        // optionsList: ['fetchOutbreakOptions', 'fetchRegions'],
                         size: 'w-1/2'
                     }
 
@@ -452,7 +471,7 @@ const routes = [
                 props: x => {
                     return {
                         jsonSchema:activate_account,
-                        vuex_action: 'updateRDEById',
+                        vuex_action: 'activateORdeactivateRDEById',
                         moduleAction:'activateProfile',
                         vuex_fetch_action:'',
                         object_id: x.params.rdeId,
@@ -468,7 +487,7 @@ const routes = [
                 props: x => {
                     return {
                         jsonSchema:deactivate_account,
-                        vuex_action: 'updateRDEById',
+                        vuex_action: 'activateORdeactivateRDEById',
                         moduleAction:'deactivateProfile',
                         object_id: x.params.rdeId,
                         object_title: x.params.rdeName,
@@ -832,7 +851,7 @@ const routes = [
     },
     //deployments
     {
-        path: "/deployments",
+        path: "/active-deployments",
         name: "Active Deployments",
         component: Deployments,
         verboseName:'ActiveDeployments',
@@ -884,7 +903,7 @@ const routes = [
                     vuex_action: 'postOutbreak',
                     object_title: 'Outbreak',
                     size: 'w-1/2',
-                    optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes'],
+                    optionsList: ['fetchAllOutbreakTypes','fetchRegions','fetchWorkCompetencies','fetchLanguageCompetencies'],
                     moduleAction:'CreateOutbreak'
                 }
             },
@@ -901,7 +920,7 @@ const routes = [
                         object_title: x.params.outbreakName,
                         object_id: x.params.outbreakId,
                         size: 'w-1/2',
-                        optionsList: ['fetchAllCompetencies', 'fetchRegions','fetchAllOutbreakTypes'],
+                        optionsList: ['fetchAllOutbreakTypes','fetchRegions','fetchWorkCompetencies','fetchLanguageCompetencies'],
                         moduleAction:'UpdateOutbreak'
 
                     }

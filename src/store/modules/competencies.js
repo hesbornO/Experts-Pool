@@ -30,6 +30,41 @@ const actions = {
             })
         })
     },
+    fetchLanguageCompetencies({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/competence/?type=language'
+            if (payload === undefined) {
+                payload = ''
+            }
+             else {
+                relative_url = relative_url + '?page='+payload                
+            }
+            api.get(relative_url).then(resp => {
+                commit("setCompetencies", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchWorkCompetencies({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/competence/?type=work'
+            if (payload === undefined) {
+                payload = ''
+            }
+             else {
+                relative_url = relative_url + '?page='+payload
+                
+            }
+            api.get(relative_url).then(resp => {
+                commit("setCompetencies", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     fetchCompetencyById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/competence/'

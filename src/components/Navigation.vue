@@ -35,6 +35,7 @@
               fill="havelock-blue"
               viewBox="0 0 20 20"
             >
+              <!-- v-if="user_level==='country_admin' || user_level==='eac_admin' || user_level==='admin'" -->
               <path
                 fill-rule="evenodd"
                 d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -49,9 +50,10 @@
               class="w-full pl-8 pr-2 py-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
               type="text"
               v-model="search_term"
-              placeholder="Type to search for RDE..."
+              :placeholder="activeLanguage.store.rde_self_profile.search"
               aria-label="Search"
           />
+              <!-- v-if="user_level==='country_admin' || user_level==='eac_admin' || user_level==='admin'" -->
           <div v-if="show_search_results" class="bg-white flex flex-col absolute w-full text-black z-40 shadow-md rounded-md p-2 gap-y-2">
             <router-link :to="{name:'adminRdeProfile', params:{rdeId:result.id ,rdeName: result.first_name}}" v-for="(result, index) in search_results" :key="index"
                          class="cursor-pointer">

@@ -1,62 +1,11 @@
 <template>
-  <dashboard_layout page_title="Active Deployments">
+  <dashboard_layout :page_title="activeLanguage.store.titles.active_deployments">
 
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
-          <!-- <div class="flex flex-row space-x-8 w-10/12">
-             <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Outbreaks</p>
-              <select
-                 v-model="fetched_outbreaks"
-                  :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2  form-select w-full']"
-                  placeholder="--select country--">
-                <option selected value="">All</option> {{this.outbreaks}}
-                <option v-for="(outbreak,index) in this.outbreaks.results" :key="index">
-                  {{ outbreak.name}}
-                </option>
-              </select>
-            </div>
-            <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Countries</p>
-              <select v-model="fetched_countries"
-                      :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
-                      name="country" placeholder="--select country--" @change="filterByCountry(country)">
-                <option selected value="">All</option>
-                <option v-for="(country,index) in eac_countries" :key="index">
-                  {{ country.text }}
-                </option>
-              </select>
-            </div>
-            <div class="flex-auto flex-col space-y-2">
-              <p class="text-gray-600 leading-relaxed text-capitalize">Status</p>
-              <select v-model="status"
-                      :class="['rounded-md border border-gray-300 text-gray-600 py-1 focus:border-blue-100 px-2 w-full']"
-                      name="status" placeholder="select status" @change="filterByStatus(status)">
-                <option class="bg-white" selected value="">All</option>
-                <option class="bg-white" value="pending_approval">Pending approval</option>
-                <option class="bg-white" value="available">Available</option>
-                <option class="bg-white" value="deployed">Deployed</option>
-              </select>
-            </div>
-            <div class="flex flex-col justify-end ">
-              <button
-                  class="btn btn-blue "
-                  @click="filterRDEs()">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                </svg>
-                <span class="px-1">Filter</span>
-              </button>
-            </div>
-          </div> -->
-          
           <router-view></router-view>
-
         </div>
-
-
         <!-- Deployments List -->
          <data_table v-bind="$attrs">
           <template v-slot="{item}" >
@@ -70,8 +19,6 @@
             <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
               {{ item.region_of_residence ? item.region_of_residence.name: '' }}{{item.region_of_residence.country.name?', '+ item.region_of_residence.country.name:''}}
             </td>
-            
-
             <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">{{ item.current_deployment?item.current_deployment : 'Unavailable' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize" v-if="item.active_deployments>0">
@@ -87,46 +34,26 @@
             </td>
             <td class="px-4 py-3 text-sm flex flex-row space-x-1" v-if="item.active_deployments>0">    
               <!-- <split-button  :primary="createPrimary(item)" class="w-32 md:w-48 bg-blue-100" />                    -->
-
-             
             </td>
-          
           </template>
         </data_table>
         <!-- end of list -->
-
       </div>
-
-
     </div>
-
-
   </dashboard_layout>
 </template>
 
 <script>
-// import {mapActions, mapGetters} from 'vuex'
+import { mapGetters} from 'vuex'
 
 import dashboard_layout from '../../components/layouts/dashboard_layout.vue';
 import data_table from "../../components/layouts/DataTableTemplate";
 
-
-// pdf
-// import VuePdfApp from "vue-pdf-app";
-// import "vue-pdf-app/dist/icons/main.css";
-// import SplitButton from "../../components/buttons/SplitButton.vue";
-
-
-
 export default {
   name: "ActiveDeployments",
   components: {
-
     dashboard_layout,
     data_table,
-    // VuePdfApp,
-    // SplitButton
-
   },
   data() {
     return {
@@ -213,20 +140,6 @@ export default {
         console.log(err);
       })
     },
-    // getRDEById(RDEId) {
-    //   this.update_rde_details = true
-    //   this.fetchRDEById(RDEId).then(resp => {
-    //     this.form = resp
-    //   })
-
-    // },
-    // postRDEUpdateById() {
-    //   let payload = {}
-    //   this.updateCountryById(payload).then(resp => {
-    //     window.location.replace('/member-countries')
-    //     console.log(resp)
-    //   })
-    // },
     processFile(e) {
       const files = e.target.files || e.dataTransfer.files;
       if (!files.length) {
@@ -243,61 +156,17 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    // registerRDE() {
-    //   this.form.competencies_list = [this.form.competencies_list]
-    //   this.form.region_of_residence_id = 21
-    //   console.log('form', this.form)
-
-    //   let payload = this.form
-    //   this.postRDE(payload).then(resp => {
-    //     this.$store.dispatch('setError', {})
-    //     window.location.replace('/member-countries')
-    //     console.log(resp)
-    //   })
-    // },
-
-    // getOccupations() {
-    //   console.log('getting occupations...')
-    //   this.$store.dispatch('fetchOccupations').then(resp => {
-    //     this.occupations = resp;
-    //     // console.log('countries:', this.countries)             
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
-    // getCountries() {
-    //   this.$store.dispatch('fetchCountries').then(resp => {
-    //     this.countries = resp;
-    //     // console.log('countries:', this.countries)             
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
-    // getRegions() {
-    //   this.$store.dispatch('fetchRegions').then(resp => {
-    //     this.regions = resp;
-    //   }).catch(err => {
-    //     console.log(err);
-    //   })
-    // },
     filterByOutbreak(){
 
     }
-
-
   },
   mounted() {
-    // this.getRDES()
-    // this.getCountries()
-    // this.getRegions()
-    // this.getOccupations()
     this.getOutbreaks()
 
   },
-  computed: {
-    // ...mapGetters(['allCountries', 'allRegions', 'getErrorMessage']),
-    // ...mapActions(['fetchCountries', 'fetchRegions', 'fetchOccupations', 'postRDE'])
-  }
+  computed:{
+    ...mapGetters(['allLanguages', 'activeLanguage']),
+  },
 };
 </script>
 

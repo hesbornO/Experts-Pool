@@ -100,6 +100,7 @@
         
         <!-- <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4"> -->
           <div>
+            <span>{{activeLanguage.store.actions.filter_params}}</span> 
             <div class="h-full bg-white rounded-md p-2 text-gray-800">
               <div class="grid grid-cols-8 w-full">
                 <div class="">
@@ -253,17 +254,18 @@
             </div>
             <div class="flex justify-end">
               <div class="flex justify-between">  
-                <!-- <router-link
-                    :to="{name:'saveFilter', params:{outbreakId:$route.params.outbreakId?$route.params.outbreakId:'id',outbreakName:$route.params.outbreakName?$route.params.outbreakName:'name',eligibility_criteria:filterString}}"
-                    class="btn btn-blue h-1/2 text-xs m-5"
-                    v-if="userHasSelectedFilterItem"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                  <span class="px-1">{{activeLanguage.store.rde_self_profile.save_filter}}</span>
-                </router-link>        -->
                 <button
-                  class="flex text-white bg-blue-400 py-2 px-4 m-5 rounded-md"
+                    @click="downloadCSV(filterString)"
+                    class="flex text-white bg-orange-300 py-2 px-4 m-5 rounded-md hover:bg-orange-400"
+                >
+                  <svg class="w-4 h-4 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                  <span class="px-1">{{activeLanguage.store.actions.download_csv}}</span>
+                </button>       
+                <button
+                  :class="['flex text-white bg-blue-400 py-2 px-4 m-5 rounded-md hover:bg-blue-500']"                  
                   @click="filterRDES"
+                  :title="!filterString?'Please select filter parameters':'Click to filter'"
+                  
                 >
                   <svg
                     class="w-5 h-5 mr-1"
@@ -279,8 +281,7 @@
                       d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
                     ></path>
                   </svg>
-
-                  Filter
+                  {{activeLanguage.store.actions.filter}}
                 </button>          
               </div>
             </div>
@@ -310,7 +311,7 @@
             </td>
             
 
-            <td class="px-4 py-3 text-sm capitalize">{{ item.active_deployments>0?'Yes' : 'No' }}
+            <td :class="['px-4 py-3 text-sm capitalize',item.current_deployment!=='No Active Deployment'?'font-mono text-orange-500':'']">{{ item.current_deployment?item.current_deployment : 'None' }}
             </td>
             <td class="px-4 py-3 text-sm capitalize">
               <span v-if="item.competencies_objects">
@@ -581,12 +582,12 @@ export default {
       academic_degree: [],
       competencies: [],
       occupations: [],
-      filterString:''
+      filterString:'',
     }
   },
   methods: {
     ...mapActions["fetchRegions",
-      "fetchAllOccupations", "fetchAllCompetencies", "fetchAllQualificationTypes"],
+      "fetchAllOccupations", "fetchAllCompetencies", "fetchAllQualificationTypes",'downloadCSV'],
     createPrimary(item) {      
       return {
           to:{name:'adminRdeProfile', params:{rdeId:item.id, rdeName: item.last_name}},
@@ -816,6 +817,22 @@ export default {
         this.filtered_rdes = [];
         this.userHasSelectedFilterItem = false;
       }
+    },
+
+    // download
+    downloadCSV(filter){
+       this.$store.dispatch('downloadCSV',filter).then(resp => {
+        const anchor = document.createElement('a');
+        anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(resp);
+        anchor.target = '_blank';
+        anchor.download = 'RapidlyDeployableExperts' + '.csv';
+        anchor.click()         
+
+       }).catch(err=>{
+         this.$store.dispatch('setErrorMsg', err.data)
+       }).then(()=>{
+         this.loading = false
+       })
     },
 
     

@@ -16,7 +16,7 @@
         </span>
         <span v-if="!this.loading && rdeDeployments" class="col-span-4">            
           <table class="w-full col-span-3 border border-black p-3" >
-            <thead class="text-lg font-semibold font-mono border border-black p-2 ">
+            <thead class="text-lg font-semibold font-mono border border-black p-2">
               <th class="border border-black">{{activeLanguage.store.titles.public_health_events}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_profile.description}}</th>
               <th class="border border-black">{{activeLanguage.store.rde_self_registration_form.region}}</th>
@@ -52,8 +52,9 @@
                         <span class="px-1">{{activeLanguage.store.rde_self_profile.reject_request}}</span>
                       </router-link>
                     </span>
+                    <div v-if="deployment.status==='ended'" class="text-orange-500 font-mono italic font-semibold col-start-2 col-end-4 flex justify-center">{{activeLanguage.store.rde_self_profile.deployment_ended}}. {{!deployment.deployment_report?activeLanguage.store.actions.upload_report:''}}</div>
                     <!-- Report -->
-                    <div class="col-start-2 col-end-4  mt-5 ml-20" v-if="deployment.status='ended'">
+                    <div class="col-start-2 col-end-4  mt-5  bg-gray-200 border-2  rounded-md" v-if="deployment.status==='ended'">
                       <span v-if="loading" class=" mt-5 flex justify-center">
                         <loading></loading>
                       </span>
@@ -62,22 +63,22 @@
                         <span v-if="deployment.deployment_report && !loading" class="">  
                           <span class="flex justify-between p-4">  
                             <span></span>              
-                            <span class="text-yellow-700 font-semibold text-base">Deployment Report</span>      
+                            <span class="text-yellow-700 font-semibold text-base">{{activeLanguage.store.rde_self_profile.deployment_report}}</span>      
                             <span></span>              
                           </span>  
                           <span class="grid grid-cols-2 justify-between p-4">
-                            <span class="col-span-1">
+                            <span class="col-span-1 p-1">
                               <button @click="togglePdfDisplay('fetchCV','viewPdf',deployment.deployment_report)" 
                                 class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-yellow-400 border border-transparent rounded-lg active:bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:shadow-outline-blue" 
                                 >
-                                <span>View</span>
+                                <span>{{activeLanguage.store.actions.view}}</span>
                               </button>
                             </span>
-                            <span class="col-span-1">
+                            <span class="col-span-1 p-1">
                               <span>
                                 <button
                                     class="hover-animation px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-400 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-blue" @click="toggleUploadField">
-                                  {{displayUploadButton?'Close':'Update'}}
+                                  {{displayUploadButton?activeLanguage.store.actions.close:activeLanguage.store.actions.update}}
                                 </button>
                               </span>
                             </span>
@@ -118,7 +119,6 @@
                             </span>
                           </span>
                         </span>
-
                         <!-- No Report -->
                         <span v-if="!deployment.deployment_report && deployment.accepted_by_user && !loading" class="text-semibold text-orange-300 p-2">
                           <label class="block mt-4 text-sm">
@@ -156,19 +156,26 @@
                           
                         </span>
                       </div>
-                    </div>  
+                    </div>                      
                     <!-- End of report -->
+
+                    <div class="col-start-2 col-end-4  mt-5" >
+                      <span class="text-green-500 font-mono font-semibold" v-if="deployment.status==='pre_deployment'">{{activeLanguage.store.rde_self_profile.accepted_request}}</span>
+                      <span class="text-green-500 font-mono font-semibold text-sm" v-if="deployment.status==='deployed'">{{activeLanguage.store.rde_self_profile.deployed}}</span>
+
+                    </div>
                   </td>
                 </tr>
             </tbody>
-            <div class="flex justify-center text-orange-500 font-mono col-span-3" v-else> No deployments yet</div>
-          </table>            
-          <div v-if="rdeDeployments.length===0" class="col-span-4 border border-black">
-            <span class="text-yellow-400 text-xl flex justify-center  font-bold animate-pulse">
-              {{activeLanguage.store.rde_self_profile.no_deployments}}.
-            </span>
-          </div>
-          
+            <tbody v-else>              
+              
+            <tr class=" text-orange-500 font-mono text-lg font-semibold" > 
+              <td></td>
+              <td></td>
+              <td>{{activeLanguage.store.rde_self_profile.no_deployments}}.</td>
+            </tr>
+            </tbody>
+          </table> 
         </span>
         
       </div>
@@ -190,7 +197,7 @@ import {  baseUrl } from '../../utils/constants';
 // import Loading from '../../components/utilities/loading.vue';
 
 export default {
-  name: "Regions",
+  name: "RDEDeployments",
   components: {
     // data_table,
     dashboard_layout,
