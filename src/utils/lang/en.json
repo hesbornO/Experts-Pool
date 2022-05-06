@@ -18,6 +18,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "filter": "Filter",
+    "filter_params":"Filter parameters",
     "back":"Back",
     "submit":"Submit",
     "select_country":"Select country",
@@ -28,7 +29,9 @@
     "view":"View",
     "view_report":"View report",
     "update":"Update",
-    "close":"Close"
+    "close":"Close",
+    "download_csv":"Download CSV"
+
 
   },
   "tables": {

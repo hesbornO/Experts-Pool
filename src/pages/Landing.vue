@@ -34,9 +34,10 @@
 
           <p class="font-normal text-gray-500 text-sm md:text-lg mb-10">We keep your profile and notify you in the event of a public health event</p>
 
-          <div class="flex items-center justify-center lg:justify-start">
-            <a href="RDE-End-User-Manual-RDE-copy.html" target="_blank" class="px-8 py-3 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">How to use this platform</a>
+          <div class="flex items-center justify-center lg:justify-start p-4">
+            <a href="http://196.41.38.246:81/media/abstract_reports/2022/05/06/2022050606591651809590RDEUserManual.pdf" target="_blank" class="px-8 py-3 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">How to use this platform</a> <br>
           </div>
+            <a href="#expert_profiles" class="px-8 py-3 ml-4 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">Expert Profiles (Call for applications)</a>
         </div>
 
         <div class="mx-auto xl:mx-0">
@@ -105,13 +106,25 @@
   </section>
   <!-- feature section //end -->
 
-  <section class="py-8 md:py-16">
+  <section class="py-4 md:py-8" id="expert_profiles">
 
     <div class="container max-w-screen-xl mx-auto px-4">
 
       <h1 class="font-semibold text-gray-700 text-3xl md:text-4xl text-center mb-5">How are experts selected?</h1>
 
-      <p class="font-normal text-gray-500 text-md md:text-lg text-center mb-20 ">Experts are selected depending on availability, academic qualifications, work experience and any other factors decided by the EAC</p>
+      <p class="font-normal text-gray-500 text-md md:text-lg text-center mb-10 ">Experts are selected depending on availability, academic qualifications, work experience and any other factors decided by the EAC</p>
+      <div >
+        <h5 class=" text-center font-semibold text-gray-700">Call for applications</h5>
+        <div class="text-blue-500 grid grid-cols-2 p-2 bg-gray-50 font-mono">
+          <a href="#">Job a </a>
+          <a href="#">Job b </a>
+          <a href="#">Job c </a>
+          <a href="#">Job d </a>
+          <a href="#">Job e </a>
+          <a href="#">Job f </a>
+          <a href="#">Job g </a>
+        </div>
+      </div>
 
 <!--      <div class="flex flex-col xl:flex-row items-center justify-between mb-20 md:mb-40">-->
 <!--        <div class="mx-auto xl:mx-0 mb-20 xl:mb-0">-->

@@ -18,6 +18,7 @@
     "delete": "Futa",
     "edit": "Hariri",
     "filter": "Chuja",
+    "filter_params":"Vigezo vya chujio",
     "back":"Nyuma",
     "submit":"Wasilisha",
     "select_country":"chagua nchi",
@@ -28,7 +29,8 @@
     "view":"Tazama",    
     "view_report":"Tazama ripoti",
     "update":"Sasisha",
-    "close":"Funga"
+    "close":"Funga",
+    "download_csv":"Pakua CSV"
 
 
 

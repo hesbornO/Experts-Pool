@@ -85,6 +85,22 @@ const actions = {
             })
         })
     },
+    downloadCSV({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/profile/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/profile/" + payload+'?output=csv'
+            }
+            api.get(relative_url).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     fetchSignUpDataById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/users/'
