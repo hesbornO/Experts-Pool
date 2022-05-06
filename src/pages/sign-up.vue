@@ -54,7 +54,15 @@
                       @input="toLower"
                       type="text"
                       :help="activeLanguage.store.sign_up_form.username_help"
-                      required
+                      :validation-rules="{
+                          validateLength: ({ value }) => value.length > 2 && value.length<20,
+                          noSpace:({value})=> !(value.includes(' ')) 
+                        }"
+                        :validation-messages="{
+                          validateLength: 'Username must be between 3 and 20 digits long.',
+                          noSpace: `Spaces are not allowed`,
+                        }"
+                        validation="required|noSpace|validateLength"
                     />
                   </label>
                 </div>
