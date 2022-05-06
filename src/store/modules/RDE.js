@@ -91,7 +91,7 @@ const actions = {
             if (payload === undefined) {
                 payload = ''
             } else {
-                relative_url = "/profile/" + payload+'?output=csv'
+                if(payload) relative_url = "/profile/?" + payload+'&output=csv'
             }
             api.get(relative_url).then(resp => {
                 commit("setRDE", resp.data)
