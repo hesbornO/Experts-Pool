@@ -3,7 +3,7 @@
 
   <!-- home section -->
   <section class="">
-    <nav class="flex-wrap lg:flex items-center justify-between mb-10 lg:mb-20 shadow-md w-full px-4 py-4" x-data="{navbarOpen:false}">
+    <nav class="flex-wrap lg:flex items-center justify-between mb-10 lg:mb-20 shadow-md w-full px-4 py-4">
       <div class="flex items-center justify-between mb-10 lg:mb-0 ">
         <img src="@/assets/img/eac_logo.png" class="h-12" alt="Logo">
         <p class="font-bold text-brandblue">EAC Rapid Deployable Experts Pool</p>
@@ -28,7 +28,7 @@
 
         <div class="mx-auto text-center xl:text-left xl:mx-0 mb-14 xl:mb-0">
           <h1 class="font-bold text-gray-700 text-3xl md:text-6xl leading-tight mb-5">
-            Register to be deployed <br> by the EAC <br> as a rapid responder for Public Health Emergency/Event
+            Register to be deployed <br> by the EAC <br> as a rapid responder for Public Health Emergencies or Events
             <!-- Get deployed <br> by the EAC <br> during emergency events -->
             </h1>
 
