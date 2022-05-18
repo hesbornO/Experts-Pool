@@ -25,7 +25,7 @@
                 <div class="flex justify-center">
                   <loading v-if="loading"></loading>
                 </div>
-                <FormulateForm v-if="jsonSchema" class="w-full" v-model="form" :errors="getErrorMessage" :schema="optionsPopulatedSchema" :form-errors="formErrors" invalid-message="Not all fields were filled out properly">
+                <FormulateForm v-if="jsonSchema && !loading" class="w-full" v-model="form" :errors="getErrorMessage" :schema="optionsPopulatedSchema" :form-errors="formErrors" invalid-message="Not all fields were filled out properly">
                     <FormulateErrors class="rounded-sm text-xs px-4 py-3 text-red-700 bg-red-100 border border-red-300" />
 
                 </FormulateForm>
@@ -224,16 +224,20 @@ export default {
     },
     async fetchOptions() {
       // let schema =[]
-      this.optionsList.map((option,index)=>{
-        this.$store.dispatch(option).then((resp)=>{
-          this.fetchedOptions.push(resp)
-          
-        }).then(()=>{
-          if(index +1 === this.optionsList.length){
-            this.populateSchema()
-          }
+      this.loading=true
+      let promises = []
+      this.optionsList.map((option)=>{
+          promises.push(this.$store.dispatch(option))
         })
+    Promise.all(promises ).then((values)=>{
+          this.fetchedOptions = values;
+         this.populateSchema()
+         this.loading=false
       })
+
+      
+      // console.log("has finished", this.optionsList,"fetched opts", this.fetchedOptions)
+
     
     },
     populateSchema(){
