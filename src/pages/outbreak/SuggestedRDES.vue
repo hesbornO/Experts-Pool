@@ -25,7 +25,7 @@
               <label class="pl-1">{{ country.label }}</label>
             </span>
           </div>
-          <div class="pl-2">
+          <!-- <div class="pl-2">
             <span class="font-semibold">Region</span><br />
             <span
               v-for="(region, index) in regions"
@@ -41,7 +41,7 @@
               />
               <label class="pl-1">{{ region.name }}</label>
             </span>
-          </div>
+          </div> -->
           
           <div>
             <span class="font-semibold">Gender</span><br />
