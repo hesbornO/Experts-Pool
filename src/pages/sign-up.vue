@@ -68,22 +68,61 @@
                 </div>
               
                 <div class="md:grid md:grid-cols-3 gap-2">
-                  <label class="block mt-4 text-sm col-span-1">
-                    <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.email}}</span>
-                    <FormulateInput
-                      name="email"
-                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                      placeholder="john@example.com"
-                      type="email"
-                      validation="email|required"
-                      error-behavior="value"
-                      required
-                    />
-                  </label>
+                  <!-- Countries -->
+                  <label class="block mt-4 text-sm">
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.country}}</span>
+                    <div
+                        class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+                    >
+                      <select name="country" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" required placeholder="select"
+                      v-model="form.country" id="country" @change="populateRegionAndPhoneCode"> 
+                        <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.country}}--</option>     
+                        <option v-for="(country,index) in countries" :key="index" :value="country.id">{{country.label}}</option>
+                      </select>
+                      <span v-if="getErrorMessage['attached_region_id']">
+                        <span v-if="getErrorMessage['attached_region_id'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['attached_region_id']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span> 
+                      <div
+                          class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                      >
+                      </div>
+                    </div>
+                  </label> 
+                  <!-- End of Countries -->
+                  <!-- Region -->
+                  <label class="block mt-4 text-sm">
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.region_of_residence}}</span>
+                    <div
+                        class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
+                    >
+                      <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" required placeholder="select"
+                      v-model="form.attached_region_id" id="region"> 
+                        <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.select_region}}--</option>     
+                        <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.label}}</option>
+                      </select>
+                      <span v-if="getErrorMessage['attached_region_id']">
+                        <span v-if="getErrorMessage['attached_region_id'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['attached_region_id']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span> 
+                      <div
+                          class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
+                      >
+                      </div>
+                    </div>
+                  </label> 
+                  <!-- End of Region -->
+                 
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400 flex justify-between">
                       {{activeLanguage.store.sign_up_form.phone_number}}
-                      <select v-model="countryCode" @change="mapCountryCode" class="w-1/2 rounded-md ">
+                      <!-- <select v-model="countryCode" @change="mapCountryCode" class="w-1/2 rounded-md ">
                         <optgroup label="Countries">
                           <option value="" disabled selected>{{activeLanguage.store.sign_up_form.select_country}}</option>
                           <option data-countryCode="DZ" value="213">Algeria (+213)</option>
@@ -304,15 +343,15 @@
                           <option data-countryCode="ZM" value="260">Zambia (+260)</option>
                           <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                         </optgroup>
-                      </select>
-                      </span>
+                      </select> -->
+                    </span>
                       
                       <FormulateInput
                       v-model="form.countryCode"
                       id="phone_number"
                       name="phone_number"
                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        placeholder="Please select country"
+                        placeholder="254"
                         :value="`${countryCode}`"
                         :validation-rules="{
                           validateLength: ({ value }) => value.length > 5 && value.length<16,
@@ -328,37 +367,25 @@
                         :show-optional="false"
                         error-behavior="value"
                         type="tel"
-                        required
-                        disabled
+                        required                        
                       />
-                  </label>
-                   <!-- Region -->
-                <label class="block mt-4 text-sm">
-                  <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.region_of_residence}}</span>
-                  <div
-                      class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
-                  >
-                    <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" required placeholder="select"
-                    v-model="form.attached_region_id" id="region"> 
-                      <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.select_region}}--</option>     
-                      <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.label}}</option>
-                    </select>
-                    <span v-if="getErrorMessage['attached_region_id']">
-                      <span v-if="getErrorMessage['attached_region_id'].length>0">
-                        <span v-for="(error,index) in getErrorMessage['attached_region_id']" :key="index">
-                          <span class="text-red-500 animate-pulse">{{error}}</span>
-                        </span>
-                      </span>
-                    </span> 
-                    <div
-                        class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
-                    >
-                    </div>
-                  </div>
-                </label> 
-                <!-- End of Region -->
+                  </label>  
+
+                  <label class="block mt-4 text-sm col-span-1">
+                      <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.email}}</span>
+                      <FormulateInput
+                        name="email"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        placeholder="john@example.com"
+                        type="email"
+                        validation="email|required"
+                        error-behavior="value"
+                        required
+                      />
+                    </label>
                 </div>             
 
+                <!-- password section -->
                 <div class="md:grid md:grid-cols-2 gap-2">
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.password}}</span>
@@ -399,18 +426,19 @@
                     </span>
                   </label>
                 </div>
+                <!-- End of password section -->
+                <span class="text-xs text-red-400 mt-6" v-for="(key, index) in Object.keys(getErrorMessage)" :key="index">
 
-                  <span class="text-xs text-red-400 mt-6" v-for="(key, index) in Object.keys(getErrorMessage)" :key="index">
-
-                    <span v-if="key!=='detail'">
-                      <span v-for="(detail_key, index) in Object.keys(getErrorMessage[key])" :key="index">
-                        <span class="capitalize">{{key}}</span> : {{getErrorMessage[key][detail_key]}}
-                      </span>
-                    </span>
-                    <span v-else>
-                      {{getErrorMessage.detail}}
+                  <span v-if="key!=='detail'">
+                    <span v-for="(detail_key, index) in Object.keys(getErrorMessage[key])" :key="index">
+                      <span class="capitalize">{{key}}</span> : {{getErrorMessage[key][detail_key]}}
                     </span>
                   </span>
+                  <span v-else>
+                    {{getErrorMessage.detail}}
+                  </span>
+                </span>
+
                 <div class="flex mt-6 text-sm">
                   <label class="flex items-center dark:text-gray-400">
                     <FormulateInput
@@ -480,6 +508,7 @@ export default {
       passwordConfirmFieldType:'password',
       showSidebar: false,
       regions: [],
+      countries: [],
       selected_language:'',
       showSignUpMsg:false,
       isLoading:false
@@ -493,6 +522,11 @@ export default {
     onSelect({name, iso2, dialCode}) {
        console.log(name, iso2, dialCode);
      },
+    populateRegionAndPhoneCode(){
+      let selectedCountry = this.countries.filter(x=>x.value==document.getElementById('country').value)
+      this.form.countryCode='+'+selectedCountry[0].phone_code
+      this.getRegions(selectedCountry[0].value)
+    },
     mapCountryCode(){
       document.getElementById('phone_number').disabled=false
       this.form.countryCode='+'+this.countryCode
@@ -546,8 +580,21 @@ export default {
         alert('Unknown field type')
       }
     },
-     getRegions() {
-      axios.get(api_url+'region/')
+     getCountries() {
+      axios.get(api_url+'country/')
+        .then(resp=>{
+          this.countries = resp.data;
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .then(function () {
+          // always executed
+        });
+    },
+     getRegions(country_id) {
+      axios.get(api_url+'region/?country='+country_id)
         .then(resp=>{
           this.regions = resp.data;
         })
@@ -567,7 +614,8 @@ export default {
    
   },
   mounted() {
-    this.getRegions()
+    this.getCountries()
+    // this.getRegions()
     this.$store.dispatch('switchLanguage', localStorage.getItem('active_language_name'))
     this.selected_language = this.activeLanguage.name
   },

@@ -12,11 +12,14 @@
         </button>
       </div>
 
-      <ul class="hidden lg:block lg:flex flex-col lg:flex-row lg:items-center lg:space-x-20" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
-        <li class="font-medium text-brandblue text-lg hover:text-brandblue-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
+      <ul class="hidden lg:block lg:flex flex-col lg:flex-row lg:items-center lg:space-x-10" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
+        <!-- <li class="font-medium text-brandblue text-lg hover:text-brandblue-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
+          <router-link :to="{name:'Login'}" >Login</router-link>
+        </li> -->
+
+        <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500 hover:text-white transition ease-linear duration-300">
           <router-link :to="{name:'Login'}" >Login</router-link>
         </li>
-
         <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500 hover:text-white transition ease-linear duration-300">
           <router-link :to="{name:'CreateAccount'}" >Sign Up</router-link>
         </li>

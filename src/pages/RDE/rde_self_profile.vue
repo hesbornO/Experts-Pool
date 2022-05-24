@@ -33,7 +33,7 @@
               <br/>
                 <span></span>
             </span>
-              <span v-if="!signUpData.email_confirmed" class="text-orange-500 font-mono text-xs">{{activeLanguage.store.sign_up_form.verify_email}} <a :href="`mailto:`+signUpData.email" class="text-blue-500">'{{signUpData.email?signUpData.email:''}}'</a> {{activeLanguage.store.sign_up_form.to_proceed}}</span>
+              <span v-if="!signUpData.email_verified" class="text-orange-500 font-mono text-xs">{{activeLanguage.store.sign_up_form.verify_email}} <a :href="`mailto:`+signUpData.email" class="text-blue-500">'{{signUpData.email?signUpData.email:''}}'</a> {{activeLanguage.store.sign_up_form.to_proceed}}</span>
 
           </span>        
       </span>
