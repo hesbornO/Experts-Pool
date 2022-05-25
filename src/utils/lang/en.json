@@ -62,11 +62,16 @@
     "full_name":"Full Name",
     "dob":"Date of Birth",
     "occupation":"Occupation",
+    "please_specify":"Other, please specify",
     "religion":"Religion",
     "id_number":"ID Number",
     "id_type":"ID Type",
     "region":"Region",
-    "gender":"Gender"    
+    "gender":"Gender",
+    "languages":"Languages",
+    "select_languages":"Select languages",
+    "select_competences":"Select competences"    
+
   },
   "login_form":{
     "username":"Username",
