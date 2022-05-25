@@ -466,24 +466,7 @@
             
           </div>
           
-          <div class="md:grid md:grid-cols-3 gap-4">
-            <label class="block mt-4 text-sm">
-              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.occupation}}</span>
-              
-            <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
-                v-model="form.occupation_id" id="occupation">         
-                  <option value="" disabled selected>--Select occupation--</option>     
-                  <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.value">{{occupation.name}}</option>
-                </select>
-
-                <span v-if="getErrorMessage['occupation_id']">
-                  <span v-if="getErrorMessage['occupation_id'].length>0">
-                    <span v-for="(error,index) in getErrorMessage['occupation_id']" :key="index">
-                      <span class="text-red-500 animate-pulse">{{error}}</span>
-                    </span>
-                  </span>
-                </span>            
-            </label> 
+          <div class="md:grid md:grid-cols-3 gap-4">            
 
             <label class="block mt-4 text-sm">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.dob}}</span>
@@ -504,7 +487,53 @@
                     </span>
                   </span>
                 </span>            
-            </label>          
+            </label>  
+            <label class="block mt-4 text-sm">
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.occupation}}</span>
+              
+              <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
+                v-model="form.occupation_id" id="occupation" @change="toggleOtherField">         
+                <option value="" disabled selected>--Select occupation--</option>     
+                <option v-for="(occupation,index) in occupations" :key="index"  :value="occupation.value">{{occupation.name}}</option>
+              </select>
+
+              <span v-if="getErrorMessage['occupation_id']">
+                <span v-if="getErrorMessage['occupation_id'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['occupation_id']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>            
+            </label>         
+            <label class="block mt-4 text-sm" v-if="displayOtherOccupationField">
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.please_specify}}</span>
+              
+              
+              <FormulateInput name="other_occupation" 
+                type="text"
+                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  placeholder="" 
+                  @input="toLower"
+                  :validation-rules="{
+                  lowerCase:({value})=> value.toLowerCase() 
+                }"
+                :validation-messages="{
+                  lowerCase: `Occupation should be lowercase`,
+                }"
+                validation="required|lowerCase"
+                :show-optional="false"
+                error-behavior="value"
+                :help="'Please enter lowercase characters'"
+                required
+              />
+              <span v-if="getErrorMessage['occupation_id']">
+                <span v-if="getErrorMessage['occupation_id'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['occupation_id']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>            
+            </label>         
           </div>
 
           <!-- Next of kin section -->
@@ -811,8 +840,23 @@
                     <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.competencies}}</span>
                       <select name="competencies" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
                       v-model="form.competencies" id="competencies"  multiple rows="10">
-                        <option value="" disabled selected>--Select competency--</option>     
+                        <option value="" disabled selected>--{{activeLanguage.store.rde_self_registration_form.select_competences}}--</option>     
                         <option v-for="(competency,index) in competencies_list" :key="index"  :value="competency.id">{{competency.name}}</option>
+                      </select>
+                      <span v-if="getErrorMessage['competencies']">
+                        <span v-if="getErrorMessage['competencies'].length>0">
+                          <span v-for="(error,index) in getErrorMessage['competencies']" :key="index">
+                            <span class="text-red-500 animate-pulse">{{error}}</span>
+                          </span>
+                        </span>
+                      </span> 
+                  </label>              
+                  <label class="block mt-4 text-sm col-span-1">
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.languages}}</span>
+                      <select name="competencies" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
+                      v-model="form.language_competencies" id="competencies"  multiple rows="10">
+                        <option value="" disabled selected>--{{activeLanguage.store.rde_self_registration_form.select_languages}}--</option>     
+                        <option v-for="(language,index) in languages_list" :key="index"  :value="language.id">{{language.name}}</option>
                       </select>
                       <span v-if="getErrorMessage['competencies']">
                         <span v-if="getErrorMessage['competencies'].length>0">
@@ -898,11 +942,13 @@ export default {
         occupation:'',
         next_of_kin:{},
         competencies:[],
+        language_competencies:[],
         next_of_kin_phone:''
        },
       occupations: {},
       countries: {},
       competencies_list:{},
+      languages_list:{},
       regions: {},
       search: '',
       status: '',
@@ -925,7 +971,8 @@ export default {
       fileUploaded:0,
       showModal: false,
       signUpData:{},
-      isLoading:false
+      isLoading:false,
+      displayOtherOccupationField:false
     }
   },
   methods: {
@@ -942,22 +989,31 @@ export default {
         this.form.next_of_kin_phone='+'+this.nextOfKinCountryCode
       }      
     },
+    toggleOtherField(){
+      let selected_occupation=this.occupations.filter(x=>x.value===this.form.occupation_id)
+      if(selected_occupation[0].name.toLowerCase()==='other') this.displayOtherOccupationField=true
+      else this.displayOtherOccupationField=false
+      
+    },
+    toLower(){
+      this.form.other_occupation = this.form.other_occupation.toLowerCase()
+    },
 
     registerRDE(){   
-      console.log('loading',this.isLoading)
       this.isLoading=true   
-      console.log('loading',this.isLoading)
-      let payload = this.form
-      payload.next_of_kin.next_of_kin_name=payload.next_of_kin_name
-      payload.next_of_kin.next_of_kin_phone=payload.next_of_kin_phone
-      payload.next_of_kin.next_of_kin_email=payload.next_of_kin_email
+      // let payload = this.form
+      this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
+      this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
+      this.form.next_of_kin.next_of_kin_email=this.form.next_of_kin_email
+      this.form.competencies=[...this.form.competencies,...this.form.language_competencies]
 
-      delete payload.next_of_kin_name
-      delete payload.next_of_kin_phone
-      delete payload.next_of_kin_email
+      delete this.form.language_competencies
+      delete this.form.next_of_kin_name
+      delete this.form.next_of_kin_phone
+      delete this.form.next_of_kin_email
 
       
-      this.postRDE(payload).then(resp=>{
+      this.postRDE(this.form).then(resp=>{
         // this.$store.dispatch('setError',{})
         
         
@@ -969,8 +1025,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       }).then(resp=>{this.isLoading=false})
        
-      // this.isLoading=false 
-      console.log('loading',this.isLoading)
+      
     }, 
     getOccupations() {
       this.$store.dispatch('fetchAllOccupations').then(resp => {
@@ -982,8 +1037,8 @@ export default {
     },
     getCompetencies() {
       this.$store.dispatch('fetchAllCompetencies').then(resp => {
-        this.competencies_list = resp;   
-        // console.log('countries:', this.countries)             
+        this.competencies_list = resp.filter(x=>x.type==='work');   
+        this.languages_list=resp.filter(x=>x.type==='language')
       }).catch(err => {
         console.log(err);
       })

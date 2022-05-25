@@ -74,7 +74,9 @@
                     <div
                         class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                     >
-                      <select name="country" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" required placeholder="select"
+                      <select name="country" 
+                      class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" 
+                      required placeholder="select"
                       v-model="form.country" id="country" @change="populateRegionAndPhoneCode"> 
                         <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.country}}--</option>     
                         <option v-for="(country,index) in countries" :key="index" :value="country.id">{{country.label}}</option>

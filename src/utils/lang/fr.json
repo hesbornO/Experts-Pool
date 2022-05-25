@@ -66,11 +66,19 @@
     "full_name":"Nom et prénom",
     "dob":"Date de naissance",
     "occupation":"Occupation",
+    "please_specify":"Autre (veuillez préciser)",
+
     "religion":"La religion",
     "id_number":"Numéro d'identification",
     "id_type":"Type d'identification",
     "region":"Région",
-    "gender":"Le sexe"
+    "gender":"Le sexe",
+    "languages":"Langues",
+    "select_languages":"Sélectionner les langues",
+    "select_competences":"Sélectionner les compétences"    
+
+        
+
 
   },
   "login_form":{

@@ -66,11 +66,18 @@
     "full_name":"Jina kamili",
     "dob":"Tarehe ya kuzaliwa",
     "occupation":"Kazi",
+    "please_specify":"Nyingine, tafadhali taja",
+
     "religion":"Dini",
     "id_number":"Nambari ya kitambulisho",
     "id_type":"Aina ya kitambulisho",
     "region":"Mkoa",
-    "gender":"Jinsia"
+    "gender":"Jinsia",
+    "languages":"Lugha",
+    "select_languages":"Chagua lugha",
+    "select_competences":"chagua uwezo"    
+
+
 
   },
   "login_form":{
