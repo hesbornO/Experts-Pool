@@ -45,7 +45,7 @@
         </div>
 
         <div class="mx-auto xl:mx-0">
-          <img src="@/assets/img/landingPagePhoto.png" width="1000" alt="Image">
+          <img src="@/assets/img/landingPagePhoto.png" width="1200" class="rounded-sm" alt="Image">
         </div>
 
       </header>
