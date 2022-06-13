@@ -17,19 +17,22 @@
           <router-link :to="{name:'Login'}" >Login</router-link>
         </li> -->
 
-        <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500 hover:text-white transition ease-linear duration-300">
+        <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500  bg-blue-50 hover:text-white transition ease-linear duration-300">
           <router-link :to="{name:'Login'}" >Login</router-link>
         </li>
-        <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500 hover:text-white transition ease-linear duration-300">
+        <li class="px-8 py-3 font-medium text-brandblue text-lg text-center border-2 border-brandblue-500 rounded-md hover:bg-brandblue-500 bg-blue-50 hover:text-white transition ease-linear duration-300">
           <router-link :to="{name:'CreateAccount'}" >Sign Up</router-link>
         </li>
       </ul>
     </nav>
 
     <div class="container max-w-screen-xl mx-auto">
-      <header class="flex-col xl:flex-row flex justify-between px-4">
+      <header class="md:grid md:grid-cols-3 xl:flex-row ">
+        <div class="mx-auto xl:mx-0 col-span-2 -ml-10">
+          <img src="@/assets/img/landingPagePhoto.png" width="800" height="600" class="rounded-md ml-5" alt="Image">
+        </div>
 
-        <div class="mx-auto text-center xl:text-left xl:mx-0 mb-14 xl:mb-0">
+        <div class="mx-auto text-center xl:text-left xl:mx-0 mb-14 xl:mb-0  ">
           <h1 class="font-bold text-gray-700 text-3xl md:text-3xl leading-tight mb-5">
             Register <router-link :to="{name:'CreateAccount'}" title="Click to sign up"  class="text-blue-500 font-mono">here</router-link> to become a member of the Pool
             <!-- Register to be deployed <br> by the EAC <br> as a rapid responder for Public Health Emergencies or Events -->
@@ -38,15 +41,13 @@
 
           <p class="font-normal text-gray-500 text-sm md:text-lg mb-10">We keep your profile and notify you in the event of a public health event</p>
 
-          <div class="flex items-center justify-center lg:justify-start py-4">
-            <a href="http://196.41.38.246:81/media/abstract_reports/2022/05/06/2022050606591651809590RDEUserManual.pdf" target="_blank" class="px-8 py-3 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">How to use this platform</a> <br>
-            <a href="#expert_profiles" class="px-8 py-3  bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14">Expert Profiles (Call for applications)</a>
+          <div class=" justify-center lg:justify-start py-4">
+            <a href="http://196.41.38.246:81/media/abstract_reports/2022/05/06/2022050606591651809590RDEUserManual.pdf" target="_blank" class="px-8 py-3 bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-1">How to use this platform</a> <br><br>
+            <a href="#expert_profiles" class="  bg-brandblue-500 font-medium text-white text-md md:text-lg rounded-md hover:bg-brandblue-700 transition ease-in-out duration-300 mr-14 mt-10 px-8 py-3 ">Expert Profiles (Call for applications)</a>
           </div>
         </div>
 
-        <div class="mx-auto xl:mx-0">
-          <img src="@/assets/img/landingPagePhoto.png" width="800" class="rounded-sm ml-5" alt="Image">
-        </div>
+        
 
       </header>
 

@@ -336,9 +336,9 @@
         <!-- end of list -->    
 
          <!--filtered list  -->
-         <span class="text-blue-500 italic font-mono font-semibold " v-if="userHasSelectedFilterItem">{{filtered_rdes && filtered_rdes.results?filtered_rdes.results.length:'0'}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':''):''}} found.</span>
+         <span class="text-blue-500 italic font-mono font-semibold pl-4" v-if="userHasSelectedFilterItem && !loading">{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length===0?'No':filtered_rdes.results.length):''}} record{{filtered_rdes && filtered_rdes.results?(filtered_rdes.results.length>1?'s':filtered_rdes.results.length===0?'s':''):''}} found.</span>
          <div v-if="userHasSelectedFilterItem">
-          <table class="w-full whitespace-no-wrap">
+          <table class="w-full whitespace-no-wrap mb-24">
             <thead>
               <tr
                 class="
@@ -461,10 +461,19 @@
             </tbody>
             <tbody
               v-else
-              class="bg-white divide-y w-full dark:divide-gray-700 dark:bg-gray-800"
+              class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 "
             >
-              <tr class="flex justify-center ">
-                <td class="text-orange-500">No records found</td>
+              
+              <tr class="text-gray-700 dark:text-gray-400 border  ">
+                <td class=""></td>
+                <td class=""></td>
+                <td class="text-orange-500 text-lg">
+                  <span class="flex justify-between" v-if="loading">Fetching...<loading></loading></span>
+                  <span v-else>No records found</span> 
+                </td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
               </tr>
             </tbody>
           </table>
@@ -486,6 +495,7 @@ import api from "@/api";
 import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
 import SplitButton from "../components/buttons/SplitButton.vue";
+import Loading from '../components/utilities/loading.vue';
 
 
 
@@ -497,13 +507,12 @@ import SplitButton from "../components/buttons/SplitButton.vue";
 export default {
   name: "Home",
   components: {
-
     dashboard_layout,
     data_table,
     // VuePdfApp,
-    SplitButton
-
-  },
+    SplitButton,
+    Loading
+},
   data() {
     return {
       allOccupations:[],
@@ -583,6 +592,7 @@ export default {
       competencies: [],
       occupations: [],
       filterString:'',
+      loading:false
     }
   },
   methods: {
@@ -751,11 +761,8 @@ export default {
                     })
                     .then(() => {
                       let initial_filter ='';
-                      console.log('filterString',this.filterString)  
                       console.log(initial_filter);
                       for (let id of initial_filter) {
-                        // this.$refs.id.checked=true
-                        console.log("id", id);
                         document.getElementById(id).checked = true;
                       }
                     });
@@ -776,7 +783,6 @@ export default {
           }
         }
 
-        // console.log('filter string:',this.filterString)
       } else {
         if (this.filterString.includes(`&${label}=${region}`))
           this.filterString = this.filterString.replace(
@@ -796,27 +802,28 @@ export default {
             );
           }
         }
-        // console.log('filter string:',this.filterString)
       }
     },
     filterRDES() {
       if (this.filterString) {
-        console.log('fs',this.filterString)        
+        this.loading=true
         this.userHasSelectedFilterItem = true;
         return new Promise((resolve, reject) => {
           api
             .get("/profile/?" + this.filterString)
             .then((resp) => {
               this.filtered_rdes = resp.data;
+              this.loading=false
             })
             .catch((err) => {
               reject(err);
-            });
+            }).then();
         });
       } else {
         this.filtered_rdes = [];
         this.userHasSelectedFilterItem = false;
       }
+
     },
 
     // download
