@@ -34,7 +34,7 @@
 
         <div class="mx-auto text-center xl:text-left xl:mx-0 mb-14 xl:mb-0  ">
           <h1 class="font-bold text-gray-700 text-3xl md:text-3xl leading-tight mb-5">
-            Register <router-link :to="{name:'CreateAccount'}" title="Click to sign up"  class="text-blue-500 font-mono">here</router-link> to become a member of the Pool
+            <router-link :to="{name:'CreateAccount'}" title="Click to sign up"  class="text-blue-500 ">Register </router-link> to become a member of the Pool
             <!-- Register to be deployed <br> by the EAC <br> as a rapid responder for Public Health Emergencies or Events -->
             <!-- Get deployed <br> by the EAC <br> during emergency events -->
             </h1>
