@@ -70,17 +70,20 @@
                 <div class="md:grid md:grid-cols-3 gap-2">
                   <!-- Countries -->
                   <label class="block mt-4 text-sm">
-                    <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.country}}</span>
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400 flex justify-between">
+                      {{activeLanguage.store.sign_up_form.country}} 
+                      <loading v-if="isLoading"></loading>
+                    </span>
                     <div
                         class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                     >
                       <select name="country" 
                       class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" 
                       required placeholder="select"
-                      v-model="form.country" id="country" @change="populateRegionAndPhoneCode"> 
+                      v-model="form.country" id="country" @change="populateRegionAndPhoneCode" v-bind:disabled="isLoading"> 
                         <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.country}}--</option>     
                         <option v-for="(country,index) in countries" :key="index" :value="country.id">{{country.label}}</option>
-                      </select>
+                      </select>                      
                       <span v-if="getErrorMessage['attached_region_id']">
                         <span v-if="getErrorMessage['attached_region_id'].length>0">
                           <span v-for="(error,index) in getErrorMessage['attached_region_id']" :key="index">
@@ -97,12 +100,15 @@
                   <!-- End of Countries -->
                   <!-- Region -->
                   <label class="block mt-4 text-sm">
-                    <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.sign_up_form.region_of_residence}}</span>
+                    <span class="text-gray-700  font font-semibold dark:text-gray-400 flex justify-between">
+                      {{activeLanguage.store.sign_up_form.region_of_residence}}
+                      <loading v-if="isLoading"></loading>
+                    </span>
                     <div
                         class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400"
                     >
                       <select name="attached_region_id" class="block w-full border-2  border-gray-200 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" validation="required" required placeholder="select"
-                      v-model="form.attached_region_id" id="region"> 
+                      v-model="form.attached_region_id" id="region" v-bind:disabled="isLoading"> 
                         <option value="" disabled selected>--{{activeLanguage.store.sign_up_form.select_region}}--</option>     
                         <option v-for="(region,index) in regions" :key="index" :value="region.id">{{region.label}}</option>
                       </select>
@@ -583,6 +589,7 @@ export default {
       }
     },
      getCountries() {
+      this.isLoading=true
       axios.get(api_url+'country/')
         .then(resp=>{
           this.countries = resp.data;
@@ -591,9 +598,9 @@ export default {
           // handle error
           console.log(error);
         })
-        .then(function () {
-          // always executed
-        });
+        .then(
+         this.isLoading=false
+        );
     },
      getRegions(country_id) {
       axios.get(api_url+'region/?country='+country_id)
