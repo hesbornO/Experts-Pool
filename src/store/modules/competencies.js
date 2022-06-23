@@ -81,6 +81,22 @@ const actions = {
             })
         })
     },
+    fetchCompetenceBySpecialization({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/competence/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/competence/?specialization=" + payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setCompetency", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     // eslint-disable-next-line no-unused-vars
     deleteCompetencyById({commit},payload) {
         return new Promise((resolve, reject) => {

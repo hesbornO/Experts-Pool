@@ -1,5 +1,5 @@
 <template>
-  <dashboard_layout page_title="Occupations">
+  <dashboard_layout page_title="Professions">
 
     <div class="mb-3 flex flex-row justify-end">      
       <router-link

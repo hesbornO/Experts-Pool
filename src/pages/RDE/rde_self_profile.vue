@@ -110,175 +110,279 @@
           <span v-if="this.loading" class=" mt-5 flex justify-center">
             <loading></loading>
           </span>
-        <div class="md:grid md:grid-cols-3 space-x-4 ">
+          <div class="md:grid md:grid-cols-3 space-x-4 ">
 
-          <!-- name -->
-          <span v-if="this.rdeSelfProfile.last_name" class="col-span-1 px-4 p-2">
-            {{activeLanguage.store.rde_self_profile.full_name}}:
-            <span class="font-mono font-semibold text-lg">
-              {{this.rdeSelfProfile.last_name?this.rdeSelfProfile.last_name:''}} 
-              {{this.rdeSelfProfile.first_name?', '+this.rdeSelfProfile.first_name:''}}
-              {{this.rdeSelfProfile.middle_name?' '+this.rdeSelfProfile.middle_name:''}}
-            </span>
-          </span>
-
-          <!-- gender -->
-          <span class="col-span-1 flex gap-4" v-if="this.rdeSelfProfile.gender">
-            {{activeLanguage.store.rde_self_registration_form.gender}}:
-            <span class="font-mono font-semibold text-lg">
-              {{this.rdeSelfProfile.gender.toLowerCase()==='m'?'Male':this.rdeSelfProfile.gender.toLowerCase()==='f'?'Female':'Undefined'}}
-            </span>
-            <span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
-              
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
-            </span>        
-          </span>
-
-          <!-- id -->
-          <span class="col-span-1 flex ">
-            <span class="capitalize">
-              {{this.rdeSelfProfile.id_type?this.rdeSelfProfile.id_type.replace('_',' ') + ':':''}}
-              <span class="font-semibold font-mono text-lg">
-                {{this.rdeSelfProfile.id_number?this.rdeSelfProfile.id_number:''}}
+            <!-- name -->
+            <span v-if="this.rdeSelfProfile.last_name" class="col-span-1 px-4 p-2">
+              {{activeLanguage.store.rde_self_profile.full_name}}:
+              <span class="font-mono font-semibold ">
+                {{this.rdeSelfProfile.last_name?this.rdeSelfProfile.last_name:''}} 
+                {{this.rdeSelfProfile.first_name?', '+this.rdeSelfProfile.first_name:''}}
+                {{this.rdeSelfProfile.middle_name?' '+this.rdeSelfProfile.middle_name:''}}
               </span>
             </span>
-          </span>
 
-          <!-- date of birth -->
-          <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.date_of_birth">
-              {{activeLanguage.store.rde_self_registration_form.dob}}:
-            <span class="flex px-2" >
-              <span class="font-semibold font-mono text-lg px-3">
-                {{this.rdeSelfProfile.date_of_birth?this.rdeSelfProfile.date_of_birth:'Undefined'}} <span class="font-normal text-orange-300 lowercase">({{age}} {{activeLanguage.store.rde_self_profile.years}})</span>
-              
-              </span>            
+            <!-- gender -->
+            <span class="col-span-1 flex gap-4" v-if="this.rdeSelfProfile.gender">
+              {{activeLanguage.store.rde_self_registration_form.gender}}:
+              <span class="font-mono font-semibold">
+                {{this.rdeSelfProfile.gender.toLowerCase()==='m'?'Male':this.rdeSelfProfile.gender.toLowerCase()==='f'?'Female':'Undefined'}}
+              </span>
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='m'"><circle cx="12" cy="4" r="2" ></circle><path d="M15 7H9a1 1 0 0 0-1 1v7h2v7h4v-7h2V8a1 1 0 0 0-1-1z"></path></svg>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='f'"><circle cx="12" cy="4" r="2" ></circle><path d="M14.948 7.684A.997.997 0 0 0 14 7h-4a.998.998 0 0 0-.948.684l-2 6 1.775.593L8 18h2v4h4v-4h2l-.827-3.724 1.775-.593-2-5.999z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);" v-if="this.rdeSelfProfile.gender.toLowerCase()==='t'"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>
+              </span>        
             </span>
-          </span>
-          <!-- Tel -->
-          <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.phone">
-            {{activeLanguage.store.rde_self_registration_form.phone}}:
-            <span class="flex px-2" >
-              <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.phone">
-                <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.phone" target="_blank" title="Click to call">
-                  <span class="px-3">
-                    {{this.rdeSelfProfile.phone?this.rdeSelfProfile.phone:'Undefined'}}
-                  </span>
-                  <span >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                  </span>
-                </a>                        
-              </span>                        
-            </span>
-          </span>
 
-          <!-- email -->
-          <span class="col-span-1 flex md:w-1/2 capitalize " v-if="this.rdeSelfProfile.email">
-              {{activeLanguage.store.rde_self_registration_form.email}}:
-            <span class="flex px-2" >
-                <a :href="mailto.concat(this.rdeSelfProfile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase" title="Click to send mail">
-                  <span class="pr-2">{{this.rdeSelfProfile.email?this.rdeSelfProfile.email:'Undefined'}}</span>
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                  </svg>
-                </a>
+            <!-- id -->
+            <span class="col-span-1 flex ">
+              <span class="capitalize">
+                {{this.rdeSelfProfile.id_type?this.rdeSelfProfile.id_type.replace('_',' ') + ':':''}}
+                <span class="font-semibold font-mono">
+                  {{this.rdeSelfProfile.id_number?this.rdeSelfProfile.id_number:''}}
+                </span>
+              </span>
             </span>
-          </span>
 
-          <!-- location -->
-          <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.region_of_residence">
-            <span>
-              {{activeLanguage.store.rde_self_profile.location}}:
-            </span>
-            <span class="flex px-2" >
-              <span class="font-semibold font-mono text-lg px-3">
-                {{this.rdeSelfProfile.region_of_residence.name?this.rdeSelfProfile.region_of_residence.name:''}}{{this.rdeSelfProfile.region_of_residence.country.name?', '+this.rdeSelfProfile.region_of_residence.country.name:''}}
-              </span>
-              <span class="animate-ping pt-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <!-- date of birth -->
+            <span class="col-span-1 flex capitalize" v-if="this.rdeSelfProfile.date_of_birth">
+                {{activeLanguage.store.rde_self_registration_form.dob}}:
+              <span class="flex px-2" >
+                <span class="font-semibold font-mono px-3 ">
+                  <span class="font-normal text-orange-500 lowercase">{{age}} {{activeLanguage.store.rde_self_profile.years}}</span>
+                
+                </span>            
               </span>
             </span>
-          </span>
-          <!-- Occupation -->
-          <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.occupation">
-              {{activeLanguage.store.rde_self_registration_form.occupation}}:
-            <span class="flex px-2" >
-              <span class="font-semibold font-mono text-lg px-3">
-                {{this.rdeSelfProfile.occupation.name?this.rdeSelfProfile.occupation.name:''}}
+            <!-- Tel -->
+            <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.phone">
+              {{activeLanguage.store.rde_self_registration_form.phone}}:
+              <span class="flex px-2" >
+                <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.phone">
+                  <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.phone" target="_blank" title="Click to call">
+                    <span class="px-3">
+                      {{this.rdeSelfProfile.phone?this.rdeSelfProfile.phone:'Undefined'}}
+                    </span>
+                    <span >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    </span>
+                  </a>                        
+                </span>                        
               </span>
             </span>
-          </span>
-          <!-- Religion -->
-          <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.religion">
-              {{activeLanguage.store.rde_self_registration_form.religion}}:
-            <span class="flex px-2" >
-              <span class="font-semibold font-mono text-lg px-3">
-                {{this.rdeSelfProfile.religion?this.rdeSelfProfile.religion:''}}
+
+            <!-- email -->
+            <span class="col-span-1 flex md:w-1/2 capitalize " v-if="this.rdeSelfProfile.email">
+                {{activeLanguage.store.rde_self_registration_form.email}}:
+              <span class="flex px-2" >
+                  <a :href="mailto.concat(this.rdeSelfProfile.email)" target="_blank" class="flex  font-mono text-md px-3 text-blue-400 lowercase" title="Click to send mail">
+                    <span class="pr-2">{{this.rdeSelfProfile.email?this.rdeSelfProfile.email:'Undefined'}}</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                  </a>
               </span>
             </span>
-          </span>
+
+            <!-- location -->
+            <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.region_of_residence">
+              <span>
+                {{activeLanguage.store.rde_self_profile.location}}:
+              </span>
+              <span class="flex px-2" >
+                <span class="font-semibold font-mono  px-3">
+                  {{this.rdeSelfProfile.region_of_residence.name?this.rdeSelfProfile.region_of_residence.name:''}}{{this.rdeSelfProfile.region_of_residence.country.name?', '+this.rdeSelfProfile.region_of_residence.country.name:''}}
+                </span>
+                <span class="animate-ping pt-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </span>
+              </span>
+            </span>
           
-        </div>
-        <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-mono text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
-          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
-            <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
-              <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
-                <span>
-                  <button class="pill_button">{{competency.name?competency.name.replace('_',' '):''}}</button>              
+            <!-- Religion -->
+            <span class="col-span-1 flex capitalize " v-if="this.rdeSelfProfile.religion">
+                {{activeLanguage.store.rde_self_registration_form.religion}}:
+              <span class="flex px-2" >
+                <span class="font-semibold font-mono px-3">
+                  {{this.rdeSelfProfile.religion?this.rdeSelfProfile.religion:''}}
+                </span>
+              </span>
+            </span>
+            
+          </div>
+          <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="text-green-500 font-mono text-lg capitalize col-span-3">{{activeLanguage.store.rde_self_profile.competencies}}</span> <br>
+            <span v-if="this.rdeSelfProfile.competencies_objects && !this.loading" class="col-span-3">
+              <span v-if="this.rdeSelfProfile.competencies_objects.length>0">
+                <span v-for="(competency,index) in this.rdeSelfProfile.competencies_objects" :key="index">
+                  <span>
+                    <button class="pill_button">{{competency.name?competency.name.replace('_',' '):''}}</button>              
+                  </span>
+                </span>            
+              </span>
+            </span>
+            <br>
+            <br>
+          <!-- next of kin details -->
+          <div class="md:grid md:grid-cols-3 space-x-4 ">
+            <span class="text-green-500 font-mono text-lg capitalize col-span-3" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_name || this.rdeSelfProfile.next_of_kin.next_of_kin_email">Next of kin details</span>
+            <!-- full name -->
+            <span v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_name" class="col-span-1 p-2">
+              {{activeLanguage.store.rde_self_profile.full_name}}:
+              <span class="font-mono font-semibold text-lg">
+                {{this.rdeSelfProfile.next_of_kin.next_of_kin_name?this.rdeSelfProfile.next_of_kin.next_of_kin_name:'Undefined'}}             
+              </span>
+            </span>
+
+
+            <!-- next of kin tel -->
+            <span class="col-span-1 flex capitalize" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_phone">
+              {{activeLanguage.store.rde_self_registration_form.phone}}:
+              <span class="flex px-2" >
+                <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_phone">
+                  <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.next_of_kin.next_of_kin_phone" target="_blank" title="Click to call">
+                    <span class="px-3">
+                      {{this.rdeSelfProfile.next_of_kin.next_of_kin_phone?this.rdeSelfProfile.next_of_kin.next_of_kin_phone:'Undefined'}}
+                    </span>
+                    <span >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    </span>
+                  </a>                        
+                </span>                        
+              </span>
+            </span>
+
+            <!-- next of kin email -->
+            <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_email">
+                {{activeLanguage.store.rde_self_registration_form.email}}
+              <span class="flex px-2" >
+                  <a :href="mailto.concat(this.rdeSelfProfile.next_of_kin.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
+                    <span class="pr-2">{{this.rdeSelfProfile.next_of_kin.next_of_kin_email?this.rdeSelfProfile.next_of_kin.next_of_kin_email:'Undefined'}}</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                  </a>
+              </span>
+            </span>
+          </div>
+          <!-- end of next of kin section -->        
+        </tab>
+
+        <tab :title="activeLanguage.store.routes.Occupations" >
+          <span v-if="this.loading" class=" mt-5 flex justify-center">
+            <loading></loading>
+          </span> 
+          <div class="flex justify-end">
+            <button :class="[' text-white  justify-end rounded-md text-sm mt-2 p-1 ',displayCompetenciesForm?'bg-orange-400':'bg-blue-400']" @click="toggleCompetenceForm">
+              <span class="p-2">
+              {{displayCompetenciesForm?'Close':'Add profession'}}
+              </span>            
+            </button>  
+          </div>   
+          <br>  
+
+          <div class="md:grid md:grid-cols-2 gap-4  border-blue-200 border-2 p-4 rounded-md" v-if="displayCompetenciesForm">         
+            <label class="block mt-4 text-sm">            
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.routes.OneHealth}}</span>
+              <select name="oneHealthSector" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
+                v-model="form.oneHealthSector" id="oneHealth" @change="fetchProfessions">         
+                <option value="" disabled selected>--Select one Health sector--</option>     
+                <option v-for="(sector,index) in oneHealthSectors" :key="index"  :value="sector.value">{{sector.label}}</option>
+              </select>
+
+              <span v-if="getErrorMessage['oneHealthSector']">
+                <span v-if="getErrorMessage['oneHealthSector'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['oneHealthSector']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
                 </span>
               </span>            
-            </span>
-          </span>
+            </label>  
 
-          <br>
-          <br>
-        <!-- next of kin details -->
-        <div class="md:grid md:grid-cols-3 space-x-4 ">
-          <span class="text-green-500 font-mono text-lg capitalize col-span-3" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_name || this.rdeSelfProfile.next_of_kin.next_of_kin_email">Next of kin details</span>
-          <!-- full name -->
-          <span v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_name" class="col-span-1 p-2">
-            {{activeLanguage.store.rde_self_profile.full_name}}:
-            <span class="font-mono font-semibold text-lg">
-              {{this.rdeSelfProfile.next_of_kin.next_of_kin_name?this.rdeSelfProfile.next_of_kin.next_of_kin_name:'Undefined'}}             
-            </span>
-          </span>
+            <label class="block mt-4 text-sm">   
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.routes.Occupations}}</span>
+              <select name="profession" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
+                v-model="form.profession" id="occupation" @change="fetchSpecializations">         
+                <option value="" disabled selected>--Select profession--</option>     
+                <option v-for="(profession,index) in professions" :key="index"  :value="profession.value">{{profession.label}}</option>
+              </select>
 
-
-          <!-- next of kin tel -->
-          <span class="col-span-1 flex capitalize" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_phone">
-            {{activeLanguage.store.rde_self_registration_form.phone}}:
-            <span class="flex px-2" >
-              <span class=" font-mono text-md px-1" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_phone">
-                <a class="flex text-blue-400  " :href="`tel:`+this.rdeSelfProfile.next_of_kin.next_of_kin_phone" target="_blank" title="Click to call">
-                  <span class="px-3">
-                    {{this.rdeSelfProfile.next_of_kin.next_of_kin_phone?this.rdeSelfProfile.next_of_kin.next_of_kin_phone:'Undefined'}}
+              <span v-if="getErrorMessage['profession']">
+                <span v-if="getErrorMessage['profession'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['profession']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
                   </span>
-                  <span >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </span>
+              </span>            
+            </label> 
+
+            <label class="block mt-4 text-sm">  
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">Specialization</span>
+              <select name="specialization" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
+                v-model="form.specialization" id="specialization" @change="fetchCompetences">         
+                <option value="" disabled selected>--Select specialization--</option>     
+                <option v-for="(specialization,index) in specializations" :key="index"  :value="specialization.value">{{specialization.label}}</option>
+              </select>
+
+              <span v-if="getErrorMessage['specialization']">
+                <span v-if="getErrorMessage['specialization'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['specialization']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
                   </span>
-                </a>                        
-              </span>                        
-            </span>
-          </span>
+                </span>
+              </span>            
+            </label>
 
-          <!-- next of kin email -->
-          <span class="col-span-1 flex md:w-1/2 capitalize -mt-16" v-if="this.rdeSelfProfile.next_of_kin.next_of_kin_email">
-              {{activeLanguage.store.rde_self_registration_form.email}}
-            <span class="flex px-2" >
-                <a :href="mailto.concat(this.rdeSelfProfile.next_of_kin.next_of_kin_email)" target="_blank" class="flex font-semibold font-mono text-md px-3 text-blue-400 uppercase">
-                  <span class="pr-2">{{this.rdeSelfProfile.next_of_kin.next_of_kin_email?this.rdeSelfProfile.next_of_kin.next_of_kin_email:'Undefined'}}</span>
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                  </svg>
-                </a>
-            </span>
-          </span>
-        </div>
-        <!-- end of next of kin section -->
+            <label class="block mt-4 text-sm">    
+            
+              <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.routes.Competence}}</span>
+              <FormulateInput
+                v-model="form.competencies"
+                :options="competences"
+                type="checkbox"
+                class="flex border border-blue-200 p-2 rounded-sm"
+                label="Select competences"
+7              />
 
-          
+              <span v-if="getErrorMessage['competencies']">
+                <span v-if="getErrorMessage['competencies'].length>0">
+                  <span v-for="(error,index) in getErrorMessage['competencies']" :key="index">
+                    <span class="text-red-500 animate-pulse">{{error}}</span>
+                  </span>
+                </span>
+              </span>            
+            </label>
 
+            <button
+              :class="['block w-full col-span-2 justify-end px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading || (form.competencies && form.competencies.length===0)" type="submit" @click="submitCompetencies">
+              <span v-if="!isLoading">{{activeLanguage.store.actions.submit}}</span>
+              <span v-if="isLoading" class="flex justify-center"><loading></loading></span>                
+            </button>              
+          </div>
+          <div v-if="rdeSelfProfile && rdeSelfProfile.competencies_objects && rdeSelfProfile.competencies_objects.length>0" class="mt-4">
+            <table class="w-full p-4 bg-gray-50">
+              <thead class=" bg-gray-200">
+                <th class="border border-black">One Health</th>
+                <th class="border border-black">Profession</th>
+                <th class="border border-black">Specialization</th>
+                <th class="border border-black">Competence</th>
+                <th class="border border-black">Delete</th>
+              </thead>
+              <tbody class="">
+                <tr v-for="(competence,index) in rdeSelfProfile.competencies_objects" :key="index">
+                  <td class="border border-black p-2">{{competence.occupation_category_name}}</td>
+                  <td class="border border-black p-2">{{competence.occupation_name}}</td>
+                  <td class="border border-black p-2">{{competence.specialization_name}}</td>
+                  <td class="border border-black p-2">{{competence.name}}</td>
+                  <td class="border border-black p-2">
+                    <span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></span>
+                  </td>
+                </tr>            
+              </tbody>
+            </table>
+          </div>
+               
         </tab>
 
         <tab :title="activeLanguage.store.rde_self_profile.qualifications" class="md:grid md:grid-cols-4 space-x-4">
@@ -760,7 +864,11 @@ export default {
       rdeDeployments:{},
       signUpData:{},
       form: {   
-        cv:''
+        cv:'',
+        oneHealthSector:'',
+        profession:'',
+        specialization:'',
+        competencies:[]
       },
       mode: 'light',
       mailto: "mailto:",
@@ -770,10 +878,17 @@ export default {
       RDEcv:'',
       fileUploaded:0,
       loading:false,
+      isLoading:false,
       username: '',
       displayUploadButton:false,
       rdeQualifications:[],
-      rde_id:''    
+      rde_id:'',
+      oneHealthSectors:[],
+      professions:[],
+      specializations:[],
+      competences:[],
+      displayCompetenciesForm:false
+        
 
     }
   },
@@ -781,6 +896,66 @@ export default {
     ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
     displaySubmit(field_id){
       if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
+    },
+    toggleCompetenceForm(){
+      this.displayCompetenciesForm=!this.displayCompetenciesForm
+    },
+    submitCompetencies(){      
+      this.isLoading=true
+      let payload={}
+      payload.id=this.rdeSelfProfile.id
+      payload.competencies=this.form.competencies
+
+      // eslint-disable-next-line no-unused-vars
+      this.$store.dispatch('updateRDEById',payload).then(resp => {
+        this.fetchRDEData()    
+        // location.reload()      
+      }).catch(err => {
+        console.log(err);
+        // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
+    },
+    fetchOneHealthSectors(){
+      this.$store.dispatch('fetchAllOneHealthSectors').then(resp => {
+        this.oneHealthSectors = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    fetchProfessions(){
+      this.$store.dispatch('fetchOccupationsBySector',this.form.oneHealthSector).then(resp => {
+        this.professions = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    fetchSpecializations(){
+      this.$store.dispatch('fetchSpecializationByProfession',this.form.profession).then(resp => {
+        this.specializations = resp;   
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    fetchCompetences(){
+      this.$store.dispatch('fetchCompetenceBySpecialization',this.form.specialization).then(resp => {
+        this.competences = resp;  
+        
+        for(let competence of this.competences){
+          delete competence.id
+          delete competence.created_at
+          delete competence.updated_at
+          delete competence.type
+          delete competence.specialization
+          delete competence.description
+          delete competence.name
+        }
+        // console.log('countries:', this.countries)             
+      }).catch(err => {
+        console.log(err);
+      })
     },
     saveCV(field_id){
       if(document.getElementById(field_id).files[0]){
@@ -956,6 +1131,7 @@ export default {
 
   mounted(){
     // this.fetchRDEData()
+    this.fetchOneHealthSectors()
     this.getProfileDetails()
     this.selected_language = this.activeLanguage.name
 
