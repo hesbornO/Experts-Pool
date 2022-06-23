@@ -343,7 +343,7 @@
                 type="checkbox"
                 class="flex border border-blue-200 p-2 rounded-sm"
                 label="Select competences"
-7              />
+              />
 
               <span v-if="getErrorMessage['competencies']">
                 <span v-if="getErrorMessage['competencies'].length>0">
@@ -908,7 +908,8 @@ export default {
 
       // eslint-disable-next-line no-unused-vars
       this.$store.dispatch('updateRDEById',payload).then(resp => {
-        this.fetchRDEData()    
+        this.fetchRDEData() 
+        this.displayCompetenciesForm=false   
         // location.reload()      
       }).catch(err => {
         console.log(err);
