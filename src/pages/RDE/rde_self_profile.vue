@@ -269,7 +269,7 @@
           <!-- end of next of kin section -->        
         </tab>
 
-        <tab :title="'Profession'" >
+        <tab :title="activeLanguage.store.routes.Occupations" >
           <span v-if="this.loading" class=" mt-5 flex justify-center">
             <loading></loading>
           </span> 
