@@ -908,7 +908,8 @@ export default {
 
       // eslint-disable-next-line no-unused-vars
       this.$store.dispatch('updateRDEById',payload).then(resp => {
-        this.fetchRDEData()    
+        this.fetchRDEData() 
+        this.displayCompetenciesForm=false   
         // location.reload()      
       }).catch(err => {
         console.log(err);
