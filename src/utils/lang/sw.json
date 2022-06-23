@@ -7,11 +7,15 @@
     "PartnerStates": "Nchi Wanachama",
     "Competence": "Umahiri",
     "Occupations": "Kazi",
-    "OneHealth": "Afya Umoja",
+    "OneHealth": "Sekta ya Afya Umoja",
     "QualificationTypes": "Aina za Sifa",
     "PublicHealthEventTypes": "Aina Ya Mikurupuko",
     "Profile":"Wasifu",
-    "MyDeployments":"Kupelekwa"
+    "MyDeployments":"Kupelekwa",
+    "Specialization":"Utaalamu",
+    "Experience":"Uzoefu"
+
+    
   },
   "actions": {
     "create": "Unda",
@@ -135,7 +139,7 @@
     "full_name":"Jina kamili",
     "years":"miaka",
     "competencies":"Umahiri",
-    "qualifications":"Sifa",
+    "qualifications":"Maelezo ya kufuzu",
     "academic_qualifications":"Sifa za Kiakademia",
     "no_qualifications_added":"Hakuna sifa zilizoongezwa",
     "add_qualification":"Ongeza Sifa",

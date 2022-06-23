@@ -33,7 +33,7 @@
               <br/>
                 <span></span>
             </span>
-              <span v-if="!signUpData.email_verified" class="text-orange-500 font-mono text-xs">{{activeLanguage.store.sign_up_form.verify_email}} <a :href="`mailto:`+signUpData.email" class="text-blue-500">'{{signUpData.email?signUpData.email:''}}'</a> {{activeLanguage.store.sign_up_form.to_proceed}}</span>
+              <!-- <span v-if="!signUpData.email_verified" class="text-orange-500 font-mono text-xs">{{activeLanguage.store.sign_up_form.verify_email}} <a :href="`mailto:`+signUpData.email" class="text-blue-500">'{{signUpData.email?signUpData.email:''}}'</a> {{activeLanguage.store.sign_up_form.to_proceed}}</span> -->
 
           </span>        
       </span>
@@ -43,7 +43,7 @@
     <div v-if="rdeSelfProfile && !loading">
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length >0">
         <span class="flex">
-          <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status==='pending_approval'?'text-yellow-700  dark:text-yellow-100':this.rdeSelfProfile.application_status==='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':this.rdeSelfProfile.application_status==='approval_complete'?'text-green-700  dark:text-green-100':this.rdeSelfProfile.application_status==='deployed'?'text-purple-700 dark:text-purple-100':'']">
+          <span :class="['capitalize italic px-4 py-3 text-sm leading-tight font-mono rounded-md flex flex-wrap font-semibold',this.rdeSelfProfile.application_status==='pending_approval'?'text-yellow-700  dark:text-yellow-100':rdeSelfProfile.application_status==='approved_by_partner_state'?'text-purple-700  dark:text-purple-100':rdeSelfProfile.application_status==='approval_complete'?'text-green-700  dark:text-green-100':rdeSelfProfile.application_status==='deployed'?'text-purple-700 dark:text-purple-100':'']">
                 {{activeLanguage.store.rde_self_profile.status}}: {{ this.rdeSelfProfile.application_status ? this.rdeSelfProfile.application_status.replace(/[_-]/g, " ") : '' }}
                 
                 <span v-if="this.rdeSelfProfile.application_status==='approved_by_partner_state'" class="flex">
@@ -105,7 +105,6 @@
       
 
       <tabs :mode="mode" v-if="rdeSelfProfile && Object.keys(rdeSelfProfile).length > 0">      
-        <!-- {{rdeSelfProfile}} -->
         <tab :title="activeLanguage.store.rde_self_profile.personal_details" >
           <span v-if="this.loading" class=" mt-5 flex justify-center">
             <loading></loading>
@@ -334,7 +333,7 @@
               </span>            
             </label>
 
-            <label class="block mt-4 text-sm">    
+            <label class="block mt-4 text-sm">  
             
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.routes.Competence}}</span>
               <FormulateInput
@@ -360,14 +359,14 @@
               <span v-if="isLoading" class="flex justify-center"><loading></loading></span>                
             </button>              
           </div>
-          <div v-if="rdeSelfProfile && rdeSelfProfile.competencies_objects && rdeSelfProfile.competencies_objects.length>0" class="mt-4">
+
+          <div v-if="rdeSelfProfile && rdeSelfProfile.competencies_objects && rdeSelfProfile.competencies_objects.length>0" class="mt-4 bg-gray-100">
             <table class="w-full p-4 bg-gray-50">
               <thead class=" bg-gray-200">
-                <th class="border border-black">One Health</th>
-                <th class="border border-black">Profession</th>
-                <th class="border border-black">Specialization</th>
-                <th class="border border-black">Competence</th>
-                <th class="border border-black">Delete</th>
+                <th class="border border-black">{{activeLanguage.store.routes.OneHealth}}</th>
+                <th class="border border-black">{{activeLanguage.store.routes.Occupations}}</th>
+                <th class="border border-black">{{activeLanguage.store.routes.Specialization}}</th>
+                <th class="border border-black">{{activeLanguage.store.routes.Competence}}</th>
               </thead>
               <tbody class="">
                 <tr v-for="(competence,index) in rdeSelfProfile.competencies_objects" :key="index">
@@ -375,14 +374,213 @@
                   <td class="border border-black p-2">{{competence.occupation_name}}</td>
                   <td class="border border-black p-2">{{competence.specialization_name}}</td>
                   <td class="border border-black p-2">{{competence.name}}</td>
-                  <td class="border border-black p-2">
-                    <span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></span>
-                  </td>
                 </tr>            
               </tbody>
             </table>
           </div>
-               
+
+          <div v-if="rdeSelfProfile && rdeSelfProfile.competencies_objects && rdeSelfProfile.competencies_objects.length>0" class="mt-8 md:grid md:grid-cols-2 gap-4 border-4 border-sky-500 rounded-sm p-2 bg-gray-100">
+            <span class="col-span-2 flex justify-center font-semibold text-lg">{{activeLanguage.store.routes.Experience}}</span>               
+            <div class="bg-gray-100 rounded-sm">
+              <div class="flex justify-between">
+                <div><span class="m-1 p-1 font-semibold text-sm font-mono">Management</span></div>              
+                <div class="">
+                  <button :class="[' text-white  justify-end rounded-md text-xs m-1 p-1 ',displayManagerialForm?'bg-orange-400':'bg-blue-400']" @click="toggleManagerialForm" v-if="!managerialExperienceExists">
+                    <span class="p-2">
+                    {{displayManagerialForm?'Close':'Add experience'}}
+                    </span>            
+                  </button>   
+                </div>  
+              </div>
+
+              <div class="md:grid md:grid-cols-2 gap-4  border-blue-200 border-2 p-2 m-1 rounded-md" v-if="displayManagerialForm">         
+                <label class="block mt-4 text-sm">            
+                  <span class="text-gray-700 font font-semibold dark:text-gray-400">Years of experience</span>
+                  <FormulateInput
+                    v-model="managerialExperience.years_of_experience"
+                    :options="[{value:'1-4',label:'1 To 4 Years'},{value:'5-10',label:'5 To 10 Years'},{value:'over-10',label:'Over 10 Years'}]"
+                    type="select"
+                    placeholder="Select range"
+                  />
+                  <span v-if="getErrorMessage['years_of_experience']">
+                    <span v-if="getErrorMessage['years_of_experience'].length>0">
+                      <span v-for="(error,index) in getErrorMessage['years_of_experience']" :key="index">
+                        <span class="text-red-500 animate-pulse">{{error}}</span>
+                      </span>
+                    </span>
+                  </span>            
+                </label>  
+
+                <label class="block mt-4 text-sm">   
+                  <span class="text-gray-700 font font-semibold dark:text-gray-400">No. of people managed</span>
+                
+                  
+                  <FormulateInput
+                    v-model="managerialExperience.no_of_people_managed"
+                    :options="[{value:'1-4',label:'1 To 4 People'},{value:'5-10',label:'5 To 10 People'},{value:'10-20',label:'10 to 20 People'},{value:'over-20',label:'Over 20 People'}]"
+                    type="select"
+                    placeholder="Select range"
+                  />
+
+                  <span v-if="getErrorMessage['no_of_people_managed']">
+                    <span v-if="getErrorMessage['no_of_people_managed'].length>0">
+                      <span v-for="(error,index) in getErrorMessage['no_of_people_managed']" :key="index">
+                        <span class="text-red-500 animate-pulse">{{error}}</span>
+                      </span>
+                    </span>
+                  </span>            
+                </label> 
+              
+                <button
+                  :class="['block w-full col-span-2 justify-end px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading" type="submit" @click="submitExperience('managerial')">
+                  <span v-if="!isLoading">{{activeLanguage.store.actions.submit}}</span>
+                  <span v-if="isLoading" class="flex justify-center"><loading></loading></span>                
+                </button>              
+              </div>
+              <table class=" p-4 w-full bg-gray-50 text-sm" v-if="rdeSelfProfile.detailed_experience && rdeSelfProfile.detailed_experience.length>0">
+                <thead class=" bg-gray-200">
+                  <th class="border border-black">No. of years</th>
+                  <th class="border border-black">No. of people managed</th>
+                </thead>
+                <tbody class="">
+                  <tr v-for="(experience,index) in rdeSelfProfile.detailed_experience" :key="index">
+                    <td class="border border-black p-2 capitalize" v-if="experience.experience_type==='managerial_experience'">{{experience.years_of_experience}}</td>
+                    <td class="border border-black p-2 capitalize" v-if="experience.experience_type==='managerial_experience'">{{experience.no_of_people_managed}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+            </div>
+            <div class="bg-gray-100 rounded-sm">
+              <div class="flex justify-between ">
+                <div><span class="m-1 p-1 font-semibold text-sm font-mono">Professional</span></div>              
+                <div class="">
+                  <button :class="[' text-white  justify-end rounded-md text-xs m-1 p-1 ',displayProfessionalForm?'bg-orange-400':'bg-blue-400']" @click="toggleProfessionalForm" v-if="!professionalExperienceExists">
+                    <span class="p-2">
+                    {{displayProfessionalForm?'Close':'Add years'}}
+                    </span>            
+                  </button>   
+                </div>  
+              </div>
+
+              <div class="md:grid md:grid-cols-2 gap-4  border-blue-200 border-2 p-2 m-1 rounded-md" v-if="displayProfessionalForm">         
+                <label class="block mt-4 text-sm">            
+                  <span class="text-gray-700 font font-semibold dark:text-gray-400">Years of experience</span>
+                 
+                  <FormulateInput
+                    v-model="professionalExperience.years_of_experience"
+                    :options="[{value:'1-4',label:'1 To 4 Years'},{value:'5-10',label:'5 To 10 Years'},{value:'over-10',label:'Over 10 Years'}]"
+                    type="select"
+                    placeholder="Select range"
+                  />
+
+                  <span v-if="getErrorMessage['years_of_experience']">
+                    <span v-if="getErrorMessage['years_of_experience'].length>0">
+                      <span v-for="(error,index) in getErrorMessage['years_of_experience']" :key="index">
+                        <span class="text-red-500 animate-pulse">{{error}}</span>
+                      </span>
+                    </span>
+                  </span>            
+                </label> 
+              
+                <button
+                  :class="['block w-full col-span-2 justify-end px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading" type="submit" @click="submitExperience('professional')">
+                  <span v-if="!isLoading">{{activeLanguage.store.actions.submit}}</span>
+                  <span v-if="isLoading" class="flex justify-center"><loading></loading></span>                
+                </button>              
+              </div>
+
+              <table class=" p-4 w-full bg-gray-50 text-sm" v-if="rdeSelfProfile.detailed_experience && rdeSelfProfile.detailed_experience.length>0">
+                <thead class=" bg-gray-200">
+                  <th class="border border-black">No. of years</th>
+                </thead>
+                <tbody class="">
+                  <tr v-for="(experience,index) in rdeSelfProfile.detailed_experience" :key="index">
+                    <td class="border border-black p-2 capitalize" v-if="experience.experience_type==='professional_experience'">{{experience.years_of_experience}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+
+            </div>
+            
+            
+           
+          </div>
+
+          <div v-if="rdeSelfProfile && rdeSelfProfile.languages " class="mt-8 md:grid md:grid-cols-1 gap-4 border-4 border-sky-500 rounded-sm p-2 bg-gray-100">
+            <span class="col-span-2 flex justify-center font-semibold text-lg">{{activeLanguage.store.rde_self_registration_form.languages}}</span>               
+            <div class="bg-gray-100 rounded-sm">
+              <div class="flex justify-end"> 
+
+                <div class="">
+                  <button :class="[' text-white  justify-end rounded-md text-xs m-1 p-1 ',displayLanguageForm?'bg-orange-400':'bg-blue-400']" @click="toggleLanguageForm" >
+                    <span class="p-2">
+                    {{displayLanguageForm?'Close':'Add language'}}
+                    </span>            
+                  </button>   
+                </div>  
+              </div>
+
+              <div class="md:grid md:grid-cols-2 gap-4  border-blue-200 border-2 p-2 m-1 rounded-md" v-if="displayLanguageForm">         
+                <label class="block mt-4 text-sm">            
+                  <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_profile.name}}</span>
+                  <FormulateInput
+                    v-model="language.language"
+                    :options="languages"
+                    type="select"
+                    placeholder="Select language"
+                    required
+                  />
+                  <span v-if="getErrorMessage['language']">
+                    <span v-if="getErrorMessage['language'].length>0">
+                      <span v-for="(error,index) in getErrorMessage['language']" :key="index">
+                        <span class="text-red-500 animate-pulse">{{error}}</span>
+                      </span>
+                    </span>
+                  </span>            
+                </label>  
+
+                <label class="block mt-4 text-sm">   
+                  <span class="text-gray-700 font font-semibold dark:text-gray-400">Proficiency level</span>               
+                  
+                  <FormulateInput
+                    v-model="language.proficiency_level"
+                    :options="[{value:'beginner',label:'Beginner'},{value:'intermediate',label:'Intermediate (Read,Write,Speak)'},{value:'fluent',label:'Fluent (Read,Write,Speak)'},{value:'native_speaker',label:'Native Speaker (Read,Write,Speak)'}]"
+                    type="select"
+                    placeholder="Select proficiency"
+                    required
+                  />
+
+                  <span v-if="getErrorMessage['proficiency_level']">
+                    <span v-if="getErrorMessage['proficiency_level'].length>0">
+                      <span v-for="(error,index) in getErrorMessage['proficiency_level']" :key="index">
+                        <span class="text-red-500 animate-pulse">{{error}}</span>
+                      </span>
+                    </span>
+                  </span>            
+                </label> 
+              
+                <button
+                  :class="['block w-full col-span-2 justify-end px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 border border-transparent rounded-lg active:bg-purple-600  focus:outline-none focus:shadow-outline-purple ',isLoading?'cursor-not-allowed bg-purple-300 hover:bg-purple-400':'bg-purple-600 hover:bg-purple-700']" v-bind:disabled="isLoading" type="submit" @click="submitLanguage">
+                  <span v-if="!isLoading">{{activeLanguage.store.actions.submit}}</span>
+                  <span v-if="isLoading" class="flex justify-center"><loading></loading></span>                
+                </button>              
+              </div>
+              <table class=" p-4 w-full bg-gray-50 text-sm" v-if="rdeSelfProfile.languages && rdeSelfProfile.languages.length>0">
+                <thead class=" bg-gray-200">
+                  <th class="border border-black">Language</th>
+                  <th class="border border-black">Proficiency</th>
+                </thead>
+                <tbody class="">
+                  <tr v-for="(language,index) in rdeSelfProfile.languages" :key="index">
+                    <td class="border border-black p-2 capitalize" >{{language.language_name}}</td>
+                    <td class="border border-black p-2 capitalize" >{{language.proficiency_level}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+            </div>                    
+                      
+          </div>
+            
         </tab>
 
         <tab :title="activeLanguage.store.rde_self_profile.qualifications" class="md:grid md:grid-cols-4 space-x-4">
@@ -562,9 +760,10 @@
                       <tr class=" text-sm border-b border-r border-l border-black" v-for="(reference,index) in rdeSelfProfile.references" :key="index">
                         <td class="p-3 border-l border-black">{{reference.name}}</td>
                         <td class="p-3 border-l border-black flex justify-between">
-                          <span> <a :href="reference.phone_number">{{reference.phone_number}}</a>
-                            </span>  
-                          <span>{{reference.email}}</span> 
+                          <span class="pr-3"> <a :href="reference.phone_number">{{reference.phone_number}}</a>
+                            </span>
+                             <br> 
+                          <span><a :h-ref="mailto.concat(reference.email)">{{reference.email}}</a></span> 
                         </td>
                         <td class="p-3 border-l border-black">{{reference.institution}}</td>                        
                         <td class="p-3 border-l border-black">{{reference.description}}</td>  
@@ -870,6 +1069,16 @@ export default {
         specialization:'',
         competencies:[]
       },
+      managerialExperience:{
+        no_of_people_managed:0,
+        years_of_experience:0
+      },
+      professionalExperience:{
+        years_of_experience:0
+      },
+      language:{language:'',proficiency_level:''},
+      managerialExperienceExists:false,
+      professionalExperienceExists:false,
       mode: 'light',
       mailto: "mailto:",
 			tel: "tel:",
@@ -887,18 +1096,31 @@ export default {
       professions:[],
       specializations:[],
       competences:[],
-      displayCompetenciesForm:false
+      displayCompetenciesForm:false,
+      displayManagerialForm:false,
+      displayProfessionalForm:false,
+      displayLanguageForm:false,
+      languages:[]
         
 
     }
   },
   methods:{
-    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment','fetchQualificationsById']),
+    ...mapActions(['fetchRDEById','fetchRDEcv','fetchRDES','getRDEprofileDeployment','fetchQualificationsById','fetchAllLanguages']),
     displaySubmit(field_id){
       if(document.getElementById(field_id).files[0]) this.fileUploaded+=1  
     },
     toggleCompetenceForm(){
       this.displayCompetenciesForm=!this.displayCompetenciesForm
+    },
+    toggleManagerialForm(){
+      this.displayManagerialForm=!this.displayManagerialForm
+    },
+    toggleProfessionalForm(){
+      this.displayProfessionalForm=!this.displayProfessionalForm
+    },
+    toggleLanguageForm(){
+      this.displayLanguageForm=!this.displayLanguageForm
     },
     submitCompetencies(){      
       this.isLoading=true
@@ -913,6 +1135,52 @@ export default {
         // location.reload()      
       }).catch(err => {
         console.log(err);
+        // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
+    },
+    submitExperience(type){      
+      this.isLoading=true
+      let payload={
+        profile:this.rdeSelfProfile.id,
+        occupation:this.rdeSelfProfile.competencies_objects[0].occupation_id
+      }
+      if(type==='managerial'){        
+        payload.years_of_experience=this.managerialExperience.years_of_experience,
+        payload.no_of_people_managed=this.managerialExperience.no_of_people_managed,
+        payload.experience_type='managerial_experience'
+      } 
+      else if(type==='professional'){
+        payload.years_of_experience=this.professionalExperience.years_of_experience,
+        payload.experience_type='professional_experience'
+      }
+      else console.log('Undefined experience type')
+
+      // eslint-disable-next-line no-unused-vars
+      this.$store.dispatch('postExperience',payload).then(resp => {
+        this.fetchRDEData() 
+        this.displayManagerialForm=false  
+        this.displayProfessionalForm=false 
+        this.managerialExperience={}
+        this.professionalExperience={}
+        // location.reload()      
+      }).catch(err => {
+        console.log(err);
+        // eslint-disable-next-line no-unused-vars
+      }).then(resp=>{this.isLoading=false})
+    },
+    submitLanguage(){      
+      this.isLoading=true
+      let payload=this.language
+      payload.profile=this.rdeSelfProfile.id
+      // eslint-disable-next-line no-unused-vars
+      this.$store.dispatch('postLanguage',payload).then(resp => {
+        this.fetchRDEData() 
+        this.displayLanguageForm=false 
+        this.language={}
+        // location.reload()      
+      }).catch(err => {
+        console.log(err);
+        
         // eslint-disable-next-line no-unused-vars
       }).then(resp=>{this.isLoading=false})
     },
@@ -1014,6 +1282,15 @@ export default {
           this.rde_id+=this.rdeSelfProfile.id
           this.fetchRDEdeployments(this.rdeSelfProfile.id)
          localStorage.setItem('rdeId', this.rdeSelfProfile.id)
+         if(this.rdeSelfProfile){
+          if(this.rdeSelfProfile.detailed_experience && this.rdeSelfProfile.detailed_experience.length>0){
+            let managerialExperience=this.rdeSelfProfile.detailed_experience.filter(v=>v.experience_type==='managerial_experience')
+            let professionalExperience=this.rdeSelfProfile.detailed_experience.filter(v=>v.experience_type==='professional_experience')
+            if(managerialExperience.length>0) this.managerialExperienceExists=true
+            if(professionalExperience.length>0) this.professionalExperienceExists=true
+
+          }
+         }
 
         }
         }).catch(err=>{
@@ -1036,7 +1313,8 @@ export default {
 
       })
 
-      //fetch academic RDE qualifications      
+      //fetch academic RDE qualifications   
+         
       
 
     },
@@ -1045,6 +1323,22 @@ export default {
         console.log()
          this.rdeDeployments = resp
        }).catch(err=>{
+         this.$store.dispatch('setErrorMsg', err.data)
+       }).then(()=>{
+         this.loading = false
+       })
+    },
+    fetchLanguages(){
+      this.$store.dispatch('fetchAllLanguages').then(resp => {
+        let tempLanguages=resp
+        for(let language of tempLanguages){
+          console.log('temp',language.name)
+          let myObj={}
+          myObj.value=language.id
+          myObj.label=language.name    
+          this.languages.push(myObj)      
+        }
+      }).catch(err=>{
          this.$store.dispatch('setErrorMsg', err.data)
        }).then(()=>{
          this.loading = false
@@ -1134,6 +1428,7 @@ export default {
     // this.fetchRDEData()
     this.fetchOneHealthSectors()
     this.getProfileDetails()
+    this.fetchLanguages()
     this.selected_language = this.activeLanguage.name
 
   }

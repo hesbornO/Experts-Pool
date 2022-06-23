@@ -7,11 +7,15 @@
     "PartnerStates": "États partenaires",
     "Competence": "Compétence",
     "Occupations": "Professions",
-    "OneHealth": "Une Santé",
+    "OneHealth": "Un Secteur de la Santé",
     "QualificationTypes": "Types de qualification",
     "PublicHealthEventTypes": "Types d'épidémies",    
     "Profile":"Profil",
-    "MyDeployments":"Déploiement"
+    "MyDeployments":"Déploiement",
+    "Specialization":"spécialisation",
+    "Experience":"Vivre"
+
+
 
   },
   "actions":
@@ -136,7 +140,7 @@
     "full_name":"Nom et prénom",
     "years":"ans",
     "competencies":"Compétences",
-    "qualifications":"Qualifications",
+    "qualifications":"Détails de la qualification",
     "academic_qualifications":"Qualifications académiques",
     "no_qualifications_added":"Aucune qualification ajoutée",
     "add_qualification":"Ajouter une qualification",

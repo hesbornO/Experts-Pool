@@ -488,7 +488,7 @@
                   </span>
                 </span>            
             </label>  
-            <!-- <label class="block mt-4 text-sm">
+            <label class="block mt-4 text-sm">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.occupation}}</span>
               
               <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
@@ -504,7 +504,7 @@
                   </span>
                 </span>
               </span>            
-            </label>          -->
+            </label>         
             <label class="block mt-4 text-sm" v-if="displayOtherOccupationField">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.please_specify}}</span>
               
@@ -833,7 +833,7 @@
                 </div>
             </label>
           </div>
-          <h6 class="text-blue-400 font-semibold pt-6">{{activeLanguage.store.rde_self_registration_form.other_info}}</h6>  
+          <!-- <h6 class="text-blue-400 font-semibold pt-6">{{activeLanguage.store.rde_self_registration_form.other_info}}</h6>   -->
 
             <div class="md:grid md:grid-cols-3 gap-3">                        
                   <!-- <label class="block mt-4 text-sm col-span-2">
@@ -851,7 +851,7 @@
                         </span>
                       </span> 
                   </label>               -->
-                  <label class="block mt-4 text-sm col-span-1">
+                  <!-- <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700  font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.languages}}</span>
                       <select name="competencies" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="select"
                       v-model="form.language_competencies" id="competencies"  multiple rows="10">
@@ -865,7 +865,7 @@
                           </span>
                         </span>
                       </span> 
-                  </label>              
+                  </label>               -->
             </div>            
             
             <div class=" mt-6 text-sm flex justify-between">
