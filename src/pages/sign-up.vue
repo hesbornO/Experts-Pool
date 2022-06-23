@@ -475,7 +475,7 @@
               </FormulateForm>
 
               <hr class="my-8" /> 
-              <p class="p-2 bg-green-500 text-white border-green-200 rounded-md" v-if="showSignUpMsg">{{activeLanguage.store.sign_up_form.check_mail}} <span class="text-blue-900 font-semibold"><a :href="`mailto:${email}`">{{email?email:'no email'}}</a></span>  {{activeLanguage.store.sign_up_form.instructions}}</p>
+              <!-- <p class="p-2 bg-green-500 text-white border-green-200 rounded-md" v-if="showSignUpMsg">{{activeLanguage.store.sign_up_form.check_mail}} <span class="text-blue-900 font-semibold"><a :href="`mailto:${email}`">{{email?email:'no email'}}</a></span>  {{activeLanguage.store.sign_up_form.instructions}}</p> -->
                      
               <p class="mt-4 flex justify-center" v-if="showSignUpMsg">              
                 <router-link class="w-full" to="/login"><span class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"> {{activeLanguage.store.sign_up_form.log_in}}</span></router-link>

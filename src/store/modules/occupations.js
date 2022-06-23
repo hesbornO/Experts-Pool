@@ -50,6 +50,39 @@ const actions = {
             })
         })
     },
+    fetchOccupationsBySector({ commit }, payload) {
+        console.log('payload',payload)
+        return new Promise((resolve, reject) => {
+            let relative_url = '/occupation/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/occupation/?occupation_category=" +payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOccupation", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    fetchSpecializationByProfession({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/specialization/'
+            if (payload === undefined) {
+                payload = ''
+            } else {
+                relative_url = "/specialization/?occupation=" +payload
+            }
+            api.get(relative_url).then(resp => {
+                commit("setOccupation", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
     // eslint-disable-next-line no-unused-vars
     deleteOccupationById({ commit }, payload) {
         return new Promise((resolve, reject) => {
