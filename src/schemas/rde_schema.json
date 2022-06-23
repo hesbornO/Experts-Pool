@@ -57,15 +57,6 @@
                     "placeholder": "--select gender--",
                     "help": "Specify gender",
                     "validation": "required"
-                },
-                {
-                    "type": "select",
-                    "label": "Occupation",
-                    "name": "occupation_id",
-                    "placeholder": "--select--",
-                    "options": [0],
-                    "help": "Specify occupation",
-                    "validation": "required"
                 }
             ]
         },
@@ -155,15 +146,7 @@
                     "name": "region_of_residence_id",
                     "options": [1],
                     "validation": "required"
-                },
-                {
-                    "type": "select",
-                    "label": "Competencies",
-                    "name": "competencies",
-                    "options": [2],
-                    "multiple": "multiple",
-                    "validation": "required"
-                }
+                }   
             ]
         },
 

@@ -69,6 +69,47 @@ const actions = {
             })
         });
     },
+    // 
+    postExperience({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post("/detailed-experience/", payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
+    fetchAllLanguages({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            let relative_url = '/language/'
+            if (payload === undefined) {
+                payload = ''
+            }
+             else {
+                relative_url = "/language/" + '?page='+payload
+                
+            }
+            api.get(relative_url).then(resp => {
+                commit("setCompetencies", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    postLanguage({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            api.post("/profile-language/", payload).then(resp => {
+                commit("setRDE", resp.data)
+                resolve(resp.data)
+            }).catch(err => {
+                commit("setError", err.response.data)
+                reject(err.response.data)
+            })
+        });
+    },
     fetchRDEById({ commit }, payload) {
         return new Promise((resolve, reject) => {
             let relative_url = '/profile/'

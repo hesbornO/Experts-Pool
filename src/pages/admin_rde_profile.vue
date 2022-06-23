@@ -116,7 +116,7 @@
             DOB:
           <span class="flex px-2" >
             <span class="font-semibold font-mono text-lg px-3">
-              {{this.rdeProfile.date_of_birth?this.rdeProfile.date_of_birth:'Undefined'}} <span class="font-normal text-orange-300 lowercase">({{age}} years)</span>
+              <span class="font-normal text-orange-300 lowercase">{{age}} years</span>
              
             </span>            
           </span>
@@ -238,6 +238,107 @@
         </span>
 
       </tab>
+      <tab :title="activeLanguage.store.routes.Occupations" >
+          <span v-if="this.loading" class=" mt-5 flex justify-center">
+            <loading></loading>
+          </span>           
+          
+          <br>
+          <div v-if="rdeProfile && rdeProfile.competencies_objects && rdeProfile.competencies_objects.length>0" class="mt-4 bg-gray-100">
+            <table class="w-full p-4 bg-gray-50">
+              <thead class=" bg-gray-200">
+                <th class="border border-black">{{activeLanguage.store.routes.OneHealth}}</th>
+                <th class="border border-black">{{activeLanguage.store.routes.Occupations}}</th>
+                <th class="border border-black">{{activeLanguage.store.routes.Specialization}}</th>
+                <th class="border border-black">{{activeLanguage.store.routes.Competence}}</th>
+              </thead>
+              <tbody class="">
+                <tr v-for="(competence,index) in rdeProfile.competencies_objects" :key="index">
+                  <td class="border border-black p-2">{{competence.occupation_category_name}}</td>
+                  <td class="border border-black p-2">{{competence.occupation_name}}</td>
+                  <td class="border border-black p-2">{{competence.specialization_name}}</td>
+                  <td class="border border-black p-2">{{competence.name}}</td>                  
+                </tr>            
+              </tbody>
+            </table>
+          </div>
+          <div v-if="rdeProfile && rdeProfile.competencies_objects && rdeProfile.competencies_objects.length>0" class="mt-8 md:grid md:grid-cols-2 gap-4 border-4 border-sky-500 rounded-sm p-2 bg-gray-100">
+            <span class="col-span-2 flex justify-center font-semibold text-lg">{{activeLanguage.store.routes.Experience}}</span>               
+            <div class="bg-gray-100 rounded-sm">
+              <div class="flex justify-between">
+                <div><span class="m-1 p-1 font-semibold text-sm font-mono">Management</span></div>              
+                <div class="">
+                    
+                </div>  
+              </div>
+
+              
+              <table class=" p-4 w-full bg-gray-50 text-sm" v-if="rdeProfile.detailed_experience && rdeProfile.detailed_experience.length>0">
+                <thead class=" bg-gray-200">
+                  <th class="border border-black">No. of years</th>
+                  <th class="border border-black">No. of people managed</th>
+                </thead>
+                <tbody class="">
+                  <tr v-for="(experience,index) in rdeProfile.detailed_experience" :key="index">
+                    <td class="border border-black p-2 capitalize" v-if="experience.experience_type==='managerial_experience'">{{experience.years_of_experience}}</td>
+                    <td class="border border-black p-2 capitalize" v-if="experience.experience_type==='managerial_experience'">{{experience.no_of_people_managed}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+            </div>
+            <div class="bg-gray-100 rounded-sm">
+              <div class="flex justify-between ">
+                <div><span class="m-1 p-1 font-semibold text-sm font-mono">Professional</span></div>              
+                <div class="">
+                  
+                </div>  
+              </div>
+            
+
+              <table class=" p-4 w-full bg-gray-50 text-sm" v-if="rdeProfile.detailed_experience && rdeProfile.detailed_experience.length>0">
+                <thead class=" bg-gray-200">
+                  <th class="border border-black">No. of years</th>
+                </thead>
+                <tbody class="">
+                  <tr v-for="(experience,index) in rdeProfile.detailed_experience" :key="index">
+                    <td class="border border-black p-2 capitalize" v-if="experience.experience_type==='professional_experience'">{{experience.years_of_experience}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+
+            </div>
+            
+            
+           
+          </div>
+          <div v-if="rdeProfile && rdeProfile.languages " class="mt-8 md:grid md:grid-cols-1 gap-4 border-4 border-sky-500 rounded-sm p-2 bg-gray-100">
+            <span class="col-span-2 flex justify-center font-semibold text-lg">{{activeLanguage.store.rde_self_registration_form.languages}}</span>               
+            <div class="bg-gray-100 rounded-sm">
+              <div class="flex justify-end"> 
+
+                <div class="">
+                    
+                </div>  
+              </div>
+
+              
+              <table class=" p-4 w-full bg-gray-50 text-sm" v-if="rdeProfile.languages && rdeProfile.languages.length>0">
+                <thead class=" bg-gray-200">
+                  <th class="border border-black">Language</th>
+                  <th class="border border-black">Proficiency</th>
+                </thead>
+                <tbody class="">
+                  <tr v-for="(language,index) in rdeProfile.languages" :key="index">
+                    <td class="border border-black p-2 capitalize" >{{language.language_name}}</td>
+                    <td class="border border-black p-2 capitalize" >{{language.proficiency_level}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+            </div>                    
+                      
+          </div>
+               
+        </tab>
 
       <tab :title="activeLanguage.store.rde_self_profile.qualifications" class="md:grid md:grid-cols-4 space-x-4">
           <div class="col-span-4 rounded-md border-2 border-green-700">

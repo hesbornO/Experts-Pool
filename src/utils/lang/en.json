@@ -7,11 +7,13 @@
     "PartnerStates": "Partner States",
     "Competence": "Competence",
     "Occupations": "Profession",
-    "OneHealth": "One Health",
+    "OneHealth": "One Health Sector",
     "QualificationTypes": "Qualification Types",
     "PublicHealthEventTypes": "Public Health Event Types",
     "Profile":"Profile",
-    "MyDeployments":"MyDeployments"
+    "MyDeployments":"MyDeployments",
+    "Specialization":"Specialization",
+    "Experience":"Experience"
   },
   "actions": {
     "create": "Create",
@@ -123,7 +125,7 @@
     "full_name":"Full Name",
     "years":"years",
     "competencies":"Competencies",
-    "qualifications":"Qualifications",
+    "qualifications":"Qualification Details",
     "academic_qualifications":"Academic Qualifications",
     "no_qualifications_added":"No qualifications added",
     "add_qualification":"Add Qualification",
