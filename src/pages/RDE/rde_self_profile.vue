@@ -343,7 +343,7 @@
                 type="checkbox"
                 class="flex border border-blue-200 p-2 rounded-sm"
                 label="Select competences"
-7              />
+              />
 
               <span v-if="getErrorMessage['competencies']">
                 <span v-if="getErrorMessage['competencies'].length>0">
