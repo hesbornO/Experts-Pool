@@ -168,8 +168,8 @@ export default {
         // this.form.occupation=this.form.occupation.value
         this.form.next_of_kin.next_of_kin_name=this.form.next_of_kin_name
         this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
+        this.form.next_of_kin.next_of_kin_email=this.form.next_of_kin_email
         this.form.region_of_residence_id=this.form.region_of_residence.value
-
         delete this.form.next_of_kin_name
         delete this.form.next_of_kin_phone
       }
@@ -203,6 +203,8 @@ export default {
           if(this.moduleAction==='UpdateRDE'){
             this.form.next_of_kin_name=this.form.next_of_kin.next_of_kin_name
             this.form.next_of_kin_phone=this.form.next_of_kin.next_of_kin_phone
+            this.form.next_of_kin_email=this.form.next_of_kin.next_of_kin_email
+
             this.form.region_of_residence_id=this.form.region_of_residence.value
             this.form.occupation_id=this.form.occupation.value
             console.log('occupation',this.form.occupation)

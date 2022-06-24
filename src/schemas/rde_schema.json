@@ -129,6 +129,12 @@
                     "type": "tel",
                     "name": "next_of_kin_phone",
                     "validation": "required"
+                },
+                {
+                    "label": "Email",
+                    "type": "tel",
+                    "name": "next_of_kin_email",
+                    "validation": "required"
                 }
             ]
         },
