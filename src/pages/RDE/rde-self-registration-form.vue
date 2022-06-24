@@ -488,7 +488,7 @@
                   </span>
                 </span>            
             </label>  
-            <label class="block mt-4 text-sm">
+            <!-- <label class="block mt-4 text-sm">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.occupation}}</span>
               
               <select name="occupation_id" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input p-2 rounded-md" validation="required" placeholder="--select--"
@@ -504,7 +504,7 @@
                   </span>
                 </span>
               </span>            
-            </label>         
+            </label>          -->
             <label class="block mt-4 text-sm" v-if="displayOtherOccupationField">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.please_specify}}</span>
               
@@ -1006,6 +1006,7 @@ export default {
       this.form.next_of_kin.next_of_kin_phone=this.form.next_of_kin_phone
       this.form.next_of_kin.next_of_kin_email=this.form.next_of_kin_email
       this.form.competencies=[...this.form.competencies,...this.form.language_competencies]
+      this.form.occupation_id='1'
 
       delete this.form.language_competencies
       delete this.form.next_of_kin_name
