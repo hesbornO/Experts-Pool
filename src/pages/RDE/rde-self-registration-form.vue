@@ -505,7 +505,7 @@
                 </span>
               </span>            
             </label>          -->
-            <label class="block mt-4 text-sm" v-if="displayOtherOccupationField">
+            <!-- <label class="block mt-4 text-sm" v-if="displayOtherOccupationField">
               <span class="text-gray-700 font font-semibold dark:text-gray-400">{{activeLanguage.store.rde_self_registration_form.please_specify}}</span>
               
               
@@ -533,7 +533,7 @@
                   </span>
                 </span>
               </span>            
-            </label>         
+            </label>          -->
           </div>
 
           <!-- Next of kin section -->
