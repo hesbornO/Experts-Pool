@@ -6,8 +6,8 @@
     <div>
       <br />
       <!-- filter -->
-      <div class="grid grid-cols-8 border-l-4 h-48 overflow-auto bg-white rounded-md p-2 h-full">
-        <div class="flex justify-between col-span-8 w-full gap-4">
+      <div class="h-full bg-white rounded-md p-2 text-gray-800">
+        <div class="grid grid-cols-6 w-full">
           <div class="pl-2">
             <span class="font-semibold">Partner State</span><br />
             <span
@@ -61,20 +61,6 @@
             </span>
           </div>
           <div>
-            <span class="font-semibold">Occupation</span><br />
-            <span v-for="(occupation, index) in occupations" :key="index">
-              <input
-                type="checkbox"
-                :value="occupation.value"
-                :ref="`occupation${occupation.value}`"
-                :id="`occupation${occupation.value}`"
-                @input="addToFilterString('occupation', occupation.value)"
-              />
-              <label class="pl-1">{{ occupation.label }}</label>
-              <br />
-            </span>
-          </div>
-          <div>
             <span class="font-semibold">Religion</span><br />
             <span v-for="(religion, index) in religions" :key="index">
               <input
@@ -118,22 +104,8 @@
             </div>
           </div>
           <div class="pr-2">
-            <span class="font-semibold">Competency</span><br />
-            <div v-for="(competency, index) in competencies" :key="index">
-              <input
-                type="checkbox"
-                :value="competency.value"
-                :ref="`competencies${competency.value}`"
-                :id="`competencies${competency.value}`"
-                @input="addToFilterString('competencies', competency.value)"
-                v-if="competency.type!=='language'"
-              />
-              <label class="pl-1" v-if="competency.type!=='language'">{{ competency.label }}</label>
-            </div>
-          </div>
-          <div class="pr-2">
             <span class="font-semibold">Language</span><br />
-            <div v-for="(competency, index) in competencies" :key="index">
+            <div v-for="(competency, index) in language_competencies" :key="index">
               <input
                 type="checkbox"
                 :value="competency.value"
@@ -144,6 +116,25 @@
               />
               <label class="pl-1" v-if="competency.type==='language'">{{ competency.label }}</label>
             </div>
+          </div>
+
+          <div class="col-span-2 pr-2">
+            <label class="font-semibold">Occupation</label>
+            <multiselect v-model="selected_occupations" :options="occupations" :multiple="true" 
+              :close-on-select="false" :clear-on-select="false" :preserve-search="true" 
+              placeholder="Type to search..." label="name" track-by="name" :preselect-first="true"                    
+              id="selected_occupations">
+              <template slot="selection" slot-scope="{ values, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+            </multiselect>
+          </div>
+          <div class="col-span-2">
+            <label class="font-semibold">Competency</label>
+            <multiselect v-model="other_competencies" :options="non_language_competencies" :multiple="true" 
+              :close-on-select="false" :clear-on-select="false" :preserve-search="true" 
+              placeholder="Type to search..." label="name" track-by="name" :preselect-first="true"                    
+              id="other_competencies">
+              <template slot="selection" slot-scope="{ values, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+            </multiselect>
           </div>
         </div>
       </div>
@@ -422,6 +413,8 @@ import api from "@/api";
 import dashboard_layout from "../../components/layouts/dashboard_layout.vue";
 import data_table from "../../components/layouts/DataTableTemplate";
 import SplitButton from "../../components/buttons/SplitButton.vue";
+import Multiselect from 'vue-multiselect'
+
 
 export default {
   name: "SuggestedRDES",
@@ -429,6 +422,8 @@ export default {
     data_table,
     dashboard_layout,
     SplitButton,
+    Multiselect
+
   },
   props: {
     eligibility_criteria: [String],
@@ -491,6 +486,12 @@ export default {
       initial_regions: [],
       filtered_rdes: [],
       userHasSelectedFilterItem: false,
+      language_competencies: [],
+      non_language_competencies:[],
+      other_competencies: [],
+
+      selected_occupations:[]
+
     };
   },
   methods: {
@@ -536,7 +537,8 @@ export default {
               this.$store
                 .dispatch("fetchAllCompetencies")
                 .then((resp) => {
-                  this.competencies = resp;
+                  this.language_competencies = resp.filter(v=>v.type==='language');
+                  this.non_language_competencies=resp.filter(v=>v.type!=='language')
                 })
                 .catch((err) => {
                   console.log(err);
@@ -650,6 +652,23 @@ export default {
       return options;
     },
     filterRDES() {
+       // other competencies
+      if(this.other_competencies?.length>0){
+        for(let item of this.other_competencies){    
+          if(!this.filterString) this.filterString=this.filterString.concat(`competencies=${item.value}`);
+          else if(this.filterString.includes(`competencies=${item.value}`))  continue
+          else this.filterString=this.filterString.concat(`&competencies=${item.value}`)        
+        }
+      }
+
+      // selected occupations
+      if(this.selected_occupations?.length>0){
+        for(let item of this.selected_occupations){   
+          if(!this.filterString) this.filterString=this.filterString.concat(`occupation=${item.value}`);
+          else if(this.filterString.includes(`occupation=${item.value}`))  continue
+          else this.filterString=this.filterString.concat(`&occupation=${item.value}`)        
+        }
+      }
       if (this.filterString) {
         this.userHasSelectedFilterItem = true;
         return new Promise((resolve, reject) => {
@@ -657,6 +676,25 @@ export default {
             .get("/profile/" + this.filterString)
             .then((resp) => {
               this.filtered_rdes = resp.data;
+
+              // remove other competencies from filter string
+              if(this.other_competencies?.length>0){
+                for(let item of this.other_competencies){ 
+                  if(this.filterString.includes(`&competencies=${item.value}`)){
+                    this.filterString=this.filterString.replace(`&competencies=${item.value}`,'')   
+                  } 
+                  else if(this.filterString.includes(`competencies=${item.value}`))this.filterString= this.filterString.replace(`competencies=${item.value}`,'')   
+                }
+              }
+              // remove selected occupations from filter string
+              if(this.selected_occupations?.length>0){
+                for(let item of this.selected_occupations){ 
+                  if(this.filterString.includes(`&occupation=${item.value}`)){
+                    this.filterString=this.filterString.replace(`&occupation=${item.value}`,'')   
+                  } 
+                  else if(this.filterString.includes(`occupation=${item.value}`))this.filterString= this.filterString.replace(`occupation=${item.value}`,'')   
+                }
+              }
             })
             .catch((err) => {
               reject(err);
@@ -676,3 +714,5 @@ export default {
   },
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+

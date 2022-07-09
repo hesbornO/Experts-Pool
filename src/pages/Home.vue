@@ -102,7 +102,7 @@
           <div>
             <span>{{activeLanguage.store.actions.filter_params}}</span> 
             <div class="h-full bg-white rounded-md p-2 text-gray-800">
-              <div class="grid grid-cols-8 w-full">
+              <div class="grid grid-cols-6 w-full">
                 <div class="">
                   <span class="font-semibold">Partner State</span>
                   <span
@@ -153,23 +153,7 @@
                     />
                     <label class="pl-1">{{ item.label }}</label>
                   </span>
-                </div>
-                <div>
-                  <span class="font-semibold">Occupation</span>
-                  <div class="flex flex-col space-y-2">
-                    <div v-for="(occupation, index) in occupations" :key="index">
-                      <input
-                          type="checkbox"
-                          :value="occupation.value"
-                          :ref="`occupation${occupation.value}`"
-                          :id="`occupation${occupation.value}`"
-                          @input="addToFilterString('occupation', occupation.value)"
-                      />
-                      <label class="pl-1">{{ occupation.label }}</label>
-                    </div>
-                  </div>
-
-                </div>
+                </div>             
                 <div>
                   <span class="font-semibold">Religion</span>
                   <div class="flex flex-col space-y-2">
@@ -217,27 +201,11 @@
                     />
                     <label class="pl-1">{{ degree.label }}</label>
                   </div>
-                </div>
-                <div class="pr-2">
-                  <span class="font-semibold">Competency</span>
-                  <div class="flex flex-col space-y-2">
-                    <div v-for="(competency, index) in competencies" :key="index">
-                      <input
-                          type="checkbox"
-                          :value="competency.value"
-                          :ref="`competencies${competency.value}`"
-                          :id="`competencies${competency.value}`"
-                          @input="addToFilterString('competencies', competency.value)"
-                          v-if="competency.type!=='language'"
-                      />
-                      <label class="pl-1" v-if="competency.type!=='language'">{{ competency.label }}</label>
-                    </div>
-                  </div>
-                </div>
+                </div>                
                 <div class="pr-2">
                   <span class="font-semibold">Language</span>
                   <div class="flex flex-col space-y-2">
-                    <div v-for="(competency, index) in competencies" :key="index">
+                    <div v-for="(competency, index) in language_competencies" :key="index">
                       <input
                           type="checkbox"
                           :value="competency.value"
@@ -249,6 +217,24 @@
                       <label class="pl-1" v-if="competency.type==='language'">{{ competency.label }}</label>
                     </div>
                   </div>
+                </div>
+                <div class="col-span-2 pr-2">
+                  <label class="font-semibold">Occupation</label>
+                  <multiselect v-model="selected_occupations" :options="occupations" :multiple="true" 
+                    :close-on-select="false" :clear-on-select="false" :preserve-search="true" 
+                    placeholder="Type to search..." label="name" track-by="name" :preselect-first="true"                    
+                    id="selected_occupations">
+                    <template slot="selection" slot-scope="{ values, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+                  </multiselect>
+                </div>
+                <div class="col-span-2">
+                  <label class="font-semibold">Competency</label>
+                  <multiselect v-model="other_competencies" :options="non_language_competencies" :multiple="true" 
+                    :close-on-select="false" :clear-on-select="false" :preserve-search="true" 
+                    placeholder="Type to search..." label="name" track-by="name" :preselect-first="true"                    
+                    id="other_competencies">
+                    <template slot="selection" slot-scope="{ values, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+                  </multiselect>
                 </div>
               </div>
             </div>
@@ -496,6 +482,7 @@ import dashboard_layout from '../components/layouts/dashboard_layout.vue';
 import data_table from "../components/layouts/DataTableTemplate";
 import SplitButton from "../components/buttons/SplitButton.vue";
 import Loading from '../components/utilities/loading.vue';
+import Multiselect from 'vue-multiselect'
 
 
 
@@ -511,7 +498,8 @@ export default {
     data_table,
     // VuePdfApp,
     SplitButton,
-    Loading
+    Loading,
+    Multiselect
 },
   data() {
     return {
@@ -590,9 +578,13 @@ export default {
       filtered_rdes: [],
       academic_degree: [],
       competencies: [],
+      language_competencies: [],
+      non_language_competencies:[],
       occupations: [],
       filterString:'',
-      loading:false
+      loading:false,
+      other_competencies: [],
+      selected_occupations:[]
     }
   },
   methods: {
@@ -744,7 +736,8 @@ export default {
               this.$store
                 .dispatch("fetchAllCompetencies")
                 .then((resp) => {
-                  this.competencies = resp;
+                  this.language_competencies = resp.filter(v=>v.type==='language');
+                  this.non_language_competencies=resp.filter(v=>v.type!=='language')
                 })
                 .catch((err) => {
                   console.log(err);
@@ -805,6 +798,25 @@ export default {
       }
     },
     filterRDES() {
+      // other competencies
+      if(this.other_competencies?.length>0){
+        for(let item of this.other_competencies){    
+          if(!this.filterString) this.filterString=this.filterString.concat(`competencies=${item.value}`);
+          else if(this.filterString.includes(`competencies=${item.value}`))  continue
+          else this.filterString=this.filterString.concat(`&competencies=${item.value}`)        
+        }
+      }
+
+      // selected occupations
+      if(this.selected_occupations?.length>0){
+        for(let item of this.selected_occupations){   
+          if(!this.filterString) this.filterString=this.filterString.concat(`occupation=${item.value}`);
+          else if(this.filterString.includes(`occupation=${item.value}`))  continue
+          else this.filterString=this.filterString.concat(`&occupation=${item.value}`)        
+        }
+      }
+
+
       if (this.filterString) {
         this.loading=true
         this.userHasSelectedFilterItem = true;
@@ -814,11 +826,34 @@ export default {
             .then((resp) => {
               this.filtered_rdes = resp.data;
               this.loading=false
+              
+              // remove other competencies from filter string
+              if(this.other_competencies?.length>0){
+                for(let item of this.other_competencies){ 
+                  if(this.filterString.includes(`&competencies=${item.value}`)){
+                    this.filterString=this.filterString.replace(`&competencies=${item.value}`,'')   
+                  } 
+                  else if(this.filterString.includes(`competencies=${item.value}`))this.filterString= this.filterString.replace(`competencies=${item.value}`,'')   
+                }
+              }
+              // remove selected occupations from filter string
+              if(this.selected_occupations?.length>0){
+                for(let item of this.selected_occupations){ 
+                  if(this.filterString.includes(`&occupation=${item.value}`)){
+                    this.filterString=this.filterString.replace(`&occupation=${item.value}`,'')   
+                  } 
+                  else if(this.filterString.includes(`occupation=${item.value}`))this.filterString= this.filterString.replace(`occupation=${item.value}`,'')   
+                }
+              }
+
             })
             .catch((err) => {
               reject(err);
             }).then();
         });
+
+        
+
       } else {
         this.filtered_rdes = [];
         this.userHasSelectedFilterItem = false;
@@ -857,6 +892,8 @@ export default {
   }
 };
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 
 <style>
 .btn {
