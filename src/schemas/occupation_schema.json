@@ -1,0 +1,21 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+        "type": "text",
+        "label": "Name",
+        "name": "name",
+        "validation": "required"
+    },
+    
+    {
+        "type": "select",
+        "options": [0],
+        "placeholder":"--type to select--",
+        "label": "One Health Sector",
+        "name": "occupation_category_id",
+        "validation": "required"
+    }
+]
+
+}]

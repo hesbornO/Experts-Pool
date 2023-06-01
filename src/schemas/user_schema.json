@@ -1,0 +1,92 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    
+    "children": [{
+            "component": "div",
+            "class": "grid grid-cols-2 gap-4",
+            "children": [{
+                    "type": "text",
+                    "label": "First Name",
+                    "name": "first_name",
+                    "validation": "required",
+                    "validationMessages": {
+                        "required": "Please specify first name"
+                    },
+                    "help": "Specify first name"
+                },
+                {
+                    "type": "text",
+                    "label": "Last Name",
+                    "name": "last_name",
+                    "validation": "required",
+                    "validationMessages": {
+                        "required": "Please specify last name"
+                    },
+                    "help": "Specify last name"
+                }
+
+            ]
+
+        },
+        {
+            "component": "div",
+            "class": "grid grid-cols-2 gap-4",
+            "children": [{
+                    "type": "text",
+                    "label": "Username",
+                    "name": "username",
+                    "validation": "required",
+                    "validationMessages": {
+                        "required": "Please specify preferred username"
+                    },
+                    "help": "Specify username"
+                },
+                {
+                    "type": "password",
+                    "label": "password",
+                    "name": "password",
+                    "validation": "required",
+                    "validationMessages": {
+                        "required": "Please specify password"
+                    },
+                    "help": "Specify username"
+                }
+
+
+            ]
+
+        },
+        {
+            "component": "div",
+            "class": "grid grid-cols-2 gap-4",
+            "children": [{
+                    "type": "number",
+                    "label": "Phone Number",
+                    "name": "phone_number",
+                    "validation": "required",
+                    "validationMessages": {
+                        "required": "Please specify phone number"
+                    },
+                    "help": "Specify phone number"
+                },
+
+                {
+                    "type": "text",
+                    "label": "Staff Number",
+                    "name": "staff_number",
+                    "help": "Specify staff number"
+                }
+
+            ]
+
+        },
+        {
+            "label": "Groups",
+            "name": "groups",
+            "value": [],
+            "help": "Specify groups"
+        }
+    ]
+
+}]

@@ -1,0 +1,194 @@
+{
+  "routes": {
+    "home": "domicile",
+    "ActiveDeployments": "Déploiements actifs",
+    "PublicHealthEvents": "épidémie",
+    "AdminReports": "Rapports d'administration",
+    "PartnerStates": "États partenaires",
+    "Competence": "Compétence",
+    "Occupations": "Professions",
+    "OneHealth": "Un Secteur de la Santé",
+    "QualificationTypes": "Types de qualification",
+    "PublicHealthEventTypes": "Types d'épidémies",    
+    "Profile":"Profil",
+    "MyDeployments":"Déploiement",
+    "Specialization":"spécialisation",
+    "Experience":"Vivre"
+
+  },
+  "actions":
+    {
+      "create": "créer",
+      "delete": "effacer",
+      "edit": "Éditer",
+      "filter": "Filtre",
+      "filter_params":"Paramètres de filtre",
+      "back":"Arrière",
+      "submit":"Nous faire parvenir",
+      "select_country":"choisissez le pays",
+      "click_to_select":"Cliquez pour sélectionner",
+      "log_in":"Connexion",
+      "log_out":"Se déconnecter",
+      "upload_report":"Télécharger le rapport",
+      "view":"Voir",
+      "view_report":"Voir le rapport",
+      "update":"Mise à jour",
+      "close":"proche",
+      "download_csv":"Télécharger CSV"
+
+
+    },
+  "tables": {
+    "home_table_headings": ["NOM", "SPÉCIALISATION", "RÉGION", "DÉPLOIEMENT ACTUEL", "COMPÉTENCE", "STATUT", "ACTION"]
+  },
+  "titles":{
+    "home_page_title":"Maison",
+    "total_rdes":"RDES totaux",
+    "active_deployments":"Déploiements actifs",
+    "public_health_events":"Événements de santé publique",
+    "partner_states":"États partenaires",
+    "occupation":"Occupation",
+    "partner_state":"État partenaire",
+    "status":"statut",
+    "complete_registration":"Enregistrement complet",
+    "cv":"Curriculum vitae (CV)"
+
+
+  },
+  "rde_self_registration_form":{
+    "personal_details":"Détails personnels",
+    "next_of_kin_details":"Détails sur le plus proche parent",
+    "other_info":"Autre info",
+    "first_name":"Prénom",
+    "middle_name":"Deuxième nom",
+    "last_name":"Nom de famille",
+    "competencies":"Compétences",
+    "email":"E-mail",
+    "phone":"Téléphoner",
+    "full_name":"Nom et prénom",
+    "dob":"Date de naissance",
+    "occupation":"Occupation",
+    "please_specify":"Autre (veuillez préciser)",
+
+    "religion":"La religion",
+    "id_number":"Numéro d'identification",
+    "id_type":"Type d'identification",
+    "region":"Région",
+    "gender":"Le sexe",
+    "languages":"Langues",
+    "select_languages":"Sélectionner les langues",
+    "select_competences":"Sélectionner les compétences"    
+
+        
+
+
+  },
+  "login_form":{
+    "username":"Nom d'utilisateur",
+    "password":"Mot de passe",
+    "forgot_your_password":"Mot de passe oublié",
+    "dont_have_an_account":"Je n'ai pas de compte",
+    "sign_up":"S'inscrire",
+    "recover_password":"Récupérer mot de passe",
+    "new_password":"Nouveau mot de passe",
+    "otp_msg":"Un OTP a été envoyé à votre adresse e-mail. Veuillez le vérifier et le saisir ci-dessous",
+
+    "confirm_new_password":"Confirmez le mot de passe"
+
+  },
+  "sign_up_form":{
+    "create_account":"Créer un Compte",
+    "first_name":"Prénom",
+    "last_name":"Nom de famille",
+    "username":"Nom d'utilisateur",
+    "username_help":"Veuillez fournir un nom d'utilisateur en minuscules",
+    "email":"E-mail",
+    "verify_email":"Veuillez vérifier votre e-mail",
+    "to_proceed":"procéder",
+    "phone_number":"Numéro de téléphone",
+    "select_country":"Choisissez le pays",
+    "country":"Pays",
+    "duration":"Durée",
+
+    "select_region":"Choisissez une région",
+    "region_of_residence":"Comté/District",
+    "password":"Mot de passe",
+    "confirm_password":"Confirmez le mot de passe",
+    "agree_to":"je suis d'accord avec le",
+    "privacy_policy":"politique de confidentialité",
+    "already_have_an_account":"Vous avez déjà un compte",
+    "log_in":"Connexion",
+    "login_check_mail":"Veuillez confirmer votre e-mail avant de tenter de vous connecter pour la première fois.",
+    "check_mail":"Vous vous êtes inscrit avec succès !! Merci de consulter vos emails",
+    "instructions":"pour plus d'instructions."
+
+
+  },
+  "rde_self_profile":{
+    "save_filter":"Enregistrer le filtre",
+    "update_profile":"Mettre à jour le profil",
+    "deactivate_account":"Désactiver le compte",
+    "activate_account":"Activer le compte",
+    "welcome":"Bienvenue",
+    "click_below_to_register":"Cliquez ci-dessous pour vous inscrire",
+    "create_profile":"Créer un profil",    
+    "status":"Statut",
+    "personal_details":"Détails personnels",
+    "location":"Lieu",
+    "full_name":"Nom et prénom",
+    "years":"ans",
+    "competencies":"Compétences",
+    "qualifications":"Détails de la qualification",
+    "academic_qualifications":"Qualifications académiques",
+    "no_qualifications_added":"Aucune qualification ajoutée",
+    "add_qualification":"Ajouter une qualification",
+    "no_experience_added":"Aucune expérience ajoutée",
+    "add_experience":"Ajouter une expérience",
+    "no_reference_listed":"Aucune référence ajoutée",
+    "add_reference":"Ajouter une référence",
+    "name":"Nom",
+    "type":"Taper",
+    "institution":"Institution",
+    "dates":"Dates",
+    "contact":"Contact",
+    "description":"La description",
+    "title":"Titre",
+    "actions":"Actions",
+    "professional_experience":"Expérience professionnelle",
+    "references":"Les références",
+    "previous_deployment":"Déploiement précédent",
+    "no_previous_deployment_listed":"Aucun déploiement précédent ajouté",
+    "recommendations":"Recommandations",
+    "make_recommendation":"Faire une recommandation",
+    "made_by":"faite par",
+    "no_recommendations":"Pas encore de recommandations",
+    "no_deployments":"Pas encore de déploiements",
+    "no_cv":"Aucun CV téléchargé! !",
+    "attach_cv":"Attach CV!",
+    "deployments":"Déploiements",
+    "deployment_request":"Demande de déploiement",
+    "request_sent":"Demande envoyée",
+    "accept_request":"Accepter la requête",
+    "reject_request":"Rejeter la demande",
+    "request_accepted":"Requête acceptée",
+    "request_rejected":"Demande rejetée",
+    "conduct_predeployment":"Veuillez effectuer les procédures de pré-déploiement.",
+    "predeployment_complete":"La procédure de prédéploiement est-elle terminée",
+    "accepted_request":"Vous avez accepté la demande de déploiement. Veuillez commencer la procédure de pré-déploiement.",
+    "disapprove":"Désapprouver",
+    "approve":"Approuver",
+    "deploy":"déployer",
+    "deployed":"Déployée",
+    "successfully_deployed":"Déployé avec succès",
+    "end_deployment":"finir",
+    "deployment_ended":"Déploiement terminé",
+    "start_date":"date de début",
+    "end_date":"date de fin",
+    "search":"Tapez pour rechercher RDE...",
+    "deployment_report":"Rapport de déploiement"
+
+
+
+
+  }
+}

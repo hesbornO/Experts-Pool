@@ -1,0 +1,35 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    
+    "children": [
+        {
+            "component":"div",
+            "class":"grid grid-cols-2 gap-4",
+            "children":[
+                {
+                    "type": "text",
+                    "label": "Name",
+                    "name": "name",
+                    "validation": "required"
+                },
+                {
+                    "type": "select",
+                    "label": "Type",
+                    "input-class":"capitalize border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1",
+                    "name": "type",
+                    "options":["work","language"],
+                    "validation": "required"
+                }
+            ]
+        },
+        {
+            "type": "textarea",
+            "label": "Description",
+            "rows":5,
+            "name": "description"
+        }
+        
+    ]
+        
+}]

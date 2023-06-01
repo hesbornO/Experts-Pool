@@ -1,0 +1,96 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    
+    "children": [{
+            "component": "div",
+            "class": "md:grid md:grid-cols-2 gap-3",
+            "children": [{
+                    "type": "text",
+                    "label": "Name",
+                    "name": "name",
+                    "validation": "required"
+                },
+                {
+                    "type": "select",
+                    "label": "Severity Level",
+                    "name": "severity",
+                    "placeholder":"--Select severity--",
+                    "options": {
+                        "minor": "Minor",
+                        "medium": "Medium",
+                        "severe": "Severe"                  
+                      },
+                    "validation": "required"
+                }
+                
+            ]
+        },   
+        {
+            "component":"div",
+            "class":"md:grid md:grid-cols-2 gap-3",
+            "children":[
+                {
+                    "type": "select",
+                    "label": "Event Type",
+                    "validation": "required",
+                    "placeholder":"--Select event type--",
+                    "name": "outbreak_type_id",
+                    "options":[0]
+                },
+                {
+                    "type": "date",
+                    "label": "Start Date",
+                    "name": "start_date",
+                    "id":"start_date_field",
+                    "max":"",
+                    "validation": "required"
+                }
+                
+            ]
+        },   
+       
+        {
+            "component": "div",
+            "class": "md:grid md:grid-cols-2 gap-3",
+            "children": [
+                {
+                    "type": "select",
+                    "label": "Affected Regions",
+                    "name": "affected_regions",
+                    "class":"col-span-2",
+                    "options":[1],
+                    "multiple":"multiple"
+                    
+                },
+                {
+                    "type": "select",
+                    "class":"col-span-1",
+                    "label": "Work Competencies",
+                    "name": "workCompetencies",
+                    "multiple":"multiple",  
+                    "options":[2]
+                },
+                {
+                    "type": "select",
+                    "class":"col-span-1",
+                    "label": "Language Competencies",
+                    "name": "languageCompetencies",
+                    "multiple":"multiple",  
+                    "options":[3]
+                }
+                
+
+            ]
+        },
+        
+        
+        {
+            "type": "textarea",
+            "label": "Description",
+            "rows": 5,
+            "name": "description",
+            "validation": "required"
+        }
+    ]
+}]

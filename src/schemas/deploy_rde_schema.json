@@ -1,0 +1,24 @@
+[
+    
+    {
+        "component": "div",
+        "class": "md:grid md:grid-cols-2 gap-2",
+        "children": [{
+                "type": "date",
+                "label": "Start Date",
+                "name": "start_date",
+                "validation": "required"
+            },
+            {
+                "type": "text",
+                "label": "Status",
+                "name": "status",
+                "readonly":true,
+                "value":"deployed",
+                "validation": "required"
+            }
+        ]
+
+    }
+    
+]

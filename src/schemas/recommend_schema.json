@@ -1,0 +1,15 @@
+[{
+    "component": "div",
+    "class": "px-2 py-3",
+    "children": [{
+        "type": "textarea",
+        "label": "Recommendation",
+        "placeholder":"Type here...",        
+        "name": "comment",
+        "rows": 5,
+        "validation": "required",
+        "validationMessages":{
+            "required":"Recommendation is required"
+        }
+    }]
+}]

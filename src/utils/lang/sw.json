@@ -1,0 +1,194 @@
+{
+  "routes": {
+    "home": "Nyumbani",
+    "ActiveDeployments": "Usambazaji Amilifu",
+    "PublicHealthEvents": "Mikurupuko ",
+    "AdminReports": "Ripoti za Msimamizi",
+    "PartnerStates": "Nchi Wanachama",
+    "Competence": "Umahiri",
+    "Occupations": "Kazi",
+    "OneHealth": "Sekta ya Afya Umoja",
+    "QualificationTypes": "Aina za Sifa",
+    "PublicHealthEventTypes": "Aina Ya Mikurupuko",
+    "Profile":"Wasifu",
+    "MyDeployments":"Kupelekwa",
+    "Specialization":"Utaalamu",
+    "Experience":"Uzoefu"
+   
+  },
+  "actions": {
+    "create": "Unda",
+    "delete": "Futa",
+    "edit": "Hariri",
+    "filter": "Chuja",
+    "filter_params":"Vigezo vya chujio",
+    "back":"Nyuma",
+    "submit":"Wasilisha",
+    "select_country":"chagua nchi",
+    "click_to_select":"bofya ili kuchagua",
+    "log_in":"Ingia",
+    "log_out":"Ondoka",
+    "upload_report":"Pakia Ripoti",
+    "view":"Tazama",    
+    "view_report":"Tazama ripoti",
+    "update":"Sasisha",
+    "close":"Funga",
+    "download_csv":"Pakua CSV"
+
+
+
+
+
+  },
+  "tables": {
+    "home_table_headings": ["JINA", "UTAALAMU", "MKOA", "UTUMIZAJI WA SASA", "UWEZO", "HALI", "KITENDO"]
+  },
+  "titles":{
+    "home_page_title":"Nyumbani",
+    "total_rdes":"Jumla ya RDES",
+    "active_deployments":"Usambazaji Amilifu",
+    "public_health_events":"Matukio ya Afya ya Umma",
+    "partner_states":"Nchi Wanachama",
+    "occupation":"Kazi",
+    "partner_state":"Nchi Mshirika",
+    "status":"Hali",
+    "complete_registration":"Kamilisha Usajili",
+    "cv":"Mtaala"
+
+  },
+  "rde_self_registration_form":{
+    "personal_details":"Maelezo ya Kibinafsi",
+    "next_of_kin_details":"Maelezo ya Jamaa",
+    "other_info":"Habari Nyingine",
+    "first_name":"Jina la kwanza",
+    "middle_name":"Jina la kati",
+    "last_name":"Jina la familia",
+    "competencies":"Umahiri",
+    "email":"Barua pepe",
+    "phone":"Simu",
+    "full_name":"Jina kamili",
+    "dob":"Tarehe ya kuzaliwa",
+    "occupation":"Kazi",
+    "please_specify":"Nyingine, tafadhali taja",
+
+    "religion":"Dini",
+    "id_number":"Nambari ya kitambulisho",
+    "id_type":"Aina ya kitambulisho",
+    "region":"Mkoa",
+    "gender":"Jinsia",
+    "languages":"Lugha",
+    "select_languages":"Chagua lugha",
+    "select_competences":"chagua uwezo"    
+
+
+
+  },
+  "login_form":{
+    "username":"Jina la mtumiaji",
+    "password":"Nenosiri",
+    "forgot_your_password":"Umesahau nenosiri yako",
+    "dont_have_an_account":"Huna akaunti",
+    "sign_up":"Jisajili",
+    "recover_password":"Rejesha nenosiri",
+    "new_password":"Nenosiri mpya",
+    "otp_msg":"OTP imetumwa kwa barua pepe yako. Tafadhali angalia na uiweke hapa chini",
+
+    "confirm_new_password":"Thibitisha Nenosiri Mpya"
+
+  },
+  "sign_up_form":{
+    "create_account":"Tengeneza Akaunti",
+    "first_name":"Jina la kwanza",
+    "last_name":"Jina la familia",
+    "username":"Jina la mtumiaji",
+    "username_help":"Tafadhali toa jina la mtumiaji lenye herufi ndogo",
+    "email":"Barua pepe",
+    "verify_email":"Tafadhali thibitisha barua pepe yako",
+    "to_proceed":"kuendelea",
+    "phone_number":"Nambari ya simu",
+    "select_country":"Chagua nchi",
+    "country":"Nchi",
+    "duration":"Muda",
+
+    "select_region":"Chagua eneo",
+    "region_of_residence":"Mkoa/Wilaya",
+    "password":"Nenosiri",
+    "confirm_password":"Thibitisha Nenosiri",
+    "agree_to":"Nakubaliana na",
+    "privacy_policy":"sera ya faragha",
+    "already_have_an_account":"Tayari unayo akaunti",
+    "log_in":"Ingia",
+    "login_check_mail":"Tafadhali thibitisha barua pepe yako kabla ya kujaribu kuingia kwa mara ya kwanza.",
+    "check_mail":"Umefanikiwa kujisajili!! Tafadhali angalia barua pepe yako",
+    "instructions":"kwa maelekezo zaidi."
+
+
+  },
+  "rde_self_profile":{
+    "save_filter":"Hifadhi kichujio",
+    "update_profile":"Sasisha Wasifu",
+    "deactivate_account":"Zima Akaunti",
+    "activate_account":"Washa Akaunti",
+    "welcome":"Karibu",
+    "click_below_to_register":"Bofya hapa chini kujiandikisha",
+    "create_profile":"Unda Wasifu",    
+    "status":"Hali",
+    "personal_details":"Maelezo ya Kibinafsi",
+    "location":"Mahali",
+    "full_name":"Jina kamili",
+    "years":"miaka",
+    "competencies":"Umahiri",
+    "qualifications":"Maelezo ya kufuzu",
+    "academic_qualifications":"Sifa za Kiakademia",
+    "no_qualifications_added":"Hakuna sifa zilizoongezwa",
+    "add_qualification":"Ongeza Sifa",
+    "no_experience_added":"Hakuna uzoefu ulioongezwa",
+    "add_experience":"Ongeza Uzoefu",
+    "no_reference_listed":"Hakuna marejeleo yaliyoongezwa",
+    "add_reference":"Ongeza Rejea",
+    "name":"Jina",
+    "type":"Aina",
+    "institution":"Taasisi",
+    "dates":"Tarehe",
+    "contact":"Wasiliana",
+    "description":"Maelezo",
+    "title":"Kichwa",
+    "actions":"Vitendo",
+    "professional_experience":"Uzoefu wa Kitaalam",
+    "references":"Marejeleo",
+    "previous_deployment":"Usambazaji Uliopita",
+    "no_previous_deployment_listed":"Hakuna utumaji uliopita ulioongezwa",
+
+    "recommendations":"Mapendekezo",
+    "make_recommendation":"Toa pendekezo",
+    "made_by":"Aliyependekeza",
+    "no_recommendations":"Bado hakuna mapendekezo",
+    "no_deployments":"Bado hakuna usambazaji",
+    "no_cv":"Hakuna CV Iliyopakiwa!",
+    "attach_cv":"Attach CV!",
+    "deployments":"Usambazaji",
+    "deployment_request":"Ombi la kusambazwa",
+    "request_sent":"Ombi limetumwa",
+    "accept_request":"Kubali ombi",
+    "reject_request":"Kataa ombi",
+    "request_accepted":"Ombi limekubaliwa",
+    "request_rejected":"Ombi limekataliwa",
+    "conduct_predeployment":"Tafadhali fanya taratibu za kabla ya kusambaza.",
+    "predeployment_complete":"Je, utaratibu wa kabla ya kusambaza umekamilika",
+    "accepted_request":"Umekubali ombi la kusambazwa. Tafadhali anza utaratibu wa kabla ya kusambazwa.",
+    "disapprove":"Usiidhinishe",
+    "approve":"Idhinisha",
+    "deploy":"peleka",
+    "deployed":"Umesambazwa",
+    "successfully_deployed":"Usambazaji umefaulu",
+    "end_deployment":"Kamilisha",
+    "deployment_ended":"Usambazaji umekwisha",
+    "start_date":"Tarehe ya kuanza",
+    "end_date":"Tarehe ya mwisho",
+    "search":"Andika ili kutafuta RDE...",
+    "deployment_report":"Ripoti ya upelekaji"
+
+
+
+  }
+}

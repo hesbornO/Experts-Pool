@@ -1,0 +1,8 @@
+[
+    {
+        "type":"text",
+        "label":"Label",
+        "name":"label",
+        "validation":"required"
+    }
+]
