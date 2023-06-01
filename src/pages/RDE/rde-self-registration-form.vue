@@ -6,6 +6,7 @@
       </svg>
       {{activeLanguage.store.actions.back}}
     </button>
+    
     <div>
       <FormulateForm v-model="form" @submit="registerRDE">
         <div :class="['px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 ']">

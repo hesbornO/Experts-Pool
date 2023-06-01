@@ -8,6 +8,7 @@ const state = {
     error: {}
 }
 
+
 const getters = {
     getCurrentUser(state) {
         return state.user

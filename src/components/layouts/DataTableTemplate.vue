@@ -6,6 +6,7 @@
       </svg>
       Back
     </button>
+    
     <div class="w-full overflow-x-auto">
       <table class="w-full whitespace-no-wrap" id="tblData">
         <thead>

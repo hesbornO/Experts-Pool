@@ -10,6 +10,7 @@ const state = {
     outbreakTypeOptions: {},
 }
 
+
 const getters = {
     allOutbreaks(state) {
         return state.Outbreaks

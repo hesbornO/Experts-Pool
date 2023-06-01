@@ -7,6 +7,7 @@
         </svg>
         Back
       </button>
+      
       <span>
         <router-link
             :to="{name:'EAC_ApproveRDEfromProfile', params:{rdeId:this.rdeProfile.id, rdeName: this.rdeProfile.last_name}}"

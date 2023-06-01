@@ -11,6 +11,7 @@ const getters = {
     }
 }
 
+
 const actions = {
     fetchAllCompetencies({ commit }, payload) {
         return new Promise((resolve, reject) => {

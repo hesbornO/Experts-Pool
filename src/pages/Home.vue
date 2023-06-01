@@ -3,7 +3,6 @@
 
     <div class="w-full overflow-hidden shadow-xs">
       <div class="w-full overflow-x-auto ">
-        
         <!-- Cards -->
         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
           <!-- Card -->

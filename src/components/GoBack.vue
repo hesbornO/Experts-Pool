@@ -6,7 +6,6 @@
         </button>
       </span>
 </template>
-
 <script>
 export default {
 methods:{

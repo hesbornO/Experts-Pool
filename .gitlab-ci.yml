@@ -7,6 +7,7 @@ build:
   allow_failure: false
   tags:
     - shared
+    
   script:
     - echo "run install"
     - npm install --progress=false

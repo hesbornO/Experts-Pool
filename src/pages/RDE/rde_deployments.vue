@@ -3,8 +3,7 @@
     <span v-if="rdeSelfProfile">
       <span class="flex justify-between" v-if="Object.keys(rdeSelfProfile).length > 0">
         <span></span>
-        <span>
-          
+        <span>          
         </span>
       </span>
     </span>    

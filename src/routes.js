@@ -1,4 +1,5 @@
 import Vue from "vue";
+
 import VueRouter from "vue-router";
 import Login from "./pages/login";
 import Home from "./pages/Home.vue";

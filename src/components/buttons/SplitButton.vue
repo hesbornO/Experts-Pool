@@ -7,6 +7,7 @@
           {{ primary.label }}
         </span>
       </router-link>
+      
       <div v-click-outside="onClose" @click="showPopup = !showPopup" class="bg-white text-primary-600 items-center flex rounded-r border-primary-300 border-l hover:bg-blue-100 hover:text-blue-500">
         <div class="cursor-pointer   mx-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -9,6 +9,7 @@
         v-on:click="toggleSideMenu"
         aria-label="Menu"
       >
+      
         <svg
           class="w-6 h-6"
           aria-hidden="true"

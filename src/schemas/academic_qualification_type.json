@@ -8,6 +8,5 @@
             "name": "degree_level",
             "validation": "required"
         }
-    ]
-        
+    ]        
 }]

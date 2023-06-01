@@ -5,6 +5,7 @@ function data() {
       return JSON.parse(window.localStorage.getItem('dark'))
     }
 
+    
     // else return their preferences
     return (
       !!window.matchMedia &&

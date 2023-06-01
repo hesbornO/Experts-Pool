@@ -1,7 +1,5 @@
 <template>
   <dashboard_layout page_title="Admin Reports">
-    
-
     <div class="w-full overflow-hidden shadow-xs ">
       <div class="w-full overflow-x-auto ">
         <div class="w-full  bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">

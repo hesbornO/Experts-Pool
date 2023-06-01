@@ -4,7 +4,6 @@
     <div class="grid gap-2 mb-1 md:grid-cols-2 xl:grid-cols-4">
       <div class="flex col-span-2 items-center ">
       </div>
-
       <div class="grid col-span-2 items-center rounded-lg shadow-xs dark:bg-gray-800">
         <div class="flex justify-between">
           <div class=""></div>

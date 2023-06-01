@@ -23,6 +23,7 @@ const state = {
     },
 }
 
+
 const getters = {
     allLanguages(state) {
         return state.languages

@@ -6,6 +6,7 @@
             "component":"div",
             "children":"Deactivate account?"
         },
+        
         {
         "type": "text",
         "label": "Deactivate account?",

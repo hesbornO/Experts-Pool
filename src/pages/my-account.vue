@@ -13,6 +13,7 @@
               class="block w-full border-2 border-purple-50 border-gray-400 rounded-sm p-2 pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
               placeholder="Peter Mwangi"
           />
+          
           <div
               class="absolute inset-y-0 right-0 flex items-center mr-3 pointer-events-none"
           >

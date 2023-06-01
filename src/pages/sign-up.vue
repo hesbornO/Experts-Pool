@@ -35,6 +35,7 @@
                       required
                     />
                   </label>
+                  
                   <label class="block mt-4 text-sm col-span-1">
                     <span class="text-gray-700 dark:text-gray-400">{{activeLanguage.store.sign_up_form.last_name}}</span>
                     <FormulateInput

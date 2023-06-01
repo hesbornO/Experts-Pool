@@ -6,6 +6,7 @@
             "component":"div",
             "children":"Accept deployment request?"
         },
+        
         {
         "type": "text",
         "label": "Accept deployment request?",

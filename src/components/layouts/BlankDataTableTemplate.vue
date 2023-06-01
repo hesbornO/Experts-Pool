@@ -8,6 +8,7 @@
               {{ table_heading }}
             </th>
         </tr>
+        
         </thead>
         <tbody v-if="loading">
         <tr class="text-gray-600 dark:text-gray-400 border">

@@ -2,7 +2,6 @@
   <div id="app" class="flex bg-gray-100 dark:bg-gray-100">
     <Sidebar/>
     <div class="flex flex-col flex-1 w-full ">
-
       <Navigation/>
       <div class="container px-6 mx-auto grid " :showBack="showBack">
         

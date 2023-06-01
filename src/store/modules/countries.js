@@ -14,6 +14,7 @@ const getters = {
     allRegions(state) {
         return state.regions
     }
+    
 }
 
 const actions = {

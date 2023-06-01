@@ -12,6 +12,7 @@ const getters = {
     }
 }
 
+
 const actions = {
     fetchAllQualificationTypes({ commit }, payload) {
         return new Promise((resolve, reject) => {

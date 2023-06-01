@@ -8,6 +8,7 @@
         "label": "End Date",
         "name": "end_date"
     },
+    
     {
         "type": "text",
         "label": "Status",

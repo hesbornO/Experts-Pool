@@ -3,7 +3,6 @@
       <div :class="['fixed z-10 inset-0 overflow-y-auto ']" aria-labelledby="modal-title"
            aria-modal="true" role="dialog" >
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 ">
-
           <div aria-hidden="true" class="fixed inset-0 bg-gray-200 bg-opacity-75 transition-opacity"></div>
 
           <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>

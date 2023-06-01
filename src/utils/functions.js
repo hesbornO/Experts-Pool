@@ -11,6 +11,7 @@ function displayServerErrMessage(err){
     this.$toast.error(full_error_message)
 }
 
+
 function setUserDetails(decoded_token){
     localStorage.setItem('full_name', decoded_token.full_name)
     localStorage.setItem('username', decoded_token.username)

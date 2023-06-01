@@ -6,6 +6,7 @@
       </svg>
       Back
     </button>
+    
     <div v-if="outbreak" class="flex justify-center">
       <!-- Report -->
       <div class="col-start-2 col-end-4  mt-5 ml-20">

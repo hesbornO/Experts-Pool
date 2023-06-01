@@ -6,6 +6,7 @@
         <div class="w-full flex flex-row bg-gray-50 py-4 p-4 mb-4 rounded-md space-x-4">
           <router-view></router-view>
         </div>
+        
         <!-- Deployments List -->
          <data_table v-bind="$attrs">
           <template v-slot="{item}" >

@@ -1,6 +1,7 @@
 [{
     "component": "div",
     "class": "px-2 py-3",
+    
     "children": [
         {
             "component":"div",

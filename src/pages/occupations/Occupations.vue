@@ -13,6 +13,7 @@
         </svg>
         <span class="px-1">Add Occupation</span>
       </router-link>
+      
     </div>
      <div class="grid grid-cols-3">
       <span></span>

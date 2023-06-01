@@ -5,6 +5,7 @@
       <div class="grid col-span-2 items-center rounded-lg shadow-xs dark:bg-gray-800 py-3">
         <div class="flex justify-between">
           <div class="">
+            
             <router-link :to="{name:'CreateRegion', params:{countryId:$route.params.countryId}}"
                          class="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 px-4 py-2 text-sm font-medium leading-5 bg-blue-100 text-blue-500 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-purple capitalize flex">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"

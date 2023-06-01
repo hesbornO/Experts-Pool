@@ -6,6 +6,7 @@
           <div class="flex items-center justify-center pl-4 sm:p-8 md:w-full">
             <div class="w-full "> 
               <div class="md:text-xs">
+                
                    <div class="flex justify-end">
                      <router-link class="w-full" to="/"><span
                         class="capitalize text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline">{{activeLanguage.store.titles.home_page_title}}</span>

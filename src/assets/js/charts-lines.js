@@ -1,6 +1,7 @@
 /**
  * For usage, visit Chart.js docs https://www.chartjs.org/docs/latest/
  */
+
 const lineConfig = {
   type: 'line',
   data: {

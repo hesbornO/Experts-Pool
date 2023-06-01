@@ -18,8 +18,7 @@
                     "name": "institution",
                     "validation": "required"
                 }
-            ]
-            
+            ]            
         },
         {
             "component":"div",

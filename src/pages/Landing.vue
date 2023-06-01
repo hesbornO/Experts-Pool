@@ -11,7 +11,6 @@
           <i data-feather="menu"></i>
         </button>
       </div>
-
       <ul class="hidden lg:block lg:flex flex-col lg:flex-row lg:items-center lg:space-x-10" :class="{'hidden':!navbarOpen,'flex':navbarOpen}">
         <!-- <li class="font-medium text-brandblue text-lg hover:text-brandblue-300 transition ease-in-out duration-300 mb-5 lg:mb-0">
           <router-link :to="{name:'Login'}" >Login</router-link>

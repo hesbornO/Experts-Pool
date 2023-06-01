@@ -7,6 +7,7 @@
         "name": "name",
         "validation": "required"
     },
+    
     {
         "type": "select",
         "options": [0],

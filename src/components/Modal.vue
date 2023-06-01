@@ -1,4 +1,5 @@
 <template>
+  
   <div
     x-show="isModalOpen"
     x-transition:enter="transition ease-out duration-150"

@@ -13,6 +13,7 @@ const getters = {
     }
 }
 
+
 const actions = {
     fetchAllOccupations({ commit }, payload) {
         return new Promise((resolve, reject) => {

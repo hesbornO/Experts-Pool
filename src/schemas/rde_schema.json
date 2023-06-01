@@ -34,6 +34,7 @@
                 }
             ]
         },
+        
         {
             "component": "div",
             "class": "md:grid md:grid-cols-3 gap-3",

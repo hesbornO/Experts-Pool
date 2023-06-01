@@ -1,6 +1,5 @@
 <template>
   <dashboard_layout :page_title="`${$route.params.outbreakName} Deployments`">
-
     <!-- Deployments -->
     <data_table v-bind="$attrs" :show-back=true>
       <template v-slot="{item}">
@@ -13,6 +12,7 @@
         <td class="px-4 py-3 text-sm italic">
           <span v-if="item.start_date">From <span class="text-pink-400"> {{item.start_date}}</span> </span>
           <span v-if="item.end_date"> to <span class="text-pink-400">{{item.end_date}}</span></span>
+        </td>
         <td class="px-4 py-3 text-sm  capitalize text-orange-400 italic font-semibold">{{item.status?item.status:''}}</td>
         <td class="px-4 py-3 text-sm flex flex-row space-x-1 text-blue-500">
           <span v-if="item.profile.phone"><a :href="`tel:${item.profile.phone}`" title="Click to call">{{item.profile.phone}}</a> | </span> 

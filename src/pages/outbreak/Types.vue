@@ -14,6 +14,7 @@
         <span class="px-1">Add Type</span>
       </router-link>
     </div>
+    
      <div class="grid grid-cols-3">
       <span></span>
       <span class="grid grid-cols-2 ">
